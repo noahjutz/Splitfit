@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/edit_routine"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="ifRoom"
+        android:title="Edit" />
+
+    <item
         android:id="@+id/delete_routine"
         android:icon="@drawable/ic_delete"
         app:showAsAction="ifRoom"

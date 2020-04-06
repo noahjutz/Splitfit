@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -12,9 +13,24 @@ import com.google.gson.reflect.TypeToken
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.activity_main.*
 
+private const val TAG = "MainActivity"
+
+// Extra names
+const val EXTRA_ROUTINE = "com.noahjutz.gymroutines.ROUTINE"
+const val EXTRA_ACTION = "com.noahjutz.gymroutines.ACTION"
+const val EXTRA_POS = "com.noahjutz.gymroutines.POS"
+
+// Actions to perform on routines
+const val ACTION_DELETE = 0
+const val ACTION_EDIT = 1
+
+// request IDs for startActivityForResult()
+const val REQUEST_VIEW_ROUTINE = 0
+const val REQUEST_CREATE_ROUTINE = 1
+const val REQUEST_EDIT_ROUTINE = 2
+
 class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickListener {
 
-    private val TAG = this::class.java.name
     private lateinit var routineAdapter: RecyclerViewAdapter
     private lateinit var routineList: ArrayList<Routine>
 
@@ -27,13 +43,13 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickList
 
         fab_add_routine.setOnClickListener {
             val intent = Intent(this, CreateRoutineActivity::class.java)
-            startActivityForResult(intent, 420)
+            startActivityForResult(intent, REQUEST_CREATE_ROUTINE)
         }
 
-        // button_sample_data.setOnClickListener {
-        //     routineList = DataSource.createDataSet()
-        //     routineAdapter.submitList(routineList)
-        // }
+        button_sample_data.setOnClickListener {
+            routineList = DataSource.createDataSet()
+            routineAdapter.submitList(routineList)
+        }
     }
 
     override fun onPause() {
@@ -68,29 +84,53 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 420) {
-            if (resultCode == RESULT_OK) {
-                val title = data?.getStringExtra("title")
-                val content = data?.getStringExtra("content")
-                Log.d(TAG, "Result OK: $title - $content")
-                val routine: Routine = Routine("" + title, "" + content)
-                routineList.add(routine)
-                routineAdapter.submitList(routineList)
+        when (requestCode) {
+            REQUEST_EDIT_ROUTINE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val routine = data?.getParcelableExtra<Routine>(EXTRA_ROUTINE)
+                    val pos = data?.getIntExtra(EXTRA_POS, -1)
+                    if (routine != null && pos != null) {
+                        try {
+                            routineList[pos] = routine
+                            routineAdapter.submitList(routineList)
+                        } catch (e: ArrayIndexOutOfBoundsException) {
+                            Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Log.d(TAG, "Result canceled")
+            REQUEST_CREATE_ROUTINE -> {
+                if (resultCode == RESULT_OK) {
+                    val routine = data?.getParcelableExtra<Routine>(EXTRA_ROUTINE)
+                    if (routine != null) {
+                        routineList.add(routine)
+                        routineAdapter.submitList(routineList)
+                    }
+                }
             }
-        }
+            REQUEST_VIEW_ROUTINE -> {
+                if (resultCode == RESULT_OK) {
+                    val action: Int = data?.getIntExtra(EXTRA_ACTION, -1) ?: -1
+                    val pos: Int = data?.getIntExtra(EXTRA_POS, -1) ?: -1
+                    Log.d(TAG, "Action: $action | Pos: $pos")
 
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                val delete: Boolean = data?.getBooleanExtra("delete", false) ?: false
-                val pos: Int = data?.getIntExtra("pos", -1) ?: -1
-                Log.d(TAG, "deleting: $delete, $pos")
-                if (delete) {
-                    routineList.removeAt(pos)
-                    routineAdapter.submitList(routineList)
-                    Log.d(TAG, "at pos: $pos")
+                    when (action) {
+                        ACTION_DELETE -> {
+                            try {
+                                routineList.removeAt(pos)
+                            } catch (e: ArrayIndexOutOfBoundsException) {
+                                Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
+                            }
+                            routineAdapter.submitList(routineList)
+                        }
+                        ACTION_EDIT -> {
+                            val intent = Intent(this, CreateRoutineActivity::class.java).apply {
+                                putExtra(EXTRA_ROUTINE, routineList[pos])
+                                putExtra(EXTRA_POS, pos)
+                            }
+                            startActivityForResult(intent, REQUEST_EDIT_ROUTINE)
+                        }
+                    }
                 }
             }
         }
@@ -105,14 +145,10 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickList
     }
 
     override fun onRoutineClick(pos: Int) {
-        Log.d(TAG, "$pos")
-        //try {
-        //    routineList.removeAt(pos)
-        //} catch (e: ArrayIndexOutOfBoundsException) {}
-        //routineAdapter.submitList(routineList)
-        val intent = Intent(this, ViewRoutineActivity::class.java)
-        intent.putExtra("routine", routineList[pos])
-        intent.putExtra("pos", pos)
-        startActivityForResult(intent, 1)
+        val intent = Intent(this, ViewRoutineActivity::class.java).apply {
+            putExtra("routine", routineList[pos])
+            putExtra("pos", pos)
+        }
+        startActivityForResult(intent, REQUEST_VIEW_ROUTINE)
     }
 }

@@ -11,6 +11,8 @@ import android.view.MenuItem
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.activity_view_routine.*
 
+private const val TAG = "ViewRoutineActivity"
+
 class ViewRoutineActivity : AppCompatActivity() {
 
     private var pos: Int = 0
@@ -36,9 +38,19 @@ class ViewRoutineActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.delete_routine -> {
-                val intent = Intent()
-                intent.putExtra("delete", true)
-                intent.putExtra("pos", pos)
+                val intent = Intent().apply {
+                    putExtra(EXTRA_ACTION, ACTION_DELETE)
+                    putExtra(EXTRA_POS, pos)
+                }
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+                true
+            }
+            R.id.edit_routine -> {
+                val intent = Intent().apply {
+                    putExtra(EXTRA_ACTION, ACTION_EDIT)
+                    putExtra(EXTRA_POS, pos)
+                }
                 setResult(Activity.RESULT_OK, intent)
                 finish()
                 true
