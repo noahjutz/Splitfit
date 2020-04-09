@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.noahjutz.gymroutines.datasets.RoutineDataSource
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,9 +30,9 @@ const val REQUEST_VIEW_ROUTINE = 0
 const val REQUEST_CREATE_ROUTINE = 1
 const val REQUEST_EDIT_ROUTINE = 2
 
-class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickListener {
+class MainActivity : AppCompatActivity(), RoutineRecyclerAdapter.OnRoutineClickListener {
 
-    private lateinit var routineAdapter: RecyclerViewAdapter
+    private lateinit var routineAdapter: RoutineRecyclerAdapter
     private lateinit var routineList: ArrayList<Routine>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickList
         }
 
         button_sample_data.setOnClickListener {
-            routineList = DataSource.createDataSet()
+            routineList = RoutineDataSource.createDataSet()
             routineAdapter.submitList(routineList)
         }
     }
@@ -97,6 +98,9 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickList
                             Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
                         }
                     }
+                    if (pos != null) {
+                        onRoutineClick(pos)
+                    }
                 }
             }
             REQUEST_CREATE_ROUTINE -> {
@@ -139,7 +143,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnRoutineClickList
     private fun initRecyclerView() {
         recycler_view.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            routineAdapter = RecyclerViewAdapter(this@MainActivity)
+            routineAdapter = RoutineRecyclerAdapter(this@MainActivity)
             adapter = routineAdapter
         }
     }

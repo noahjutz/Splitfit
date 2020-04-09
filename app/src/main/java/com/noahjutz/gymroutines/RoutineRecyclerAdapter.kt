@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.models.Routine
-import kotlinx.android.synthetic.main.layout_listitem.view.*
+import kotlinx.android.synthetic.main.routine_listitem.view.*
 
-class RecyclerViewAdapter(private val onRoutineClickListener: OnRoutineClickListener) :
+class RoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: ArrayList<Routine> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RoutineViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_listitem, parent, false),
+            LayoutInflater.from(parent.context).inflate(R.layout.routine_listitem, parent, false),
             onRoutineClickListener
         )
     }

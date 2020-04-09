@@ -8,25 +8,48 @@ import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.noahjutz.gymExercises.ViewRoutineExerciseRecyclerAdapter
+import com.noahjutz.gymroutines.models.Exercise
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.activity_view_routine.*
 
 private const val TAG = "ViewRoutineActivity"
 
-class ViewRoutineActivity : AppCompatActivity() {
+class ViewRoutineActivity : AppCompatActivity(), ViewRoutineExerciseRecyclerAdapter.OnExerciseClickListener {
 
     private var pos: Int = 0
+    private lateinit var exerciseList: ArrayList<Exercise>
+    private lateinit var exerciseAdapter: ViewRoutineExerciseRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_routine)
 
+        initRecyclerView()
+
         val intent = intent
-        val routine: Routine = intent.getParcelableExtra("routine")!!
+        val routine: Routine? = intent.getParcelableExtra("routine")
         pos = intent.getIntExtra("pos", -1)
 
-        view_title.text = routine.title
-        view_content.text = routine.content
+        val gson = Gson()
+        val type = object : TypeToken<ArrayList<Exercise>>() {}.type
+        exerciseList = gson.fromJson(routine?.exercisesJson, type) ?: ArrayList()
+        exerciseAdapter.submitList(exerciseList)
+
+        view_title.text = routine?.title ?: "Error"
+        view_content.text = routine?.content ?: "Error"
+    }
+
+    private fun initRecyclerView() {
+        recycler_view_exercises.apply {
+            layoutManager = LinearLayoutManager(this@ViewRoutineActivity)
+            exerciseAdapter = ViewRoutineExerciseRecyclerAdapter(this@ViewRoutineActivity)
+            adapter = exerciseAdapter
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -57,5 +80,9 @@ class ViewRoutineActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onExerciseClick(pos: Int) {
+        Toast.makeText(this, "$pos TODO", Toast.LENGTH_SHORT).show()
     }
 }
