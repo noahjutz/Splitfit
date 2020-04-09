@@ -47,10 +47,10 @@ class MainActivity : AppCompatActivity(), RoutineRecyclerAdapter.OnRoutineClickL
             startActivityForResult(intent, REQUEST_CREATE_ROUTINE)
         }
 
-        button_sample_data.setOnClickListener {
-            routineList = RoutineDataSource.createDataSet()
-            routineAdapter.submitList(routineList)
-        }
+        //button_sample_data.setOnClickListener {
+        //    routineList = RoutineDataSource.createDataSet()
+        //    routineAdapter.submitList(routineList)
+        //}
     }
 
     override fun onPause() {

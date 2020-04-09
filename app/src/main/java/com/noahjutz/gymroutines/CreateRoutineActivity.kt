@@ -77,8 +77,9 @@ class CreateRoutineActivity : AppCompatActivity(),
             REQUEST_EXERCISE -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val exercise = data?.getParcelableExtra<Exercise>("EXERCISE")
-                    Toast.makeText(this, "Exercise result: ${exercise!!.name}", Toast.LENGTH_SHORT).show()
-                    exerciseList.add(exercise)
+                    if (exercise != null) {
+                        exerciseList.add(exercise)
+                    }
                     exerciseAdapter.submitList(exerciseList)
                 }
             }

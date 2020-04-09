@@ -1,8 +1,6 @@
 package com.noahjutz.gymExercises
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
@@ -41,16 +39,27 @@ class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseCli
         itemView: View,
         private val onExerciseClickListener: OnExerciseClickListener
     ) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        private val ExerciseTitle: TextView = itemView.title
+        RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener {
+        private val exerciseTitle: TextView = itemView.title
 
         fun bind(Exercise: Exercise) {
             itemView.setOnClickListener(this)
-            ExerciseTitle.text = Exercise.name
+            exerciseTitle.text = Exercise.name
+            itemView.setOnCreateContextMenuListener(this)
         }
 
         override fun onClick(v: View?) {
             onExerciseClickListener.onExerciseClick(adapterPosition)
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            menu?.setHeaderTitle(exerciseTitle.text.toString())
+            menu?.add(this.adapterPosition, 420, 0, "Delete")
+            menu?.add(this.adapterPosition, 421, 0, "Edit")
         }
     }
 

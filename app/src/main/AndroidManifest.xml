@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewExercisesActivity" android:label="Exercises" />
+        <activity android:name=".CreateExerciseActivity"
+            android:label="Create Exercise"/>
+        <activity
+            android:name=".ViewExercisesActivity"
+            android:label="Exercises" />
         <activity
             android:name=".ViewRoutineActivity"
             android:parentActivityName=".MainActivity" />
