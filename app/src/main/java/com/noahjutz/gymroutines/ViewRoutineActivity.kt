@@ -19,15 +19,17 @@ import kotlinx.android.synthetic.main.activity_view_routine.*
 
 private const val TAG = "ViewRoutineActivity"
 
+const val EXTRA_EXERCISE_TO_VIEW = "com.noahjutz.gymroutines.EXERCISE_TO_VIEW"
+
 class ViewRoutineActivity : AppCompatActivity(),
     ViewRoutineExerciseRecyclerAdapter.OnExerciseClickListener {
-
     private var pos: Int = 0
 
     // private lateinit var exerciseList: ArrayList<Exercise>
     private lateinit var exerciseAdapter: ViewRoutineExerciseRecyclerAdapter
     private lateinit var exerciseIdList: ArrayList<Int>
     private lateinit var allExercisesList: ArrayList<Exercise>
+    private lateinit var listToSubmit: ArrayList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,7 @@ class ViewRoutineActivity : AppCompatActivity(),
     }
 
     private fun submitList(idList: ArrayList<Int>) {
-        val listToSubmit = ArrayList<Exercise>()
+        listToSubmit = ArrayList<Exercise>()
         loadExercisesSharedPrefs()
         for (id: Int in idList) {
             for (e: Exercise in allExercisesList) {
@@ -69,6 +71,17 @@ class ViewRoutineActivity : AppCompatActivity(),
             }
         }
         exerciseAdapter.submitList(listToSubmit)
+    }
+
+    private fun findExerciseById(idToFind: Int): ArrayList<Exercise> {
+        val listToReturn = ArrayList<Exercise>()
+        loadExercisesSharedPrefs()
+        for (e: Exercise in allExercisesList) {
+            if (e.id == idToFind) {
+                listToReturn.add(e)
+            }
+        }
+        return listToReturn
     }
 
     private fun loadExercisesSharedPrefs() {
@@ -119,6 +132,11 @@ class ViewRoutineActivity : AppCompatActivity(),
     }
 
     override fun onExerciseClick(pos: Int) {
-        Toast.makeText(this, "$pos TODO", Toast.LENGTH_SHORT).show()
+        intent = Intent(this, ViewExerciseActivity::class.java).apply {
+            putExtra(
+                EXTRA_EXERCISE_TO_VIEW, listToSubmit[pos]
+            )
+        }
+        startActivity(intent)
     }
 }

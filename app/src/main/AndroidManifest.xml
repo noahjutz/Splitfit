@@ -9,15 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateExerciseActivity"
-            android:label="Create Exercise"/>
+        <activity android:name=".ViewExerciseActivity"
+            android:label="View Exercise"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".CreateExerciseActivity"
+            android:label="Create Exercise" />
         <activity
             android:name=".ViewExercisesActivity"
             android:label="Exercises" />
         <activity
             android:name=".ViewRoutineActivity"
+            android:label="View Routine"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".CreateRoutineActivity" />
+        <activity
+            android:name=".CreateRoutineActivity"
+            android:label="Create/Edit Routine"
+            android:parentActivityName=".ViewRoutineActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
