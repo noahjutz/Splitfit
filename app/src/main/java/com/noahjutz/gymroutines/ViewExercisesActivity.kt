@@ -39,6 +39,8 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
 
         initRecyclerView()
         loadData()
+        Log.d(TAG, "List: $exerciseList")
+        Log.d(TAG, "Show: $exerciseListToShow")
     }
 
     override fun onPause() {
@@ -119,14 +121,14 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         return when (item.itemId) {
             421 -> { // Edit
                 intent = Intent(this, CreateExerciseActivity::class.java).apply {
-                    putExtra(EXTRA_EXERCISE, exerciseList[item.groupId])
+                    putExtra(EXTRA_EXERCISE, exerciseListToShow[item.groupId])
                     putExtra(EXTRA_POS, item.groupId)
                 }
                 startActivityForResult(intent, REQUEST_EDIT_EXERCISE)
                 true
             }
             420 -> { // Delete
-                exerciseList[item.groupId].hidden = true
+                exerciseListToShow[item.groupId].hidden = true
                 submitList()
                 true
             }
@@ -148,7 +150,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
 
     override fun onExerciseClick(pos: Int) {
         val intent = Intent().apply {
-            putExtra(EXTRA_EXERCISE_ID, exerciseList[pos].id)
+            putExtra(EXTRA_EXERCISE_ID, exerciseListToShow[pos].id)
         }
         setResult(Activity.RESULT_OK, intent)
         finish()

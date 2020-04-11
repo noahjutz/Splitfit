@@ -50,7 +50,6 @@ class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseCli
             itemView.setOnClickListener(this)
             itemView.title.text = exercise.name
             itemView.exercise_id.text = exercise.id.toString()
-            Log.d(TAG, "ID: ${exercise.id}, Exercise: $exercise")
             itemView.setOnCreateContextMenuListener(this)
         }
 
