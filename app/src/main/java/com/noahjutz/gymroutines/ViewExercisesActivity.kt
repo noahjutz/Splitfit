@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AdapterView
@@ -59,7 +60,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         val gson = Gson()
         val type = object : TypeToken<ArrayList<Exercise>>() {}.type
         exerciseList = gson.fromJson(exerciseListJson, type)
-        submitList(exerciseList)
+        submitList()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,7 +88,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                     val exercise = data?.getParcelableExtra<Exercise>(EXTRA_EXERCISE)
                     if (exercise != null) {
                         exerciseList.add(exercise)
-                        submitList(exerciseList)
+                        submitList()
                     }
 
                 }
@@ -98,7 +99,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                     val pos = data?.getIntExtra(EXTRA_POS, -1)
                     if (exercise != null && pos != null) {
                         exerciseList[pos] = exercise
-                        submitList(exerciseList)
+                        submitList()
                     }
                 }
             }
@@ -126,15 +127,15 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
             }
             420 -> { // Delete
                 exerciseList[item.groupId].hidden = true
-                submitList(exerciseList)
+                submitList()
                 true
             }
             else -> super.onContextItemSelected(item)
         }
     }
 
-    private fun submitList(exerciseList: java.util.ArrayList<Exercise>) {
-        exerciseListToShow = exerciseList
+    private fun submitList() {
+        exerciseListToShow = ArrayList(exerciseList)
         val iterator = exerciseListToShow.iterator()
         while (iterator.hasNext()) {
             val item = iterator.next()
