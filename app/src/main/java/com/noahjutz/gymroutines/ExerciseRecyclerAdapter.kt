@@ -57,7 +57,6 @@ class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseCli
             v: View?,
             menuInfo: ContextMenu.ContextMenuInfo?
         ) {
-            menu?.setHeaderTitle(exerciseTitle.text.toString())
             menu?.add(this.adapterPosition, 420, 0, "Delete")
             menu?.add(this.adapterPosition, 421, 0, "Edit")
         }

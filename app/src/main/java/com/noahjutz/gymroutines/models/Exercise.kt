@@ -4,12 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Exercise(
-    val name: String
+    val name: String,
+    var hidden: Boolean = false
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString()
-    ) {
-    }
+    ) {}
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)

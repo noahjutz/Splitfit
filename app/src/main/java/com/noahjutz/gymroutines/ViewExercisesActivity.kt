@@ -31,6 +31,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
 
     private lateinit var exerciseAdapter: ExerciseRecyclerAdapter
     private lateinit var exerciseList: ArrayList<Exercise>
+    private lateinit var exerciseListToShow: ArrayList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +60,13 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         val gson = Gson()
         val type = object : TypeToken<ArrayList<Exercise>>() {}.type
         exerciseList = gson.fromJson(exerciseListJson, type)
-        exerciseAdapter.submitList(exerciseList)
+        exerciseListToShow = exerciseList
+        for (e: Exercise in exerciseList) {
+            if (e.hidden) {
+                exerciseListToShow.remove(e)
+            }
+        }
+        exerciseAdapter.submitList(exerciseListToShow)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -87,7 +94,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                     val exercise = data?.getParcelableExtra<Exercise>(EXTRA_EXERCISE)
                     if (exercise != null) {
                         exerciseList.add(exercise)
-                        exerciseAdapter.submitList(exerciseList)
+                        exerciseAdapter.submitList(exerciseListToShow)
                     }
 
                 }
@@ -98,7 +105,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                     val pos = data?.getIntExtra(EXTRA_POS, -1)
                     if (exercise != null && pos != null) {
                         exerciseList[pos] = exercise
-                        exerciseAdapter.submitList(exerciseList)
+                        exerciseAdapter.submitList(exerciseListToShow)
                     }
                 }
             }
@@ -127,8 +134,14 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
             }
             420 -> { // Delete
                 Toast.makeText(this, "delete, ${item.groupId}", Toast.LENGTH_SHORT).show()
-                exerciseList.removeAt(item.groupId)
-                exerciseAdapter.submitList(exerciseList)
+                exerciseList[item.groupId].hidden = true
+                exerciseListToShow = exerciseList
+                for (e: Exercise in exerciseList) {
+                    if (e.hidden) {
+                        exerciseListToShow.remove(e)
+                    }
+                }
+                exerciseAdapter.submitList(exerciseListToShow)
                 true
             }
             else -> super.onContextItemSelected(item)
