@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,24 +23,26 @@ class CreateRoutineActivity : AppCompatActivity(),
     CreateRoutineExerciseRecyclerAdapter.OnExerciseClickListener {
 
     private lateinit var exerciseAdapter: CreateRoutineExerciseRecyclerAdapter
-    private lateinit var exerciseList: ArrayList<Exercise>
+    private lateinit var allExercisesList: ArrayList<Exercise>
+    private lateinit var exerciseIdList: ArrayList<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_routine)
 
         initRecyclerView()
-        exerciseList = ArrayList()
+        exerciseIdList = ArrayList()
+        loadExercisesSharedPrefs() // init allExercisesList
 
         val pos = intent.getIntExtra(EXTRA_POS, -1)
         val routine: Routine? = intent.getParcelableExtra(EXTRA_ROUTINE)
         if (routine != null) {
-            edit_title.setText(routine?.title ?: "Error")
-            edit_content.setText(routine?.content ?: "Error")
+            edit_title.setText(routine.title)
+            edit_content.setText(routine.content)
             val gson = Gson()
-            val type = object : TypeToken<ArrayList<Exercise>>(){}.type
-            exerciseList = gson.fromJson(routine?.exercisesJson, type) ?: ArrayList()
-            exerciseAdapter.submitList(exerciseList)
+            val type = object : TypeToken<ArrayList<Int>>() {}.type
+            exerciseIdList = gson.fromJson(routine.exercisesJson, type) ?: ArrayList()
+            submitList(exerciseIdList)
         }
 
         button_add_exercise.setOnClickListener {
@@ -51,7 +54,7 @@ class CreateRoutineActivity : AppCompatActivity(),
             val title = edit_title.text.toString()
             val content = edit_content.text.toString()
             val gson = Gson()
-            val exercisesJson = gson.toJson(exerciseList)
+            val exercisesJson = gson.toJson(exerciseIdList)
             if (title != "") {
                 val intent = Intent().apply {
                     putExtra(EXTRA_ROUTINE, Routine(title, content, exercisesJson))
@@ -76,23 +79,45 @@ class CreateRoutineActivity : AppCompatActivity(),
         when (requestCode) {
             REQUEST_EXERCISE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val exercise = data?.getParcelableExtra<Exercise>("EXERCISE")
-                    if (exercise != null) {
-                        exerciseList.add(exercise)
+                    val id = data?.getIntExtra(EXTRA_EXERCISE_ID, -1)
+                    if (id != null) {
+                        exerciseIdList.add(id)
                     }
-                    exerciseAdapter.submitList(exerciseList)
                 }
+                submitList(exerciseIdList)
             }
         }
     }
 
+    private fun loadExercisesSharedPrefs() {
+        val sharedPrefs = getSharedPreferences(SHARED_PREFS_EXERCISES, Context.MODE_PRIVATE)
+        val exerciseListJson = sharedPrefs.getString(SAVED_EXERCISES_PREFS, "[]")
+        val gson = Gson()
+        val type = object : TypeToken<ArrayList<Exercise>>() {}.type
+        val exerciseList: ArrayList<Exercise> = gson.fromJson(exerciseListJson, type)
+        allExercisesList = exerciseList
+    }
+
+    private fun submitList(idList: ArrayList<Int>) {
+        val listToSubmit = ArrayList<Exercise>()
+        loadExercisesSharedPrefs()
+        for (id: Int in idList) {
+            for (e: Exercise in allExercisesList) {
+                if (e.id == id) {
+                    listToSubmit.add(e)
+                }
+            }
+        }
+        exerciseAdapter.submitList(listToSubmit)
+    }
+
     override fun onExerciseClick(pos: Int) {
+
         try {
-            exerciseList.removeAt(pos)
-            exerciseAdapter.submitList(exerciseList)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
-            Log.d(TAG, exerciseList.toString())
+            exerciseIdList.removeAt(pos)
+            submitList(exerciseIdList)
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            Log.d(TAG, "Error: $e\nList: $exerciseIdList")
         }
     }
 }

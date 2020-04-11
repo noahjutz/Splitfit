@@ -32,12 +32,14 @@ class CreateExerciseActivity : AppCompatActivity() {
         edit_exercise_name.setText(exercise?.name ?: "")
 
         fab_save_exercise.setOnClickListener {
-            val exerciseToPass = Exercise(edit_exercise_name.text.toString(), nextId)
+            val exerciseToPass = Exercise(edit_exercise_name.text.toString(), exercise?.id ?: nextId)
             intent = Intent().apply {
                 putExtra(EXTRA_EXERCISE, exerciseToPass)
                 putExtra(EXTRA_POS, pos)
             }
-            nextId++
+            if (exercise == null) {
+                nextId++
+            }
             setResult(Activity.RESULT_OK, intent)
             finish()
         }

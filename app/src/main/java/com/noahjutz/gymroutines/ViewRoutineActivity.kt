@@ -1,14 +1,14 @@
 package com.noahjutz.gymroutines
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -19,11 +19,15 @@ import kotlinx.android.synthetic.main.activity_view_routine.*
 
 private const val TAG = "ViewRoutineActivity"
 
-class ViewRoutineActivity : AppCompatActivity(), ViewRoutineExerciseRecyclerAdapter.OnExerciseClickListener {
+class ViewRoutineActivity : AppCompatActivity(),
+    ViewRoutineExerciseRecyclerAdapter.OnExerciseClickListener {
 
     private var pos: Int = 0
-    private lateinit var exerciseList: ArrayList<Exercise>
+
+    // private lateinit var exerciseList: ArrayList<Exercise>
     private lateinit var exerciseAdapter: ViewRoutineExerciseRecyclerAdapter
+    private lateinit var exerciseIdList: ArrayList<Int>
+    private lateinit var allExercisesList: ArrayList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +39,45 @@ class ViewRoutineActivity : AppCompatActivity(), ViewRoutineExerciseRecyclerAdap
         val routine: Routine? = intent.getParcelableExtra("routine")
         pos = intent.getIntExtra("pos", -1)
 
+        val exerciseIdListJson = routine?.exercisesJson
         val gson = Gson()
-        val type = object : TypeToken<ArrayList<Exercise>>() {}.type
-        exerciseList = gson.fromJson(routine?.exercisesJson, type) ?: ArrayList()
-        exerciseAdapter.submitList(exerciseList)
+        val type = object : TypeToken<ArrayList<Int>>() {}.type
+        exerciseIdList = gson.fromJson(exerciseIdListJson, type)
+        submitList(exerciseIdList)
+
+        // val gson = Gson()
+        // val type = object : TypeToken<ArrayList<Exercise>>() {}.type
+        // exerciseList = gson.fromJson(routine?.exercisesJson, type) ?: ArrayList()
+        // exerciseAdapter.submitList(exerciseList)
+
+        exerciseIdList = ArrayList()
+        allExercisesList = ArrayList()
+        loadExercisesSharedPrefs()
 
         view_title.text = routine?.title ?: "Error"
         view_content.text = routine?.content ?: "Error"
+    }
+
+    private fun submitList(idList: ArrayList<Int>) {
+        val listToSubmit = ArrayList<Exercise>()
+        loadExercisesSharedPrefs()
+        for (id: Int in idList) {
+            for (e: Exercise in allExercisesList) {
+                if (e.id == id) {
+                    listToSubmit.add(e)
+                }
+            }
+        }
+        exerciseAdapter.submitList(listToSubmit)
+    }
+
+    private fun loadExercisesSharedPrefs() {
+        val sharedPrefs = getSharedPreferences(SHARED_PREFS_EXERCISES, Context.MODE_PRIVATE)
+        val exerciseListJson = sharedPrefs.getString(SAVED_EXERCISES_PREFS, "[]")
+        val gson = Gson()
+        val type = object : TypeToken<ArrayList<Exercise>>() {}.type
+        val exerciseList: ArrayList<Exercise> = gson.fromJson(exerciseListJson, type)
+        allExercisesList = exerciseList
     }
 
     private fun initRecyclerView() {

@@ -4,31 +4,27 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.noahjutz.gymExercises.ExerciseRecyclerAdapter
 import com.noahjutz.gymroutines.models.Exercise
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_view_exercises.*
 
 private const val TAG = "ViewExerciseActivity"
 
-private const val SHARED_PREFS = "com.noahjutz.gymroutines.VIEW_EXERCISE_ACTIVITY_PREFS"
-private const val SAVED_EXERCISES = "com.noahjutz.gymroutines.SAVED_EXERCISES"
+const val SHARED_PREFS_EXERCISES = "com.noahjutz.gymroutines.VIEW_EXERCISE_ACTIVITY_PREFS"
+const val SAVED_EXERCISES_PREFS = "com.noahjutz.gymroutines.SAVED_EXERCISES"
 
 private const val REQUEST_CREATE_EXERCISE = 0
 private const val REQUEST_EDIT_EXERCISE = 1
 
 const val EXTRA_EXERCISE = "com.noahjutz.gymroutines.EXERCISE"
+const val EXTRA_EXERCISE_ID = "com.noahjutz.gymroutines.EXERCISE_ID"
 
 class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExerciseClickListener {
 
@@ -50,16 +46,16 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
     }
 
     private fun saveData() {
-        val sharedPrefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
+        val sharedPrefs = getSharedPreferences(SHARED_PREFS_EXERCISES, Context.MODE_PRIVATE)
         val editor = sharedPrefs.edit().apply {
-            putString(SAVED_EXERCISES, Gson().toJson(exerciseList))
+            putString(SAVED_EXERCISES_PREFS, Gson().toJson(exerciseList))
         }
         editor.apply()
     }
 
     private fun loadData() {
-        val sharedPrefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
-        val exerciseListJson = sharedPrefs.getString(SAVED_EXERCISES, "[]")
+        val sharedPrefs = getSharedPreferences(SHARED_PREFS_EXERCISES, Context.MODE_PRIVATE)
+        val exerciseListJson = sharedPrefs.getString(SAVED_EXERCISES_PREFS, "[]")
         val gson = Gson()
         val type = object : TypeToken<ArrayList<Exercise>>() {}.type
         exerciseList = gson.fromJson(exerciseListJson, type)
@@ -151,7 +147,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
 
     override fun onExerciseClick(pos: Int) {
         val intent = Intent().apply {
-            putExtra("EXERCISE", exerciseList[pos])
+            putExtra(EXTRA_EXERCISE_ID, exerciseList[pos].id)
         }
         setResult(Activity.RESULT_OK, intent)
         finish()
