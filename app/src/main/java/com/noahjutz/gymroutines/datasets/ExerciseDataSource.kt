@@ -8,33 +8,39 @@ class ExerciseDataSource {
             val list = ArrayList<Exercise>()
             list.add(
                 Exercise(
-                    "Jumping Jacks"
+                    "Jumping Jacks",
+                    123123
                 )
             )
 
             list.add(
                 Exercise(
-                    "Lunges"
+                    "Lunges",
+                    123123
                 )
             )
             list.add(
                 Exercise(
-                    "Push Ups"
+                    "Push Ups",
+                    123123
                 )
             )
             list.add(
                 Exercise(
-                    "Decline Push Ups"
+                    "Decline Push Ups",
+                    123123
                 )
             )
             list.add(
                 Exercise(
-                    "Squats"
+                    "Squats",
+                    123123
                 )
             )
             list.add(
                 Exercise(
-                    "Leg Press"
+                    "Leg Press",
+                    123123
                 )
             )
             return list

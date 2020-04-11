@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
@@ -18,6 +19,8 @@ import com.noahjutz.gymExercises.ExerciseRecyclerAdapter
 import com.noahjutz.gymroutines.models.Exercise
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_view_exercises.*
+
+private const val TAG = "ViewExerciseActivity"
 
 private const val SHARED_PREFS = "com.noahjutz.gymroutines.VIEW_EXERCISE_ACTIVITY_PREFS"
 private const val SAVED_EXERCISES = "com.noahjutz.gymroutines.SAVED_EXERCISES"
@@ -60,13 +63,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         val gson = Gson()
         val type = object : TypeToken<ArrayList<Exercise>>() {}.type
         exerciseList = gson.fromJson(exerciseListJson, type)
-        exerciseListToShow = exerciseList
-        for (e: Exercise in exerciseList) {
-            if (e.hidden) {
-                exerciseListToShow.remove(e)
-            }
-        }
-        exerciseAdapter.submitList(exerciseListToShow)
+        submitList(exerciseList)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -94,7 +91,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                     val exercise = data?.getParcelableExtra<Exercise>(EXTRA_EXERCISE)
                     if (exercise != null) {
                         exerciseList.add(exercise)
-                        exerciseAdapter.submitList(exerciseListToShow)
+                        submitList(exerciseList)
                     }
 
                 }
@@ -105,7 +102,7 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                     val pos = data?.getIntExtra(EXTRA_POS, -1)
                     if (exercise != null && pos != null) {
                         exerciseList[pos] = exercise
-                        exerciseAdapter.submitList(exerciseListToShow)
+                        submitList(exerciseList)
                     }
                 }
             }
@@ -124,7 +121,6 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         val info = item.menuInfo as? AdapterView.AdapterContextMenuInfo
         return when (item.itemId) {
             421 -> { // Edit
-                Toast.makeText(this, "edit, ${item.groupId}", Toast.LENGTH_SHORT).show()
                 intent = Intent(this, CreateExerciseActivity::class.java).apply {
                     putExtra(EXTRA_EXERCISE, exerciseList[item.groupId])
                     putExtra(EXTRA_POS, item.groupId)
@@ -133,19 +129,24 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                 true
             }
             420 -> { // Delete
-                Toast.makeText(this, "delete, ${item.groupId}", Toast.LENGTH_SHORT).show()
                 exerciseList[item.groupId].hidden = true
-                exerciseListToShow = exerciseList
-                for (e: Exercise in exerciseList) {
-                    if (e.hidden) {
-                        exerciseListToShow.remove(e)
-                    }
-                }
-                exerciseAdapter.submitList(exerciseListToShow)
+                submitList(exerciseList)
                 true
             }
             else -> super.onContextItemSelected(item)
         }
+    }
+
+    private fun submitList(exerciseList: java.util.ArrayList<Exercise>) {
+        exerciseListToShow = exerciseList
+        val iterator = exerciseListToShow.iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.hidden) {
+                iterator.remove()
+            }
+        }
+        exerciseAdapter.submitList(exerciseListToShow)
     }
 
     override fun onExerciseClick(pos: Int) {

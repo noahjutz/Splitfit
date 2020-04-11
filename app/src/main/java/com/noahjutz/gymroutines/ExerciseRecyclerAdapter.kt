@@ -1,11 +1,16 @@
 package com.noahjutz.gymExercises
 
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
+import kotlinx.android.synthetic.main.exercise_listitem.view.*
 import kotlinx.android.synthetic.main.routine_listitem.view.*
+import kotlinx.android.synthetic.main.routine_listitem.view.title
+
+private const val TAG = "ExerciseRecyclerAdapter"
 
 class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -40,11 +45,12 @@ class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseCli
         private val onExerciseClickListener: OnExerciseClickListener
     ) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener {
-        private val exerciseTitle: TextView = itemView.title
 
-        fun bind(Exercise: Exercise) {
+        fun bind(exercise: Exercise) {
             itemView.setOnClickListener(this)
-            exerciseTitle.text = Exercise.name
+            itemView.title.text = exercise.name
+            itemView.exercise_id.text = exercise.id.toString()
+            Log.d(TAG, "ID: ${exercise.id}, Exercise: $exercise")
             itemView.setOnCreateContextMenuListener(this)
         }
 

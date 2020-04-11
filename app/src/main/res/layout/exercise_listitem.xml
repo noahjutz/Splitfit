@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
+    android:orientation="vertical"
     android:id="@+id/parent_layout">
 
     <TextView
@@ -11,6 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        tools:text="Hello World" />
+        tools:text="Lunge" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/exercise_id"
+        tools:text="0" />
 
 </LinearLayout>
