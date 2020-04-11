@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -121,24 +123,47 @@ class MainActivity : AppCompatActivity(), RoutineRecyclerAdapter.OnRoutineClickL
 
                     when (action) {
                         ACTION_DELETE -> {
-                            try {
-                                routineList.removeAt(pos)
-                            } catch (e: ArrayIndexOutOfBoundsException) {
-                                Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
-                            }
-                            routineAdapter.submitList(routineList)
+                            deleteRoutine(pos)
                         }
                         ACTION_EDIT -> {
-                            val intent = Intent(this, CreateRoutineActivity::class.java).apply {
-                                putExtra(EXTRA_ROUTINE, routineList[pos])
-                                putExtra(EXTRA_POS, pos)
-                            }
-                            startActivityForResult(intent, REQUEST_EDIT_ROUTINE)
+                            editRoutine(pos)
                         }
                     }
                 }
             }
         }
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val info = item.menuInfo as? AdapterView.AdapterContextMenuInfo
+        return when (item.itemId) {
+            1420 -> { // Delete
+                deleteRoutine(item.groupId)
+                true
+            }
+            1421 -> { // Edit
+                editRoutine(item.groupId)
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
+    private fun deleteRoutine(pos: Int) {
+        try {
+            routineList.removeAt(pos)
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
+        }
+        routineAdapter.submitList(routineList)
+    }
+
+    private fun editRoutine(pos: Int) {
+        val intent = Intent(this, CreateRoutineActivity::class.java).apply {
+            putExtra(EXTRA_ROUTINE, routineList[pos])
+            putExtra(EXTRA_POS, pos)
+        }
+        startActivityForResult(intent, REQUEST_EDIT_ROUTINE)
     }
 
     private fun initRecyclerView() {

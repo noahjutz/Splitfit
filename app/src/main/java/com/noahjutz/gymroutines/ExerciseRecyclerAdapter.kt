@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
 import kotlinx.android.synthetic.main.exercise_listitem.view.*

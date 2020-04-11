@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines
 
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,7 @@ class RoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickL
         itemView: View,
         private val onRoutineClickListener: OnRoutineClickListener
     ) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener {
         private val routineTitle: TextView = itemView.title
         private val routineContent: TextView = itemView.content
 
@@ -48,10 +49,20 @@ class RoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickL
             itemView.setOnClickListener(this)
             routineTitle.text = routine.title
             routineContent.text = routine.content
+            itemView.setOnCreateContextMenuListener(this)
         }
 
         override fun onClick(v: View?) {
             onRoutineClickListener.onRoutineClick(adapterPosition)
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            menu?.add(this.adapterPosition, 1420, 0, "Delete")
+            menu?.add(this.adapterPosition, 1421, 0, "Edit")
         }
     }
 
