@@ -6,7 +6,7 @@ import android.os.Parcelable
 data class Routine(
     val title: String,
     val content: String,
-    val exercisesJson: String
+    val exerciseRefsJson: String
 ) : Parcelable {
     constructor(parcel: Parcel) : this (
         parcel.readString().toString(),
@@ -18,7 +18,7 @@ data class Routine(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeString(content)
-        parcel.writeString(exercisesJson)
+        parcel.writeString(exerciseRefsJson)
     }
 
     override fun describeContents(): Int {

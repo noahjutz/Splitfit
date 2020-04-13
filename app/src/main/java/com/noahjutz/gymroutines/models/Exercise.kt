@@ -11,7 +11,7 @@ class Exercise(
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readInt()
-    ) {}
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)

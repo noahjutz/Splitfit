@@ -6,15 +6,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.noahjutz.gymExercises.CreateRoutineExerciseRecyclerAdapter
 import com.noahjutz.gymroutines.models.Exercise
+import com.noahjutz.gymroutines.models.ExerciseReference
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.activity_create_routine.*
-import java.lang.Exception
 
 private const val TAG = "CreateRoutineActivity"
 private const val REQUEST_EXERCISE = 0
@@ -24,14 +23,17 @@ class CreateRoutineActivity : AppCompatActivity(),
 
     private lateinit var exerciseAdapter: CreateRoutineExerciseRecyclerAdapter
     private lateinit var allExercisesList: ArrayList<Exercise>
-    private lateinit var exerciseIdList: ArrayList<Int>
+
+    // private lateinit var exerciseIdList: ArrayList<Int>
+    private lateinit var exerciseRefList: ArrayList<ExerciseReference>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_routine)
 
         initRecyclerView()
-        exerciseIdList = ArrayList()
+        // exerciseIdList = ArrayList()
+        exerciseRefList = ArrayList()
         loadExercisesSharedPrefs() // init allExercisesList
 
         val pos = intent.getIntExtra(EXTRA_POS, -1)
@@ -40,9 +42,11 @@ class CreateRoutineActivity : AppCompatActivity(),
             edit_title.setText(routine.title)
             edit_content.setText(routine.content)
             val gson = Gson()
-            val type = object : TypeToken<ArrayList<Int>>() {}.type
-            exerciseIdList = gson.fromJson(routine.exercisesJson, type) ?: ArrayList()
-            submitList(exerciseIdList)
+            val type = object : TypeToken<ArrayList<ExerciseReference>>() {}.type
+            // exerciseIdList = gson.fromJson(routine.exerciseRefsJson, type) ?: ArrayList()
+            // submitList(exerciseIdList)
+            exerciseRefList = gson.fromJson(routine.exerciseRefsJson, type) ?: ArrayList()
+            submitList(exerciseRefList)
         }
 
         button_add_exercise.setOnClickListener {
@@ -54,10 +58,11 @@ class CreateRoutineActivity : AppCompatActivity(),
             val title = edit_title.text.toString()
             val content = edit_content.text.toString()
             val gson = Gson()
-            val exercisesJson = gson.toJson(exerciseIdList)
+            // val exercisesJson = gson.toJson(exerciseIdList)
+            val exerciseRefsJson = gson.toJson(exerciseRefList)
             if (title != "") {
                 val intent = Intent().apply {
-                    putExtra(EXTRA_ROUTINE, Routine(title, content, exercisesJson))
+                    putExtra(EXTRA_ROUTINE, Routine(title, content, exerciseRefsJson))
                     putExtra(EXTRA_POS, pos)
                 }
                 setResult(Activity.RESULT_OK, intent)
@@ -81,10 +86,11 @@ class CreateRoutineActivity : AppCompatActivity(),
                 if (resultCode == Activity.RESULT_OK) {
                     val id = data?.getIntExtra(EXTRA_EXERCISE_ID, -1)
                     if (id != null) {
-                        exerciseIdList.add(id)
+                        //exerciseIdList.add(id)
+                        exerciseRefList.add(ExerciseReference("[]", id))
                     }
                 }
-                submitList(exerciseIdList)
+                submitList(exerciseRefList)
             }
         }
     }
@@ -98,26 +104,21 @@ class CreateRoutineActivity : AppCompatActivity(),
         allExercisesList = exerciseList
     }
 
-    private fun submitList(idList: ArrayList<Int>) {
-        val listToSubmit = ArrayList<Exercise>()
+    private fun submitList(refList: ArrayList<ExerciseReference>) {
+        val listToSubmit = ArrayList<ExerciseReference>()
         loadExercisesSharedPrefs()
-        for (id: Int in idList) {
-            for (e: Exercise in allExercisesList) {
-                if (e.id == id) {
-                    listToSubmit.add(e)
-                }
-            }
+        for (ref: ExerciseReference in refList) {
+            listToSubmit.add(ExerciseReference("[]", ref.idToRef))
         }
-        exerciseAdapter.submitList(listToSubmit)
+        exerciseAdapter.submitList(listToSubmit, allExercisesList)
     }
 
     override fun onExerciseClick(pos: Int) {
-
         try {
-            exerciseIdList.removeAt(pos)
-            submitList(exerciseIdList)
+            exerciseRefList.removeAt(pos)
+            submitList(exerciseRefList)
         } catch (e: ArrayIndexOutOfBoundsException) {
-            Log.d(TAG, "Error: $e\nList: $exerciseIdList")
+            Log.d(TAG, "Error: $e\nList: $exerciseRefList")
         }
     }
 }

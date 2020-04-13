@@ -7,16 +7,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
+import com.noahjutz.gymroutines.models.ExerciseReference
+import kotlinx.android.synthetic.main.exercise_listitem.view.*
 import kotlinx.android.synthetic.main.routine_listitem.view.*
+import kotlinx.android.synthetic.main.routine_listitem.view.title
 
 class CreateRoutineExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var items: ArrayList<Exercise> = ArrayList()
+    private var realItems: ArrayList<Exercise> = ArrayList()
+    private var items: ArrayList<ExerciseReference> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ExerciseViewHolder(
+        return ExerciseRefViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.exercise_listitem, parent, false),
-            onExerciseClickListener
+            onExerciseClickListener,
+            realItems
         )
     }
 
@@ -26,27 +31,34 @@ class CreateRoutineExerciseRecyclerAdapter(private val onExerciseClickListener: 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ExerciseViewHolder -> {
+            is ExerciseRefViewHolder -> {
                 holder.bind(items[position])
             }
         }
     }
 
-    fun submitList(list: ArrayList<Exercise>) {
+    fun submitList(list: ArrayList<ExerciseReference>, listE: ArrayList<Exercise>) {
         items = list
+        realItems = listE
         notifyDataSetChanged()
     }
 
-    class ExerciseViewHolder(
+    class ExerciseRefViewHolder(
         itemView: View,
-        private val onExerciseClickListener: OnExerciseClickListener
+        private val onExerciseClickListener: OnExerciseClickListener,
+        private val realItems: ArrayList<Exercise>
     ) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        private val ExerciseTitle: TextView = itemView.title
+        private val exerciseTitle: TextView = itemView.title
 
-        fun bind(Exercise: Exercise) {
+        fun bind(exerciseRef: ExerciseReference) {
             itemView.setOnClickListener(this)
-            ExerciseTitle.text = Exercise.name
+            for (e: Exercise in realItems) {
+                if (e.id == exerciseRef.idToRef) {
+                    exerciseTitle.text = e.name
+                }
+            }
+            itemView.sets.text = exerciseRef.setsJson
         }
 
         override fun onClick(v: View?) {

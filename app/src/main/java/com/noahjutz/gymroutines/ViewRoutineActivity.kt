@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.noahjutz.gymExercises.ViewRoutineExerciseRecyclerAdapter
 import com.noahjutz.gymroutines.models.Exercise
+import com.noahjutz.gymroutines.models.ExerciseReference
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.activity_view_routine.*
 
@@ -25,34 +25,39 @@ class ViewRoutineActivity : AppCompatActivity(),
     ViewRoutineExerciseRecyclerAdapter.OnExerciseClickListener {
     private var pos: Int = 0
 
-    // private lateinit var exerciseList: ArrayList<Exercise>
     private lateinit var exerciseAdapter: ViewRoutineExerciseRecyclerAdapter
-    private lateinit var exerciseIdList: ArrayList<Int>
+    // private lateinit var exerciseIdList: ArrayList<Int>
+    private lateinit var exerciseRefList: ArrayList<ExerciseReference>
     private lateinit var allExercisesList: ArrayList<Exercise>
-    private lateinit var listToSubmit: ArrayList<Exercise>
+    private lateinit var listToSubmit: ArrayList<ExerciseReference>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_routine)
 
         initRecyclerView()
+        exerciseRefList = ArrayList()
 
         val intent = intent
         val routine: Routine? = intent.getParcelableExtra("routine")
         pos = intent.getIntExtra("pos", -1)
 
-        val exerciseIdListJson = routine?.exercisesJson
+        // val exerciseIdListJson = routine?.exerciseRefsJson
+        // val gson = Gson()
+        // val type = object : TypeToken<ArrayList<Int>>() {}.type
+        // exerciseIdList = gson.fromJson(exerciseIdListJson, type)
+        // submitList(exerciseIdList)
+
+        val exerciseRefListJson = routine?.exerciseRefsJson
         val gson = Gson()
-        val type = object : TypeToken<ArrayList<Int>>() {}.type
-        exerciseIdList = gson.fromJson(exerciseIdListJson, type)
-        submitList(exerciseIdList)
+        val type = object : TypeToken<ArrayList<ExerciseReference>>() {}.type
+        exerciseRefList = gson.fromJson(exerciseRefListJson, type) ?: ArrayList()
+        submitList(exerciseRefList)
 
         // val gson = Gson()
         // val type = object : TypeToken<ArrayList<Exercise>>() {}.type
         // exerciseList = gson.fromJson(routine?.exercisesJson, type) ?: ArrayList()
         // exerciseAdapter.submitList(exerciseList)
-
-        exerciseIdList = ArrayList()
         allExercisesList = ArrayList()
         loadExercisesSharedPrefs()
 
@@ -60,28 +65,13 @@ class ViewRoutineActivity : AppCompatActivity(),
         view_content.text = routine?.content ?: "Error"
     }
 
-    private fun submitList(idList: ArrayList<Int>) {
-        listToSubmit = ArrayList<Exercise>()
+    private fun submitList(refList: ArrayList<ExerciseReference>) {
+        listToSubmit = ArrayList<ExerciseReference>()
         loadExercisesSharedPrefs()
-        for (id: Int in idList) {
-            for (e: Exercise in allExercisesList) {
-                if (e.id == id) {
-                    listToSubmit.add(e)
-                }
-            }
+        for (ref: ExerciseReference in refList) {
+            listToSubmit.add(ExerciseReference("[]", ref.idToRef))
         }
-        exerciseAdapter.submitList(listToSubmit)
-    }
-
-    private fun findExerciseById(idToFind: Int): ArrayList<Exercise> {
-        val listToReturn = ArrayList<Exercise>()
-        loadExercisesSharedPrefs()
-        for (e: Exercise in allExercisesList) {
-            if (e.id == idToFind) {
-                listToReturn.add(e)
-            }
-        }
-        return listToReturn
+        exerciseAdapter.submitList(listToSubmit, allExercisesList)
     }
 
     private fun loadExercisesSharedPrefs() {
@@ -132,9 +122,18 @@ class ViewRoutineActivity : AppCompatActivity(),
     }
 
     override fun onExerciseClick(pos: Int) {
+        submitList(exerciseRefList)
+        val exList = ArrayList<Exercise>()
+        for (er: ExerciseReference in listToSubmit) {
+            for (e: Exercise in allExercisesList) {
+                if (er.idToRef == e.id) {
+                    exList.add(e)
+                }
+            }
+        }
         intent = Intent(this, ViewExerciseActivity::class.java).apply {
             putExtra(
-                EXTRA_EXERCISE_TO_VIEW, listToSubmit[pos]
+                EXTRA_EXERCISE_TO_VIEW, exList[pos]
             )
         }
         startActivity(intent)
