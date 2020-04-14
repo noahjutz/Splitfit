@@ -26,10 +26,8 @@ class ViewRoutineActivity : AppCompatActivity(),
     private var pos: Int = 0
 
     private lateinit var exerciseAdapter: ViewRoutineExerciseRecyclerAdapter
-    // private lateinit var exerciseIdList: ArrayList<Int>
     private lateinit var exerciseRefList: ArrayList<ExerciseReference>
     private lateinit var allExercisesList: ArrayList<Exercise>
-    private lateinit var listToSubmit: ArrayList<ExerciseReference>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +64,8 @@ class ViewRoutineActivity : AppCompatActivity(),
     }
 
     private fun submitList(refList: ArrayList<ExerciseReference>) {
-        listToSubmit = ArrayList<ExerciseReference>()
         loadExercisesSharedPrefs()
-        for (ref: ExerciseReference in refList) {
-            listToSubmit.add(ExerciseReference("[]", ref.idToRef))
-        }
-        exerciseAdapter.submitList(listToSubmit, allExercisesList)
+        exerciseAdapter.submitList(refList, allExercisesList)
     }
 
     private fun loadExercisesSharedPrefs() {
@@ -124,7 +118,7 @@ class ViewRoutineActivity : AppCompatActivity(),
     override fun onExerciseClick(pos: Int) {
         submitList(exerciseRefList)
         val exList = ArrayList<Exercise>()
-        for (er: ExerciseReference in listToSubmit) {
+        for (er: ExerciseReference in exerciseRefList) {
             for (e: Exercise in allExercisesList) {
                 if (er.idToRef == e.id) {
                     exList.add(e)

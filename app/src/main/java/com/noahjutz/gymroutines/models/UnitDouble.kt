@@ -5,12 +5,16 @@ import android.os.Parcelable
 
 data class UnitDouble(
     override val name: String,
-    override val value: Double
+    override var value: Double
 ) : MeasureUnit, Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readDouble()
     )
+
+    override fun toString(): String {
+        return "[UnitDouble: $name, $value]"
+    }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
         dest?.writeString(name)

@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class ExerciseReference(
-    val setsJson: String,
+    var setsJson: String,
     val idToRef: Int
 ) : Parcelable {
     constructor(parcel: Parcel) : this(

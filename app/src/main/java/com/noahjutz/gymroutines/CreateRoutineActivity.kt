@@ -6,14 +6,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.noahjutz.gymExercises.CreateRoutineExerciseRecyclerAdapter
-import com.noahjutz.gymroutines.models.Exercise
-import com.noahjutz.gymroutines.models.ExerciseReference
-import com.noahjutz.gymroutines.models.Routine
+import com.noahjutz.gymroutines.models.*
+import com.noahjutz.gymroutines.models.Set
 import kotlinx.android.synthetic.main.activity_create_routine.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 private const val TAG = "CreateRoutineActivity"
 private const val REQUEST_EXERCISE = 0
@@ -105,20 +107,71 @@ class CreateRoutineActivity : AppCompatActivity(),
     }
 
     private fun submitList(refList: ArrayList<ExerciseReference>) {
-        val listToSubmit = ArrayList<ExerciseReference>()
+        //val listToSubmit = ArrayList<ExerciseReference>()
         loadExercisesSharedPrefs()
-        for (ref: ExerciseReference in refList) {
-            listToSubmit.add(ExerciseReference("[]", ref.idToRef))
+        //for (ref: ExerciseReference in refList) {
+        //    listToSubmit.add(ref)
+        //}
+        exerciseAdapter.submitList(refList, allExercisesList)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            2420 -> { // Remove
+                try {
+                    exerciseRefList.removeAt(item.groupId)
+                    submitList(exerciseRefList)
+                } catch (e: ArrayIndexOutOfBoundsException) {
+                    Log.d(TAG, "Error: $e\nList: $exerciseRefList")
+                }
+                true
+            }
+            2421 -> { // Edit
+                // for (e: Exercise in allExercisesList) {
+                //     if (e.id == exerciseRefList[item.groupId].idToRef) {
+                //         val intent = Intent(this, CreateExerciseActivity::class.java).apply {
+                //             putExtra(EXTRA_EXERCISE, e)
+                //             putExtra(EXTRA_POS, item.groupId)
+                //         }
+                //         startActivityForResult(intent, REQUEST_EDIT_ROUTINE)
+                //     }
+                // }
+                Toast.makeText(this, "TODO: Edit", Toast.LENGTH_SHORT).show()
+                true
+            }
+            2422 -> { // Add Set
+                val setsJson = exerciseRefList[item.groupId].setsJson
+                val type = object: TypeToken<ArrayList<com.noahjutz.gymroutines.models.Set>>() {}.type
+                val gson = Gson()
+                val setsList: ArrayList<Set> = gson.fromJson(setsJson, type)
+
+                val fields: ArrayList<Field> = ArrayList()
+                fields.add(Field("Weight", UnitDouble("kg", 0.0)))
+                fields.add(Field("Reps", UnitDouble("rep", 0.0)))
+                val fieldsJson = gson.toJson(fields)
+
+                setsList.add(Set(fieldsJson))
+                val newSetsJson = gson.toJson(setsList)
+                exerciseRefList[item.groupId].setsJson = newSetsJson
+                Log.d(TAG, "Exercise: ${exerciseRefList[item.groupId]}")
+                submitList(exerciseRefList)
+                true
+            }
+            2423 -> { // Move Up
+                Collections.swap(exerciseRefList, item.groupId, item.groupId - 1)
+                submitList(exerciseRefList)
+                true
+            }
+            else -> super.onContextItemSelected(item)
         }
-        exerciseAdapter.submitList(listToSubmit, allExercisesList)
     }
 
     override fun onExerciseClick(pos: Int) {
-        try {
-            exerciseRefList.removeAt(pos)
-            submitList(exerciseRefList)
-        } catch (e: ArrayIndexOutOfBoundsException) {
-            Log.d(TAG, "Error: $e\nList: $exerciseRefList")
-        }
+        // try {
+        //     exerciseRefList.removeAt(pos)
+        //     submitList(exerciseRefList)
+        // } catch (e: ArrayIndexOutOfBoundsException) {
+        //     Log.d(TAG, "Error: $e\nList: $exerciseRefList")
+        // }
     }
 }
