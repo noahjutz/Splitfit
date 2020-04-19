@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines
+package com.noahjutz.gymroutines.ui.routines.view_routine
 
 import android.app.Activity
 import android.content.Context
@@ -11,10 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.noahjutz.gymExercises.ViewRoutineExerciseRecyclerAdapter
+import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
 import com.noahjutz.gymroutines.models.ExerciseReference
 import com.noahjutz.gymroutines.models.Routine
+import com.noahjutz.gymroutines.ui.exercises.view_exercise.ViewExerciseActivity
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.SAVED_EXERCISES_PREFS
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.SHARED_PREFS_EXERCISES
+import com.noahjutz.gymroutines.ui.routines.view_routines.ACTION_DELETE
+import com.noahjutz.gymroutines.ui.routines.view_routines.ACTION_EDIT
+import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_ACTION
+import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_POS
 import kotlinx.android.synthetic.main.activity_view_routine.*
 
 private const val TAG = "ViewRoutineActivity"
@@ -22,10 +29,10 @@ private const val TAG = "ViewRoutineActivity"
 const val EXTRA_EXERCISE_TO_VIEW = "com.noahjutz.gymroutines.EXERCISE_TO_VIEW"
 
 class ViewRoutineActivity : AppCompatActivity(),
-    ViewRoutineExerciseRecyclerAdapter.OnExerciseClickListener {
+    ExerciseRecyclerAdapter.OnExerciseClickListener {
     private var pos: Int = 0
 
-    private lateinit var exerciseAdapter: ViewRoutineExerciseRecyclerAdapter
+    private lateinit var exerciseAdapter: ExerciseRecyclerAdapter
     private lateinit var exerciseRefList: ArrayList<ExerciseReference>
     private lateinit var allExercisesList: ArrayList<Exercise>
 
@@ -40,22 +47,11 @@ class ViewRoutineActivity : AppCompatActivity(),
         val routine: Routine? = intent.getParcelableExtra("routine")
         pos = intent.getIntExtra("pos", -1)
 
-        // val exerciseIdListJson = routine?.exerciseRefsJson
-        // val gson = Gson()
-        // val type = object : TypeToken<ArrayList<Int>>() {}.type
-        // exerciseIdList = gson.fromJson(exerciseIdListJson, type)
-        // submitList(exerciseIdList)
-
         val exerciseRefListJson = routine?.exerciseRefsJson
         val gson = Gson()
         val type = object : TypeToken<ArrayList<ExerciseReference>>() {}.type
         exerciseRefList = gson.fromJson(exerciseRefListJson, type) ?: ArrayList()
         submitList(exerciseRefList)
-
-        // val gson = Gson()
-        // val type = object : TypeToken<ArrayList<Exercise>>() {}.type
-        // exerciseList = gson.fromJson(routine?.exercisesJson, type) ?: ArrayList()
-        // exerciseAdapter.submitList(exerciseList)
         allExercisesList = ArrayList()
         loadExercisesSharedPrefs()
 
@@ -80,7 +76,7 @@ class ViewRoutineActivity : AppCompatActivity(),
     private fun initRecyclerView() {
         recycler_view_exercises.apply {
             layoutManager = LinearLayoutManager(this@ViewRoutineActivity)
-            exerciseAdapter = ViewRoutineExerciseRecyclerAdapter(this@ViewRoutineActivity)
+            exerciseAdapter = ExerciseRecyclerAdapter(this@ViewRoutineActivity)
             adapter = exerciseAdapter
         }
     }
@@ -95,7 +91,10 @@ class ViewRoutineActivity : AppCompatActivity(),
         return when (item.itemId) {
             R.id.delete_routine -> {
                 val intent = Intent().apply {
-                    putExtra(EXTRA_ACTION, ACTION_DELETE)
+                    putExtra(
+                        EXTRA_ACTION,
+                        ACTION_DELETE
+                    )
                     putExtra(EXTRA_POS, pos)
                 }
                 setResult(Activity.RESULT_OK, intent)
@@ -104,7 +103,10 @@ class ViewRoutineActivity : AppCompatActivity(),
             }
             R.id.edit_routine -> {
                 val intent = Intent().apply {
-                    putExtra(EXTRA_ACTION, ACTION_EDIT)
+                    putExtra(
+                        EXTRA_ACTION,
+                        ACTION_EDIT
+                    )
                     putExtra(EXTRA_POS, pos)
                 }
                 setResult(Activity.RESULT_OK, intent)

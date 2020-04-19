@@ -9,24 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewExerciseActivity"
+        <activity android:name="com.noahjutz.gymroutines.ui.exercises.view_exercise.ViewExerciseActivity"
             android:label="View Exercise"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity"/>
         <activity
-            android:name=".CreateExerciseActivity"
+            android:name="com.noahjutz.gymroutines.ui.exercises.create_exercise.CreateExerciseActivity"
             android:label="Create Exercise" />
         <activity
-            android:name=".ViewExercisesActivity"
+            android:name="com.noahjutz.gymroutines.ui.exercises.view_exercises.ViewExercisesActivity"
             android:label="Exercises" />
         <activity
-            android:name=".ViewRoutineActivity"
+            android:name="com.noahjutz.gymroutines.ui.routines.view_routine.ViewRoutineActivity"
             android:label="View Routine"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity" />
         <activity
-            android:name=".CreateRoutineActivity"
+            android:name="com.noahjutz.gymroutines.ui.routines.create_routine.CreateRoutineActivity"
             android:label="Create/Edit Routine"
-            android:parentActivityName=".ViewRoutineActivity" />
-        <activity android:name=".MainActivity">
+            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routine.ViewRoutineActivity" />
+        <activity android:name="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

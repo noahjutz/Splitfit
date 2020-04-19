@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines
+package com.noahjutz.gymroutines.ui.routines.view_routines
 
 import android.view.ContextMenu
 import android.view.LayoutInflater
@@ -6,16 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.routine_listitem.view.*
 
-class RoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickListener) :
+private const val TAG = "VR_RoutineRecyclerAdapter"
+
+class ViewRoutinesRoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: ArrayList<Routine> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RoutineViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.routine_listitem, parent, false),
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.routine_listitem,
+                parent,
+                false
+            ),
             onRoutineClickListener
         )
     }

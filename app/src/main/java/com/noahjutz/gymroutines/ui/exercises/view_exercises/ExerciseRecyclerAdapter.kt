@@ -1,27 +1,25 @@
-package com.noahjutz.gymExercises
+package com.noahjutz.gymroutines.ui.exercises.view_exercises
 
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
-import com.noahjutz.gymroutines.models.ExerciseReference
 import kotlinx.android.synthetic.main.exercise_listitem.view.*
-import kotlinx.android.synthetic.main.routine_listitem.view.*
 import kotlinx.android.synthetic.main.routine_listitem.view.title
 
-class ViewRoutineExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseClickListener) :
+private const val TAG = "VE_ExerciseRecyclerAdapter"
+
+class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var realItems: ArrayList<Exercise> = ArrayList()
-    private var items: ArrayList<ExerciseReference> = ArrayList()
+    private var items: ArrayList<Exercise> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ExerciseRefViewHolder(
+        return ExerciseViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.exercise_listitem, parent, false),
-            onExerciseClickListener,
-            realItems
+            onExerciseClickListener
         )
     }
 
@@ -31,38 +29,41 @@ class ViewRoutineExerciseRecyclerAdapter(private val onExerciseClickListener: On
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ExerciseRefViewHolder -> {
+            is ExerciseViewHolder -> {
                 holder.bind(items[position])
             }
         }
     }
 
-    fun submitList(list: ArrayList<ExerciseReference>, listE: ArrayList<Exercise>) {
+    fun submitList(list: ArrayList<Exercise>) {
         items = list
-        realItems = listE
         notifyDataSetChanged()
     }
 
-    class ExerciseRefViewHolder(
+    class ExerciseViewHolder(
         itemView: View,
-        private val onExerciseClickListener: OnExerciseClickListener,
-        private val realItems: ArrayList<Exercise>
+        private val onExerciseClickListener: OnExerciseClickListener
     ) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        private val exerciseTitle: TextView = itemView.title
+        RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener {
 
-        fun bind(exerciseRef: ExerciseReference) {
+        fun bind(exercise: Exercise) {
             itemView.setOnClickListener(this)
-            for (e: Exercise in realItems) {
-                if (e.id == exerciseRef.idToRef) {
-                    exerciseTitle.text = e.name
-                }
-            }
-            itemView.sets.text = exerciseRef.setsJson
+            itemView.title.text = exercise.name
+            itemView.exercise_id.text = exercise.id.toString()
+            itemView.setOnCreateContextMenuListener(this)
         }
 
         override fun onClick(v: View?) {
             onExerciseClickListener.onExerciseClick(adapterPosition)
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            menu?.add(this.adapterPosition, 420, 0, "Delete")
+            menu?.add(this.adapterPosition, 421, 0, "Edit")
         }
     }
 

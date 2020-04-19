@@ -1,9 +1,8 @@
-package com.noahjutz.gymroutines
+package com.noahjutz.gymroutines.ui.routines.view_routines
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -13,11 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.noahjutz.gymroutines.datasets.RoutineDataSource
+import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.ui.routines.view_routine.ViewRoutineActivity
+import com.noahjutz.gymroutines.ui.routines.create_routine.CreateRoutineActivity
 import com.noahjutz.gymroutines.models.Routine
 import kotlinx.android.synthetic.main.activity_main.*
 
-private const val TAG = "MainActivity"
+private const val TAG = "ViewRoutinesActivity"
 
 // Extra names
 const val EXTRA_ROUTINE = "com.noahjutz.gymroutines.ROUTINE"
@@ -33,9 +34,10 @@ const val REQUEST_VIEW_ROUTINE = 0
 const val REQUEST_CREATE_ROUTINE = 1
 const val REQUEST_EDIT_ROUTINE = 2
 
-class MainActivity : AppCompatActivity(), RoutineRecyclerAdapter.OnRoutineClickListener {
+class MainActivity : AppCompatActivity(),
+    ViewRoutinesRoutineRecyclerAdapter.OnRoutineClickListener {
 
-    private lateinit var routineAdapter: RoutineRecyclerAdapter
+    private lateinit var routineAdapter: ViewRoutinesRoutineRecyclerAdapter
     private lateinit var routineList: ArrayList<Routine>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +49,9 @@ class MainActivity : AppCompatActivity(), RoutineRecyclerAdapter.OnRoutineClickL
 
         fab_add_routine.setOnClickListener {
             val intent = Intent(this, CreateRoutineActivity::class.java)
-            startActivityForResult(intent, REQUEST_CREATE_ROUTINE)
+            startActivityForResult(intent,
+                REQUEST_CREATE_ROUTINE
+            )
         }
 
         //button_sample_data.setOnClickListener {
@@ -163,13 +167,18 @@ class MainActivity : AppCompatActivity(), RoutineRecyclerAdapter.OnRoutineClickL
             putExtra(EXTRA_ROUTINE, routineList[pos])
             putExtra(EXTRA_POS, pos)
         }
-        startActivityForResult(intent, REQUEST_EDIT_ROUTINE)
+        startActivityForResult(intent,
+            REQUEST_EDIT_ROUTINE
+        )
     }
 
     private fun initRecyclerView() {
         recycler_view.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            routineAdapter = RoutineRecyclerAdapter(this@MainActivity)
+            routineAdapter =
+                ViewRoutinesRoutineRecyclerAdapter(
+                    this@MainActivity
+                )
             adapter = routineAdapter
         }
     }
@@ -179,6 +188,8 @@ class MainActivity : AppCompatActivity(), RoutineRecyclerAdapter.OnRoutineClickL
             putExtra("routine", routineList[pos])
             putExtra("pos", pos)
         }
-        startActivityForResult(intent, REQUEST_VIEW_ROUTINE)
+        startActivityForResult(intent,
+            REQUEST_VIEW_ROUTINE
+        )
     }
 }

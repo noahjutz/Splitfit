@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines
+package com.noahjutz.gymroutines.ui.routines.create_routine
 
 import android.app.Activity
 import android.content.Context
@@ -11,13 +11,21 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.noahjutz.gymroutines.*
 import com.noahjutz.gymroutines.models.*
 import com.noahjutz.gymroutines.models.Set
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.EXTRA_EXERCISE_ID
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.SAVED_EXERCISES_PREFS
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.SHARED_PREFS_EXERCISES
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.ViewExercisesActivity
+import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_POS
+import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_ROUTINE
 import kotlinx.android.synthetic.main.activity_create_routine.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 private const val TAG = "CreateRoutineActivity"
+
 private const val REQUEST_EXERCISE = 0
 
 class CreateRoutineActivity : AppCompatActivity(),
@@ -25,8 +33,6 @@ class CreateRoutineActivity : AppCompatActivity(),
 
     private lateinit var exerciseAdapter: CreateRoutineExerciseRecyclerAdapter
     private lateinit var allExercisesList: ArrayList<Exercise>
-
-    // private lateinit var exerciseIdList: ArrayList<Int>
     private lateinit var exerciseRefList: ArrayList<ExerciseReference>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +40,6 @@ class CreateRoutineActivity : AppCompatActivity(),
         setContentView(R.layout.activity_create_routine)
 
         initRecyclerView()
-        // exerciseIdList = ArrayList()
         exerciseRefList = ArrayList()
         loadExercisesSharedPrefs() // init allExercisesList
 
@@ -45,15 +50,15 @@ class CreateRoutineActivity : AppCompatActivity(),
             edit_content.setText(routine.content)
             val gson = Gson()
             val type = object : TypeToken<ArrayList<ExerciseReference>>() {}.type
-            // exerciseIdList = gson.fromJson(routine.exerciseRefsJson, type) ?: ArrayList()
-            // submitList(exerciseIdList)
             exerciseRefList = gson.fromJson(routine.exerciseRefsJson, type) ?: ArrayList()
             submitList(exerciseRefList)
         }
 
         button_add_exercise.setOnClickListener {
             val intent = Intent(this, ViewExercisesActivity::class.java)
-            startActivityForResult(intent, REQUEST_EXERCISE)
+            startActivityForResult(intent,
+                REQUEST_EXERCISE
+            )
         }
 
         fab_save_routine.setOnClickListener {
@@ -76,7 +81,10 @@ class CreateRoutineActivity : AppCompatActivity(),
     private fun initRecyclerView() {
         list_added_exercises.apply {
             layoutManager = LinearLayoutManager(this@CreateRoutineActivity)
-            exerciseAdapter = CreateRoutineExerciseRecyclerAdapter(this@CreateRoutineActivity)
+            exerciseAdapter =
+                CreateRoutineExerciseRecyclerAdapter(
+                    this@CreateRoutineActivity
+                )
             adapter = exerciseAdapter
         }
     }
@@ -84,11 +92,10 @@ class CreateRoutineActivity : AppCompatActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            REQUEST_EXERCISE -> {
+            REQUEST_EXERCISE -> { // Add exercise to routine
                 if (resultCode == Activity.RESULT_OK) {
                     val id = data?.getIntExtra(EXTRA_EXERCISE_ID, -1)
                     if (id != null) {
-                        //exerciseIdList.add(id)
                         exerciseRefList.add(ExerciseReference("[]", id))
                     }
                 }
@@ -107,11 +114,6 @@ class CreateRoutineActivity : AppCompatActivity(),
     }
 
     private fun submitList(refList: ArrayList<ExerciseReference>) {
-        //val listToSubmit = ArrayList<ExerciseReference>()
-        loadExercisesSharedPrefs()
-        //for (ref: ExerciseReference in refList) {
-        //    listToSubmit.add(ref)
-        //}
         exerciseAdapter.submitList(refList, allExercisesList)
     }
 
@@ -127,35 +129,25 @@ class CreateRoutineActivity : AppCompatActivity(),
                 true
             }
             2421 -> { // Edit
-                // for (e: Exercise in allExercisesList) {
-                //     if (e.id == exerciseRefList[item.groupId].idToRef) {
-                //         val intent = Intent(this, CreateExerciseActivity::class.java).apply {
-                //             putExtra(EXTRA_EXERCISE, e)
-                //             putExtra(EXTRA_POS, item.groupId)
-                //         }
-                //         startActivityForResult(intent, REQUEST_EDIT_ROUTINE)
-                //     }
-                // }
-                Toast.makeText(this, "TODO: Edit", Toast.LENGTH_SHORT).show()
-                true
+                false
             }
             2422 -> { // Add Set
-                val setsJson = exerciseRefList[item.groupId].setsJson
-                val type = object: TypeToken<ArrayList<com.noahjutz.gymroutines.models.Set>>() {}.type
-                val gson = Gson()
-                val setsList: ArrayList<Set> = gson.fromJson(setsJson, type)
-
-                val fields: ArrayList<Field> = ArrayList()
-                fields.add(Field("Weight", UnitDouble("kg", 0.0)))
-                fields.add(Field("Reps", UnitDouble("rep", 0.0)))
-                val fieldsJson = gson.toJson(fields)
-
-                setsList.add(Set(fieldsJson))
-                val newSetsJson = gson.toJson(setsList)
-                exerciseRefList[item.groupId].setsJson = newSetsJson
-                Log.d(TAG, "Exercise: ${exerciseRefList[item.groupId]}")
-                submitList(exerciseRefList)
-                true
+                // val setsJson = exerciseRefList[item.groupId].setsJson
+                // val type = object: TypeToken<ArrayList<com.noahjutz.gymroutines.models.Set>>() {}.type
+                // val gson = Gson()
+                // val setsList: ArrayList<Set> = gson.fromJson(setsJson, type)
+//
+                // val fields: ArrayList<Field> = ArrayList()
+                // fields.add(Field("Weight", UnitDouble("kg", 0.0)))
+                // fields.add(Field("Reps", UnitDouble("rep", 0.0)))
+                // val fieldsJson = gson.toJson(fields)
+//
+                // setsList.add(Set(fieldsJson))
+                // val newSetsJson = gson.toJson(setsList)
+                // exerciseRefList[item.groupId].setsJson = newSetsJson
+                // Log.d(TAG, "Exercise: ${exerciseRefList[item.groupId]}")
+                // submitList(exerciseRefList)
+                false
             }
             2423 -> { // Move Up
                 Collections.swap(exerciseRefList, item.groupId, item.groupId - 1)
@@ -167,11 +159,5 @@ class CreateRoutineActivity : AppCompatActivity(),
     }
 
     override fun onExerciseClick(pos: Int) {
-        // try {
-        //     exerciseRefList.removeAt(pos)
-        //     submitList(exerciseRefList)
-        // } catch (e: ArrayIndexOutOfBoundsException) {
-        //     Log.d(TAG, "Error: $e\nList: $exerciseRefList")
-        // }
     }
 }

@@ -1,12 +1,13 @@
-package com.noahjutz.gymroutines
+package com.noahjutz.gymroutines.ui.exercises.create_exercise
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.EXTRA_EXERCISE
+import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_POS
+import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
 import kotlinx.android.synthetic.main.activity_create_exercise.*
 import kotlin.properties.Delegates

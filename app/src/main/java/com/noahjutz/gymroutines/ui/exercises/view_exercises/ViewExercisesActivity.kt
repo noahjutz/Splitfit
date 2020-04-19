@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines
+package com.noahjutz.gymroutines.ui.exercises.view_exercises
 
 import android.app.Activity
 import android.content.Context
@@ -12,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.noahjutz.gymExercises.ExerciseRecyclerAdapter
+import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.ui.exercises.create_exercise.CreateExerciseActivity
 import com.noahjutz.gymroutines.models.Exercise
+import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_POS
 import kotlinx.android.synthetic.main.activity_view_exercises.*
 
 private const val TAG = "ViewExerciseActivity"
@@ -69,7 +71,9 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         return when (item.itemId) {
             R.id.create_exercise -> {
                 intent = Intent(this, CreateExerciseActivity::class.java)
-                startActivityForResult(intent, REQUEST_CREATE_EXERCISE)
+                startActivityForResult(intent,
+                    REQUEST_CREATE_EXERCISE
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -124,7 +128,9 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
                     putExtra(EXTRA_EXERCISE, exerciseListToShow[item.groupId])
                     putExtra(EXTRA_POS, item.groupId)
                 }
-                startActivityForResult(intent, REQUEST_EDIT_EXERCISE)
+                startActivityForResult(intent,
+                    REQUEST_EDIT_EXERCISE
+                )
                 true
             }
             420 -> { // Delete
