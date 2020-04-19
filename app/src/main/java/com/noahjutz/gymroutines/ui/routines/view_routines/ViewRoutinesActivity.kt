@@ -53,11 +53,6 @@ class MainActivity : AppCompatActivity(),
                 REQUEST_CREATE_ROUTINE
             )
         }
-
-        //button_sample_data.setOnClickListener {
-        //    routineList = RoutineDataSource.createDataSet()
-        //    routineAdapter.submitList(routineList)
-        //}
     }
 
     override fun onPause() {
@@ -94,30 +89,10 @@ class MainActivity : AppCompatActivity(),
 
         when (requestCode) {
             REQUEST_EDIT_ROUTINE -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    val routine = data?.getParcelableExtra<Routine>(EXTRA_ROUTINE)
-                    val pos = data?.getIntExtra(EXTRA_POS, -1)
-                    if (routine != null && pos != null) {
-                        try {
-                            routineList[pos] = routine
-                            routineAdapter.submitList(routineList)
-                        } catch (e: ArrayIndexOutOfBoundsException) {
-                            Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    if (pos != null) {
-                        onRoutineClick(pos)
-                    }
-                }
+                // TODO
             }
             REQUEST_CREATE_ROUTINE -> {
-                if (resultCode == RESULT_OK) {
-                    val routine = data?.getParcelableExtra<Routine>(EXTRA_ROUTINE)
-                    if (routine != null) {
-                        routineList.add(routine)
-                        routineAdapter.submitList(routineList)
-                    }
-                }
+                // TODO
             }
             REQUEST_VIEW_ROUTINE -> {
                 if (resultCode == RESULT_OK) {
@@ -163,10 +138,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun editRoutine(pos: Int) {
-        val intent = Intent(this, CreateRoutineActivity::class.java).apply {
-            putExtra(EXTRA_ROUTINE, routineList[pos])
-            putExtra(EXTRA_POS, pos)
-        }
+        // TODO
         startActivityForResult(intent,
             REQUEST_EDIT_ROUTINE
         )
@@ -184,10 +156,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onRoutineClick(pos: Int) {
-        val intent = Intent(this, ViewRoutineActivity::class.java).apply {
-            putExtra("routine", routineList[pos])
-            putExtra("pos", pos)
-        }
+        // TODO
         startActivityForResult(intent,
             REQUEST_VIEW_ROUTINE
         )

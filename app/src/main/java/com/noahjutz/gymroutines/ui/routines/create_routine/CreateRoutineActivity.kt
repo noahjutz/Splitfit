@@ -41,41 +41,30 @@ class CreateRoutineActivity : AppCompatActivity(),
 
         initRecyclerView()
         exerciseRefList = ArrayList()
-        loadExercisesSharedPrefs() // init allExercisesList
 
-        val pos = intent.getIntExtra(EXTRA_POS, -1)
-        val routine: Routine? = intent.getParcelableExtra(EXTRA_ROUTINE)
-        if (routine != null) {
-            edit_title.setText(routine.title)
-            edit_content.setText(routine.content)
-            val gson = Gson()
-            val type = object : TypeToken<ArrayList<ExerciseReference>>() {}.type
-            exerciseRefList = gson.fromJson(routine.exerciseRefsJson, type) ?: ArrayList()
-            submitList(exerciseRefList)
-        }
+        populateViews()
 
-        button_add_exercise.setOnClickListener {
-            val intent = Intent(this, ViewExercisesActivity::class.java)
-            startActivityForResult(intent,
-                REQUEST_EXERCISE
-            )
-        }
+        button_add_exercise.setOnClickListener { addExercise() }
 
-        fab_save_routine.setOnClickListener {
-            val title = edit_title.text.toString()
-            val content = edit_content.text.toString()
-            val gson = Gson()
-            // val exercisesJson = gson.toJson(exerciseIdList)
-            val exerciseRefsJson = gson.toJson(exerciseRefList)
-            if (title != "") {
-                val intent = Intent().apply {
-                    putExtra(EXTRA_ROUTINE, Routine(title, content, exerciseRefsJson))
-                    putExtra(EXTRA_POS, pos)
-                }
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            }
-        }
+        fab_save_routine.setOnClickListener { saveRoutine() }
+    }
+
+    private fun populateViews() {
+        // TODO: MVVM Migration
+    }
+
+    private fun addExercise() {
+        val intent = Intent(this, ViewExercisesActivity::class.java)
+        startActivityForResult(
+            intent,
+            REQUEST_EXERCISE
+        )
+    }
+
+    private fun saveRoutine() {
+        // Save with ViewModel
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     private fun initRecyclerView() {
@@ -93,13 +82,14 @@ class CreateRoutineActivity : AppCompatActivity(),
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_EXERCISE -> { // Add exercise to routine
-                if (resultCode == Activity.RESULT_OK) {
-                    val id = data?.getIntExtra(EXTRA_EXERCISE_ID, -1)
-                    if (id != null) {
-                        exerciseRefList.add(ExerciseReference("[]", id))
-                    }
-                }
-                submitList(exerciseRefList)
+                // Not implemented yet, need Room database
+                // if (resultCode == Activity.RESULT_OK) {
+                //     val id = data?.getIntExtra(EXTRA_EXERCISE_ID, -1)
+                //     if (id != null) {
+                //         exerciseRefList.add(ExerciseReference("[]", id))
+                //     }
+                // }
+                // submitList(exerciseRefList)
             }
         }
     }
@@ -132,21 +122,6 @@ class CreateRoutineActivity : AppCompatActivity(),
                 false
             }
             2422 -> { // Add Set
-                // val setsJson = exerciseRefList[item.groupId].setsJson
-                // val type = object: TypeToken<ArrayList<com.noahjutz.gymroutines.models.Set>>() {}.type
-                // val gson = Gson()
-                // val setsList: ArrayList<Set> = gson.fromJson(setsJson, type)
-//
-                // val fields: ArrayList<Field> = ArrayList()
-                // fields.add(Field("Weight", UnitDouble("kg", 0.0)))
-                // fields.add(Field("Reps", UnitDouble("rep", 0.0)))
-                // val fieldsJson = gson.toJson(fields)
-//
-                // setsList.add(Set(fieldsJson))
-                // val newSetsJson = gson.toJson(setsList)
-                // exerciseRefList[item.groupId].setsJson = newSetsJson
-                // Log.d(TAG, "Exercise: ${exerciseRefList[item.groupId]}")
-                // submitList(exerciseRefList)
                 false
             }
             2423 -> { // Move Up

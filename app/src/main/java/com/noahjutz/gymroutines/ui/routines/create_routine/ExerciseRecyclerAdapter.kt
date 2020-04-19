@@ -73,16 +73,11 @@ class CreateRoutineExerciseRecyclerAdapter(private val onExerciseClickListener: 
             itemView.setOnClickListener(this)
             itemView.setOnCreateContextMenuListener(this)
             for (e: Exercise in realItems) {
-                if (e.id == exerciseRef.idToRef) {
+                if (e == exerciseRef.exercise) {
                     exerciseTitle.text = e.name
                 }
             }
-            val type = object: TypeToken<ArrayList<Set>>(){}.type
-            val gson = Gson()
-            val setsList: ArrayList<Set> = gson.fromJson(exerciseRef.setsJson, type)
-            for (set: Set in setsList)  {
-                itemView.sets.text = "${itemView.sets.text}\n$set"
-            }
+            itemView.sets.text = exerciseRef.sets.toString()
         }
 
         override fun onClick(v: View?) {

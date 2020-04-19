@@ -9,6 +9,8 @@ import com.noahjutz.gymroutines.ui.exercises.view_exercises.EXTRA_EXERCISE
 import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_POS
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.EXTRA_EXERCISE_ID
+import com.noahjutz.gymroutines.ui.exercises.view_exercises.EXTRA_EXERCISE_NAME
 import kotlinx.android.synthetic.main.activity_create_exercise.*
 import kotlin.properties.Delegates
 
@@ -25,33 +27,22 @@ class CreateExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_exercise)
 
-        val sharedPrefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        nextId = sharedPrefs.getInt(PREF_NEXT_ID, 0)
-
-        val exercise = intent.getParcelableExtra<Exercise>(EXTRA_EXERCISE)
+        val exerciseName = intent.getStringExtra(EXTRA_EXERCISE_NAME)
         val pos = intent.getIntExtra(EXTRA_POS, -1)
-        edit_exercise_name.setText(exercise?.name ?: "")
+        edit_exercise_name.setText(exerciseName ?: "")
 
         fab_save_exercise.setOnClickListener {
-            val exerciseToPass = Exercise(edit_exercise_name.text.toString(), exercise?.id ?: nextId)
             intent = Intent().apply {
-                putExtra(EXTRA_EXERCISE, exerciseToPass)
+                putExtra(EXTRA_EXERCISE_ID, nextId)
+                putExtra(EXTRA_EXERCISE_NAME, edit_exercise_name.text.toString())
                 putExtra(EXTRA_POS, pos)
             }
-            if (exercise == null) {
+            if (exerciseName == null) {
                 nextId++
             }
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
 
-    }
-
-    override fun onPause() {
-        super.onPause()
-        val sharedPrefs = getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        sharedPrefs.edit()
-            .putInt(PREF_NEXT_ID, nextId)
-            .apply()
     }
 }

@@ -42,35 +42,18 @@ class ViewRoutineActivity : AppCompatActivity(),
 
         initRecyclerView()
         exerciseRefList = ArrayList()
-
-        val intent = intent
-        val routine: Routine? = intent.getParcelableExtra("routine")
-        pos = intent.getIntExtra("pos", -1)
-
-        val exerciseRefListJson = routine?.exerciseRefsJson
-        val gson = Gson()
-        val type = object : TypeToken<ArrayList<ExerciseReference>>() {}.type
-        exerciseRefList = gson.fromJson(exerciseRefListJson, type) ?: ArrayList()
-        submitList(exerciseRefList)
         allExercisesList = ArrayList()
-        loadExercisesSharedPrefs()
+        populateViews()
+    }
 
-        view_title.text = routine?.title ?: "Error"
-        view_content.text = routine?.content ?: "Error"
+    private fun populateViews() {
+        // TODO: populate recyclerview and these:
+        view_title.text = "Error"
+        view_content.text = "Error"
     }
 
     private fun submitList(refList: ArrayList<ExerciseReference>) {
-        loadExercisesSharedPrefs()
         exerciseAdapter.submitList(refList, allExercisesList)
-    }
-
-    private fun loadExercisesSharedPrefs() {
-        val sharedPrefs = getSharedPreferences(SHARED_PREFS_EXERCISES, Context.MODE_PRIVATE)
-        val exerciseListJson = sharedPrefs.getString(SAVED_EXERCISES_PREFS, "[]")
-        val gson = Gson()
-        val type = object : TypeToken<ArrayList<Exercise>>() {}.type
-        val exerciseList: ArrayList<Exercise> = gson.fromJson(exerciseListJson, type)
-        allExercisesList = exerciseList
     }
 
     private fun initRecyclerView() {
@@ -118,20 +101,6 @@ class ViewRoutineActivity : AppCompatActivity(),
     }
 
     override fun onExerciseClick(pos: Int) {
-        submitList(exerciseRefList)
-        val exList = ArrayList<Exercise>()
-        for (er: ExerciseReference in exerciseRefList) {
-            for (e: Exercise in allExercisesList) {
-                if (er.idToRef == e.id) {
-                    exList.add(e)
-                }
-            }
-        }
-        intent = Intent(this, ViewExerciseActivity::class.java).apply {
-            putExtra(
-                EXTRA_EXERCISE_TO_VIEW, exList[pos]
-            )
-        }
-        startActivity(intent)
+        // TODO: View Exercise
     }
 }

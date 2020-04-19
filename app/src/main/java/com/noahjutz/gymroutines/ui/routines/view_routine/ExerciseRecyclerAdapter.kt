@@ -55,11 +55,10 @@ class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseCli
         fun bind(exerciseRef: ExerciseReference) {
             itemView.setOnClickListener(this)
             for (e: Exercise in realItems) {
-                if (e.id == exerciseRef.idToRef) {
+                if (e == exerciseRef.exercise) {
                     exerciseTitle.text = e.name
                 }
             }
-            itemView.sets.text = exerciseRef.setsJson
         }
 
         override fun onClick(v: View?) {

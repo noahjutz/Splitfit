@@ -9,44 +9,38 @@ class RoutineDataSource {
             list.add(
                 Routine(
                     "Push",
-                    "Push Exercises (Triceps, Chest, etc)",
-                    "[{\"name\":\"Push Ups\"}]"
+                    "Push Exercises (Triceps, Chest, etc)"
                 )
             )
 
             list.add(
                 Routine(
                     "Pull",
-                    "Pull Exercises (Back, Biceps, etc)",
-                    "[{\"name\":\"Dips\"},{\"name\":\"Squats\"}]"
+                    "Pull Exercises (Back, Biceps, etc)"
                 )
             )
             list.add(
                 Routine(
                     "Legs",
-                    "Leg Exercises (Glutes, Hamstrings, Quads)",
-                    "[{\"name\":\"Pull Ups\"}]"
+                    "Leg Exercises (Glutes, Hamstrings, Quads)"
                 )
             )
             list.add(
                 Routine(
                     "Upper",
-                    "Part of Upper/Lower Body Split",
-                    "[{\"name\":\"Leg Press\"}]"
+                    "Part of Upper/Lower Body Split"
                 )
             )
             list.add(
                 Routine(
                     "Lower",
-                    "Part of Upper/Lower Body Split",
-                    "[{\"name\":\"Lateral Raise\"}]"
+                    "Part of Upper/Lower Body Split"
                 )
             )
             list.add(
                 Routine(
                     "Whole Body",
-                    "3x / Week",
-                    "[{\"name\":\"Pike Push Ups\"}]"
+                    "3x / Week"
                 )
             )
             return list

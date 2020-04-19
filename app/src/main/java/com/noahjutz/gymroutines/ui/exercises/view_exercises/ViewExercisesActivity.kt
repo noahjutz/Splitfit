@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ui.exercises.create_exercise.CreateExerciseActivity
 import com.noahjutz.gymroutines.models.Exercise
+import com.noahjutz.gymroutines.ui.routines.view_routine.EXTRA_EXERCISE_TO_VIEW
 import com.noahjutz.gymroutines.ui.routines.view_routines.EXTRA_POS
 import kotlinx.android.synthetic.main.activity_view_exercises.*
 
@@ -28,6 +29,7 @@ private const val REQUEST_EDIT_EXERCISE = 1
 
 const val EXTRA_EXERCISE = "com.noahjutz.gymroutines.EXERCISE"
 const val EXTRA_EXERCISE_ID = "com.noahjutz.gymroutines.EXERCISE_ID"
+const val EXTRA_EXERCISE_NAME = "com.noahjutz.gymroutines.EXERCISE_NAME"
 
 class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExerciseClickListener {
 
@@ -71,7 +73,8 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         return when (item.itemId) {
             R.id.create_exercise -> {
                 intent = Intent(this, CreateExerciseActivity::class.java)
-                startActivityForResult(intent,
+                startActivityForResult(
+                    intent,
                     REQUEST_CREATE_EXERCISE
                 )
                 true
@@ -91,19 +94,22 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         when (requestCode) {
             REQUEST_CREATE_EXERCISE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val exercise = data?.getParcelableExtra<Exercise>(EXTRA_EXERCISE)
-                    if (exercise != null) {
+                    val exerciseTitle = data?.getStringExtra(EXTRA_EXERCISE_NAME)
+                    val exerciseId = data?.getIntExtra(EXTRA_EXERCISE_ID, -1)
+                    val exercise = Exercise(exerciseId ?: -1, exerciseTitle ?: "")
+                    if (exercise.id != -1) {
                         exerciseList.add(exercise)
                         submitList()
                     }
-
                 }
             }
             REQUEST_EDIT_EXERCISE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val exercise = data?.getParcelableExtra<Exercise>(EXTRA_EXERCISE)
                     val pos = data?.getIntExtra(EXTRA_POS, -1)
-                    if (exercise != null && pos != null) {
+                    val exerciseTitle = data?.getStringExtra(EXTRA_EXERCISE_NAME)
+                    val exerciseId = data?.getIntExtra(EXTRA_EXERCISE_ID, -1)
+                    val exercise = Exercise(exerciseId ?: -1, exerciseTitle ?: "")
+                    if (exercise.id != -1 && pos != null) {
                         exerciseList[pos] = exercise
                         submitList()
                     }
@@ -125,10 +131,12 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
         return when (item.itemId) {
             421 -> { // Edit
                 intent = Intent(this, CreateExerciseActivity::class.java).apply {
-                    putExtra(EXTRA_EXERCISE, exerciseListToShow[item.groupId])
+                    putExtra(EXTRA_EXERCISE_NAME, exerciseListToShow[item.groupId].name)
+                    putExtra(EXTRA_EXERCISE_ID, exerciseListToShow[item.groupId].id)
                     putExtra(EXTRA_POS, item.groupId)
                 }
-                startActivityForResult(intent,
+                startActivityForResult(
+                    intent,
                     REQUEST_EDIT_EXERCISE
                 )
                 true

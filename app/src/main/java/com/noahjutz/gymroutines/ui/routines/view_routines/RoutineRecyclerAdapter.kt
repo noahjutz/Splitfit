@@ -55,7 +55,7 @@ class ViewRoutinesRoutineRecyclerAdapter(private val onRoutineClickListener: OnR
         fun bind(routine: Routine) {
             itemView.setOnClickListener(this)
             routineTitle.text = routine.title
-            routineContent.text = routine.content
+            routineContent.text = routine.note
             itemView.setOnCreateContextMenuListener(this)
         }
 
