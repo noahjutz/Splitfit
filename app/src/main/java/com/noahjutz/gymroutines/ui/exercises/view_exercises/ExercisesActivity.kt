@@ -2,22 +2,20 @@ package com.noahjutz.gymroutines.ui.exercises.view_exercises
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahjutz.gymroutines.R
-import kotlinx.android.synthetic.main.activity_view_exercises.*
+import kotlinx.android.synthetic.main.activity_exercises.*
 
-private const val TAG = "ViewExerciseActivity"
+private const val TAG = "ExercisesActivity"
 
-class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExerciseClickListener {
+class ExercisesActivity : AppCompatActivity(), ExerciseAdapter.OnExerciseClickListener {
 
-    private lateinit var exerciseAdapter: ExerciseRecyclerAdapter
+    private lateinit var exerciseAdapter: ExerciseAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_exercises)
+        setContentView(R.layout.activity_exercises)
 
         initRecyclerView()
         populateViews()
@@ -42,8 +40,8 @@ class ViewExercisesActivity : AppCompatActivity(), ExerciseRecyclerAdapter.OnExe
 
     private fun initRecyclerView() {
         list_exercises.apply {
-            layoutManager = LinearLayoutManager(this@ViewExercisesActivity)
-            exerciseAdapter = ExerciseRecyclerAdapter(this@ViewExercisesActivity)
+            layoutManager = LinearLayoutManager(this@ExercisesActivity)
+            exerciseAdapter = ExerciseAdapter(this@ExercisesActivity)
             adapter = exerciseAdapter
         }
     }

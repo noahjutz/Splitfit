@@ -7,11 +7,11 @@ import com.noahjutz.gymroutines.R
 
 private const val TAG = "ViewExercisesActivity"
 
-class ViewExerciseActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_exercise)
+        setContentView(R.layout.activity_exercise)
 
         populateViews()
     }

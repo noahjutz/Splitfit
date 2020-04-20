@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Exercise
-import kotlinx.android.synthetic.main.exercise_listitem.view.*
-import kotlinx.android.synthetic.main.routine_listitem.view.title
+import kotlinx.android.synthetic.main.listitem_exercise.view.*
+import kotlinx.android.synthetic.main.listitem_routine.view.title
 
 private const val TAG = "VE_ExerciseRecyclerAdapter"
 
 // TODO: Use ListAdapter for animations
-class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseClickListener) :
+class ExerciseAdapter(private val onExerciseClickListener: OnExerciseClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: ArrayList<Exercise> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ExerciseViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.exercise_listitem, parent, false),
+            LayoutInflater.from(parent.context).inflate(R.layout.listitem_exercise, parent, false),
             onExerciseClickListener
         )
     }

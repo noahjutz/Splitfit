@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,12 +15,12 @@ import com.noahjutz.gymroutines.models.Exercise
 import com.noahjutz.gymroutines.models.ExerciseReference
 import kotlinx.android.synthetic.main.fragment_create_routine.*
 
-private const val TAG = "CreateRoutineActivity"
+private const val TAG = "CreateRoutineFragment"
 
 class CreateRoutineFragment : Fragment(),
-    ExerciseRecyclerAdapter.OnExerciseClickListener {
+    ExerciseAdapter.OnExerciseClickListener {
 
-    private lateinit var exerciseAdapter: ExerciseRecyclerAdapter
+    private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var allExercisesList: ArrayList<Exercise>
     private lateinit var exerciseRefList: ArrayList<ExerciseReference>
 
@@ -75,7 +74,7 @@ class CreateRoutineFragment : Fragment(),
         list_added_exercises.apply {
             layoutManager = LinearLayoutManager(this@CreateRoutineFragment.context)
             exerciseAdapter =
-                ExerciseRecyclerAdapter(this@CreateRoutineFragment)
+                ExerciseAdapter(this@CreateRoutineFragment)
             adapter = exerciseAdapter
         }
     }

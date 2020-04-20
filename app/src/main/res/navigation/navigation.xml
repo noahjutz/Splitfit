@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/viewRoutinesFragment"
-        android:name="com.noahjutz.gymroutines.ui.routines.view_routines.ViewRoutinesFragment"
+        android:name="com.noahjutz.gymroutines.ui.routines.view_routines.RoutinesFragment"
         android:label="fragment_view_routines"
-        tools:layout="@layout/fragment_view_routines">
+        tools:layout="@layout/fragment_routines">
         <action
             android:id="@+id/action_viewRoutinesFragment_to_createRoutineFragment"
             app:destination="@id/createRoutineFragment" />
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewRoutineFragment"
-        android:name="com.noahjutz.gymroutines.ui.routines.view_routine.ViewRoutineFragment"
+        android:name="com.noahjutz.gymroutines.ui.routines.view_routine.RoutineFragment"
         android:label="ViewRoutineFragment"
-        tools:layout="@layout/fragment_view_routine" />
+        tools:layout="@layout/fragment_routine" />
 </navigation>

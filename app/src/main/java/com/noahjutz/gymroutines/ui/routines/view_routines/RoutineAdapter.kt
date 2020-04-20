@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.models.Routine
-import kotlinx.android.synthetic.main.routine_listitem.view.*
+import kotlinx.android.synthetic.main.listitem_routine.view.*
 
-private const val TAG = "VR_RoutineRecyclerAdapter"
+private const val TAG = "RoutinesRoutineAdapter"
 
 // TODO: Use ListAdapter for animations
-class RoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickListener) :
+class RoutineAdapter(private val onRoutineClickListener: OnRoutineClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: ArrayList<Routine> = ArrayList()
 
@@ -22,7 +22,7 @@ class RoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickL
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RoutineViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.routine_listitem, parent, false),
+                .inflate(R.layout.listitem_routine, parent, false),
             onRoutineClickListener
         )
     }

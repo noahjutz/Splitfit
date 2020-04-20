@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.exercises.view_exercises.ViewExercisesActivity">
+    tools:context=".ui.exercises.view_exercises.ExercisesActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_exercises"
@@ -16,7 +16,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        tools:listitem="@layout/exercise_listitem" />
+        tools:listitem="@layout/listitem_exercise" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_exercise"

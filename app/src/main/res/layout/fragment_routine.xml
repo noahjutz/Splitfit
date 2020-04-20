@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.routines.view_routine.ViewRoutineFragment">
+        tools:context=".ui.routines.view_routine.RoutineFragment">
 
         <TextView
             android:id="@+id/view_title"
@@ -51,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_content"
-            tools:listitem="@layout/exercise_listitem" />
+            tools:listitem="@layout/listitem_exercise" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

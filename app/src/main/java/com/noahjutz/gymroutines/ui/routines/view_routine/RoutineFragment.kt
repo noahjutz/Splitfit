@@ -9,23 +9,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.databinding.FragmentViewRoutineBinding
-import kotlinx.android.synthetic.main.fragment_view_routine.*
+import com.noahjutz.gymroutines.databinding.FragmentRoutineBinding
+import kotlinx.android.synthetic.main.fragment_routine.*
 
-private const val TAG = "ViewRoutineActivity"
+private const val TAG = "RoutineFragment"
 
-class ViewRoutineFragment : Fragment(),
-    ExerciseRecyclerAdapter.OnExerciseClickListener {
+class RoutineFragment : Fragment(),
+    ExerciseAdapter.OnExerciseClickListener {
 
-    private lateinit var exerciseAdapter: ExerciseRecyclerAdapter
+    private lateinit var exerciseAdapter: ExerciseAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentViewRoutineBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_view_routine, container, false
+        val binding: FragmentRoutineBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_routine, container, false
         )
         return binding.root
     }
@@ -61,8 +61,8 @@ class ViewRoutineFragment : Fragment(),
 
     private fun initRecyclerView() {
         recycler_view_exercises.apply {
-            layoutManager = LinearLayoutManager(this@ViewRoutineFragment.context)
-            exerciseAdapter = ExerciseRecyclerAdapter(this@ViewRoutineFragment)
+            layoutManager = LinearLayoutManager(this@RoutineFragment.context)
+            exerciseAdapter = ExerciseAdapter(this@RoutineFragment)
             adapter = exerciseAdapter
         }
     }
