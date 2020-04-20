@@ -19,12 +19,6 @@
         <activity
             android:name=".ui.exercises.view_exercises.ViewExercisesActivity"
             android:label="Exercises" />
-        <activity
-            android:name=".ui.routines.view_routine.ViewRoutineActivity"
-            android:label="View Routine" />
-        <activity
-            android:name=".ui.routines.create_routine.CreateRoutineActivity"
-            android:label="Create/Edit Routine" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

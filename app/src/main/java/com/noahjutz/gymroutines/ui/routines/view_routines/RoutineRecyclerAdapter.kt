@@ -15,6 +15,10 @@ class RoutineRecyclerAdapter(private val onRoutineClickListener: OnRoutineClickL
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: ArrayList<Routine> = ArrayList()
 
+    fun submitList(list: java.util.ArrayList<Routine>) {
+        items = list
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RoutineViewHolder(
             LayoutInflater.from(parent.context)

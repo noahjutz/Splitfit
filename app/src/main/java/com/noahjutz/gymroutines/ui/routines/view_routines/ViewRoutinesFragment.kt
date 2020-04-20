@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentViewRoutinesBinding
+import com.noahjutz.gymroutines.datasets.RoutineDataSource
 import kotlinx.android.synthetic.main.fragment_view_routines.*
 
 private const val TAG = "ViewRoutinesActivity"
@@ -27,27 +29,32 @@ class ViewRoutinesFragment : Fragment(),
         val binding: FragmentViewRoutinesBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_view_routines, container, false
         )
-
-        // initRecyclerView()
-        populateViews()
-
-        // fab_add_routine.setOnClickListener { createRoutine() }
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        initRecyclerView()
+        populateViews()
+
+        activity?.title = "Gym Routines"
+
+        fab_add_routine.setOnClickListener { createRoutine() }
+    }
+
     private fun populateViews() {
-        Log.d(TAG, "populateViews(): called")
-        // TODO
+        // TEMPORARY get from dataset
+        val list = RoutineDataSource.createDataSet()
+        routineAdapter.submitList(list)
     }
 
     private fun createRoutine() {
-        Log.d(TAG, "createRoutine(): called")
-        // TODO
+        findNavController().navigate(R.id.action_viewRoutinesFragment_to_createRoutineFragment)
     }
 
     private fun viewRoutine(pos: Int) {
-        Log.d(TAG, "viewRoutine(): called at $pos")
-        // TODO
+        findNavController().navigate(R.id.action_viewRoutinesFragment_to_viewRoutineFragment)
     }
 
     private fun deleteRoutine(pos: Int) {

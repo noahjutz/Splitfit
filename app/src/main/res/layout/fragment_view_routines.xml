@@ -36,20 +36,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add" />
 
-        <!-- Debug -->
-
-        <Button
-            android:id="@+id/button_routine_sampledata"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Get Sample Data"
-            tools:ignore="HardcodedText" />
-
     </RelativeLayout>
 </layout>

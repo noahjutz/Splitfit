@@ -9,5 +9,28 @@
         android:id="@+id/viewRoutinesFragment"
         android:name="com.noahjutz.gymroutines.ui.routines.view_routines.ViewRoutinesFragment"
         android:label="fragment_view_routines"
-        tools:layout="@layout/fragment_view_routines" />
+        tools:layout="@layout/fragment_view_routines">
+        <action
+            android:id="@+id/action_viewRoutinesFragment_to_createRoutineFragment"
+            app:destination="@id/createRoutineFragment" />
+        <action
+            android:id="@+id/action_viewRoutinesFragment_to_viewRoutineFragment"
+            app:destination="@id/viewRoutineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createRoutineFragment"
+        android:name="com.noahjutz.gymroutines.ui.routines.create_routine.CreateRoutineFragment"
+        android:label="CreateRoutineFragment"
+        tools:layout="@layout/fragment_create_routine">
+        <action
+            android:id="@+id/action_createRoutineFragment_to_viewRoutinesFragment"
+            app:destination="@id/viewRoutinesFragment"
+            app:popUpTo="@id/viewRoutinesFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/viewRoutineFragment"
+        android:name="com.noahjutz.gymroutines.ui.routines.view_routine.ViewRoutineFragment"
+        android:label="ViewRoutineFragment"
+        tools:layout="@layout/fragment_view_routine" />
 </navigation>
