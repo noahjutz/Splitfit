@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.noahjutz.gymroutines.ui.exercises.view_exercise.ViewExerciseActivity"
+        <activity
+            android:name="com.noahjutz.gymroutines.ui.exercises.view_exercise.ViewExerciseActivity"
             android:label="View Exercise"
-            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity"/>
+            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity" />
         <activity
             android:name="com.noahjutz.gymroutines.ui.exercises.create_exercise.CreateExerciseActivity"
             android:label="Create Exercise" />

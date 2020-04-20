@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.exercises.view_exercises.ViewExercisesActivity">
+    tools:context=".ui.routines.view_routines.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_exercises"
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
@@ -16,10 +16,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        tools:listitem="@layout/exercise_listitem" />
+        tools:listitem="@layout/routine_listitem" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_exercise"
+        android:id="@+id/fab_add_routine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -37,7 +37,7 @@
     <!-- Debug -->
 
     <Button
-        android:id="@+id/button_exercise_sampledata"
+        android:id="@+id/button_routine_sampledata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

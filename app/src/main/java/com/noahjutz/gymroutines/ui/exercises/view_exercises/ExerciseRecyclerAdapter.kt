@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.routine_listitem.view.title
 
 private const val TAG = "VE_ExerciseRecyclerAdapter"
 
+// TODO: Use ListAdapter for animations
 class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: ArrayList<Exercise> = ArrayList()
@@ -33,11 +34,6 @@ class ExerciseRecyclerAdapter(private val onExerciseClickListener: OnExerciseCli
                 holder.bind(items[position])
             }
         }
-    }
-
-    fun submitList(list: ArrayList<Exercise>) {
-        items = list
-        notifyDataSetChanged()
     }
 
     class ExerciseViewHolder(
