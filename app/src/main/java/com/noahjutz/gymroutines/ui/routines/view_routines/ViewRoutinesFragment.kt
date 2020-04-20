@@ -2,28 +2,37 @@ package com.noahjutz.gymroutines.ui.routines.view_routines
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.datasets.RoutineDataSource
-import com.noahjutz.gymroutines.models.Routine
-import kotlinx.android.synthetic.main.activity_view_routines.*
+import com.noahjutz.gymroutines.databinding.FragmentViewRoutinesBinding
+import kotlinx.android.synthetic.main.fragment_view_routines.*
 
 private const val TAG = "ViewRoutinesActivity"
 
-class MainActivity : AppCompatActivity(),
+class ViewRoutinesFragment : Fragment(),
     RoutineRecyclerAdapter.OnRoutineClickListener {
 
     private lateinit var routineAdapter: RoutineRecyclerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_routines)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding: FragmentViewRoutinesBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_view_routines, container, false
+        )
 
-        initRecyclerView()
+        // initRecyclerView()
         populateViews()
 
-        fab_add_routine.setOnClickListener { createRoutine() }
+        // fab_add_routine.setOnClickListener { createRoutine() }
+        return binding.root
     }
 
     private fun populateViews() {
@@ -53,10 +62,10 @@ class MainActivity : AppCompatActivity(),
 
     private fun initRecyclerView() {
         recycler_view.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@ViewRoutinesFragment.context)
             routineAdapter =
                 RoutineRecyclerAdapter(
-                    this@MainActivity
+                    this@ViewRoutinesFragment
                 )
             adapter = routineAdapter
         }

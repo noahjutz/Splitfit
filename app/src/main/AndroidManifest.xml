@@ -9,28 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.routines.view_routines.ViewRoutinesFragment" />
         <activity
-            android:name="com.noahjutz.gymroutines.ui.exercises.view_exercise.ViewExerciseActivity"
-            android:label="View Exercise"
-            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity" />
+            android:name=".ui.exercises.view_exercise.ViewExerciseActivity"
+            android:label="View Exercise" />
         <activity
-            android:name="com.noahjutz.gymroutines.ui.exercises.create_exercise.CreateExerciseActivity"
+            android:name=".ui.exercises.create_exercise.CreateExerciseActivity"
             android:label="Create Exercise" />
         <activity
-            android:name="com.noahjutz.gymroutines.ui.exercises.view_exercises.ViewExercisesActivity"
+            android:name=".ui.exercises.view_exercises.ViewExercisesActivity"
             android:label="Exercises" />
         <activity
-            android:name="com.noahjutz.gymroutines.ui.routines.view_routine.ViewRoutineActivity"
-            android:label="View Routine"
-            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity" />
+            android:name=".ui.routines.view_routine.ViewRoutineActivity"
+            android:label="View Routine" />
         <activity
-            android:name="com.noahjutz.gymroutines.ui.routines.create_routine.CreateRoutineActivity"
-            android:label="Create/Edit Routine"
-            android:parentActivityName="com.noahjutz.gymroutines.ui.routines.view_routine.ViewRoutineActivity" />
-        <activity android:name="com.noahjutz.gymroutines.ui.routines.view_routines.MainActivity">
+            android:name=".ui.routines.create_routine.CreateRoutineActivity"
+            android:label="Create/Edit Routine" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
