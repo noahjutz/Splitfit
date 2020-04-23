@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.exercises.create_exercise
+package com.noahjutz.gymroutines.ui.exercises
 
 import android.os.Bundle
 import android.util.Log

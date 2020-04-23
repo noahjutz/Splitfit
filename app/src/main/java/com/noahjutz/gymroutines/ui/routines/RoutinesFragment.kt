@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.routines.view_routines
+package com.noahjutz.gymroutines.ui.routines
 
 import android.os.Bundle
 import android.util.Log
@@ -50,11 +50,11 @@ class RoutinesFragment : Fragment(),
     }
 
     private fun createRoutine() {
-        findNavController().navigate(R.id.action_viewRoutinesFragment_to_createRoutineFragment)
+        findNavController().navigate(R.id.add_routine)
     }
 
     private fun viewRoutine(pos: Int) {
-        findNavController().navigate(R.id.action_viewRoutinesFragment_to_viewRoutineFragment)
+        findNavController().navigate(R.id.view_edit_routine)
     }
 
     private fun deleteRoutine(pos: Int) {

@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.routines.view_routines
+package com.noahjutz.gymroutines.ui.routines
 
 import android.view.LayoutInflater
 import android.view.View

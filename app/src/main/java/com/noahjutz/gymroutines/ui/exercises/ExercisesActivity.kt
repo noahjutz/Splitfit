@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.exercises.view_exercises
+package com.noahjutz.gymroutines.ui.exercises
 
 import android.os.Bundle
 import android.util.Log
@@ -41,7 +41,10 @@ class ExercisesActivity : AppCompatActivity(), ExerciseAdapter.OnExerciseClickLi
     private fun initRecyclerView() {
         list_exercises.apply {
             layoutManager = LinearLayoutManager(this@ExercisesActivity)
-            exerciseAdapter = ExerciseAdapter(this@ExercisesActivity)
+            exerciseAdapter =
+                ExerciseAdapter(
+                    this@ExercisesActivity
+                )
             adapter = exerciseAdapter
         }
     }

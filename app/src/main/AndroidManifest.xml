@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.routines.view_routines.RoutinesFragment" />
+        <activity android:name=".ui.routines.RoutinesFragment" />
         <activity
             android:name=".ui.exercises.view_exercise.ExerciseActivity"
             android:label="View Exercise" />
         <activity
-            android:name=".ui.exercises.create_exercise.CreateExerciseActivity"
+            android:name=".ui.exercises.CreateExerciseActivity"
             android:label="Create Exercise" />
         <activity
-            android:name=".ui.exercises.view_exercises.ExercisesActivity"
+            android:name=".ui.exercises.ExercisesActivity"
             android:label="Exercises" />
         <activity android:name=".MainActivity">
             <intent-filter>
