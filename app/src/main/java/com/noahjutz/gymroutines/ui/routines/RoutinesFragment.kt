@@ -65,6 +65,9 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun initViews() {
+        // View Listeners
+        debug_button_clear.setOnClickListener { viewModel.clearRoutines() }
+        debug_button_insert.setOnClickListener { viewModel.insertRoutine(Routine("Legs")) }
         // TODO: Populate views
     }
 

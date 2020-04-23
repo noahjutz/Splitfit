@@ -38,12 +38,40 @@
 
         <!-- Debug -->
 
-        <TextView
-            android:id="@+id/debug_textview"
+        <ScrollView
             android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/debug_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                tools:text="AAA\nAAA\nAAA" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/debug_button_insert"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="16dp"
-            tools:text="AAA\nAAA\nAAA" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="Insert" />
+
+        <Button
+            android:id="@+id/debug_button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/debug_button_insert"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="Clear" />
     </RelativeLayout>
 </layout>

@@ -18,6 +18,12 @@ class RoutinesViewModel(
         }
     }
 
+    fun clearRoutines() {
+        viewModelScope.launch {
+            repository.clearRoutines()
+        }
+    }
+
     fun getAllRoutines(): LiveData<List<Routine>> {
         return allRoutines
     }
