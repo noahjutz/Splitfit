@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mvvmtutorial.viewmodel.ViewModelFactory
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.Repository
+import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import kotlinx.android.synthetic.main.fragment_routines.*
 
@@ -17,6 +21,8 @@ private const val TAG = "RoutinesFragment"
 
 class RoutinesFragment : Fragment() {
 
+    private val viewModel: RoutinesViewModel by viewModels { viewModelFactory }
+    private lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +32,7 @@ class RoutinesFragment : Fragment() {
         val binding: FragmentRoutinesBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_routines, container, false
         )
+
         return binding.root
     }
 
@@ -33,15 +40,32 @@ class RoutinesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initRecyclerView()
-        populateViews()
+        initViews()
+        initViewModel()
 
-        activity?.title = "View Routines"
+        requireActivity().title = "View Routines"
 
         fab_add_routine.setOnClickListener { createRoutine() }
     }
 
-    private fun populateViews() {
-        // TODO
+    private fun initViewModel() {
+        viewModelFactory = ViewModelFactory(Repository(requireActivity().application))
+        viewModel.getAllRoutines().observe(viewLifecycleOwner, Observer { routines ->
+            if (routines.isEmpty()) {
+                debug_textview.text = "Empty List :("
+            } else {
+                val sb = StringBuilder()
+                for (routine: Routine in routines) {
+                    sb.append(routine)
+                        .append("\n")
+                }
+                debug_textview.text = sb.toString()
+            }
+        })
+    }
+
+    private fun initViews() {
+        // TODO: Populate views
     }
 
     private fun createRoutine() {

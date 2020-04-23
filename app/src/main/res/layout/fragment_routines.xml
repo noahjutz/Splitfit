@@ -36,5 +36,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add" />
 
+        <!-- Debug -->
+
+        <TextView
+            android:id="@+id/debug_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp"
+            tools:text="AAA\nAAA\nAAA" />
     </RelativeLayout>
 </layout>
