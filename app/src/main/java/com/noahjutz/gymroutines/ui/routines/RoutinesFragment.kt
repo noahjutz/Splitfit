@@ -54,7 +54,7 @@ class RoutinesFragment : Fragment(),
     }
 
     private fun viewRoutine(pos: Int) {
-        findNavController().navigate(R.id.view_edit_routine)
+        findNavController().navigate(R.id.add_routine)
     }
 
     private fun deleteRoutine(pos: Int) {

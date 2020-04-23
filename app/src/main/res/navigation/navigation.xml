@@ -12,21 +12,26 @@
         android:label="RoutinesFragment"
         tools:layout="@layout/fragment_routines">
         <action
-            android:id="@+id/view_edit_routine"
-            app:destination="@id/createRoutineFragment" />
-        <action
             android:id="@+id/add_routine"
-            app:destination="@id/createRoutineFragment" />
+            app:destination="@id/createRoutineActivity" />
     </fragment>
     <fragment
-        android:id="@+id/createRoutineFragment"
-        android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineFragment"
-        android:label="CreateRoutineFragment"
-        tools:layout="@layout/fragment_create_routine">
+        android:id="@+id/exercisesFragment"
+        android:name="com.noahjutz.gymroutines.ui.exercises.ExercisesFragment"
+        android:label="ExercisesFragment"
+        tools:layout="@layout/fragment_exercises">
         <action
-            android:id="@+id/save_routine"
-            app:destination="@id/routinesFragment"
-            app:popUpTo="@id/routinesFragment"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/add_exercise"
+            app:destination="@id/createExerciseActivity" />
     </fragment>
+    <activity
+        android:id="@+id/createExerciseActivity"
+        android:name="com.noahjutz.gymroutines.ui.exercises.CreateExerciseActivity"
+        android:label="activity_create_exercise"
+        tools:layout="@layout/activity_create_exercise" />
+    <activity
+        android:id="@+id/createRoutineActivity"
+        android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineActivity"
+        android:label="CreateRoutineActivity"
+        tools:layout="@layout/activity_create_routine" />
 </navigation>

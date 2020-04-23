@@ -3,10 +3,11 @@ package com.noahjutz.gymroutines.ui.exercises
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.noahjutz.gymroutines.R
 import kotlinx.android.synthetic.main.activity_create_exercise.*
 
-private const val TAG = "CreateRoutineActivity"
+private const val TAG = "CreateExerciseActivity"
 
 class CreateExerciseActivity : AppCompatActivity() {
 
@@ -14,18 +15,12 @@ class CreateExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_exercise)
 
-        populateViews()
-
         fab_save_exercise.setOnClickListener { saveExercise() }
-    }
-
-    private fun populateViews() {
-        Log.d(TAG, "populateViews(): called")
-        // TODO: Populate views if called as edit exercise activity
     }
 
     private fun saveExercise() {
         Log.d(TAG, "saveExercise(): called")
         // TODO: Save to database
+        finish()
     }
 }
