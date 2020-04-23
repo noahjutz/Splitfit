@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.models.Routine
+import com.noahjutz.gymroutines.data.Routine
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 private const val TAG = "RoutinesRoutineAdapter"

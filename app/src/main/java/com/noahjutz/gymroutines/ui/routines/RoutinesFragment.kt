@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
-import com.noahjutz.gymroutines.datasets.RoutineDataSource
 import kotlinx.android.synthetic.main.fragment_routines.*
 
 private const val TAG = "RoutinesFragment"
@@ -44,9 +43,7 @@ class RoutinesFragment : Fragment(),
     }
 
     private fun populateViews() {
-        // TEMPORARY get from dataset
-        val list = RoutineDataSource.createDataSet()
-        routineAdapter.submitList(list)
+        // TODO
     }
 
     private fun createRoutine() {

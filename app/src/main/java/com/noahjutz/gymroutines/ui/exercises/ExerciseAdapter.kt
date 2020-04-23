@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.models.Exercise
+import com.noahjutz.gymroutines.data.Exercise
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 import kotlinx.android.synthetic.main.listitem_routine.view.title
 
