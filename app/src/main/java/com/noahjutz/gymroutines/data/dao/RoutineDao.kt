@@ -12,7 +12,7 @@ interface RoutineDao {
     fun insert(routine: Routine)
 
     @Query("DELETE FROM routine_table")
-    fun deleteAllRoutines()
+    fun clearRoutines()
 
     @Query("SELECT * FROM routine_table ORDER BY name DESC")
     fun getAllRoutines(): LiveData<List<Routine>>

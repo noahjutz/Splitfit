@@ -33,7 +33,7 @@ class CreateRoutineFragment : Fragment() {
         initRecyclerView()
         populateViews()
 
-        activity?.title = "Create/Edit/View Routine"
+        activity?.title = "Create Routine"
 
         button_add_exercise.setOnClickListener { addExercise() }
     }

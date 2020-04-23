@@ -14,9 +14,7 @@ import kotlinx.android.synthetic.main.fragment_exercises.*
 
 private const val TAG = "ExercisesActivity"
 
-class ExercisesFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
-
-    private lateinit var exerciseAdapter: ExerciseAdapter
+class ExercisesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +31,8 @@ class ExercisesFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
         populateViews()
+
+        activity?.title = "View Exercises"
 
         fab_add_exercise.setOnClickListener { createExercise() }
     }
@@ -53,9 +53,5 @@ class ExercisesFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
 
     private fun initRecyclerView() {
         // TODO
-    }
-
-    override fun onExerciseClick(pos: Int) {
-        viewExercise(pos)
     }
 }

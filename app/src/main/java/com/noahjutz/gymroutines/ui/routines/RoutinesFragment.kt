@@ -15,10 +15,8 @@ import kotlinx.android.synthetic.main.fragment_routines.*
 
 private const val TAG = "RoutinesFragment"
 
-class RoutinesFragment : Fragment(),
-    RoutineAdapter.OnRoutineClickListener {
+class RoutinesFragment : Fragment() {
 
-    private lateinit var routineAdapter: RoutineAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +35,7 @@ class RoutinesFragment : Fragment(),
         initRecyclerView()
         populateViews()
 
-        activity?.title = "Gym Routines"
+        activity?.title = "View Routines"
 
         fab_add_routine.setOnClickListener { createRoutine() }
     }
@@ -65,17 +63,6 @@ class RoutinesFragment : Fragment(),
     }
 
     private fun initRecyclerView() {
-        recycler_view.apply {
-            layoutManager = LinearLayoutManager(this@RoutinesFragment.context)
-            routineAdapter =
-                RoutineAdapter(
-                    this@RoutinesFragment
-                )
-            adapter = routineAdapter
-        }
-    }
-
-    override fun onRoutineClick(pos: Int) {
-        viewRoutine(pos)
+        // TODO
     }
 }

@@ -23,9 +23,15 @@ class CreateExerciseFragment : Fragment() {
             inflater, R.layout.fragment_create_exercise, container, false
         )
 
-        populateViews()
-
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        activity?.title= "Create Exercise"
+
+        populateViews()
     }
 
     private fun populateViews() {
