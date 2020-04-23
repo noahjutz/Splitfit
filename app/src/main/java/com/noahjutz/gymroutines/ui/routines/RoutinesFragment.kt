@@ -49,43 +49,23 @@ class RoutinesFragment : Fragment() {
     private fun initViewModel() {
         viewModelFactory = ViewModelFactory(Repository(requireActivity().application))
         viewModel.getRoutines().observe(viewLifecycleOwner, Observer { routines ->
-            if (routines.isEmpty()) {
-                debug_textview.text = "Empty List :("
-            } else {
-                val sb = StringBuilder()
-                for (routine: Routine in routines) {
-                    sb.append(routine)
-                        .append("\n")
-                }
-                debug_textview.text = sb.toString()
-            }
+            debug_textview.text = viewModel.debugText
         })
     }
 
     private fun initViews() {
-        // View Listeners
-        fab_add_routine.setOnClickListener { createRoutine() }
+        // Debug
         debug_button_clear.setOnClickListener { viewModel.clearRoutines() }
         debug_button_insert.setOnClickListener { viewModel.insertRoutine(Routine("Legs")) }
+
+        // View Listeners
+        fab_add_routine.setOnClickListener { addRoutine() }
+
         // TODO: Populate views
     }
 
-    private fun createRoutine() {
+    private fun addRoutine() {
         findNavController().navigate(R.id.add_routine)
-    }
-
-    private fun viewRoutine(pos: Int) {
-        findNavController().navigate(R.id.add_routine)
-    }
-
-    private fun deleteRoutine(pos: Int) {
-        Log.d(TAG, "deleteRoutine(): called at $pos")
-        // TODO
-    }
-
-    private fun editRoutine(pos: Int) {
-        Log.d(TAG, "editRoutine: called at $pos")
-        // TODO: Launch [CreateRoutineActivity]
     }
 
     private fun initRecyclerView() {

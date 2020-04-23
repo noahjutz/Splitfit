@@ -29,14 +29,13 @@ class CreateExerciseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        activity?.title= "Create Exercise"
+        initViews()
 
-        populateViews()
+        activity?.title= "Create Exercise"
     }
 
-    private fun populateViews() {
-        Log.d(TAG, "populateViews(): called")
-        // TODO: Populate views if called as edit exercise activity
+    private fun initViews() {
+        // TODO: Populate Views
     }
 
 }

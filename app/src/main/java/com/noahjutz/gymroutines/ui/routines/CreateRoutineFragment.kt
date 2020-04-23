@@ -34,31 +34,19 @@ class CreateRoutineFragment : Fragment() {
         populateViews()
 
         activity?.title = "Create Routine"
-
-        button_add_exercise.setOnClickListener { addExercise() }
     }
 
     private fun populateViews() {
-        Log.d(TAG, "populateViews(): called")
-        // TODO: Populate views if called as edit activity
+        // Listeners
+        button_add_exercise.setOnClickListener { addExercise() }
+
+        // TODO: Populate Views
     }
 
     private fun addExercise() {
         Log.d(TAG, "addExercise(): called")
         // TODO: Create a pick exercise activity
         // TODO: Launch [PickExerciseActivity]
-    }
-
-    private fun saveRoutine() {
-        Log.d(TAG, "saveRoutine(): called")
-        // TODO: Save to Database
-        // findNavController().navigate(R.id.save_routine)
-
-    }
-
-    private fun viewExercise(pos: Int) {
-        Log.d(TAG, "viewExercise(): called at $pos")
-        // TODO: Launch [ViewExerciseActivity]
     }
 
     private fun initRecyclerView() {

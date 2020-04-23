@@ -19,7 +19,6 @@ class CreateExerciseActivity : AppCompatActivity() {
     }
 
     private fun saveExercise() {
-        Log.d(TAG, "saveExercise(): called")
         // TODO: Save to database
         finish()
     }

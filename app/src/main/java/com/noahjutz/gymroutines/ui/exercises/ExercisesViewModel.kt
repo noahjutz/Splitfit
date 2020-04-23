@@ -11,6 +11,19 @@ import kotlinx.coroutines.launch
 class ExercisesViewModel(private val repository: Repository) : ViewModel() {
     private val exercises = repository.getExercises()
 
+    val debugText: String
+        get() {
+            return if (exercises.value?.isEmpty() == true) {
+                "Empty List :("
+            } else {
+                val sb = StringBuilder()
+                exercises.value?.forEach { exercise ->
+                    sb.append("$exercise\n")
+                }
+                sb.toString()
+            }
+        }
+
     fun insertExercise(exercise: Exercise) {
         CoroutineScope(IO).launch {
             repository.insert(exercise)

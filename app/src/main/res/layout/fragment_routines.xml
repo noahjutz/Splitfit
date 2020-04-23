@@ -40,13 +40,14 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="130dp">
             <TextView
                 android:id="@+id/debug_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:gravity="center"
+                android:gravity="end"
                 tools:text="AAA\nBBB\nCCC" />
         </ScrollView>
 

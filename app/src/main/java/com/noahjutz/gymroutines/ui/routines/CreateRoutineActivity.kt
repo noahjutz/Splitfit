@@ -11,7 +11,14 @@ class CreateRoutineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_routine)
 
+        initViews()
+    }
+
+    private fun initViews() {
+        // Listeners
         fab_save_routine.setOnClickListener { saveRoutine() }
+
+        // TODO: Populate Views
     }
 
     private fun saveRoutine() {
