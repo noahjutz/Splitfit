@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:gravity="center"
-                tools:text="AAA\nAAA\nAAA" />
+                tools:text="AAA\nBBB\nCCC" />
         </ScrollView>
 
         <Button

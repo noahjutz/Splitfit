@@ -12,11 +12,20 @@ class Repository(application: Application) {
     private val exerciseDao = database.exerciseDao
     private val routineDao = database.routineDao
 
-    private val allRoutines = routineDao.getAllRoutines()
+    private val routines = routineDao.getRoutines()
+    private val exercises = exerciseDao.getExercises()
 
+    /**
+     * Routines
+     */
     fun insert(routine: Routine) = CoroutineScope(IO).launch { routineDao.insert(routine) }
-
     fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
+    fun getRoutines(): LiveData<List<Routine>> = routines
 
-    fun getAllRoutines(): LiveData<List<Routine>> = allRoutines
+    /**
+     * Exercises
+     */
+    fun insert(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
+    fun clearExercises() = CoroutineScope(IO).launch { exerciseDao.clearExercises() }
+    fun getExercises(): LiveData<List<Exercise>> = exercises
 }

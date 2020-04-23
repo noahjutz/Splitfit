@@ -44,13 +44,11 @@ class RoutinesFragment : Fragment() {
         initViewModel()
 
         requireActivity().title = "View Routines"
-
-        fab_add_routine.setOnClickListener { createRoutine() }
     }
 
     private fun initViewModel() {
         viewModelFactory = ViewModelFactory(Repository(requireActivity().application))
-        viewModel.getAllRoutines().observe(viewLifecycleOwner, Observer { routines ->
+        viewModel.getRoutines().observe(viewLifecycleOwner, Observer { routines ->
             if (routines.isEmpty()) {
                 debug_textview.text = "Empty List :("
             } else {
@@ -66,6 +64,7 @@ class RoutinesFragment : Fragment() {
 
     private fun initViews() {
         // View Listeners
+        fab_add_routine.setOnClickListener { createRoutine() }
         debug_button_clear.setOnClickListener { viewModel.clearRoutines() }
         debug_button_insert.setOnClickListener { viewModel.insertRoutine(Routine("Legs")) }
         // TODO: Populate views

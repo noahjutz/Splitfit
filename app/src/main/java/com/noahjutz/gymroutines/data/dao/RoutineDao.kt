@@ -15,5 +15,5 @@ interface RoutineDao {
     fun clearRoutines()
 
     @Query("SELECT * FROM routine_table ORDER BY name DESC")
-    fun getAllRoutines(): LiveData<List<Routine>>
+    fun getRoutines(): LiveData<List<Routine>>
 }
