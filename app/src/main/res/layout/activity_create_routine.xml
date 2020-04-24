@@ -8,18 +8,39 @@
         android:layout_height="match_parent"
         tools:context=".ui.routines.CreateRoutineActivity">
 
-        <fragment
-            android:id="@+id/create_routine_fragment"
-            android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            tools:layout="@layout/fragment_create_routine" />
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edit_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_name"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="Description"
+            android:inputType="textMultiLine" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_save_routine"

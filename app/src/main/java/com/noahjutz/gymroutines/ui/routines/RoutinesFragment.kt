@@ -47,22 +47,21 @@ class RoutinesFragment : Fragment() {
         requireActivity().title = "View Routines"
     }
 
-    private fun initViewModel() {
-        viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
-        viewModel.getRoutines().observe(viewLifecycleOwner, Observer { routines ->
-            debug_textview.text = viewModel.debugText
-        })
-    }
-
     private fun initViews() {
         // Debug
         debug_button_clear.setOnClickListener { viewModel.clearRoutines() }
         debug_button_insert.setOnClickListener { viewModel.insertRoutine(Routine("Legs")) }
 
-        // View Listeners
         fab_add_routine.setOnClickListener { addRoutine() }
 
         // TODO: Populate views
+    }
+
+    private fun initViewModel() {
+        viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
+        viewModel.getRoutines().observe(viewLifecycleOwner, Observer { routines ->
+            debug_textview.text = viewModel.debugText
+        })
     }
 
     private fun addRoutine() {

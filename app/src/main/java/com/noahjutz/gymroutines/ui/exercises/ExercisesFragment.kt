@@ -57,10 +57,10 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun initViews() {
-        // Listeners
         fab_add_exercise.setOnClickListener { addExercise() }
         debug_button_insert.setOnClickListener { viewModel.insertExercise(Exercise("Lunge")) }
         debug_button_clear.setOnClickListener { viewModel.clearExercises() }
+
         // TODO: Populate Views
     }
 

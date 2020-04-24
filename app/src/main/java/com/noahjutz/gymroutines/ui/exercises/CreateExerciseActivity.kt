@@ -15,7 +15,15 @@ class CreateExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_exercise)
 
+        initViews()
+
+        title = "Create Exercise"
+    }
+
+    private fun initViews() {
         fab_save_exercise.setOnClickListener { saveExercise() }
+
+        // TODO: Populate Views
     }
 
     private fun saveExercise() {
