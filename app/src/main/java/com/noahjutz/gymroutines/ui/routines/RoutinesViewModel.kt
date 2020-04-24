@@ -8,6 +8,8 @@ import com.noahjutz.gymroutines.data.Routine
 import kotlinx.android.synthetic.main.fragment_routines.*
 import kotlinx.coroutines.launch
 
+private const val TAG = "RoutinesViewModel"
+
 class RoutinesViewModel(
     private val repository: Repository
 ) : ViewModel() {

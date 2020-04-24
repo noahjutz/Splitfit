@@ -2,7 +2,6 @@ package com.noahjutz.gymroutines.ui.exercises
 
 import android.os.Bundle
 import com.noahjutz.gymroutines.databinding.*
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.mvvmtutorial.viewmodel.ViewModelFactory
+import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
-import com.noahjutz.gymroutines.data.Repository
 import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_exercises.debug_button_clear
 import kotlinx.android.synthetic.main.fragment_exercises.debug_button_insert

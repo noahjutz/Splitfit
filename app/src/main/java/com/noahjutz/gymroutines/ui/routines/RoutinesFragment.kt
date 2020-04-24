@@ -1,7 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.mvvmtutorial.viewmodel.ViewModelFactory
+import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import kotlinx.android.synthetic.main.fragment_routines.*

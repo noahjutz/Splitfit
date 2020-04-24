@@ -1,10 +1,10 @@
-package com.example.mvvmtutorial.viewmodel
+package com.noahjutz.gymroutines
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
+import com.noahjutz.gymroutines.ui.routines.CreateRoutineViewModel
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -20,6 +20,11 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(ExercisesViewModel::class.java) -> {
                 ExercisesViewModel(
+                    repository
+                ) as T
+            }
+            modelClass.isAssignableFrom(CreateRoutineViewModel::class.java) -> {
+                CreateRoutineViewModel(
                     repository
                 ) as T
             }
