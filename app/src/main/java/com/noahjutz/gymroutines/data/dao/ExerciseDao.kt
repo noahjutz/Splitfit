@@ -15,6 +15,6 @@ interface ExerciseDao {
     @Query("DELETE FROM exercise_table")
     fun clearExercises()
 
-    @Query("SELECT * FROM exercise_table")
+    @Query("SELECT * FROM exercise_table ORDER BY name DESC")
     fun getExercises(): LiveData<List<Exercise>>
 }

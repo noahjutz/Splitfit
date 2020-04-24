@@ -3,6 +3,7 @@ package com.noahjutz.gymroutines
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.noahjutz.gymroutines.data.Repository
+import com.noahjutz.gymroutines.ui.exercises.CreateExerciseViewModel
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.ui.routines.CreateRoutineViewModel
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
@@ -25,6 +26,11 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(CreateRoutineViewModel::class.java) -> {
                 CreateRoutineViewModel(
+                    repository
+                ) as T
+            }
+            modelClass.isAssignableFrom(CreateExerciseViewModel::class.java) -> {
+                CreateExerciseViewModel(
                     repository
                 ) as T
             }

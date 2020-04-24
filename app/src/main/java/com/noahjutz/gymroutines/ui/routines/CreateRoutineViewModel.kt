@@ -9,9 +9,5 @@ import kotlinx.coroutines.launch
 private const val TAG = "CreateRoutineViewModel"
 
 class CreateRoutineViewModel(private val repository: Repository) : ViewModel() {
-    fun insertRoutine(routine: Routine) {
-        viewModelScope.launch {
-            repository.insert(routine)
-        }
-    }
+    fun insertRoutine(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
 }
