@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class Repository(application: Application) {
+class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
 
     private val exerciseDao = database.exerciseDao
@@ -14,6 +14,19 @@ class Repository(application: Application) {
 
     private val routines = routineDao.getRoutines()
     private val exercises = exerciseDao.getExercises()
+
+    /**
+     * Singleton instantiation with constructor parameter
+     */
+    companion object {
+        @Volatile
+        private var INSTANCE: Repository? = null
+
+        fun getInstance(application: Application) =
+            INSTANCE ?: synchronized(this) {
+                Repository(application).also { INSTANCE = it }
+            }
+    }
 
     /**
      * Routines

@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mvvmtutorial.viewmodel.ViewModelFactory
+import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
@@ -49,7 +50,7 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModelFactory = ViewModelFactory(Repository(requireActivity().application))
+        viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
         viewModel.getExercises().observe(viewLifecycleOwner, Observer { exercises ->
             debug_textview.text = viewModel.debugText
         })

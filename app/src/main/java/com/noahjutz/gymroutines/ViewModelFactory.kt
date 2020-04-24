@@ -12,14 +12,14 @@ class ViewModelFactory(
     private val repository: Repository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        when {
+        return when {
             modelClass.isAssignableFrom(RoutinesViewModel::class.java) -> {
-                return RoutinesViewModel(
+                RoutinesViewModel(
                     repository
                 ) as T
             }
             modelClass.isAssignableFrom(ExercisesViewModel::class.java) -> {
-                return ExercisesViewModel(
+                ExercisesViewModel(
                     repository
                 ) as T
             }

@@ -12,6 +12,9 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val routineDao: RoutineDao
 
+    /**
+     * Singleton instantiation with constructor parameter
+     */
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
