@@ -8,6 +8,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Switch
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
@@ -91,7 +93,13 @@ class RoutinesFragment : Fragment() {
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    viewModel.delete(adapter.getRoutineAt(viewHolder.adapterPosition))
+                    val routine = adapter.getRoutineAt(viewHolder.adapterPosition)
+                    viewModel.delete(routine)
+                    Snackbar.make(recycler_view, "Deleted ${routine.name}", Snackbar.LENGTH_SHORT)
+                        .setAction("Undo", View.OnClickListener {
+                            viewModel.insert(routine)
+                        })
+                        .show()
                 }
 
             }).attachToRecyclerView(it)
