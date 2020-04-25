@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.ui.exercises
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
@@ -9,20 +10,23 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class ExercisesViewModel(private val repository: Repository) : ViewModel() {
-    private val exercises = repository.getExercises()
+    val exercises: LiveData<List<Exercise>>
+        get() = repository.getExercises()
 
-    val debugText: String
-        get() {
-            return if (exercises.value?.isEmpty() == true) {
-                "Empty List :("
-            } else {
-                val sb = StringBuilder()
-                exercises.value?.forEach { exercise ->
-                    sb.append("$exercise\n")
-                }
-                sb.toString()
-            }
+    /**
+     * Data Binding fields
+     */
+    private val _debugText = MutableLiveData<String>()
+    val debugText: LiveData<String>
+        get() = _debugText
+
+    fun updateDebugText() {
+        val sb = StringBuilder("Exercises:\n")
+        exercises.value?.forEach { exercise ->
+            sb.append("$exercise\n")
         }
+        _debugText.value = sb.toString()
+    }
 
     fun insertExercise(exercise: Exercise) {
         CoroutineScope(IO).launch {
@@ -34,9 +38,5 @@ class ExercisesViewModel(private val repository: Repository) : ViewModel() {
         CoroutineScope(IO).launch {
             repository.clearExercises()
         }
-    }
-
-    fun getExercises(): LiveData<List<Exercise>> {
-        return exercises
     }
 }

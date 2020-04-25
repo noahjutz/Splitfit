@@ -1,6 +1,8 @@
 package com.noahjutz.gymroutines.ui.routines
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.gymroutines.data.Repository
@@ -13,20 +15,23 @@ private const val TAG = "RoutinesViewModel"
 class RoutinesViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    private val routines = repository.getRoutines()
+    val routines: LiveData<List<Routine>>
+        get() = repository.getRoutines()
 
-    val debugText: String
-        get() {
-            return if (routines.value?.isEmpty() == true) {
-                "Empty List :("
-            } else {
-                val sb = StringBuilder()
-                routines.value?.forEach { routine ->
-                    sb.append("$routine\n")
-                }
-                sb.toString()
-            }
+    /**
+     * Data Binding fields
+     */
+    private val _debugText = MutableLiveData<String>()
+    val debugText: LiveData<String>
+        get() = _debugText
+
+    fun updateDebugText() {
+        val sb = StringBuilder("Routines:\n")
+        routines.value?.forEach { routine ->
+            sb.append("$routine\n")
         }
+        _debugText.value = sb.toString()
+    }
 
     fun insertRoutine(routine: Routine) {
         viewModelScope.launch {
@@ -38,9 +43,5 @@ class RoutinesViewModel(
         viewModelScope.launch {
             repository.clearRoutines()
         }
-    }
-
-    fun getRoutines(): LiveData<List<Routine>> {
-        return routines
     }
 }

@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:gravity="end"
-                tools:text="AAA\nBBB\nCCC" />
+                android:text="@{viewmodel.debugText, default=error_binding}"/>
         </ScrollView>
 
         <Button

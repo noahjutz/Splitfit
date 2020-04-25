@@ -25,13 +25,14 @@ class ExercisesFragment : Fragment() {
 
     private val viewModel: ExercisesViewModel by viewModels { viewModelFactory }
     private lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var binding: FragmentExercisesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentExercisesBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_exercises, container, false
         )
         return binding.root
@@ -49,8 +50,10 @@ class ExercisesFragment : Fragment() {
 
     private fun initViewModel() {
         viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
-        viewModel.getExercises().observe(viewLifecycleOwner, Observer { exercises ->
-            debug_textview.text = viewModel.debugText
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
+            viewModel.updateDebugText()
         })
     }
 
