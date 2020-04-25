@@ -13,10 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.noahjutz.gymroutines.ViewModelFactory
+import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import kotlinx.android.synthetic.main.fragment_routines.*
@@ -57,7 +59,7 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        adapter = RoutinesAdapter(object: RoutinesAdapter.OnItemClickListener {
+        adapter = RoutinesAdapter(object : RoutinesAdapter.OnItemClickListener {
             override fun onItemClick(routine: Routine) {
                 Log.d(TAG, "onItemClick: $routine")
                 // TODO
@@ -78,6 +80,21 @@ class RoutinesFragment : Fragment() {
                     resources.getDimension(R.dimen.default_padding).toInt()
                 )
             )
+            ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    viewModel.delete(adapter.getRoutineAt(viewHolder.adapterPosition))
+                }
+
+            }).attachToRecyclerView(it)
         }
     }
 
@@ -127,7 +144,7 @@ class RoutinesFragment : Fragment() {
             add("Very cool routine")
             add("My new routine")
         }
-        viewModel.insertRoutine(
+        viewModel.insert(
             Routine(
                 names[i1],
                 descriptions[i2]

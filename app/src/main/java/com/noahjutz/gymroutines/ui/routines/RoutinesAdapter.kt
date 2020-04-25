@@ -27,6 +27,7 @@ class RoutinesAdapter(
         }
     }
 ) {
+    fun getRoutineAt(pos: Int): Routine = getItem(pos)
 
     inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {

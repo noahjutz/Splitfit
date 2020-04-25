@@ -33,9 +33,15 @@ class RoutinesViewModel(
         _debugText.value = sb.toString()
     }
 
-    fun insertRoutine(routine: Routine) {
+    fun insert(routine: Routine) {
         viewModelScope.launch {
             repository.insert(routine)
+        }
+    }
+
+    fun delete(routine: Routine) {
+        viewModelScope.launch {
+            repository.delete(routine)
         }
     }
 
