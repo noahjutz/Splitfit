@@ -42,34 +42,37 @@ class ExercisesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initRecyclerView()
-        initViews()
         initViewModel()
+        initBinding()
 
-        activity?.title = "View Exercises"
+        requireActivity().title = "View Exercises"
+    }
+
+    private fun initRecyclerView() {
+        // TODO
     }
 
     private fun initViewModel() {
         viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             viewModel.updateDebugText()
         })
     }
 
-    private fun initViews() {
-        fab_add_exercise.setOnClickListener { addExercise() }
-        debug_button_insert.setOnClickListener { viewModel.insertExercise(Exercise("Lunge")) }
-        debug_button_clear.setOnClickListener { viewModel.clearExercises() }
-
-        // TODO: Populate Views
+    private fun initBinding() {
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.fragment = this
     }
 
-    private fun addExercise() {
+    /**
+     * Data binding click listeners
+     */
+    fun debugInsertExercise() {
+        viewModel.insertExercise(Exercise("Lunge"))
+    }
+
+    fun addExercise() {
         findNavController().navigate(R.id.add_exercise)
-    }
-
-    private fun initRecyclerView() {
-        // TODO
     }
 }

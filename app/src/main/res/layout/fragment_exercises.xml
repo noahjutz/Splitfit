@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.noahjutz.gymroutines.ui.exercises.ExercisesFragment" />
     </data>
 
     <RelativeLayout
@@ -39,6 +43,7 @@
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{() -> fragment.addExercise()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add" />
@@ -49,13 +54,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="130dp">
+
             <TextView
                 android:id="@+id/debug_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:gravity="end"
-                android:text="@{viewmodel.debugText, default=error_binding}"/>
+                android:text="@{viewmodel.debugText, default=error_binding}" />
         </ScrollView>
 
         <Button
@@ -67,6 +73,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:onClick="@{() -> fragment.debugInsertExercise()}"
             android:text="Insert" />
 
         <Button
@@ -79,6 +86,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:onClick="@{() -> viewmodel.clearExercises()}"
             android:text="Clear" />
 
     </RelativeLayout>

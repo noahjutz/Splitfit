@@ -4,9 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.noahjutz.gymroutines.ui.routines.RoutinesViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.noahjutz.gymroutines.ui.routines.RoutinesFragment" />
     </data>
 
     <RelativeLayout
@@ -38,6 +43,7 @@
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{() -> fragment.addRoutine()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add" />
@@ -68,6 +74,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:onClick="@{() -> fragment.debugInsertRoutine()}"
             android:text="Insert" />
 
         <Button
@@ -80,6 +87,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:onClick="@{() -> viewmodel.clearRoutines()}"
             android:text="Clear" />
     </RelativeLayout>
 </layout>

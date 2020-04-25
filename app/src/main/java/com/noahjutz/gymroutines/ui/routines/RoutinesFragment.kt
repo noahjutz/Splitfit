@@ -42,37 +42,38 @@ class RoutinesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initRecyclerView()
-        initViews()
         initViewModel()
+        initBinding()
 
         requireActivity().title = "View Routines"
     }
 
-    private fun initViews() {
-        // Debug
-        debug_button_clear.setOnClickListener { viewModel.clearRoutines() }
-        debug_button_insert.setOnClickListener { viewModel.insertRoutine(Routine("Legs")) }
-
-        fab_add_routine.setOnClickListener { addRoutine() }
-
-        // TODO: Populate views
+    private fun initRecyclerView() {
+        // TODO
     }
 
     private fun initViewModel() {
         viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.routines.observe(viewLifecycleOwner, Observer { routines ->
             Log.d(TAG, "Routines: $routines")
             viewModel.updateDebugText()
         })
     }
 
-    private fun addRoutine() {
-        findNavController().navigate(R.id.add_routine)
+    private fun initBinding() {
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.fragment = this
     }
 
-    private fun initRecyclerView() {
-        // TODO
+    /**
+     * Data Binding click listeners
+     */
+    fun debugInsertRoutine() {
+        viewModel.insertRoutine(Routine("Legs"))
+    }
+
+    fun addRoutine() {
+        findNavController().navigate(R.id.add_routine)
     }
 }
