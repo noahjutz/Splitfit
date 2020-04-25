@@ -62,6 +62,11 @@ class RoutinesFragment : Fragment() {
             it.layoutManager = LinearLayoutManager(requireContext())
             it.setHasFixedSize(true)
             it.adapter = adapter
+            it.addItemDecoration(
+                MarginItemDecoration(
+                    resources.getDimension(R.dimen.default_padding).toInt()
+                )
+            )
         }
     }
 
@@ -107,10 +112,12 @@ class RoutinesFragment : Fragment() {
             add("Very cool routine")
             add("My new routine")
         }
-        viewModel.insertRoutine(Routine(
-            names[i1],
-            descriptions[i2]
-        ))
+        viewModel.insertRoutine(
+            Routine(
+                names[i1],
+                descriptions[i2]
+            )
+        )
     }
 
     fun addRoutine() {
