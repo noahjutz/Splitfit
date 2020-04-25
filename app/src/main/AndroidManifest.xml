@@ -9,18 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.routines.CreateRoutineActivity"></activity>
-        <activity android:name=".ui.routines.RoutinesFragment" />
         <activity
-            android:name=".ui.exercises.view_exercise.ExerciseActivity"
-            android:label="View Exercise" />
+            android:name=".ui.routines.CreateRoutineActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ui.exercises.CreateExerciseActivity"
-            android:label="Create Exercise" />
-        <activity
-            android:name=".ui.exercises.ExercisesFragment"
-            android:label="Exercises" />
-        <activity android:name=".MainActivity">
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

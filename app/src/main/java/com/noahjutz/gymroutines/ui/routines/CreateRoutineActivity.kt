@@ -22,9 +22,13 @@ class CreateRoutineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_routine)
 
+        initActivity()
         initBinding()
+    }
 
+    private fun initActivity() {
         title = "Create Routine"
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
     }
 
     private fun initBinding() {

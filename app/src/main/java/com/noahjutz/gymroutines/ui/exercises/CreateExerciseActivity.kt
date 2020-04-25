@@ -27,9 +27,13 @@ class CreateExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_exercise)
 
+        initActivity()
         initBinding()
+    }
 
+    private fun initActivity() {
         title = "Create Exercise"
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
     }
 
     private fun initBinding() {
