@@ -24,7 +24,9 @@ private const val TAG = "ExercisesActivity"
 class ExercisesFragment : Fragment() {
 
     private val viewModel: ExercisesViewModel by viewModels { viewModelFactory }
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModelFactory: ViewModelFactory by lazy {
+        InjectorUtils.provideViewModelFactory(requireActivity().application)
+    }
     private lateinit var binding: FragmentExercisesBinding
 
     override fun onCreateView(
@@ -53,7 +55,6 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
         viewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             viewModel.updateDebugText()
         })

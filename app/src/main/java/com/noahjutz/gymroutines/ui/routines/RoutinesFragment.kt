@@ -23,7 +23,9 @@ private const val TAG = "RoutinesFragment"
 class RoutinesFragment : Fragment() {
 
     private val viewModel: RoutinesViewModel by viewModels { viewModelFactory }
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModelFactory: ViewModelFactory by lazy {
+        InjectorUtils.provideViewModelFactory(requireActivity().application)
+    }
     private lateinit var binding: FragmentRoutinesBinding
 
     override fun onCreateView(
@@ -53,7 +55,6 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModelFactory = InjectorUtils.provideViewModelFactory(requireActivity().application)
         viewModel.routines.observe(viewLifecycleOwner, Observer { routines ->
             Log.d(TAG, "Routines: $routines")
             viewModel.updateDebugText()

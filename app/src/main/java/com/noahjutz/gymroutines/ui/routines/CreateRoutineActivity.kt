@@ -12,20 +12,17 @@ import kotlinx.android.synthetic.main.activity_create_routine.*
 class CreateRoutineActivity : AppCompatActivity() {
 
     private val viewModel: CreateRoutineViewModel by viewModels { viewModelFactory }
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModelFactory: ViewModelFactory by lazy {
+        InjectorUtils.provideViewModelFactory(application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_routine)
 
-        initViewModel()
         initViews()
 
         title = "Create Routine"
-    }
-
-    private fun initViewModel() {
-        viewModelFactory = InjectorUtils.provideViewModelFactory(application)
     }
 
     private fun initViews() {

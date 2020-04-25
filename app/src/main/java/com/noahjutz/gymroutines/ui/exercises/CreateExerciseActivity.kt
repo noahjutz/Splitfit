@@ -16,20 +16,17 @@ private const val TAG = "CreateExerciseActivity"
 class CreateExerciseActivity : AppCompatActivity() {
 
     private val viewModel: CreateExerciseViewModel by viewModels { viewModelFactory }
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val viewModelFactory: ViewModelFactory by lazy {
+        InjectorUtils.provideViewModelFactory(application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_exercise)
 
-        initViewModel()
         initViews()
 
         title = "Create Exercise"
-    }
-
-    private fun initViewModel() {
-        viewModelFactory = InjectorUtils.provideViewModelFactory(application)
     }
 
     private fun initViews() {
