@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Switch
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,6 +20,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import kotlinx.android.synthetic.main.fragment_routines.*
+import java.util.*
 
 private const val TAG = "RoutinesFragment"
 
@@ -77,8 +81,36 @@ class RoutinesFragment : Fragment() {
     /**
      * Data Binding click listeners
      */
+    fun showDebug(view: View) {
+        if ((view as Switch).isChecked) {
+            debug_button_insert.visibility = VISIBLE
+            debug_button_clear.visibility = VISIBLE
+            debug_textview.visibility = VISIBLE
+        } else {
+            debug_button_insert.visibility = GONE
+            debug_button_clear.visibility = GONE
+            debug_textview.visibility = GONE
+        }
+    }
+
     fun debugInsertRoutine() {
-        viewModel.insertRoutine(Routine("Legs"))
+        // Generate random routine and insert it
+        val i1 = (0..2).shuffled().first()
+        val i2 = (0..2).shuffled().first()
+        val names = ArrayList<String>().apply {
+            add("Legs")
+            add("Push")
+            add("Pull")
+        }
+        val descriptions = ArrayList<String>().apply {
+            add("")
+            add("Very cool routine")
+            add("My new routine")
+        }
+        viewModel.insertRoutine(Routine(
+            names[i1],
+            descriptions[i2]
+        ))
     }
 
     fun addRoutine() {
