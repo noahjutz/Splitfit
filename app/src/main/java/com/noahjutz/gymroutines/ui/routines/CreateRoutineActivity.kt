@@ -3,10 +3,12 @@ package com.noahjutz.gymroutines.ui.routines
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Routine
+import com.noahjutz.gymroutines.databinding.ActivityCreateRoutineBinding
 import kotlinx.android.synthetic.main.activity_create_routine.*
 
 class CreateRoutineActivity : AppCompatActivity() {
@@ -20,18 +22,23 @@ class CreateRoutineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_routine)
 
-        initViews()
+        initBinding()
 
         title = "Create Routine"
     }
 
-    private fun initViews() {
-        fab_save_routine.setOnClickListener { saveRoutine() }
-
-        // TODO: Populate Views
+    private fun initBinding() {
+        DataBindingUtil.setContentView<ActivityCreateRoutineBinding>(
+            this, R.layout.activity_create_routine
+        ).let {
+            it.activity = this
+        }
     }
 
-    private fun saveRoutine() {
+    /**
+     * Data Binding click listeners
+     */
+    fun saveRoutine() {
         if (edit_name.text.trim().isEmpty()) return
         val routine = Routine(
             edit_name.text.toString().trim(),
