@@ -57,7 +57,18 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        adapter = RoutinesAdapter()
+        adapter = RoutinesAdapter(object: RoutinesAdapter.OnItemClickListener {
+            override fun onItemClick(routine: Routine) {
+                Log.d(TAG, "onItemClick: $routine")
+                // TODO
+            }
+
+            override fun onItemLongClick(routine: Routine) {
+                Log.d(TAG, "onItemLongClick: $routine")
+                // TODO
+            }
+
+        })
         recycler_view.let {
             it.layoutManager = LinearLayoutManager(requireContext())
             it.setHasFixedSize(true)
@@ -98,6 +109,10 @@ class RoutinesFragment : Fragment() {
         }
     }
 
+    fun addRoutine() {
+        findNavController().navigate(R.id.add_routine)
+    }
+
     fun debugInsertRoutine() {
         // Generate random routine and insert it
         val i1 = (0..2).shuffled().first()
@@ -118,9 +133,5 @@ class RoutinesFragment : Fragment() {
                 descriptions[i2]
             )
         )
-    }
-
-    fun addRoutine() {
-        findNavController().navigate(R.id.add_routine)
     }
 }

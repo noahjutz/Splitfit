@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Routine
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
-class RoutinesAdapter : ListAdapter<Routine, RoutinesAdapter.RoutineHolder>(
+class RoutinesAdapter(
+    private val onItemClickListener: OnItemClickListener
+) : ListAdapter<Routine, RoutinesAdapter.RoutineHolder>(
     object : DiffUtil.ItemCallback<Routine>() {
         override fun areItemsTheSame(oldItem: Routine, newItem: Routine): Boolean {
             return oldItem.routineId == newItem.routineId
@@ -25,7 +28,17 @@ class RoutinesAdapter : ListAdapter<Routine, RoutinesAdapter.RoutineHolder>(
     }
 ) {
 
-    class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                this@RoutinesAdapter.onItemClickListener.onItemClick(getItem(adapterPosition))
+            }
+            itemView.setOnLongClickListener {
+                this@RoutinesAdapter.onItemClickListener.onItemLongClick(getItem(adapterPosition))
+                true
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineHolder {
         return RoutineHolder(
@@ -42,6 +55,11 @@ class RoutinesAdapter : ListAdapter<Routine, RoutinesAdapter.RoutineHolder>(
         if (routine.description.trim().isEmpty()) {
             holder.itemView.description.visibility = GONE
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(routine: Routine)
+        fun onItemLongClick(routine: Routine)
     }
 }
 
