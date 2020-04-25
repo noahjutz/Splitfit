@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
 import java.util.*
 
@@ -63,12 +65,11 @@ class RoutinesFragment : Fragment() {
     private fun initRecyclerView() {
         adapter = RoutinesAdapter(object : RoutinesAdapter.OnItemClickListener {
             override fun onItemClick(routine: Routine) {
-                Log.d(TAG, "onItemClick: $routine")
-                // TODO
+                val action = RoutinesFragmentDirections.addRoutine(routine.routineId)
+                findNavController().navigate(action)
             }
 
             override fun onItemLongClick(routine: Routine) {
-                Log.d(TAG, "onItemLongClick: $routine")
                 // TODO
             }
 
@@ -82,8 +83,10 @@ class RoutinesFragment : Fragment() {
                     resources.getDimension(R.dimen.default_padding).toInt()
                 )
             )
-            ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ) {
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
@@ -96,9 +99,10 @@ class RoutinesFragment : Fragment() {
                     val routine = adapter.getRoutineAt(viewHolder.adapterPosition)
                     viewModel.delete(routine)
                     Snackbar.make(recycler_view, "Deleted ${routine.name}", Snackbar.LENGTH_SHORT)
-                        .setAction("Undo", View.OnClickListener {
+                        .setAction("Undo") {
                             viewModel.insert(routine)
-                        })
+                        }
+                        .setAnchorView(fab_add_routine)
                         .show()
                 }
 
@@ -134,10 +138,6 @@ class RoutinesFragment : Fragment() {
         }
     }
 
-    fun addRoutine() {
-        findNavController().navigate(R.id.add_routine)
-    }
-
     fun debugInsertRoutine() {
         // Generate random routine and insert it
         val i1 = (0..2).shuffled().first()
@@ -158,5 +158,10 @@ class RoutinesFragment : Fragment() {
                 descriptions[i2]
             )
         )
+    }
+
+    fun addRoutine() {
+        val action = RoutinesFragmentDirections.addRoutine(-1)
+        findNavController().navigate(action)
     }
 }

@@ -13,7 +13,11 @@
         tools:layout="@layout/fragment_routines">
         <action
             android:id="@+id/add_routine"
-            app:destination="@id/createRoutineActivity" />
+            app:destination="@id/createRoutineActivity">
+            <argument
+                android:name="routineId"
+                app:argType="integer" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/exercisesFragment"
@@ -33,5 +37,9 @@
         android:id="@+id/createRoutineActivity"
         android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineActivity"
         android:label="CreateRoutineActivity"
-        tools:layout="@layout/activity_create_routine" />
+        tools:layout="@layout/activity_create_routine">
+        <argument
+            android:name="routineId"
+            app:argType="integer" />
+    </activity>
 </navigation>
