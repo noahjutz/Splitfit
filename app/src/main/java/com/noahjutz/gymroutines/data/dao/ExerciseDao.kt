@@ -1,9 +1,7 @@
 package com.noahjutz.gymroutines.data.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Routine
 
@@ -11,6 +9,12 @@ import com.noahjutz.gymroutines.data.Routine
 interface ExerciseDao {
     @Insert
     fun insert(exercise: Exercise)
+
+    @Delete
+    fun delete(exercise: Exercise)
+
+    @Update
+    fun update(exercise: Exercise)
 
     @Query("DELETE FROM exercise_table")
     fun clearExercises()

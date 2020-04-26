@@ -1,13 +1,11 @@
 package com.noahjutz.gymroutines.ui.exercises
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
+import androidx.navigation.navArgs
 import com.noahjutz.gymroutines.InjectorUtils
-import com.noahjutz.gymroutines.MainActivity
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Exercise
@@ -18,6 +16,7 @@ private const val TAG = "CreateExerciseActivity"
 
 class CreateExerciseActivity : AppCompatActivity() {
 
+    private val args: CreateExerciseActivityArgs by navArgs()
     private val viewModel: CreateExerciseViewModel by viewModels { viewModelFactory }
     private val viewModelFactory: ViewModelFactory by lazy {
         InjectorUtils.provideViewModelFactory(application)
@@ -27,13 +26,21 @@ class CreateExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_exercise)
 
-        initActivity()
         initBinding()
+        initActivity()
     }
 
     private fun initActivity() {
-        title = "Create Exercise"
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
+        title = "Create Exercise"
+
+        if (args.exerciseId != -1) {
+            title = "Edit Exercise"
+
+            val exercise = viewModel.getExerciseById(args.exerciseId)
+            edit_name.setText(exercise.name)
+            edit_description.setText(exercise.description)
+        }
     }
 
     private fun initBinding() {
@@ -49,11 +56,20 @@ class CreateExerciseActivity : AppCompatActivity() {
      */
     fun saveExercise() {
         if (edit_name.text.toString().trim().isEmpty()) return
-        val exercise = Exercise(
-            edit_name.text.toString().trim(),
-            edit_description.text.toString().trim()
-        )
-        viewModel.insert(exercise)
+
+        if (args.exerciseId != -1) {
+            val exercise = viewModel.getExerciseById(args.exerciseId).apply {
+                name = edit_name.text.toString().trim()
+                description = edit_description.text.toString().trim()
+            }
+            viewModel.updateExercise(exercise)
+        } else {
+            val exercise = Exercise(
+                edit_name.text.toString().trim(),
+                edit_description.text.toString().trim()
+            )
+            viewModel.insert(exercise)
+        }
         finish()
     }
 }

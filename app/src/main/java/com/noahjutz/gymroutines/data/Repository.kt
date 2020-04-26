@@ -32,14 +32,17 @@ class Repository private constructor(application: Application) {
      * Routines
      */
     fun insert(routine: Routine) = CoroutineScope(IO).launch { routineDao.insert(routine) }
-    fun delete(routine: Routine)  = CoroutineScope(IO).launch { routineDao.delete(routine) }
+    fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
     fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
     fun getRoutines(): LiveData<List<Routine>> = routines
     fun update(routine: Routine) = CoroutineScope(IO).launch { routineDao.update(routine) }
+
     /**
      * Exercises
      */
     fun insert(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
+    fun delete(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.delete(exercise) }
     fun clearExercises() = CoroutineScope(IO).launch { exerciseDao.clearExercises() }
     fun getExercises(): LiveData<List<Exercise>> = exercises
+    fun update(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.update(exercise) }
 }

@@ -20,7 +20,7 @@
         tools:context=".ui.exercises.ExercisesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_exercises"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -50,31 +50,31 @@
 
         <!-- Debug -->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="130dp">
-
-            <TextView
-                android:id="@+id/debug_textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="end"
-                android:text="@{viewmodel.debugText, default=error_binding}" />
-        </ScrollView>
+        <Switch
+            android:id="@+id/debug_button_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="@{(view) -> fragment.showDebug(view)}" />
 
         <Button
             android:id="@+id/debug_button_insert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/debug_button_show"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:onClick="@{() -> fragment.debugInsertExercise()}"
-            android:text="Insert" />
+            android:text="Insert"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/debug_button_clear"
@@ -87,7 +87,18 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:onClick="@{() -> viewmodel.clearExercises()}"
-            android:text="Clear" />
+            android:text="Clear"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/debug_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/debug_button_clear"
+            android:layout_margin="16dp"
+            android:gravity="end"
+            android:text="@{viewmodel.debugText, default=error_binding}"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </layout>

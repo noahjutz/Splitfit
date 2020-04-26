@@ -3,6 +3,7 @@ package com.noahjutz.gymroutines.ui.exercises
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import kotlinx.coroutines.CoroutineScope
@@ -28,14 +29,20 @@ class ExercisesViewModel(private val repository: Repository) : ViewModel() {
         _debugText.value = sb.toString()
     }
 
-    fun insertExercise(exercise: Exercise) {
-        CoroutineScope(IO).launch {
+    fun insert(exercise: Exercise) {
+        viewModelScope.launch {
             repository.insert(exercise)
         }
     }
 
+    fun delete(exercise: Exercise) {
+        viewModelScope.launch {
+            repository.delete(exercise)
+        }
+    }
+
     fun clearExercises() {
-        CoroutineScope(IO).launch {
+        viewModelScope.launch {
             repository.clearExercises()
         }
     }

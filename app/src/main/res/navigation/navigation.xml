@@ -26,13 +26,21 @@
         tools:layout="@layout/fragment_exercises">
         <action
             android:id="@+id/add_exercise"
-            app:destination="@id/createExerciseActivity" />
+            app:destination="@id/createExerciseActivity">
+            <argument
+                android:name="exerciseId"
+                app:argType="integer" />
+        </action>
     </fragment>
     <activity
         android:id="@+id/createExerciseActivity"
         android:name="com.noahjutz.gymroutines.ui.exercises.CreateExerciseActivity"
         android:label="activity_create_exercise"
-        tools:layout="@layout/activity_create_exercise" />
+        tools:layout="@layout/activity_create_exercise">
+        <argument
+            android:name="exerciseId"
+            app:argType="integer" />
+    </activity>
     <activity
         android:id="@+id/createRoutineActivity"
         android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineActivity"
