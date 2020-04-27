@@ -1,10 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines
 
-import androidx.databinding.Bindable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
 import kotlinx.coroutines.launch
@@ -24,6 +21,25 @@ class CreateRoutineViewModel(
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
+    private val _routine = MediatorLiveData<Routine>()
+    val routine: LiveData<Routine>
+        get() = _routine
+
+    init {
+        _routine.value = Routine("")
+
+        _routine.addSource(name) { name ->
+            _routine.value = _routine.value.also {
+                it?.name = name
+            }
+        }
+        _routine.addSource(description) { description ->
+            _routine.value = _routine.value.also {
+                it?.description = description
+            }
+        }
+    }
+
     fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
     fun update(routine: Routine) = viewModelScope.launch { repository.update(routine) }
     fun getRoutineById(id: Int): Routine? = routines.value?.find { it.routineId == id }
@@ -37,10 +53,6 @@ class CreateRoutineViewModel(
     }
 
     fun insert() {
-        val routine = Routine(
-            name.value.toString(),
-            description.value.toString()
-        )
-        insert(routine)
+        if (routine.value != null) insert(routine.value!!)
     }
 }
