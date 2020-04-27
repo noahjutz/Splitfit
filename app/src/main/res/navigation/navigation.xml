@@ -9,45 +9,38 @@
     <fragment
         android:id="@+id/routinesFragment"
         android:name="com.noahjutz.gymroutines.ui.routines.RoutinesFragment"
-        android:label="RoutinesFragment"
         tools:layout="@layout/fragment_routines">
         <action
             android:id="@+id/add_routine"
-            app:destination="@id/createRoutineActivity">
-            <argument
-                android:name="routineId"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/createRoutineFragment" />
     </fragment>
     <fragment
         android:id="@+id/exercisesFragment"
         android:name="com.noahjutz.gymroutines.ui.exercises.ExercisesFragment"
-        android:label="ExercisesFragment"
         tools:layout="@layout/fragment_exercises">
         <action
             android:id="@+id/add_exercise"
-            app:destination="@id/createExerciseActivity">
-            <argument
-                android:name="exerciseId"
-                app:argType="integer" />
-        </action>
+            app:destination="@id/createExerciseActivity" />
     </fragment>
     <activity
         android:id="@+id/createExerciseActivity"
         android:name="com.noahjutz.gymroutines.ui.exercises.CreateExerciseActivity"
-        android:label="activity_create_exercise"
         tools:layout="@layout/activity_create_exercise">
         <argument
             android:name="exerciseId"
             app:argType="integer" />
     </activity>
-    <activity
-        android:id="@+id/createRoutineActivity"
-        android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineActivity"
-        android:label="CreateRoutineActivity"
-        tools:layout="@layout/activity_create_routine">
+    <fragment
+        android:id="@+id/createRoutineFragment"
+        android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineFragment"
+        tools:layout="@layout/fragment_create_routine">
         <argument
             android:name="routineId"
             app:argType="integer" />
-    </activity>
+        <action
+            android:id="@+id/save_routine"
+            app:destination="@id/routinesFragment"
+            app:popUpTo="@id/routinesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
