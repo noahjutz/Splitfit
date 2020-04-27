@@ -24,10 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             tools:listitem="@layout/listitem_routine" />
 
@@ -36,11 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="@dimen/any_margin_large"
+            android:layout_marginBottom="@dimen/any_margin_large"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{() -> fragment.addRoutine()}"
@@ -56,10 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginTop="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
             android:onClick="@{(view) -> fragment.debugShow(view)}" />
 
         <Button
@@ -68,13 +62,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/debug_button_show"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginTop="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
             android:onClick="@{() -> fragment.debugInsertRoutine()}"
             android:text="Insert"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/debug_button_clear"
@@ -82,20 +75,19 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/debug_button_insert"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginTop="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
             android:onClick="@{() -> viewmodel.clearRoutines()}"
             android:text="Clear"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/debug_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/debug_button_clear"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/any_margin_default"
             android:gravity="end"
             android:text="@{viewmodel.debugText, default=error_binding}"
             android:visibility="gone" />

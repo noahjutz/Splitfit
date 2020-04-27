@@ -77,7 +77,7 @@ class ExercisesFragment : Fragment() {
             it.adapter = adapter
             it.addItemDecoration(
                 MarginItemDecoration(
-                    resources.getDimension(R.dimen.default_padding).toInt()
+                    resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
             ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(

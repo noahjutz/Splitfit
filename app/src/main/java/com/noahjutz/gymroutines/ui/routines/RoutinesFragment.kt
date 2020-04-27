@@ -110,7 +110,7 @@ class RoutinesFragment : Fragment() {
             setHasFixedSize(true)
             addItemDecoration(
                 MarginItemDecoration(
-                    resources.getDimension(R.dimen.default_padding).toInt()
+                    resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
             ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
