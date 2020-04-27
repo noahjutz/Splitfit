@@ -1,17 +1,16 @@
 package com.noahjutz.gymroutines.ui.routines
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.activity.viewModels
+import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.navArgs
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
@@ -54,24 +53,39 @@ class CreateRoutineFragment : Fragment() {
 
         if (args.routineId != -1) {
             val routine = viewModel.getRoutineById(args.routineId)
-            edit_name.setText(routine.name)
-            edit_description.setText(routine.description)
+            edit_name.editText?.setText(routine.name)
+            edit_description.editText?.setText(routine.description)
+        }
+
+        edit_name.editText?.doOnTextChanged { text, _, _, _ ->
+            if (text?.trim().toString().isNotEmpty()) {
+                edit_name.error = null
+            }
         }
     }
 
     fun saveRoutine() {
-        if (edit_name.text.trim().isEmpty()) return
+        if (edit_name.editText?.text.toString().trim().isEmpty()) {
+            edit_name.error = "Please enter a name"
+            return
+        }
+        if (edit_name.editText?.text.toString().length > 20) {
+            return
+        }
+        if (edit_description.editText?.text.toString().length > 500) {
+            return
+        }
 
         if (args.routineId != -1) {
             val routine = viewModel.getRoutineById(args.routineId).apply {
-                name = edit_name.text.toString().trim()
-                description = edit_description.text.toString().trim()
+                name = edit_name.editText?.text.toString().trim()
+                description = edit_description.editText?.text.toString().trim()
             }
             viewModel.updateRoutine(routine)
         } else {
             val routine = Routine(
-                edit_name.text.toString().trim(),
-                edit_description.text.toString().trim()
+                edit_name.editText?.text.toString().trim(),
+                edit_description.editText?.text.toString().trim()
             )
             viewModel.insertRoutine(routine)
         }

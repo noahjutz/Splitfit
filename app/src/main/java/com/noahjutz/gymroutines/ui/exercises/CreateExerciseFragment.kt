@@ -14,7 +14,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
-import kotlinx.android.synthetic.main.fragment_create_routine.*
+import kotlinx.android.synthetic.main.fragment_create_exercise.*
 
 class CreateExerciseFragment : Fragment() {
 
