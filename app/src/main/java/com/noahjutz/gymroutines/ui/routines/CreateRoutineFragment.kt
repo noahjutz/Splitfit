@@ -15,7 +15,6 @@ import androidx.navigation.fragment.navArgs
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
-import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
@@ -66,8 +65,8 @@ class CreateRoutineFragment : Fragment() {
     private fun initViews() {
         if (args.routineId != -1) {
             val routine = viewModel.getRoutineById(args.routineId)
-            edit_name.editText?.setText(routine?.name)
-            edit_description.editText?.setText(routine?.description)
+            viewModel.name.value = routine?.name
+            viewModel.description.value = routine?.description
         }
 
         edit_name.editText?.doOnTextChanged { text, _, _, _ ->
@@ -79,28 +78,21 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initBinding() {
         binding.fragment = this
+        binding.viewmodel = viewModel
     }
 
     fun saveRoutine() {
+        if (edit_name.editText?.text.toString().trim().length > 20) return
+        if (edit_description.editText?.text.toString().trim().length > 500) return
         if (edit_name.editText?.text.toString().trim().isEmpty()) {
             edit_name.error = "Please enter a name"
             return
         }
-        if (edit_name.editText?.text.toString().trim().length > 20) return
-        if (edit_description.editText?.text.toString().trim().length > 500) return
 
         if (args.routineId != -1) {
-            val routine = viewModel.getRoutineById(args.routineId)?.apply {
-                name = edit_name.editText?.text.toString().trim()
-                description = edit_description.editText?.text.toString().trim()
-            }
-            if (routine != null) viewModel.update(routine)
+            viewModel.update(args.routineId)
         } else {
-            val routine = Routine(
-                edit_name.editText?.text.toString().trim(),
-                edit_description.editText?.text.toString().trim()
-            )
-            viewModel.insert(routine)
+            viewModel.insert()
         }
         val action = CreateRoutineFragmentDirections.saveRoutine()
         findNavController().navigate(action)

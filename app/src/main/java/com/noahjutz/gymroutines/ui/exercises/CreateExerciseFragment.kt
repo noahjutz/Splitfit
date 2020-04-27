@@ -15,7 +15,6 @@ import androidx.navigation.fragment.navArgs
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
-import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_exercise.*
@@ -66,8 +65,8 @@ class CreateExerciseFragment : Fragment() {
     private fun initViews() {
         if (args.exerciseId != -1) {
             val exercise = viewModel.getExerciseById(args.exerciseId)
-            edit_name.editText?.setText(exercise?.name)
-            edit_description.editText?.setText(exercise?.description)
+            viewModel.name.value = exercise?.name
+            viewModel.description.value = exercise?.description
         }
 
         edit_name.editText?.doOnTextChanged { text, _, _, _ ->
@@ -79,28 +78,21 @@ class CreateExerciseFragment : Fragment() {
 
     private fun initBinding() {
         binding.fragment = this
+        binding.viewmodel = viewModel
     }
 
     fun saveExercise() {
+        if (edit_name.editText?.text.toString().trim().length > 20) return
+        if (edit_description.editText?.text.toString().trim().length > 500) return
         if (edit_name.editText?.text.toString().trim().isEmpty()) {
             edit_name.error = "Please enter a name"
             return
         }
-        if (edit_name.editText?.text.toString().trim().length > 20) return
-        if (edit_description.editText?.text.toString().trim().length > 500) return
 
         if (args.exerciseId != -1) {
-            val exercise = viewModel.getExerciseById(args.exerciseId)?.apply {
-                name = edit_name.editText?.text.toString().trim()
-                description = edit_description.editText?.text.toString().trim()
-            }
-            if (exercise != null) viewModel.update(exercise)
+            viewModel.update(args.exerciseId)
         } else {
-            val exercise = Exercise(
-                edit_name.editText?.text.toString().trim(),
-                edit_description.editText?.text.toString().trim()
-            )
-            viewModel.insert(exercise)
+            viewModel.insert()
         }
         val action = CreateExerciseFragmentDirections.saveExercise()
         findNavController().navigate(action)

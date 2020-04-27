@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.ui.exercises
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.gymroutines.data.Exercise
@@ -16,7 +17,29 @@ class CreateExerciseViewModel(
     val exercises: LiveData<List<Exercise>>
         get() = repository.exercises
 
+    /**
+     * Two-way data binding values
+     */
+    val name = MutableLiveData<String>()
+    val description = MutableLiveData<String>()
+
     fun insert(exercise: Exercise) = viewModelScope.launch { repository.insert(exercise) }
     fun update(exercise: Exercise) = viewModelScope.launch { repository.update(exercise) }
     fun getExerciseById(id: Int): Exercise? = exercises.value?.find { it.exerciseId == id }
+
+    fun update(exerciseId: Int) {
+        val exercise = getExerciseById(exerciseId)?.apply {
+            name = this@CreateExerciseViewModel.name.value.toString()
+            description = this@CreateExerciseViewModel.description.value.toString()
+        }
+        if (exercise != null) update(exercise)
+    }
+
+    fun insert() {
+        val exercise = Exercise(
+            name.value.toString(),
+            description.value.toString()
+        )
+        insert(exercise)
+    }
 }
