@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class ExercisesViewModel(private val repository: Repository) : ViewModel() {
     val exercises: LiveData<List<Exercise>>
-        get() = repository.getExercises()
+        get() = repository.exercises
 
     /**
      * Data Binding fields

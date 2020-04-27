@@ -3,7 +3,6 @@ package com.noahjutz.gymroutines.data.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.Exercise
-import com.noahjutz.gymroutines.data.Routine
 
 @Dao
 interface ExerciseDao {

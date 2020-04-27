@@ -3,10 +3,6 @@ package com.noahjutz.gymroutines.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-/**
- * Domain Models
- */
-
 @Entity(tableName = "routine_table")
 data class Routine(
     var name: String,

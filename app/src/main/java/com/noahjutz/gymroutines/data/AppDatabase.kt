@@ -1,9 +1,9 @@
 package com.noahjutz.gymroutines.data
 
 import android.content.Context
-import androidx.room.RoomDatabase
 import androidx.room.Database
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.noahjutz.gymroutines.data.dao.ExerciseDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
 
@@ -12,9 +12,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val routineDao: RoutineDao
 
-    /**
-     * Singleton instantiation with constructor parameter
-     */
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null

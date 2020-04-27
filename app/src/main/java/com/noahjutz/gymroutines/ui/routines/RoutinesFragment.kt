@@ -1,15 +1,12 @@
 package com.noahjutz.gymroutines.ui.routines
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Switch
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,8 +23,8 @@ import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
-import java.util.*
 
+@Suppress("unused")
 private const val TAG = "RoutinesFragment"
 
 class RoutinesFragment : Fragment() {
@@ -48,66 +45,75 @@ class RoutinesFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_routines, container, false
         )
-
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        initActivity()
         initRecyclerView()
         initViewModel()
         initBinding()
+    }
 
-        requireActivity().title = "View Routines"
-        requireActivity().bottom_nav.visibility = VISIBLE
+    private fun initActivity() {
+        requireActivity().apply {
+            title = "View Routines"
+            bottom_nav.visibility = VISIBLE
+        }
     }
 
     private fun initRecyclerView() {
-        adapter = RoutinesAdapter(object : RoutinesAdapter.OnItemClickListener {
-            override fun onItemClick(routine: Routine) {
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val routine = adapter.getRoutineAt(viewHolder.adapterPosition)
+                viewModel.delete(routine)
+                Snackbar.make(recycler_view, "Deleted ${routine.name}", Snackbar.LENGTH_SHORT)
+                    .setAction("Undo") {
+                        viewModel.insert(routine)
+                    }
+                    .setAnchorView(fab_add_routine)
+                    .show()
+            }
+
+        }
+
+        val onItemClickListener = object : RoutinesAdapter.OnItemClickListener {
+            override fun onRoutineClick(routine: Routine) {
                 val action = RoutinesFragmentDirections.addRoutine(routine.routineId)
                 findNavController().navigate(action)
             }
 
-            override fun onItemLongClick(routine: Routine) {
+            override fun onRoutineLongClick(routine: Routine) {
                 // TODO
             }
 
-        })
-        recycler_view.let {
-            it.layoutManager = LinearLayoutManager(requireContext())
-            it.setHasFixedSize(true)
-            it.adapter = adapter
-            it.addItemDecoration(
+        }
+
+        adapter = RoutinesAdapter(onItemClickListener)
+
+        recycler_view.apply {
+            adapter = this@RoutinesFragment.adapter
+            layoutManager = LinearLayoutManager(this@RoutinesFragment.requireContext())
+            setHasFixedSize(true)
+            addItemDecoration(
                 MarginItemDecoration(
                     resources.getDimension(R.dimen.default_padding).toInt()
                 )
             )
-            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            ) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val routine = adapter.getRoutineAt(viewHolder.adapterPosition)
-                    viewModel.delete(routine)
-                    Snackbar.make(recycler_view, "Deleted ${routine.name}", Snackbar.LENGTH_SHORT)
-                        .setAction("Undo") {
-                            viewModel.insert(routine)
-                        }
-                        .setAnchorView(fab_add_routine)
-                        .show()
-                }
-
-            }).attachToRecyclerView(it)
+            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
@@ -124,39 +130,21 @@ class RoutinesFragment : Fragment() {
         binding.fragment = this
     }
 
-    /**
-     * Data Binding click listeners
-     */
-    fun showDebug(view: View) {
-        if ((view as Switch).isChecked) {
-            debug_button_insert.visibility = VISIBLE
-            debug_button_clear.visibility = VISIBLE
-            debug_textview.visibility = VISIBLE
-        } else {
-            debug_button_insert.visibility = GONE
-            debug_button_clear.visibility = GONE
-            debug_textview.visibility = GONE
-        }
+    fun debugShow(view: View) {
+        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
+        debug_button_insert.visibility = isVisible
+        debug_button_clear.visibility = isVisible
+        debug_textview.visibility = isVisible
     }
 
     fun debugInsertRoutine() {
-        // Generate random routine and insert it
-        val i1 = (0..2).shuffled().first()
-        val i2 = (0..2).shuffled().first()
-        val names = ArrayList<String>().apply {
-            add("Legs")
-            add("Push")
-            add("Pull")
-        }
-        val descriptions = ArrayList<String>().apply {
-            add("")
-            add("Very cool routine")
-            add("My new routine")
-        }
+        val names = listOf("Push", "Pull", "Legs")
+        val descriptions = listOf("", "Very cool routine", "My new routine")
+
         viewModel.insert(
             Routine(
-                names[i1],
-                descriptions[i2]
+                names[(0..2).shuffled().first()],
+                descriptions[(0..2).shuffled().first()]
             )
         )
     }

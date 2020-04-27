@@ -1,7 +1,6 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -12,12 +11,9 @@ class Repository private constructor(application: Application) {
     private val exerciseDao = database.exerciseDao
     private val routineDao = database.routineDao
 
-    private val routines = routineDao.getRoutines()
-    private val exercises = exerciseDao.getExercises()
+    val routines = routineDao.getRoutines()
+    val exercises = exerciseDao.getExercises()
 
-    /**
-     * Singleton instantiation with constructor parameter
-     */
     companion object {
         @Volatile
         private var INSTANCE: Repository? = null
@@ -34,7 +30,6 @@ class Repository private constructor(application: Application) {
     fun insert(routine: Routine) = CoroutineScope(IO).launch { routineDao.insert(routine) }
     fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
     fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
-    fun getRoutines(): LiveData<List<Routine>> = routines
     fun update(routine: Routine) = CoroutineScope(IO).launch { routineDao.update(routine) }
 
     /**
@@ -43,6 +38,5 @@ class Repository private constructor(application: Application) {
     fun insert(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
     fun delete(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.delete(exercise) }
     fun clearExercises() = CoroutineScope(IO).launch { exerciseDao.clearExercises() }
-    fun getExercises(): LiveData<List<Exercise>> = exercises
     fun update(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.update(exercise) }
 }

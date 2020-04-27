@@ -13,7 +13,7 @@ class CreateExerciseViewModel(private val repository: Repository) : ViewModel() 
     fun getExerciseById(id: Int): Exercise {
         var toReturn = Exercise("Error")
         viewModelScope.launch {
-            repository.getExercises().value?.forEach { exercise ->
+            repository.exercises.value?.forEach { exercise ->
                 if (exercise.exerciseId == id) {
                     toReturn = exercise
                 }

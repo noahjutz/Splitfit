@@ -1,17 +1,16 @@
 package com.noahjutz.gymroutines
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.noahjutz.gymroutines.ui.exercises.ExercisesFragmentDirections
-import com.noahjutz.gymroutines.ui.routines.RoutinesFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
 
+@Suppress("unused")
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {

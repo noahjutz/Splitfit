@@ -14,26 +14,14 @@ class ViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(RoutinesViewModel::class.java) -> {
-                RoutinesViewModel(
-                    repository
-                ) as T
-            }
-            modelClass.isAssignableFrom(ExercisesViewModel::class.java) -> {
-                ExercisesViewModel(
-                    repository
-                ) as T
-            }
-            modelClass.isAssignableFrom(CreateRoutineViewModel::class.java) -> {
-                CreateRoutineViewModel(
-                    repository
-                ) as T
-            }
-            modelClass.isAssignableFrom(CreateExerciseViewModel::class.java) -> {
-                CreateExerciseViewModel(
-                    repository
-                ) as T
-            }
+            modelClass.isAssignableFrom(RoutinesViewModel::class.java) ->
+                RoutinesViewModel(repository) as T
+            modelClass.isAssignableFrom(ExercisesViewModel::class.java) ->
+                ExercisesViewModel(repository) as T
+            modelClass.isAssignableFrom(CreateRoutineViewModel::class.java) ->
+                CreateRoutineViewModel(repository) as T
+            modelClass.isAssignableFrom(CreateExerciseViewModel::class.java) ->
+                CreateExerciseViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }
     }

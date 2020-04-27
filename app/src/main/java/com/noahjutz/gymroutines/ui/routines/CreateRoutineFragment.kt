@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
@@ -21,15 +20,18 @@ import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
 
+@Suppress("unused")
+private const val TAG = "CreateRoutineFragment"
+
 class CreateRoutineFragment : Fragment() {
 
-    private lateinit var binding: FragmentCreateRoutineBinding
-
-    private val args: CreateRoutineFragmentArgs by navArgs()
     private val viewModel: CreateRoutineViewModel by viewModels { viewModelFactory }
     private val viewModelFactory: ViewModelFactory by lazy {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
+    private val args: CreateRoutineFragmentArgs by navArgs()
+
+    private lateinit var binding: FragmentCreateRoutineBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,22 +44,30 @@ class CreateRoutineFragment : Fragment() {
             container,
             false
         )
-        binding.fragment = this
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        requireActivity().apply {
-            (requireActivity() as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
-            title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
-        }
+        initActivity()
+        initBinding()
+        initViews()
+    }
 
+    private fun initActivity() {
+        requireActivity().apply {
+            (this as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
+            title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
+            bottom_nav.visibility = GONE
+        }
+    }
+
+    private fun initViews() {
         if (args.routineId != -1) {
             val routine = viewModel.getRoutineById(args.routineId)
-            edit_name.editText?.setText(routine.name)
-            edit_description.editText?.setText(routine.description)
+            edit_name.editText?.setText(routine?.name)
+            edit_description.editText?.setText(routine?.description)
         }
 
         edit_name.editText?.doOnTextChanged { text, _, _, _ ->
@@ -65,8 +75,10 @@ class CreateRoutineFragment : Fragment() {
                 edit_name.error = null
             }
         }
+    }
 
-        requireActivity().bottom_nav.visibility = GONE
+    private fun initBinding() {
+        binding.fragment = this
     }
 
     fun saveRoutine() {
@@ -74,19 +86,15 @@ class CreateRoutineFragment : Fragment() {
             edit_name.error = "Please enter a name"
             return
         }
-        if (edit_name.editText?.text.toString().length > 20) {
-            return
-        }
-        if (edit_description.editText?.text.toString().length > 500) {
-            return
-        }
+        if (edit_name.editText?.text.toString().trim().length > 20) return
+        if (edit_description.editText?.text.toString().trim().length > 500) return
 
         if (args.routineId != -1) {
-            val routine = viewModel.getRoutineById(args.routineId).apply {
+            val routine = viewModel.getRoutineById(args.routineId)?.apply {
                 name = edit_name.editText?.text.toString().trim()
                 description = edit_description.editText?.text.toString().trim()
             }
-            viewModel.updateRoutine(routine)
+            if (routine != null) viewModel.updateRoutine(routine)
         } else {
             val routine = Routine(
                 edit_name.editText?.text.toString().trim(),
