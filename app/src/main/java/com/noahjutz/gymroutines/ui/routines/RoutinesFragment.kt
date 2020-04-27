@@ -60,6 +60,7 @@ class RoutinesFragment : Fragment() {
         initBinding()
 
         requireActivity().title = "View Routines"
+        requireActivity().bottom_nav.visibility = VISIBLE
     }
 
     private fun initRecyclerView() {
