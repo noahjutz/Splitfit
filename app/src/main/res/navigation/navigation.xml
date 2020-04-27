@@ -20,16 +20,8 @@
         tools:layout="@layout/fragment_exercises">
         <action
             android:id="@+id/add_exercise"
-            app:destination="@id/createExerciseActivity" />
+            app:destination="@id/createExerciseFragment" />
     </fragment>
-    <activity
-        android:id="@+id/createExerciseActivity"
-        android:name="com.noahjutz.gymroutines.ui.exercises.CreateExerciseActivity"
-        tools:layout="@layout/activity_create_exercise">
-        <argument
-            android:name="exerciseId"
-            app:argType="integer" />
-    </activity>
     <fragment
         android:id="@+id/createRoutineFragment"
         android:name="com.noahjutz.gymroutines.ui.routines.CreateRoutineFragment"
@@ -41,6 +33,20 @@
             android:id="@+id/save_routine"
             app:destination="@id/routinesFragment"
             app:popUpTo="@id/routinesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/createExerciseFragment"
+        android:name="com.noahjutz.gymroutines.ui.exercises.CreateExerciseFragment"
+        android:label="CreateExerciseFragment"
+        tools:layout="@layout/fragment_create_exercise">
+        <argument
+            android:name="exerciseId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/save_exercise"
+            app:destination="@id/exercisesFragment"
+            app:popUpTo="@id/createExerciseFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>
