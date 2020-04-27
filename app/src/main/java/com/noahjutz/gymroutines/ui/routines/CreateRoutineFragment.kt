@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
@@ -88,7 +90,15 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initBinding() {
         binding.fragment = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
+    }
+
+    fun debugShow(view: View) {
+        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
+        debug_button_insert.visibility = isVisible
+        debug_button_clear.visibility = isVisible
+        debug_textview.visibility = isVisible
     }
 
     fun saveRoutine() {

@@ -42,6 +42,7 @@ class CreateRoutineViewModel(
 
     fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
     fun update(routine: Routine) = viewModelScope.launch { repository.update(routine) }
+
     fun getRoutineById(id: Int): Routine? = routines.value?.find { it.routineId == id }
 
     fun update(routineId: Int) {

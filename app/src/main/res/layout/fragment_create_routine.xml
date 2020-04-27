@@ -80,5 +80,51 @@
             android:onClick="@{() -> fragment.saveRoutine()}"
             app:srcCompat="@drawable/ic_done" />
 
+        <!-- Debug -->
+
+        <Switch
+            android:id="@+id/debug_button_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:onClick="@{(view) -> fragment.debugShow(view)}" />
+
+        <Button
+            android:id="@+id/debug_button_insert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/debug_button_show"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:text="Insert"
+            android:visibility="gone"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/debug_button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/debug_button_insert"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:text="Clear"
+            android:visibility="gone"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/debug_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/debug_button_clear"
+            android:layout_margin="@dimen/any_margin_default"
+            android:gravity="end"
+            android:text="@{viewmodel.routine.toString(), default=error_binding}"
+            android:visibility="gone" />
+
     </RelativeLayout>
 </layout>
