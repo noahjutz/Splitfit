@@ -38,7 +38,6 @@
     <fragment
         android:id="@+id/createExerciseFragment"
         android:name="com.noahjutz.gymroutines.ui.exercises.CreateExerciseFragment"
-        android:label="CreateExerciseFragment"
         tools:layout="@layout/fragment_create_exercise">
         <argument
             android:name="exerciseId"

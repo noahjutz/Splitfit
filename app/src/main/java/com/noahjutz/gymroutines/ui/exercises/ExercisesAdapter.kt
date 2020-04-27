@@ -13,6 +13,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
+@Suppress("unused")
 private const val TAG = "RoutinesAdapter"
 
 class ExercisesAdapter(
@@ -24,9 +25,7 @@ class ExercisesAdapter(
         }
 
         override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-            Log.d(TAG, "${oldItem.name} ${newItem.name}")
-            return oldItem.name == newItem.name
-                    && oldItem.description == newItem.description
+            return oldItem == newItem
         }
     }
 ) {
@@ -35,10 +34,10 @@ class ExercisesAdapter(
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                this@ExercisesAdapter.onItemClickListener.onItemClick(getItem(adapterPosition))
+                this@ExercisesAdapter.onItemClickListener.onExerciseClick(getItem(adapterPosition))
             }
             itemView.setOnLongClickListener {
-                this@ExercisesAdapter.onItemClickListener.onItemLongClick(getItem(adapterPosition))
+                this@ExercisesAdapter.onItemClickListener.onExerciseLongClick(getItem(adapterPosition))
                 true
             }
         }
@@ -62,8 +61,8 @@ class ExercisesAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(exercise: Exercise)
-        fun onItemLongClick(exercise: Exercise)
+        fun onExerciseClick(exercise: Exercise)
+        fun onExerciseLongClick(exercise: Exercise)
     }
 }
 

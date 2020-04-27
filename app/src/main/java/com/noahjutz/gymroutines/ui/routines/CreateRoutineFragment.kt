@@ -94,13 +94,13 @@ class CreateRoutineFragment : Fragment() {
                 name = edit_name.editText?.text.toString().trim()
                 description = edit_description.editText?.text.toString().trim()
             }
-            if (routine != null) viewModel.updateRoutine(routine)
+            if (routine != null) viewModel.update(routine)
         } else {
             val routine = Routine(
                 edit_name.editText?.text.toString().trim(),
                 edit_description.editText?.text.toString().trim()
             )
-            viewModel.insertRoutine(routine)
+            viewModel.insert(routine)
         }
         val action = CreateRoutineFragmentDirections.saveRoutine()
         findNavController().navigate(action)

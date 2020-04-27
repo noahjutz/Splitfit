@@ -1,9 +1,10 @@
 package com.noahjutz.gymroutines.ui.exercises
 
 import android.os.Bundle
-import com.noahjutz.gymroutines.databinding.*
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Switch
 import androidx.databinding.DataBindingUtil
@@ -15,17 +16,18 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Exercise
-import kotlinx.android.synthetic.main.fragment_exercises.*
-import kotlinx.android.synthetic.main.fragment_exercises.debug_button_clear
-import kotlinx.android.synthetic.main.fragment_exercises.debug_button_insert
-import kotlinx.android.synthetic.main.fragment_exercises.debug_textview
-import java.util.ArrayList
+import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
+import com.noahjutz.gymroutines.ui.routines.MarginItemDecoration
+import com.noahjutz.gymroutines.ui.routines.RoutinesFragmentDirections
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_routines.*
 
-private const val TAG = "ExercisesActivity"
+@Suppress("unused")
+private const val TAG = "ExercisesFragment"
 
 class ExercisesFragment : Fragment() {
 
@@ -34,8 +36,8 @@ class ExercisesFragment : Fragment() {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
 
-    private lateinit var adapter: ExercisesAdapter
     private lateinit var binding: FragmentExercisesBinding
+    private lateinit var adapter: ExercisesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,60 +53,68 @@ class ExercisesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        initActivity()
         initRecyclerView()
         initViewModel()
         initBinding()
+    }
 
-        requireActivity().title = "View Exercises"
+    private fun initActivity() {
+        requireActivity().apply {
+            title = "View Exercises"
+            bottom_nav.visibility = VISIBLE
+        }
     }
 
     private fun initRecyclerView() {
-        adapter = ExercisesAdapter(object : ExercisesAdapter.OnItemClickListener {
-            override fun onItemClick(exercise: Exercise) {
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
+                viewModel.delete(exercise)
+                Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
+                    .setAction("Undo") {
+                        viewModel.insert(exercise)
+                    }
+                    .setAnchorView(fab_add_routine)
+                    .show()
+            }
+
+        }
+
+        val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
+            override fun onExerciseClick(exercise: Exercise) {
                 val action = ExercisesFragmentDirections.addExercise(exercise.exerciseId)
                 findNavController().navigate(action)
             }
 
-            override fun onItemLongClick(exercise: Exercise) {
+            override fun onExerciseLongClick(exercise: Exercise) {
                 // TODO
             }
+        }
 
-        })
+        adapter = ExercisesAdapter(onItemClickListener)
 
-        recycler_view.let {
-            it.layoutManager = LinearLayoutManager(requireContext())
-            it.setHasFixedSize(true)
-            it.adapter = adapter
-            it.addItemDecoration(
+        recycler_view.apply {
+            adapter = this@ExercisesFragment.adapter
+            layoutManager = LinearLayoutManager(this@ExercisesFragment.requireContext())
+            setHasFixedSize(true)
+            addItemDecoration(
                 MarginItemDecoration(
                     resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
-            ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(
-                0,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            ) {
-
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
-                    viewModel.delete(exercise)
-                    Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
-                        .setAction("Undo") {
-                            viewModel.insert(exercise)
-                        }
-                        .setAnchorView(fab_add_exercise)
-                        .show()
-                }
-
-            }).attachToRecyclerView(it)
+            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
@@ -121,39 +131,21 @@ class ExercisesFragment : Fragment() {
         binding.fragment = this
     }
 
-    /**
-     * Data binding click listeners
-     */
-    fun showDebug(view: View) {
-        if ((view as Switch).isChecked) {
-            debug_button_insert.visibility = View.VISIBLE
-            debug_button_clear.visibility = View.VISIBLE
-            debug_textview.visibility = View.VISIBLE
-        } else {
-            debug_button_insert.visibility = View.GONE
-            debug_button_clear.visibility = View.GONE
-            debug_textview.visibility = View.GONE
-        }
+    fun debugShow(view: View) {
+        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
+        debug_button_insert.visibility = isVisible
+        debug_button_clear.visibility = isVisible
+        debug_textview.visibility = isVisible
     }
 
     fun debugInsertExercise() {
-        // Generate random exercise and insert it
-        val i1 = (0..2).shuffled().first()
-        val i2 = (0..2).shuffled().first()
-        val names = ArrayList<String>().apply {
-            add("Hammer curls")
-            add("Sit ups")
-            add("Squats")
-        }
-        val descriptions = ArrayList<String>().apply {
-            add("")
-            add("Really exhausting")
-            add("Compound movement")
-        }
+        val names = listOf("Squats", "Lunges", "Push ups")
+        val descriptions = listOf("", "Exhausting", "Easy")
+
         viewModel.insert(
             Exercise(
-                names[i1],
-                descriptions[i2]
+                names[(0..2).shuffled().first()],
+                descriptions[(0..2).shuffled().first()]
             )
         )
     }
