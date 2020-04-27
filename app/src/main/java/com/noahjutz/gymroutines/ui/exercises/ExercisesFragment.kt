@@ -142,12 +142,12 @@ class ExercisesFragment : Fragment() {
         val names = listOf("Squats", "Lunges", "Push ups")
         val descriptions = listOf("", "Exhausting", "Easy")
 
-        viewModel.insert(
-            Exercise(
-                names[(0..2).shuffled().first()],
-                descriptions[(0..2).shuffled().first()]
-            )
+        val exercise = Exercise(
+            names.shuffled().first(),
+            descriptions.shuffled().first()
         )
+
+        viewModel.insert(exercise)
     }
 
     fun addExercise() {

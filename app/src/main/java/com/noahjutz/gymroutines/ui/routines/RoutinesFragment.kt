@@ -141,12 +141,12 @@ class RoutinesFragment : Fragment() {
         val names = listOf("Push", "Pull", "Legs")
         val descriptions = listOf("", "Very cool routine", "My new routine")
 
-        viewModel.insert(
-            Routine(
-                names[(0..2).shuffled().first()],
-                descriptions[(0..2).shuffled().first()]
-            )
+        val routine = Routine(
+            names.shuffled().first(),
+            descriptions.shuffled().first()
         )
+
+        viewModel.insert(routine)
     }
 
     fun addRoutine() {
