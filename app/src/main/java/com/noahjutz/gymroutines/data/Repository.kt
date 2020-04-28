@@ -27,15 +27,18 @@ class Repository private constructor(application: Application) {
     /**
      * Routines
      */
-    fun insert(routine: Routine) = CoroutineScope(IO).launch { routineDao.insert(routine) }
+    fun insertOrUpdate(routine: Routine) =
+        CoroutineScope(IO).launch { routineDao.insertOrUpdate(routine) }
+
     fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
     fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
-    fun update(routine: Routine) = CoroutineScope(IO).launch { routineDao.update(routine) }
 
     /**
      * Exercises
      */
-    fun insert(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
+    fun insertOrUpdate(exercise: Exercise) =
+        CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
+
     fun delete(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.delete(exercise) }
     fun clearExercises() = CoroutineScope(IO).launch { exerciseDao.clearExercises() }
     fun update(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.update(exercise) }

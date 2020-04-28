@@ -7,14 +7,11 @@ import com.noahjutz.gymroutines.data.RoutineWithExercises
 
 @Dao
 interface RoutineDao {
-    @Insert
-    fun insert(routine: Routine)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOrUpdate(routine: Routine)
 
     @Delete
     fun delete(routine: Routine)
-
-    @Update
-    fun update(routine: Routine)
 
     @Query("DELETE FROM routine_table")
     fun clearRoutines()

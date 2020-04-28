@@ -23,7 +23,7 @@ class CreateExerciseViewModel(
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
-    fun insert(exercise: Exercise) = viewModelScope.launch { repository.insert(exercise) }
+    fun insert(exercise: Exercise) = viewModelScope.launch { repository.insertOrUpdate(exercise) }
     fun update(exercise: Exercise) = viewModelScope.launch { repository.update(exercise) }
     fun getExerciseById(id: Int): Exercise? = exercises.value?.find { it.exerciseId == id }
 

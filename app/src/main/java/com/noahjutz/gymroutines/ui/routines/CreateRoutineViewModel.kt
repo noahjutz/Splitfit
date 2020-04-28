@@ -58,23 +58,22 @@ class CreateRoutineViewModel(
         description.value = routine.value?.description
     }
 
-    private fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
-    private fun update(routine: Routine) = viewModelScope.launch { repository.update(routine) }
+    private fun insertOrUpdate(routine: Routine) =
+        viewModelScope.launch { repository.insertOrUpdate(routine) }
+
     private fun getRoutineById(id: Int): Routine? = routines.value?.find { it.routineId == id }
 
     /**
-     * @param id is used to determine whether to call [insert] or [update]
      * @return true if successful
      */
-    fun save(id: Int): Boolean {
+    fun save(): Boolean {
         if (
             routine.value?.name.toString().isEmpty()
             || routine.value?.name.toString().length > 20
             || routine.value?.description.toString().length > 500
         ) return false
 
-        if (id != -1) update(routine.value!!)
-        else insert(routine.value!!)
+        insertOrUpdate(routine.value!!)
         return true
     }
 }

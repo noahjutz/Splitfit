@@ -93,7 +93,7 @@ class CreateRoutineFragment : Fragment() {
     }
 
     fun saveRoutine() {
-        if (viewModel.save(args.routineId)) {
+        if (viewModel.save()) {
             val action = CreateRoutineFragmentDirections.saveRoutine()
             findNavController().navigate(action)
         } else if (viewModel.routine.value?.name.toString().isEmpty())
