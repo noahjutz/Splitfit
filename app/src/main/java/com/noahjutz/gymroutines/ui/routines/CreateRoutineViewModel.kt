@@ -51,7 +51,7 @@ class CreateRoutineViewModel(
      */
     fun init(routineId: Int) {
         _routine.value =
-            if (routineId != -1) getRoutineById(routineId)
+            if (routineId != -1) getRoutineById(routineId)?.copy()
             else Routine("")
 
         name.value = routine.value?.name
