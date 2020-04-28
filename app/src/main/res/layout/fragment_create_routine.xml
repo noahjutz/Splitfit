@@ -123,7 +123,7 @@
             android:layout_below="@id/debug_button_clear"
             android:layout_margin="@dimen/any_margin_default"
             android:gravity="end"
-            android:text="@{viewmodel.routine.toString(), default=error_binding}"
+            android:text="@{viewmodel.debugText, default=error_binding}"
             android:visibility="gone" />
 
     </RelativeLayout>

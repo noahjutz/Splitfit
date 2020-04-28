@@ -24,6 +24,10 @@ class CreateRoutineViewModel(
     val routine: LiveData<Routine>
         get() = _routine
 
+    private val _debugText = MediatorLiveData<String>()
+    val debugText: LiveData<String>
+        get() = _debugText
+
     init {
         _routine.addSource(name) { name ->
             _routine.value = _routine.value.also {
@@ -34,6 +38,10 @@ class CreateRoutineViewModel(
             _routine.value = _routine.value.also {
                 it?.description = description.trim()
             }
+        }
+
+        _debugText.addSource(routine) { routine ->
+            _debugText.value = routine.toString()
         }
     }
 
