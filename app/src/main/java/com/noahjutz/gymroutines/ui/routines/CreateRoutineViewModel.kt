@@ -1,9 +1,11 @@
 package com.noahjutz.gymroutines.ui.routines
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -51,7 +53,7 @@ class CreateRoutineViewModel(
      */
     fun init(routineId: Int) {
         _routine.value =
-            if (routineId != -1) getRoutineById(routineId)?.copy()
+            if (routineId != -1) getRoutineById(routineId)?.copy() ?: Routine("")
             else Routine("")
 
         name.value = routine.value?.name
@@ -61,7 +63,11 @@ class CreateRoutineViewModel(
     private fun insertOrUpdate(routine: Routine) =
         viewModelScope.launch { repository.insertOrUpdate(routine) }
 
-    private fun getRoutineById(id: Int): Routine? = routines.value?.find { it.routineId == id }
+    private fun getRoutineById(id: Int): Routine? {
+        return runBlocking {
+            repository.getRoutineById(id)
+        }
+    }
 
     /**
      * @return true if successful

@@ -4,6 +4,9 @@ import android.app.Application
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+
+private const val TAG = "Repository"
 
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
@@ -32,6 +35,11 @@ class Repository private constructor(application: Application) {
 
     fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
     fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
+    fun getRoutineById(id: Int): Routine? {
+        return runBlocking {
+            routineDao.getRoutineById(id)
+        }
+    }
 
     /**
      * Exercises
