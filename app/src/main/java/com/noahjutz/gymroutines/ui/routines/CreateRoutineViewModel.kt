@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
@@ -16,7 +15,7 @@ class CreateRoutineViewModel(
         get() = repository.routines
 
     /**
-     * Two-way data binding values
+     * Two-way data binding values for EditTexts
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
@@ -26,34 +25,48 @@ class CreateRoutineViewModel(
         get() = _routine
 
     init {
-        _routine.value = Routine("")
-
         _routine.addSource(name) { name ->
             _routine.value = _routine.value.also {
-                it?.name = name
+                it?.name = name.trim()
             }
         }
         _routine.addSource(description) { description ->
             _routine.value = _routine.value.also {
-                it?.description = description
+                it?.description = description.trim()
             }
         }
     }
 
-    fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
-    fun update(routine: Routine) = viewModelScope.launch { repository.update(routine) }
+    /**
+     * Initializes [CreateRoutineViewModel] with a [Routine]
+     * @param routineId is used to update [_routine]
+     */
+    fun init(routineId: Int) {
+        _routine.value =
+            if (routineId != -1) getRoutineById(routineId)
+            else Routine("")
 
-    fun getRoutineById(id: Int): Routine? = routines.value?.find { it.routineId == id }
-
-    fun update(routineId: Int) {
-        val routine = getRoutineById(routineId)?.apply {
-            name = this@CreateRoutineViewModel.name.value.toString()
-            description = this@CreateRoutineViewModel.description.value.toString()
-        }
-        if (routine != null) update(routine)
+        name.value = routine.value?.name
+        description.value = routine.value?.description
     }
 
-    fun insert() {
-        if (routine.value != null) insert(routine.value!!)
+    private fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
+    private fun update(routine: Routine) = viewModelScope.launch { repository.update(routine) }
+    private fun getRoutineById(id: Int): Routine? = routines.value?.find { it.routineId == id }
+
+    /**
+     * @param id is used to determine whether to call [insert] or [update]
+     * @return true if successful
+     */
+    fun save(id: Int): Boolean {
+        if (
+            routine.value?.name.toString().isEmpty()
+            || routine.value?.name.toString().length > 20
+            || routine.value?.description.toString().length > 500
+        ) return false
+
+        if (id != -1) update(routine.value!!)
+        else insert(routine.value!!)
+        return true
     }
 }

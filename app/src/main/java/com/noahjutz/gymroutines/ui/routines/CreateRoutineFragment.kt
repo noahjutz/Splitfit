@@ -60,10 +60,7 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        // For debugging
-        viewModel.routine.observe(viewLifecycleOwner, Observer { routine ->
-            Log.d(TAG, routine.toString())
-        })
+        viewModel.init(args.routineId)
     }
 
     private fun initActivity() {
@@ -75,12 +72,6 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initViews() {
-        if (args.routineId != -1) {
-            val routine = viewModel.getRoutineById(args.routineId)
-            viewModel.name.value = routine?.name
-            viewModel.description.value = routine?.description
-        }
-
         edit_name.editText?.doOnTextChanged { text, _, _, _ ->
             if (text?.trim().toString().isNotEmpty()) {
                 edit_name.error = null
@@ -102,19 +93,10 @@ class CreateRoutineFragment : Fragment() {
     }
 
     fun saveRoutine() {
-        if (edit_name.editText?.text.toString().trim().length > 20) return
-        if (edit_description.editText?.text.toString().trim().length > 500) return
-        if (edit_name.editText?.text.toString().trim().isEmpty()) {
+        if (viewModel.save(args.routineId)) {
+            val action = CreateRoutineFragmentDirections.saveRoutine()
+            findNavController().navigate(action)
+        } else if (viewModel.routine.value?.name.toString().isEmpty())
             edit_name.error = "Please enter a name"
-            return
-        }
-
-        if (args.routineId != -1) {
-            viewModel.update(args.routineId)
-        } else {
-            viewModel.insert()
-        }
-        val action = CreateRoutineFragmentDirections.saveRoutine()
-        findNavController().navigate(action)
     }
 }
