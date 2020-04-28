@@ -1,7 +1,6 @@
 package com.noahjutz.gymroutines.data
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "routine_table")
 data class Routine(
@@ -20,4 +19,20 @@ data class Exercise(
 
     @PrimaryKey(autoGenerate = true)
     val exerciseId: Int = 0
+)
+
+@Entity(primaryKeys = ["routineId", "exerciseId"])
+data class RoutineExerciseCrossRef(
+    val routineId: Int,
+    val exerciseId: Int
+)
+
+data class RoutineWithExercises(
+    @Embedded val routine: Routine,
+    @Relation(
+        parentColumn = "routineId",
+        entityColumn = "exerciseId",
+        associateBy = Junction(RoutineExerciseCrossRef::class)
+    )
+    val exercises: List<Exercise>
 )
