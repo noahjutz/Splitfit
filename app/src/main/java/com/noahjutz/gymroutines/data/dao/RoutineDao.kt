@@ -2,27 +2,42 @@ package com.noahjutz.gymroutines.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Routine
+import com.noahjutz.gymroutines.data.RoutineExerciseCrossRef
 import com.noahjutz.gymroutines.data.RoutineWithExercises
 
 @Dao
-interface RoutineDao {
+abstract class RoutineDao {
+    suspend fun insertExercisesForRoutine(routine: Routine, exercises: List<Exercise>) {
+        exercises.forEach() { exercise ->
+            val crossRef = RoutineExerciseCrossRef(
+                routine.routineId,
+                exercise.exerciseId
+            )
+            insertOrUpdate(crossRef)
+        }
+    }
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(routine: Routine)
+    abstract suspend fun insertOrUpdate(routineExerciseCrossRef: RoutineExerciseCrossRef)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertOrUpdate(routine: Routine)
 
     @Delete
-    suspend fun delete(routine: Routine)
+    abstract suspend fun delete(routine: Routine)
 
     @Query("DELETE FROM routine_table")
-    suspend fun clearRoutines()
+    abstract suspend fun clearRoutines()
 
     @Query("SELECT * FROM routine_table ORDER BY name DESC")
-    fun getRoutines(): LiveData<List<Routine>>
+    abstract fun getRoutines(): LiveData<List<Routine>>
 
     @Query("SELECT * FROM routine_table WHERE routineId = :id")
-    suspend fun getRoutineById(id: Int): Routine
+    abstract suspend fun getRoutineById(id: Int): Routine
 
     @Transaction
     @Query("SELECT * FROM routine_table")
-    fun getRoutinesWithExercises(): List<RoutineWithExercises>
+    abstract fun getRoutinesWithExercises(): List<RoutineWithExercises>
 }
