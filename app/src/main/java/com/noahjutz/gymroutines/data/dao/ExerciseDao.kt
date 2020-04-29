@@ -7,7 +7,7 @@ import com.noahjutz.gymroutines.data.Exercise
 @Dao
 interface ExerciseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(exercise: Exercise)
+    suspend fun insert(exercise: Exercise)
 
     @Delete
     suspend fun delete(exercise: Exercise)

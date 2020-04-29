@@ -30,9 +30,7 @@ class Repository private constructor(application: Application) {
     /**
      * Routines
      */
-    fun insertOrUpdate(routine: Routine) =
-        CoroutineScope(IO).launch { routineDao.insertOrUpdate(routine) }
-
+    fun insert(routine: Routine) = CoroutineScope(IO).launch { routineDao.insert(routine) }
     fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
     fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
     fun getRoutineById(id: Int): Routine? = runBlocking { routineDao.getRoutineById(id) }
@@ -42,9 +40,7 @@ class Repository private constructor(application: Application) {
     /**
      * Exercises
      */
-    fun insertOrUpdate(exercise: Exercise) =
-        CoroutineScope(IO).launch { exerciseDao.insertOrUpdate(exercise) }
-
+    fun insert(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
     fun delete(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.delete(exercise) }
     fun clearExercises() = CoroutineScope(IO).launch { exerciseDao.clearExercises() }
     fun getExerciseById(id: Int): Exercise? = runBlocking { exerciseDao.getExerciseById(id) }

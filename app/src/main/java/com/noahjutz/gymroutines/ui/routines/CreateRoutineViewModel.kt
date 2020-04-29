@@ -16,38 +16,12 @@ class CreateRoutineViewModel(
 ) : ViewModel() {
     val routines: LiveData<List<Routine>>
         get() = repository.routines
+    private val allExercises: LiveData<List<Exercise>>
+        get() = repository.exercises
 
     private val _exercises = MutableLiveData<List<Exercise>>()
     val exercises: LiveData<List<Exercise>>
         get() = _exercises
-
-    private val allExercises: LiveData<List<Exercise>>
-        get() = repository.exercises
-
-    fun debugInsertExercise() {
-        val allExercisesList = allExercises.value
-        val exercisesList = exercises.value as ArrayList
-        if (!allExercisesList.isNullOrEmpty()) {
-            val random =
-                if (allExercisesList.size == 1) 0
-                else Random().nextInt(allExercisesList.size)
-
-            val exercise = allExercisesList[random]
-
-            if (!exercisesList.contains(exercise))
-                _exercises.value = exercisesList.apply { add(exercise) }
-        }
-    }
-
-    fun debugClearExercises() {
-        _exercises.value = ArrayList()
-    }
-
-    /**
-     * Two-way data binding values for EditTexts
-     */
-    val name = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
 
     private val _routine = MediatorLiveData<Routine>()
     val routine: LiveData<Routine>
@@ -56,6 +30,40 @@ class CreateRoutineViewModel(
     private val _debugText = MediatorLiveData<String>()
     val debugText: LiveData<String>
         get() = _debugText
+
+    /**
+     * Two-way data binding values for EditTexts
+     */
+    val name = MutableLiveData<String>()
+    val description = MutableLiveData<String>()
+
+    /**
+     * @return true if successful
+     */
+    fun save(): Boolean {
+        if (
+            routine.value?.name.toString().isEmpty()
+            || routine.value?.name.toString().length > 20
+            || routine.value?.description.toString().length > 500
+        ) return false
+
+        repository.insertExercisesForRoutine(routine.value!!, exercises.value!!)
+        insert(routine.value!!)
+        return true
+    }
+
+    /**
+     * Initializes [CreateRoutineViewModel] with a [Routine]
+     * @param routineId is used to update [_routine]
+     */
+    fun init(routineId: Int) {
+        _routine.value =
+            if (routineId != -1) getRoutineById(routineId)?.copy() ?: Routine("")
+            else Routine("")
+
+        name.value = routine.value?.name
+        description.value = routine.value?.description
+    }
 
     init {
         _exercises.value = ArrayList()
@@ -92,36 +100,33 @@ class CreateRoutineViewModel(
         }
     }
 
+
     /**
-     * Initializes [CreateRoutineViewModel] with a [Routine]
-     * @param routineId is used to update [_routine]
+     * Repository access functions
      */
-    fun init(routineId: Int) {
-        _routine.value =
-            if (routineId != -1) getRoutineById(routineId)?.copy() ?: Routine("")
-            else Routine("")
-
-        name.value = routine.value?.name
-        description.value = routine.value?.description
-    }
-
-    private fun insertOrUpdate(routine: Routine) =
-        viewModelScope.launch { repository.insertOrUpdate(routine) }
-
+    private fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
     private fun getRoutineById(id: Int): Routine? = runBlocking { repository.getRoutineById(id) }
 
     /**
-     * @return true if successful
+     * Debug
      */
-    fun save(): Boolean {
-        if (
-            routine.value?.name.toString().isEmpty()
-            || routine.value?.name.toString().length > 20
-            || routine.value?.description.toString().length > 500
-        ) return false
+    fun debugInsertExercise() {
+        val allExercisesList = allExercises.value
+        val exercisesList = exercises.value as ArrayList
 
-        repository.insertExercisesForRoutine(routine.value!!, exercises.value!!)
-        insertOrUpdate(routine.value!!)
-        return true
+        if (!allExercisesList.isNullOrEmpty()) {
+            val random =
+                if (allExercisesList.size == 1) 0
+                else Random().nextInt(allExercisesList.size)
+
+            val exercise = allExercisesList[random]
+
+            if (!exercisesList.contains(exercise))
+                _exercises.value = exercisesList.apply { add(exercise) }
+        }
+    }
+
+    fun debugClearExercises() {
+        _exercises.value = ArrayList()
     }
 }

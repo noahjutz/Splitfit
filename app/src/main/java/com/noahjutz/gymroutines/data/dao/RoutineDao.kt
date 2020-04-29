@@ -18,16 +18,16 @@ abstract class RoutineDao {
                 routine.routineId,
                 exercise.exerciseId
             )
-            insertOrUpdate(crossRef)
+            insert(crossRef)
             Log.d(TAG, "CrossRefs: $crossRef")
         }
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertOrUpdate(routineExerciseCrossRef: RoutineExerciseCrossRef)
+    abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertOrUpdate(routine: Routine)
+    abstract suspend fun insert(routine: Routine)
 
     @Delete
     abstract suspend fun delete(routine: Routine)

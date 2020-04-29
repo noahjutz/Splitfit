@@ -60,7 +60,7 @@ class CreateExerciseViewModel(
     }
 
     private fun insertOrUpdate(exercise: Exercise) =
-        viewModelScope.launch { repository.insertOrUpdate(exercise) }
+        viewModelScope.launch { repository.insert(exercise) }
 
     fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExerciseById(id) }
 
