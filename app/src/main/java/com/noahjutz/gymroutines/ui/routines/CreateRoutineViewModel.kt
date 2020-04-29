@@ -83,6 +83,13 @@ class CreateRoutineViewModel(
                         "Exercises:\n$exercises\n\n" +
                         "All exercises:\n${allExercises.value}"
         }
+
+        _debugText.addSource(allExercises) { allExercises ->
+            _debugText.value =
+                "Routine:\n${routine.value}\n\n" +
+                        "Exercises:\n${exercises.value}\n\n" +
+                        "All exercises:\n$allExercises"
+        }
     }
 
     /**
