@@ -1,12 +1,10 @@
 package com.noahjutz.gymroutines.ui.exercises
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @Suppress("unused")
 private const val TAG = "CreateExerciseViewModel"
@@ -23,23 +21,60 @@ class CreateExerciseViewModel(
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
-    fun insert(exercise: Exercise) = viewModelScope.launch { repository.insertOrUpdate(exercise) }
-    fun update(exercise: Exercise) = viewModelScope.launch { repository.update(exercise) }
-    fun getExerciseById(id: Int): Exercise? = exercises.value?.find { it.exerciseId == id }
+    private val _exercise = MediatorLiveData<Exercise>()
+    val exercise: LiveData<Exercise>
+        get() = _exercise
 
-    fun update(exerciseId: Int) {
-        val exercise = getExerciseById(exerciseId)?.apply {
-            name = this@CreateExerciseViewModel.name.value.toString()
-            description = this@CreateExerciseViewModel.description.value.toString()
+    private val _debugText = MediatorLiveData<String>()
+    val debugText: LiveData<String>
+        get() = _debugText
+
+    init {
+        _exercise.addSource(name) { name ->
+            _exercise.value = _exercise.value.also {
+                it?.name = name.trim()
+            }
         }
-        if (exercise != null) update(exercise)
+        _exercise.addSource(description) { description ->
+            _exercise.value = _exercise.value.also {
+                it?.description = description.trim()
+            }
+        }
+
+        _debugText.addSource(exercise) { exercise ->
+            _debugText.value = "Exercise:\n$exercise"
+        }
     }
 
-    fun insert() {
-        val exercise = Exercise(
-            name.value.toString(),
-            description.value.toString()
-        )
-        insert(exercise)
+    /**
+     * Initializes [CreateExerciseViewModel] with an [Exercise]
+     * @param exerciseId is used to update [_exercise]
+     */
+    fun init(exerciseId: Int) {
+        _exercise.value =
+            if (exerciseId != -1) getExerciseById(exerciseId)?.copy() ?: Exercise("")
+            else Exercise("")
+
+        name.value = exercise.value?.name
+        description.value = exercise.value?.description
+    }
+
+    private fun insertOrUpdate(exercise: Exercise) =
+        viewModelScope.launch { repository.insertOrUpdate(exercise) }
+
+    fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExerciseById(id) }
+
+    /**
+     * @return true if successful
+     */
+    fun save(): Boolean {
+        if (
+            exercise.value?.name.toString().isEmpty()
+            || exercise.value?.name.toString().length > 20
+            || exercise.value?.description.toString().length > 500
+        ) return false
+
+        insertOrUpdate(exercise.value!!)
+        return true
     }
 }

@@ -89,7 +89,6 @@ class ExercisesFragment : Fragment() {
                     .setAnchorView(fab_add_routine)
                     .show()
             }
-
         }
 
         val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {

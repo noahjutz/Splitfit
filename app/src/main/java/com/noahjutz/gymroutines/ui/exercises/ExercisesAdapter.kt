@@ -16,18 +16,20 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.*
 @Suppress("unused")
 private const val TAG = "RoutinesAdapter"
 
+private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
+    override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+        return oldItem.exerciseId == newItem.exerciseId
+    }
+
+    override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+        return oldItem == newItem
+    }
+}
+
 class ExercisesAdapter(
     private val onItemClickListener: OnItemClickListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(
-    object : DiffUtil.ItemCallback<Exercise>() {
-        override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-            return oldItem.exerciseId == newItem.exerciseId
-        }
-
-        override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-            return oldItem == newItem
-        }
-    }
+    diffUtil
 ) {
     fun getExerciseAt(pos: Int): Exercise = getItem(pos)
 
@@ -53,8 +55,10 @@ class ExercisesAdapter(
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exercise = getItem(position)
+
         holder.itemView.name.text = exercise.name
         holder.itemView.description.text = exercise.description
+
         if (exercise.description.trim().isEmpty()) {
             holder.itemView.description.visibility = GONE
         }

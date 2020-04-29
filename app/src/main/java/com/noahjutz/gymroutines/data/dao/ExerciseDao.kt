@@ -6,18 +6,18 @@ import com.noahjutz.gymroutines.data.Exercise
 
 @Dao
 interface ExerciseDao {
-    @Insert
-    fun insert(exercise: Exercise)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrUpdate(exercise: Exercise)
 
     @Delete
-    fun delete(exercise: Exercise)
-
-    @Update
-    fun update(exercise: Exercise)
+    suspend fun delete(exercise: Exercise)
 
     @Query("DELETE FROM exercise_table")
-    fun clearExercises()
+    suspend fun clearExercises()
 
     @Query("SELECT * FROM exercise_table ORDER BY name DESC")
     fun getExercises(): LiveData<List<Exercise>>
+
+    @Query("SELECT * FROM exercise_table WHERE exerciseId = :id")
+    suspend fun getExerciseById(id: Int): Exercise
 }

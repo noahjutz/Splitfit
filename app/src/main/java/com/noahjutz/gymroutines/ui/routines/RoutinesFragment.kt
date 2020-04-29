@@ -87,7 +87,6 @@ class RoutinesFragment : Fragment() {
                     .setAnchorView(fab_add_routine)
                     .show()
             }
-
         }
 
         val onItemClickListener = object : RoutinesAdapter.OnItemClickListener {
@@ -99,7 +98,6 @@ class RoutinesFragment : Fragment() {
             override fun onRoutineLongClick(routine: Routine) {
                 // TODO
             }
-
         }
 
         adapter = RoutinesAdapter(onItemClickListener)

@@ -101,11 +101,7 @@ class CreateRoutineViewModel(
     private fun insertOrUpdate(routine: Routine) =
         viewModelScope.launch { repository.insertOrUpdate(routine) }
 
-    private fun getRoutineById(id: Int): Routine? {
-        return runBlocking {
-            repository.getRoutineById(id)
-        }
-    }
+    private fun getRoutineById(id: Int): Routine? = runBlocking { repository.getRoutineById(id) }
 
     /**
      * @return true if successful

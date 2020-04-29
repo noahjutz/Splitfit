@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
@@ -51,7 +53,12 @@ class CreateExerciseFragment : Fragment() {
 
         initActivity()
         initBinding()
+        initViewModel()
         initViews()
+    }
+
+    private fun initViewModel() {
+        viewModel.init(args.exerciseId)
     }
 
     private fun initActivity() {
@@ -63,11 +70,12 @@ class CreateExerciseFragment : Fragment() {
     }
 
     private fun initViews() {
-        if (args.exerciseId != -1) {
-            val exercise = viewModel.getExerciseById(args.exerciseId)
-            viewModel.name.value = exercise?.name
-            viewModel.description.value = exercise?.description
-        }
+        // TODO: Remove this and put it in ViewModel
+        // if (args.exerciseId != -1) {
+        //     val exercise = viewModel.getExerciseById(args.exerciseId)
+        //     viewModel.name.value = exercise?.name
+        //     viewModel.description.value = exercise?.description
+        // }
 
         edit_name.editText?.doOnTextChanged { text, _, _, _ ->
             if (text?.trim().toString().isNotEmpty()) {
@@ -78,23 +86,20 @@ class CreateExerciseFragment : Fragment() {
 
     private fun initBinding() {
         binding.fragment = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
     }
 
-    fun saveExercise() {
-        if (edit_name.editText?.text.toString().trim().length > 20) return
-        if (edit_description.editText?.text.toString().trim().length > 500) return
-        if (edit_name.editText?.text.toString().trim().isEmpty()) {
-            edit_name.error = "Please enter a name"
-            return
-        }
+    fun debugShow(view: View) {
+        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
+        debug_textview.visibility = isVisible
+    }
 
-        if (args.exerciseId != -1) {
-            viewModel.update(args.exerciseId)
-        } else {
-            viewModel.insert()
-        }
-        val action = CreateExerciseFragmentDirections.saveExercise()
-        findNavController().navigate(action)
+    fun saveExercise() {
+        if (viewModel.save()) {
+            val action = CreateExerciseFragmentDirections.saveExercise()
+            findNavController().navigate(action)
+        } else if (viewModel.exercise.value?.name.toString().isEmpty())
+            edit_name.error = "Please enter a name"
     }
 }
