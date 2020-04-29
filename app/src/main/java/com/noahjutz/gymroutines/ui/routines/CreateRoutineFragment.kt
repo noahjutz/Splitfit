@@ -96,7 +96,7 @@ class CreateRoutineFragment : Fragment() {
         if (viewModel.save()) {
             val action = CreateRoutineFragmentDirections.saveRoutine()
             findNavController().navigate(action)
-        } else if (viewModel.routine.value?.name.toString().isEmpty())
+        } else if (viewModel.routineWithExercises.value?.routine?.name.toString().isEmpty())
             edit_name.error = "Please enter a name"
     }
 }

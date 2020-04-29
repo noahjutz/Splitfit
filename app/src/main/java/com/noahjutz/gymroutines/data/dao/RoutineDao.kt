@@ -47,5 +47,5 @@ abstract class RoutineDao {
 
     @Transaction
     @Query("SELECT * FROM routine_table WHERE routineId == :id")
-    abstract fun getRoutineWithExercisesById(id: Int): RoutineWithExercises
+    abstract suspend fun getRoutineWithExercisesById(id: Int): RoutineWithExercises
 }
