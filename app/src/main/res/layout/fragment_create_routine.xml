@@ -100,7 +100,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/any_margin_default"
             android:layout_marginEnd="@dimen/any_margin_default"
-            android:text="Insert"
+            android:onClick="@{() -> viewmodel.debugInsertExercise()}"
+            android:text="Insert Exercise"
             android:visibility="gone"
             tools:ignore="HardcodedText" />
 
@@ -112,6 +113,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/any_margin_default"
             android:layout_marginEnd="@dimen/any_margin_default"
+            android:onClick="@{() -> viewmodel.debugClearExercises()}"
             android:text="Clear"
             android:visibility="gone"
             tools:ignore="HardcodedText" />

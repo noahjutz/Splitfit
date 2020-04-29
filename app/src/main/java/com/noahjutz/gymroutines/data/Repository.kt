@@ -40,6 +40,11 @@ class Repository private constructor(application: Application) {
             routineDao.getRoutineById(id)
         }
     }
+    fun insertExercisesForRoutine(routine: Routine, exercises: List<Exercise>) {
+        CoroutineScope(IO).launch {
+            routineDao.insertExercisesForRoutine(routine, exercises)
+        }
+    }
 
     /**
      * Exercises

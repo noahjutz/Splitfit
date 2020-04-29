@@ -1,11 +1,14 @@
 package com.noahjutz.gymroutines.data.dao
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineExerciseCrossRef
 import com.noahjutz.gymroutines.data.RoutineWithExercises
+
+private const val TAG = "RoutineDao"
 
 @Dao
 abstract class RoutineDao {
@@ -16,6 +19,7 @@ abstract class RoutineDao {
                 exercise.exerciseId
             )
             insertOrUpdate(crossRef)
+            Log.d(TAG, "CrossRefs: $crossRef")
         }
     }
 
