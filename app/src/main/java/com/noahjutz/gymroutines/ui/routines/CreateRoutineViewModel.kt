@@ -7,6 +7,7 @@ import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineWithExercises
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
@@ -56,11 +57,9 @@ class CreateRoutineViewModel(
 
         _debugText.run {
             addSource(routineWithExercises) { routineWithExercises ->
-                updateDebugText(routineWithExercises, null)
+                updateDebugText(routineWithExercises)
             }
-            addSource(allExercises) { allExercises ->
-                updateDebugText(null, allExercises)
-            }
+            addSource(allExercises) {} // To observe allExercises
         }
     }
 
@@ -119,12 +118,21 @@ class CreateRoutineViewModel(
      * Debug
      */
     private fun updateDebugText(
-        routineWithExercises: RoutineWithExercises?,
-        allExercises: List<Exercise>?
+        routineWithExercises: RoutineWithExercises?
     ) {
-        _debugText.value =
-            "RoutineWithExercises:\n${routineWithExercises ?: this.routineWithExercises.value}\n\n" +
-                    "All Exercises:\n${allExercises ?: this.allExercises.value}"
+        val rwe = routineWithExercises ?: this.routineWithExercises.value!!
+        val sb = StringBuilder()
+        rwe.exercises.forEach { exercise ->
+            sb.append("${exercise.name}: ")
+                .append("${exercise.description}\n\n")
+        }
+
+        _debugText.value = "RoutineWithExercises:\n" +
+                "Name: ${rwe.routine.name}\n" +
+                "Desc: ${rwe.routine.description}\n" +
+                "ID: ${rwe.routine.routineId}\n\n" +
+                "Exercises:\n" +
+                "$sb"
     }
 
     fun debugInsertExercise() {
