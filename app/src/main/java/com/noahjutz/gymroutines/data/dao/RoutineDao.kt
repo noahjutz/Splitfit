@@ -53,7 +53,7 @@ abstract class RoutineDao {
 
     @Transaction
     @Query("SELECT * FROM routine_table")
-    abstract fun getRoutinesWithExercises(): List<RoutineWithExercises>
+    abstract fun getRoutinesWithExercises(): LiveData<List<RoutineWithExercises>>
 
     @Transaction
     @Query("SELECT * FROM routine_table WHERE routineId == :id")

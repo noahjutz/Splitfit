@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.gymroutines.data.Repository
-import com.noahjutz.gymroutines.data.Routine
+import com.noahjutz.gymroutines.data.RoutineWithExercises
 import kotlinx.coroutines.launch
 
 @Suppress("unused")
@@ -14,8 +14,9 @@ private const val TAG = "RoutinesViewModel"
 class RoutinesViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    val routines: LiveData<List<Routine>>
-        get() = repository.routines
+
+    val routinesWithExercises: LiveData<List<RoutineWithExercises>>
+        get() = repository.routinesWithExercises
 
     private val _debugText = MutableLiveData<String>()
     val debugText: LiveData<String>
@@ -23,13 +24,20 @@ class RoutinesViewModel(
 
     fun updateDebugText() {
         val sb = StringBuilder("Routines:\n")
-        routines.value?.forEach { routine ->
-            sb.append("$routine\n")
+        routinesWithExercises.value?.forEach { rwe ->
+            sb.append("$rwe\n")
         }
         _debugText.value = sb.toString()
     }
 
-    fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
-    fun delete(routine: Routine) = viewModelScope.launch { repository.delete(routine) }
     fun clearRoutines() = viewModelScope.launch { repository.clearRoutines() }
+
+    fun insert(rwe: RoutineWithExercises) {
+        repository.insert(rwe.routine)
+        repository.insertExercisesForRoutine(rwe.routine.routineId, rwe.exercises)
+    }
+    fun delete(routineWithExercises: RoutineWithExercises) {
+        repository.insertExercisesForRoutine(routineWithExercises.routine.routineId, listOf())
+        repository.delete(routineWithExercises.routine)
+    }
 }
