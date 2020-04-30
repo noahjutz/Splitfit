@@ -12,8 +12,12 @@ private const val TAG = "RoutineDao"
 
 @Dao
 abstract class RoutineDao {
-    suspend fun insertExercisesForRoutine(routineId: Int, exercises: List<Exercise>) {
-        exercises.forEach() { exercise ->
+    suspend fun assignExercisesToRoutine(routineId: Int, exercises: List<Exercise>) {
+        getRoutineExerciseCrossRefs().forEach { crossRef ->
+            if (crossRef.routineId == routineId) delete(crossRef)
+        }
+
+        exercises.forEach { exercise ->
             val crossRef = RoutineExerciseCrossRef(
                 routineId,
                 exercise.exerciseId
@@ -22,6 +26,12 @@ abstract class RoutineDao {
             Log.d(TAG, "CrossRefs: $crossRef")
         }
     }
+
+    @Query("SELECT * from routineexercisecrossref")
+    abstract suspend fun getRoutineExerciseCrossRefs(): List<RoutineExerciseCrossRef>
+
+    @Delete
+    abstract suspend fun delete(routineExerciseCrossRef: RoutineExerciseCrossRef)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef)

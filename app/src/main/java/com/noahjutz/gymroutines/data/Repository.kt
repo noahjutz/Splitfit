@@ -36,7 +36,7 @@ class Repository private constructor(application: Application) {
     fun getRoutineById(id: Int): Routine? = runBlocking { routineDao.getRoutineById(id) }
     fun getMaxId(): Int? = runBlocking { routineDao.getMaxId() }
     fun insertExercisesForRoutine(routineId: Int, exercises: List<Exercise>) =
-        CoroutineScope(IO).launch { routineDao.insertExercisesForRoutine(routineId, exercises) }
+        CoroutineScope(IO).launch { routineDao.assignExercisesToRoutine(routineId, exercises) }
 
     fun getRoutineWithExercisesById(routineId: Int): RoutineWithExercises? = runBlocking {
         routineDao.getRoutineWithExercisesById(routineId)
