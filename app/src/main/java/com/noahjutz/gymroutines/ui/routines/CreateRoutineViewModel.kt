@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
@@ -93,12 +94,9 @@ class CreateRoutineViewModel(
             || routine.description.length > 500
         ) return false
 
-        insert(routine)
-
-        val id =
-            if (routineId == -1) repository.getMaxId()!!
-            else routine.routineId
-        insertExercisesForRoutine(id, exercises)
+        val id = insert(routine)
+        Log.d(TAG, id.toString())
+        insertExercisesForRoutine(id.toInt(), exercises)
 
         return true
     }
@@ -106,7 +104,7 @@ class CreateRoutineViewModel(
     /**
      * Repository access functions
      */
-    private fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
+    private fun insert(routine: Routine): Long = runBlocking { repository.insert(routine) }
     private fun insertExercisesForRoutine(routineId: Int, exercises: List<Exercise>) =
         viewModelScope.launch { repository.insertExercisesForRoutine(routineId, exercises) }
 

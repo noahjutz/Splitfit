@@ -37,7 +37,7 @@ abstract class RoutineDao {
     abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(routine: Routine)
+    abstract suspend fun insert(routine: Routine): Long
 
     @Delete
     abstract suspend fun delete(routine: Routine)
@@ -58,7 +58,4 @@ abstract class RoutineDao {
     @Transaction
     @Query("SELECT * FROM routine_table WHERE routineId == :id")
     abstract suspend fun getRoutineWithExercisesById(id: Int): RoutineWithExercises
-
-    @Query("SELECT MAX(routineId) FROM routine_table")
-    abstract suspend fun getMaxId(): Int
 }
