@@ -7,11 +7,11 @@
 
         <variable
             name="viewmodel"
-            type="com.noahjutz.gymroutines.ui.routines.CreateRoutineViewModel" />
+            type="com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel" />
 
         <variable
             name="fragment"
-            type="com.noahjutz.gymroutines.ui.routines.CreateRoutineFragment" />
+            type="com.noahjutz.gymroutines.ui.routines.create.CreateRoutineFragment" />
     </data>
 
     <RelativeLayout
@@ -68,6 +68,16 @@
                 android:inputType="textMultiLine"
                 android:text="@={viewmodel.description}" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_description"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            tools:listitem="@layout/listitem_exercise" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_save"

@@ -1,7 +1,6 @@
-package com.noahjutz.gymroutines.ui.routines
+package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -16,9 +15,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.ViewModelFactory
+import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
@@ -35,6 +39,7 @@ class CreateRoutineFragment : Fragment() {
     private val args: CreateRoutineFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentCreateRoutineBinding
+    private lateinit var adapter: ExercisesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,13 +59,10 @@ class CreateRoutineFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initActivity()
+        initRecyclerView()
         initBinding()
         initViewModel()
         initViews()
-    }
-
-    private fun initViewModel() {
-        viewModel.init(args.routineId)
     }
 
     private fun initActivity() {
@@ -71,11 +73,55 @@ class CreateRoutineFragment : Fragment() {
         }
     }
 
-    private fun initViews() {
-        edit_name.editText?.doOnTextChanged { text, _, _, _ ->
-            if (text?.trim().toString().isNotEmpty()) {
-                edit_name.error = null
+    private fun initRecyclerView() {
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
             }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
+                viewModel.removeExercise(exercise)
+                adapter.notifyDataSetChanged()
+                Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
+                    .setAction("Undo") {
+                        viewModel.addExercise(exercise)
+                        adapter.notifyDataSetChanged()
+                    }
+                    .setAnchorView(fab_save)
+                    .show()
+            }
+        }
+
+        val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
+            override fun onExerciseClick(exercise: Exercise) {
+                // TODO
+            }
+
+            override fun onExerciseLongClick(exercise: Exercise) {
+                // TODO
+            }
+        }
+
+        adapter = ExercisesAdapter(onItemClickListener)
+
+        recycler_view.apply {
+            adapter = this@CreateRoutineFragment.adapter
+            layoutManager = LinearLayoutManager(this@CreateRoutineFragment.requireContext())
+            setHasFixedSize(true)
+            addItemDecoration(
+                MarginItemDecoration(
+                    resources.getDimension(R.dimen.any_margin_default).toInt()
+                )
+            )
+            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
@@ -83,6 +129,22 @@ class CreateRoutineFragment : Fragment() {
         binding.fragment = this
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
+    }
+
+    private fun initViewModel() {
+        viewModel.init(args.routineId)
+        viewModel.routineWithExercises.observe(viewLifecycleOwner, Observer { rwe ->
+            adapter.submitList(rwe.exercises)
+            adapter.notifyDataSetChanged()
+        })
+    }
+
+    private fun initViews() {
+        edit_name.editText?.doOnTextChanged { text, _, _, _ ->
+            if (text?.trim().toString().isNotEmpty()) {
+                edit_name.error = null
+            }
+        }
     }
 
     fun debugShow(view: View) {
@@ -94,7 +156,8 @@ class CreateRoutineFragment : Fragment() {
 
     fun saveRoutine() {
         if (viewModel.save()) {
-            val action = CreateRoutineFragmentDirections.saveRoutine()
+            val action =
+                CreateRoutineFragmentDirections.saveRoutine()
             findNavController().navigate(action)
         } else if (viewModel.routineWithExercises.value?.routine?.name.toString().isEmpty())
             edit_name.error = "Please enter a name"

@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.routines
+package com.noahjutz.gymroutines.ui.routines.create
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -101,6 +101,29 @@ class CreateRoutineViewModel(
         return true
     }
 
+    fun removeExercise(exercise: Exercise) {
+        val rwe = routineWithExercises.value!!
+        val list = rwe.exercises as ArrayList<Exercise>
+        _routineWithExercises.value = RoutineWithExercises(
+            rwe.routine,
+            list.apply { remove(exercise); sortBy { it.name } } as List<Exercise>
+        )
+    }
+
+    fun addExercise(exercise: Exercise) {
+        val rwe = routineWithExercises.value!!
+        val list = rwe.exercises as? ArrayList<Exercise> ?: ArrayList()
+        if (list.contains(exercise)) return
+        list.apply {
+            add(exercise)
+            sortBy { it.exerciseId }
+        }
+        _routineWithExercises.value = RoutineWithExercises(
+            rwe.routine,
+            list as List<Exercise>
+        )
+    }
+
     /**
      * Repository access functions
      */
@@ -142,20 +165,11 @@ class CreateRoutineViewModel(
                 else Random().nextInt(allExercisesList.size)
 
             val exercise = allExercisesList[random]
-
-            if (!routineWithExercises.value!!.exercises.contains(exercise)) {
-                val newExercisesList =
-                    routineWithExercises.value!!.exercises as? ArrayList<Exercise> ?: ArrayList()
-                _routineWithExercises.value = RoutineWithExercises(
-                    routineWithExercises.value!!.routine,
-                    newExercisesList.apply { add(exercise) }
-                )
-            }
+            addExercise(exercise)
         }
     }
 
     fun debugClearExercises() {
-        // _exercises.value = ArrayList()
         _routineWithExercises.value = RoutineWithExercises(
             routineWithExercises.value!!.routine,
             listOf()

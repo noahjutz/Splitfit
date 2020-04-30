@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.exercises
+package com.noahjutz.gymroutines.ui.routines.create
 
 import android.graphics.Rect
 import android.util.Log
@@ -32,6 +32,7 @@ class ExercisesAdapter(
     diffUtil
 ) {
     fun getExerciseAt(pos: Int): Exercise = getItem(pos)
+    fun getPosOf(exercise: Exercise) = currentList.indexOf(exercise)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
