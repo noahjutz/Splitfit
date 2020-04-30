@@ -34,8 +34,9 @@ class Repository private constructor(application: Application) {
     fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
     fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
     fun getRoutineById(id: Int): Routine? = runBlocking { routineDao.getRoutineById(id) }
-    fun insertExercisesForRoutine(routine: Routine, exercises: List<Exercise>) =
-        CoroutineScope(IO).launch { routineDao.insertExercisesForRoutine(routine, exercises) }
+    fun getMaxId(): Int? = runBlocking { routineDao.getMaxId() }
+    fun insertExercisesForRoutine(routineId: Int, exercises: List<Exercise>) =
+        CoroutineScope(IO).launch { routineDao.insertExercisesForRoutine(routineId, exercises) }
 
     fun getRoutineWithExercisesById(routineId: Int): RoutineWithExercises? = runBlocking {
         routineDao.getRoutineWithExercisesById(routineId)

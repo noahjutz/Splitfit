@@ -12,10 +12,10 @@ private const val TAG = "RoutineDao"
 
 @Dao
 abstract class RoutineDao {
-    suspend fun insertExercisesForRoutine(routine: Routine, exercises: List<Exercise>) {
+    suspend fun insertExercisesForRoutine(routineId: Int, exercises: List<Exercise>) {
         exercises.forEach() { exercise ->
             val crossRef = RoutineExerciseCrossRef(
-                routine.routineId,
+                routineId,
                 exercise.exerciseId
             )
             insert(crossRef)
@@ -48,4 +48,7 @@ abstract class RoutineDao {
     @Transaction
     @Query("SELECT * FROM routine_table WHERE routineId == :id")
     abstract suspend fun getRoutineWithExercisesById(id: Int): RoutineWithExercises
+
+    @Query("SELECT MAX(routineId) FROM routine_table")
+    abstract suspend fun getMaxId(): Int
 }

@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
@@ -10,6 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -27,6 +27,8 @@ class CreateRoutineViewModel(
     private val _debugText = MediatorLiveData<String>()
     val debugText: LiveData<String>
         get() = _debugText
+
+    private var routineId by Delegates.notNull<Int>()
 
     /**
      * Two-way data binding values for EditTexts
@@ -63,28 +65,11 @@ class CreateRoutineViewModel(
     }
 
     /**
-     * @return true if successful
-     */
-    fun save(): Boolean {
-        val routineWithExercises = routineWithExercises.value!!
-        val routine = routineWithExercises.routine
-        val exercises = routineWithExercises.exercises
-        if (
-            routine.name.isEmpty()
-            || routine.name.length > 20
-            || routine.description.length > 500
-        ) return false
-
-        insert(routine)
-        insertExercisesForRoutine(routine, exercises)
-        return true
-    }
-
-    /**
      * Initializes [CreateRoutineViewModel] with a [Routine]
      * @param routineId is used to update [_routineWithExercises]
      */
     fun init(routineId: Int) {
+        this.routineId = routineId
         _routineWithExercises.value =
             if (routineId != -1) getRoutineWithExercisesById(routineId)?.copy()
             else RoutineWithExercises(Routine(""), listOf())
@@ -95,13 +80,36 @@ class CreateRoutineViewModel(
         description.value = routine.description
     }
 
+    /**
+     * @return true if successful
+     */
+    fun save(): Boolean {
+        val routineWithExercises = routineWithExercises.value!!
+        val routine = routineWithExercises.routine
+        val exercises = routineWithExercises.exercises
+
+        if (
+            routine.name.isEmpty()
+            || routine.name.length > 20
+            || routine.description.length > 500
+        ) return false
+
+        insert(routine)
+
+        val id =
+            if (routineId == -1) repository.getMaxId()!!
+            else routine.routineId
+        insertExercisesForRoutine(id, exercises)
+
+        return true
+    }
 
     /**
      * Repository access functions
      */
     private fun insert(routine: Routine) = viewModelScope.launch { repository.insert(routine) }
-    private fun insertExercisesForRoutine(routine: Routine, exercises: List<Exercise>) =
-        viewModelScope.launch { repository.insertExercisesForRoutine(routine, exercises) }
+    private fun insertExercisesForRoutine(routineId: Int, exercises: List<Exercise>) =
+        viewModelScope.launch { repository.insertExercisesForRoutine(routineId, exercises) }
 
     private fun getRoutineById(id: Int): Routine? = runBlocking { repository.getRoutineById(id) }
     private fun getRoutineWithExercisesById(routineId: Int): RoutineWithExercises? =
@@ -114,8 +122,9 @@ class CreateRoutineViewModel(
         routineWithExercises: RoutineWithExercises?,
         allExercises: List<Exercise>?
     ) {
-        _debugText.value = "RoutineWithExercises:\n${routineWithExercises ?: this.routineWithExercises.value}\n\n" +
-                "All Exercises:\n${allExercises ?: this.allExercises.value}"
+        _debugText.value =
+            "RoutineWithExercises:\n${routineWithExercises ?: this.routineWithExercises.value}\n\n" +
+                    "All Exercises:\n${allExercises ?: this.allExercises.value}"
     }
 
     fun debugInsertExercise() {
