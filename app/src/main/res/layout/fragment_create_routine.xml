@@ -19,65 +19,75 @@
         android:layout_height="match_parent"
         tools:context=".ui.routines.CreateRoutineActivity">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginLeft="@dimen/any_margin_default"
-            android:layout_marginTop="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            android:layout_marginRight="@dimen/any_margin_default"
-            app:counterEnabled="true"
-            app:counterMaxLength="20"
-            app:endIconMode="clear_text"
-            app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_title">
+            android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/create_routine_hint_title"
-                android:inputType="textPersonName"
-                android:text="@={viewmodel.name}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_description"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edit_name"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginTop="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            app:counterEnabled="true"
-            app:counterMaxLength="500"
-            app:startIconDrawable="@drawable/ic_short_text">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edit_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/any_margin_default"
+                    android:layout_marginLeft="@dimen/any_margin_default"
+                    android:layout_marginTop="@dimen/any_margin_default"
+                    android:layout_marginEnd="@dimen/any_margin_default"
+                    android:layout_marginRight="@dimen/any_margin_default"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="20"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_title">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/create_routine_hint_description"
-                android:inputType="textMultiLine"
-                android:text="@={viewmodel.description}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/create_routine_hint_title"
+                        android:inputType="textPersonName"
+                        android:text="@={viewmodel.name}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edit_description"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            tools:listitem="@layout/listitem_exercise" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edit_description"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edit_name"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/any_margin_default"
+                    android:layout_marginTop="@dimen/any_margin_default"
+                    android:layout_marginEnd="@dimen/any_margin_default"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="500"
+                    app:startIconDrawable="@drawable/ic_short_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/create_routine_hint_description"
+                        android:inputType="textMultiLine"
+                        android:text="@={viewmodel.description}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edit_description"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    tools:listitem="@layout/listitem_exercise" />
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_save"

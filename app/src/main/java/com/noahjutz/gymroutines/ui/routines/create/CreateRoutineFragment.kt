@@ -122,6 +122,7 @@ class CreateRoutineFragment : Fragment() {
                 )
             )
             ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
+            isNestedScrollingEnabled = false
         }
     }
 
