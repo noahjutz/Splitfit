@@ -85,7 +85,7 @@ class RoutinesFragment : Fragment() {
                     .setAction("Undo") {
                         viewModel.insert(rwe)
                     }
-                    .setAnchorView(fab_add_routine)
+                    .setAnchorView(fab_pick_exercises)
                     .show()
             }
         }

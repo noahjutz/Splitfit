@@ -37,13 +37,13 @@ class ExercisesAdapter(
         init {
             itemView.setOnClickListener {
                 val card = it as MaterialCardView
-                card.isChecked = (!card.isChecked)
                 this@ExercisesAdapter.onItemClickListener
-                    .onExerciseClick(getItem(adapterPosition))
+                    .onExerciseClick(getItem(adapterPosition), card)
             }
             itemView.setOnLongClickListener {
+                val card = it as MaterialCardView
                 this@ExercisesAdapter.onItemClickListener
-                    .onExerciseLongClick(getItem(adapterPosition))
+                    .onExerciseLongClick(getItem(adapterPosition), card)
                 true
             }
         }
@@ -69,8 +69,8 @@ class ExercisesAdapter(
     }
 
     interface OnItemClickListener {
-        fun onExerciseClick(exercise: Exercise)
-        fun onExerciseLongClick(exercise: Exercise)
+        fun onExerciseClick(exercise: Exercise, card: MaterialCardView)
+        fun onExerciseLongClick(exercise: Exercise, card: MaterialCardView)
     }
 }
 

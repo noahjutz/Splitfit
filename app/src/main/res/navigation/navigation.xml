@@ -29,6 +29,10 @@
         <argument
             android:name="routineId"
             app:argType="integer" />
+        <argument
+            android:name="exercisesString"
+            android:defaultValue="[]"
+            app:argType="string" />
         <action
             android:id="@+id/save_routine"
             app:destination="@id/routinesFragment"

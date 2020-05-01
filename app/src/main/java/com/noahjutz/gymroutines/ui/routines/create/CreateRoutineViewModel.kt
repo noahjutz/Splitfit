@@ -2,6 +2,8 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
@@ -12,6 +14,7 @@ import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
+import kotlin.reflect.typeOf
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -68,7 +71,7 @@ class CreateRoutineViewModel(
      * Initializes [CreateRoutineViewModel] with a [Routine]
      * @param routineId is used to update [_routineWithExercises]
      */
-    fun init(routineId: Int) {
+    fun init(routineId: Int, exercisesString: String) {
         this.routineId = routineId
         _routineWithExercises.value =
             if (routineId != -1) getRoutineWithExercisesById(routineId)?.copy()
@@ -78,6 +81,17 @@ class CreateRoutineViewModel(
 
         name.value = routine.name
         description.value = routine.description
+
+        if (exercisesString.isNotEmpty() && exercisesString != "[]") {
+            val gson = Gson()
+            val type = object : TypeToken<List<Exercise>>() {}.type
+            val exercisesList: List<Exercise> = gson.fromJson(exercisesString, type)
+            _routineWithExercises.value =
+                RoutineWithExercises(
+                    routineWithExercises.value!!.routine,
+                    exercisesList
+                )
+        }
     }
 
     /**
@@ -106,7 +120,10 @@ class CreateRoutineViewModel(
         val list = rwe.exercises as ArrayList<Exercise>
         _routineWithExercises.value = RoutineWithExercises(
             rwe.routine,
-            list.apply { remove(exercise); sortBy { it.name } } as List<Exercise>
+            list.apply {
+                remove(exercise)
+                sortBy { it.name }
+            } as List<Exercise>
         )
     }
 
@@ -116,7 +133,7 @@ class CreateRoutineViewModel(
         if (list.contains(exercise)) return
         list.apply {
             add(exercise)
-            sortBy { it.exerciseId }
+            sortBy { it.name }
         }
         _routineWithExercises.value = RoutineWithExercises(
             rwe.routine,

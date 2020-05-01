@@ -132,7 +132,7 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel.init(args.routineId)
+        viewModel.init(args.routineId, args.exercisesString)
         viewModel.routineWithExercises.observe(viewLifecycleOwner, Observer { rwe ->
             adapter.submitList(rwe.exercises)
             adapter.notifyDataSetChanged()

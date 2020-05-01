@@ -1,9 +1,10 @@
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,6 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
@@ -54,8 +58,13 @@ class PickExerciseFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it)
+        exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
+            adapter.submitList(exercises)
+        })
+        pickExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
+            fab_pick_exercises.visibility =
+                if (exercises.isEmpty()) GONE
+                else VISIBLE
         })
     }
 
@@ -67,11 +76,13 @@ class PickExerciseFragment : Fragment() {
 
     private fun initRecyclerView() {
         val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
-            override fun onExerciseClick(exercise: Exercise) {
-                pickExerciseViewModel.addExercise(exercise)
+            override fun onExerciseClick(exercise: Exercise, card: MaterialCardView) {
+                card.isChecked = (!card.isChecked)
+                if (card.isChecked) pickExerciseViewModel.addExercise(exercise)
+                else pickExerciseViewModel.removeExercise(exercise)
             }
 
-            override fun onExerciseLongClick(exercise: Exercise) {}
+            override fun onExerciseLongClick(exercise: Exercise, card: MaterialCardView) {}
         }
 
         adapter = ExercisesAdapter(onItemClickListener)
@@ -89,9 +100,9 @@ class PickExerciseFragment : Fragment() {
     }
 
     fun pickExercise() {
-        if (pickExerciseViewModel.pickExercises(args.routineId)) {
-            val action = PickExerciseFragmentDirections.addExercise(args.routineId)
-            findNavController().navigate(action)
-        }
+        val gson = Gson()
+        val listString = gson.toJson(pickExerciseViewModel.exercises.value)
+        val action = PickExerciseFragmentDirections.addExercise(args.routineId, listString)
+        findNavController().navigate(action)
     }
 }
