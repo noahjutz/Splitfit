@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
@@ -17,10 +20,15 @@ import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.ui.routines.create.MarginItemDecoration
 import kotlinx.android.synthetic.main.fragment_pick_exercise.*
 
+@Suppress("unused")
+private const val TAG = "PickExerciseFragment"
+
 class PickExerciseFragment : Fragment() {
 
-    private val viewModel: ExercisesViewModel by viewModels { viewModelFactory }
+    private val exercisesViewModel: ExercisesViewModel by viewModels { viewModelFactory }
+    private val pickExerciseViewModel: PickExerciseViewModel by viewModels { viewModelFactory }
     private val viewModelFactory by lazy { InjectorUtils.provideViewModelFactory(requireActivity().application) }
+    private val args: PickExerciseFragmentArgs by navArgs()
     private lateinit var adapter: ExercisesAdapter
     private lateinit var binding: FragmentPickExerciseBinding
 
@@ -35,13 +43,18 @@ class PickExerciseFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initBinding()
         initRecyclerView()
         initActivity()
         initViewModel()
     }
 
+    private fun initBinding() {
+        binding.fragment = this
+    }
+
     private fun initViewModel() {
-        viewModel.exercises.observe(viewLifecycleOwner, Observer {
+        exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
@@ -55,7 +68,7 @@ class PickExerciseFragment : Fragment() {
     private fun initRecyclerView() {
         val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
             override fun onExerciseClick(exercise: Exercise) {
-                // TODO
+                pickExerciseViewModel.addExercise(exercise)
             }
 
             override fun onExerciseLongClick(exercise: Exercise) {}
@@ -72,6 +85,13 @@ class PickExerciseFragment : Fragment() {
                     resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
+        }
+    }
+
+    fun pickExercise() {
+        if (pickExerciseViewModel.pickExercises(args.routineId)) {
+            val action = PickExerciseFragmentDirections.addExercise(args.routineId)
+            findNavController().navigate(action)
         }
     }
 }

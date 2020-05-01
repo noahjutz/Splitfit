@@ -164,7 +164,7 @@ class CreateRoutineFragment : Fragment() {
     }
 
     fun addExercise() {
-        val action = CreateRoutineFragmentDirections.addExercise()
+        val action = CreateRoutineFragmentDirections.addExercise(args.routineId)
         findNavController().navigate(action)
     }
 }

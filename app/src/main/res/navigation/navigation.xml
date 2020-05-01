@@ -55,6 +55,9 @@
         android:id="@+id/add_exercise"
         android:name="com.noahjutz.gymroutines.ui.routines.create.pick.PickExerciseFragment"
         tools:layout="@layout/fragment_pick_exercise" >
+        <argument
+            android:name="routineId"
+            app:argType="integer" />
         <action
             android:id="@+id/add_exercise"
             app:destination="@id/createRoutineFragment"
