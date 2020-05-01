@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.exercises
+package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.graphics.Rect
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
@@ -35,10 +36,14 @@ class ExercisesAdapter(
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                this@ExercisesAdapter.onItemClickListener.onExerciseClick(getItem(adapterPosition))
+                val card = it as MaterialCardView
+                card.isChecked = (!card.isChecked)
+                this@ExercisesAdapter.onItemClickListener
+                    .onExerciseClick(getItem(adapterPosition))
             }
             itemView.setOnLongClickListener {
-                this@ExercisesAdapter.onItemClickListener.onExerciseLongClick(getItem(adapterPosition))
+                this@ExercisesAdapter.onItemClickListener
+                    .onExerciseLongClick(getItem(adapterPosition))
                 true
             }
         }

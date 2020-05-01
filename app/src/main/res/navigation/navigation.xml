@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/add_exercise"
-        android:name="com.noahjutz.gymroutines.ui.routines.create.PickExerciseFragment"
+        android:name="com.noahjutz.gymroutines.ui.routines.create.pick.PickExerciseFragment"
         tools:layout="@layout/fragment_pick_exercise" >
         <action
             android:id="@+id/add_exercise"

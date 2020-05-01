@@ -22,7 +22,6 @@ import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
 import com.noahjutz.gymroutines.ui.routines.MarginItemDecoration
-import com.noahjutz.gymroutines.ui.routines.RoutinesFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
 

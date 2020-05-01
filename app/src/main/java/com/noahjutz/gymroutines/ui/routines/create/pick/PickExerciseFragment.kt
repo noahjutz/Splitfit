@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.ui.routines.create
+package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentPickExerciseBinding
-import com.noahjutz.gymroutines.ui.exercises.ExercisesAdapter
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
+import com.noahjutz.gymroutines.ui.routines.create.MarginItemDecoration
 import kotlinx.android.synthetic.main.fragment_pick_exercise.*
 
 class PickExerciseFragment : Fragment() {
