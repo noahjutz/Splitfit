@@ -115,7 +115,6 @@ class CreateRoutineFragment : Fragment() {
         recycler_view.apply {
             adapter = this@CreateRoutineFragment.adapter
             layoutManager = LinearLayoutManager(this@CreateRoutineFragment.requireContext())
-            setHasFixedSize(true)
             addItemDecoration(
                 MarginItemDecoration(
                     resources.getDimension(R.dimen.any_margin_default).toInt()
@@ -162,5 +161,10 @@ class CreateRoutineFragment : Fragment() {
             findNavController().navigate(action)
         } else if (viewModel.routineWithExercises.value?.routine?.name.toString().isEmpty())
             edit_name.error = "Please enter a name"
+    }
+
+    fun addExercise() {
+        val action = CreateRoutineFragmentDirections.addExercise()
+        findNavController().navigate(action)
     }
 }

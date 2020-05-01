@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -32,9 +33,6 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/any_margin_default"
                     android:layout_marginLeft="@dimen/any_margin_default"
                     android:layout_marginTop="@dimen/any_margin_default"
@@ -59,9 +57,6 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/edit_name"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/any_margin_default"
                     android:layout_marginTop="@dimen/any_margin_default"
                     android:layout_marginEnd="@dimen/any_margin_default"
@@ -81,12 +76,18 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/edit_description"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
+                    tools:itemCount="3"
                     tools:listitem="@layout/listitem_exercise" />
-            </RelativeLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/any_margin_default"
+                    android:onClick="@{() -> fragment.addExercise()}"
+                    android:text="Add Exercise" />
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

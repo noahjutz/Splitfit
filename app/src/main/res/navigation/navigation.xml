@@ -34,6 +34,9 @@
             app:destination="@id/routinesFragment"
             app:popUpTo="@id/routinesFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/add_exercise"
+            app:destination="@id/add_exercise" />
     </fragment>
     <fragment
         android:id="@+id/createExerciseFragment"
@@ -46,6 +49,16 @@
             android:id="@+id/save_exercise"
             app:destination="@id/exercisesFragment"
             app:popUpTo="@id/createExerciseFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/add_exercise"
+        android:name="com.noahjutz.gymroutines.ui.routines.create.PickExerciseFragment"
+        tools:layout="@layout/fragment_pick_exercise" >
+        <action
+            android:id="@+id/add_exercise"
+            app:destination="@id/createRoutineFragment"
+            app:popUpTo="@id/createRoutineFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -97,9 +97,7 @@ class ExercisesFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-            override fun onExerciseLongClick(exercise: Exercise) {
-                // TODO
-            }
+            override fun onExerciseLongClick(exercise: Exercise) {}
         }
 
         adapter = ExercisesAdapter(onItemClickListener)
