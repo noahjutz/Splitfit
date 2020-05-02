@@ -48,6 +48,7 @@ class CreateRoutineFragment : Fragment() {
             container,
             false
         )
+        initBinding()
         return binding.root
     }
 
@@ -55,7 +56,6 @@ class CreateRoutineFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initActivity()
         initRecyclerView()
-        initBinding()
     }
 
     private fun initActivity() {

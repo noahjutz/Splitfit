@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
@@ -15,16 +14,26 @@ class CreateRoutineViewModel(
     private val repository: Repository,
     private val routineId: Int
 ) : ViewModel() {
+    /**
+     * The [RoutineWithExercises] object that is being created/edited
+     * @see initRwe
+     * @see save
+     */
     private val _rwe = MediatorLiveData<RoutineWithExercises>()
-    val rwe: LiveData<RoutineWithExercises>
+    private val rwe: LiveData<RoutineWithExercises>
         get() = _rwe
+
+    /**
+     * Data binding fields
+     * MediatorLiveData Sources for [rwe]
+     * @see initRwe
+     */
+    val name = MutableLiveData<String>()
+    val description = MutableLiveData<String>()
 
     private val _debugText = MediatorLiveData<String>()
     val debugText: LiveData<String>
         get() = _debugText
-
-    val name = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
 
     init {
         initRwe()
@@ -32,6 +41,9 @@ class CreateRoutineViewModel(
         initDebug()
     }
 
+    /**
+     * Auto-save
+     */
     override fun onCleared() {
         super.onCleared()
         save()
@@ -40,10 +52,7 @@ class CreateRoutineViewModel(
     private fun initRwe() {
         _rwe.run {
             value = getRoutineWithExercisesById(routineId)
-                ?: RoutineWithExercises(
-                    Routine(""),
-                    listOf()
-                )
+                ?: RoutineWithExercises(Routine(""), listOf())
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value.also {
@@ -63,16 +72,8 @@ class CreateRoutineViewModel(
         description.value = rwe.value?.routine?.description
     }
 
-    private fun initDebug() {
-        _debugText.run {
-            addSource(rwe) { routineWithExercises ->
-                updateDebugText(routineWithExercises)
-            }
-        }
-    }
-
     /**
-     * Inserts the routine of rwe.
+     * Inserts the [rwe]'s [Routine].
      * Assigns the exerciseIds of rwe.exercises to routines with cross references.
      */
     private fun save() {
@@ -83,9 +84,10 @@ class CreateRoutineViewModel(
     }
 
     /**
-     * Repository access functions
+     * [repository] access functions
      */
     private fun insert(routine: Routine): Long = runBlocking { repository.insert(routine) }
+
     private fun getRoutineWithExercisesById(routineId: Int): RoutineWithExercises? =
         runBlocking { repository.getRoutineWithExercisesById(routineId) }
 
@@ -98,6 +100,15 @@ class CreateRoutineViewModel(
     /**
      * Debug
      */
+
+    private fun initDebug() {
+        _debugText.run {
+            addSource(rwe) { routineWithExercises ->
+                updateDebugText(routineWithExercises)
+            }
+        }
+    }
+
     private fun updateDebugText(
         routineWithExercises: RoutineWithExercises?
     ) {
