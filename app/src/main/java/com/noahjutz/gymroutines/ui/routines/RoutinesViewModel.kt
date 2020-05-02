@@ -34,10 +34,13 @@ class RoutinesViewModel(
 
     fun insert(rwe: RoutineWithExercises) {
         repository.insert(rwe.routine)
-        repository.insertExercisesForRoutine(rwe.routine.routineId, rwe.exercises)
+        repository.assignExercisesToRoutine(
+            rwe.routine.routineId,
+            rwe.exercises.map { it.exerciseId })
     }
+
     fun delete(routineWithExercises: RoutineWithExercises) {
-        repository.insertExercisesForRoutine(routineWithExercises.routine.routineId, listOf())
+        repository.assignExercisesToRoutine(routineWithExercises.routine.routineId, listOf())
         repository.delete(routineWithExercises.routine)
     }
 }

@@ -7,13 +7,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Switch
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,17 +53,13 @@ class CreateRoutineFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         initActivity()
         initRecyclerView()
         initBinding()
-        initViewModel()
-        initViews()
     }
 
     private fun initActivity() {
         requireActivity().apply {
-            (this as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
             title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
             bottom_nav.visibility = GONE
         }
@@ -88,26 +80,18 @@ class CreateRoutineFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
-                viewModel.removeExercise(exercise)
-                adapter.notifyDataSetChanged()
+                // TODO: Remove Exercise
                 Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") {
-                        viewModel.addExercise(exercise)
-                        adapter.notifyDataSetChanged()
+                        // TODO: Re-add exercise
                     }
-                    .setAnchorView(fab_save)
                     .show()
             }
         }
 
         val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
-            override fun onExerciseClick(exercise: Exercise) {
-                // TODO
-            }
-
-            override fun onExerciseLongClick(exercise: Exercise) {
-                // TODO
-            }
+            override fun onExerciseClick(exercise: Exercise) {}
+            override fun onExerciseLongClick(exercise: Exercise) {}
         }
 
         adapter = ExercisesAdapter(onItemClickListener)
@@ -120,8 +104,8 @@ class CreateRoutineFragment : Fragment() {
                     resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
-            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
             isNestedScrollingEnabled = false
+            // TODO: ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
@@ -131,40 +115,10 @@ class CreateRoutineFragment : Fragment() {
         binding.viewmodel = viewModel
     }
 
-    private fun initViewModel() {
-        viewModel.init(args.routineId, args.exercisesString)
-        viewModel.routineWithExercises.observe(viewLifecycleOwner, Observer { rwe ->
-            adapter.submitList(rwe.exercises)
-            adapter.notifyDataSetChanged()
-        })
-    }
-
-    private fun initViews() {
-        edit_name.editText?.doOnTextChanged { text, _, _, _ ->
-            if (text?.trim().toString().isNotEmpty()) {
-                edit_name.error = null
-            }
-        }
-    }
-
     fun debugShow(view: View) {
         val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
         debug_button_insert.visibility = isVisible
         debug_button_clear.visibility = isVisible
         debug_textview.visibility = isVisible
-    }
-
-    fun saveRoutine() {
-        if (viewModel.save()) {
-            val action =
-                CreateRoutineFragmentDirections.saveRoutine()
-            findNavController().navigate(action)
-        } else if (viewModel.routineWithExercises.value?.routine?.name.toString().isEmpty())
-            edit_name.error = "Please enter a name"
-    }
-
-    fun addExercise() {
-        val action = CreateRoutineFragmentDirections.addExercise(args.routineId)
-        findNavController().navigate(action)
     }
 }

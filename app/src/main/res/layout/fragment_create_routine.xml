@@ -85,21 +85,9 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/any_margin_default"
-                    android:onClick="@{() -> fragment.addExercise()}"
                     android:text="Add Exercise" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="@dimen/any_margin_large"
-            android:layout_marginBottom="@dimen/any_margin_large"
-            android:onClick="@{() -> fragment.saveRoutine()}"
-            app:srcCompat="@drawable/ic_done" />
 
         <!-- Debug -->
 
