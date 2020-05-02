@@ -27,8 +27,9 @@ class CreateRoutineViewModel(
     val description = MutableLiveData<String>()
 
     init {
-        initDebug()
         initRwe()
+        initViews()
+        initDebug()
     }
 
     override fun onCleared() {
@@ -38,10 +39,11 @@ class CreateRoutineViewModel(
 
     private fun initRwe() {
         _rwe.run {
-            value = RoutineWithExercises(
-                Routine(""),
-                listOf()
-            )
+            value = getRoutineWithExercisesById(routineId)
+                ?: RoutineWithExercises(
+                    Routine(""),
+                    listOf()
+                )
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value.also {
@@ -54,6 +56,11 @@ class CreateRoutineViewModel(
                 }
             }
         }
+    }
+
+    private fun initViews() {
+        name.value = rwe.value?.routine?.name
+        description.value = rwe.value?.routine?.description
     }
 
     private fun initDebug() {
