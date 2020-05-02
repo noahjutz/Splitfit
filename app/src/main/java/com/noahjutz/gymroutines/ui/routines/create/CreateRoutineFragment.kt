@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.noahjutz.gymroutines.InjectorUtils
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.ViewModelFactory
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
+import com.noahjutz.gymroutines.util.CreateViewModelFactory
+import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
 
@@ -29,8 +29,8 @@ private const val TAG = "CreateRoutineFragment"
 class CreateRoutineFragment : Fragment() {
 
     private val viewModel: CreateRoutineViewModel by viewModels { viewModelFactory }
-    private val viewModelFactory: ViewModelFactory by lazy {
-        InjectorUtils.provideViewModelFactory(requireActivity().application)
+    private val viewModelFactory: CreateViewModelFactory by lazy {
+        InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.routineId)
     }
     private val args: CreateRoutineFragmentArgs by navArgs()
 

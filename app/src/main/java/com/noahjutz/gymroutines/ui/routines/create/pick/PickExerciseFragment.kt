@@ -14,9 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.noahjutz.gymroutines.InjectorUtils
+import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentPickExerciseBinding

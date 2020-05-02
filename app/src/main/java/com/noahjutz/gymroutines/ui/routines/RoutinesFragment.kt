@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.noahjutz.gymroutines.InjectorUtils
+import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.ViewModelFactory
+import com.noahjutz.gymroutines.util.ViewModelFactory
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineWithExercises
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding

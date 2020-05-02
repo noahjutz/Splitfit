@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.noahjutz.gymroutines.InjectorUtils
+import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.ViewModelFactory
+import com.noahjutz.gymroutines.util.ViewModelFactory
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_exercise.*

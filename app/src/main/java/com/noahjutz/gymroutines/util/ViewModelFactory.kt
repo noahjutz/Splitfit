@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines
+package com.noahjutz.gymroutines.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,8 +19,6 @@ class ViewModelFactory(
                 RoutinesViewModel(repository) as T
             modelClass.isAssignableFrom(ExercisesViewModel::class.java) ->
                 ExercisesViewModel(repository) as T
-            modelClass.isAssignableFrom(CreateRoutineViewModel::class.java) ->
-                CreateRoutineViewModel(repository) as T
             modelClass.isAssignableFrom(CreateExerciseViewModel::class.java) ->
                 CreateExerciseViewModel(repository) as T
             modelClass.isAssignableFrom(PickExerciseViewModel::class.java) ->

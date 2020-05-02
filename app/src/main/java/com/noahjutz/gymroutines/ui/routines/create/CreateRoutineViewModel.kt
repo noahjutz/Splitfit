@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
@@ -11,7 +12,8 @@ import kotlinx.coroutines.runBlocking
 private const val TAG = "CreateRoutineViewModel"
 
 class CreateRoutineViewModel(
-    private val repository: Repository
+    private val repository: Repository,
+    private val routineId: Int
 ) : ViewModel() {
     private val _rwe = MediatorLiveData<RoutineWithExercises>()
     val rwe: LiveData<RoutineWithExercises>
