@@ -115,6 +115,13 @@ class CreateRoutineFragment : Fragment() {
         binding.viewmodel = viewModel
     }
 
+    fun addExercise() {
+        // TODO
+    }
+
+    /**
+     * Debug
+     */
     fun debugShow(view: View) {
         val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
         debug_button_insert.visibility = isVisible

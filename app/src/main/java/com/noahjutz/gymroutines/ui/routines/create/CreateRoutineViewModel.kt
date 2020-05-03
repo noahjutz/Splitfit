@@ -42,11 +42,18 @@ class CreateRoutineViewModel(
     }
 
     /**
-     * Auto-save
+     * Auto-save if not empty
      */
     override fun onCleared() {
         super.onCleared()
-        save()
+        if (!isRoutineEmpty()) save()
+    }
+
+    private fun isRoutineEmpty(): Boolean {
+        val rwe = rwe.value!!
+        return (rwe.routine.name.isEmpty()
+            && rwe.routine.description.isEmpty()
+            && rwe.exercises.isEmpty())
     }
 
     private fun initRwe() {
