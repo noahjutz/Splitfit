@@ -6,18 +6,21 @@ import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineExerciseCrossRef
 import com.noahjutz.gymroutines.data.RoutineWithExercises
 
+@Suppress("unused")
 private const val TAG = "RoutineDao"
 
 @Dao
 abstract class RoutineDao {
     suspend fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) {
-        for (crossRef in getRoutineExerciseCrossRefs()) {
-            if (crossRef.routineId == routineId) delete(crossRef)
-        }
-
         for (exerciseId in exerciseIds) {
             val crossRef = RoutineExerciseCrossRef(routineId, exerciseId)
             insert(crossRef)
+        }
+    }
+
+    suspend fun unassignExercisesFromRoutine(routineId: Int) {
+        for (crossRef in getRoutineExerciseCrossRefs()) {
+            if (crossRef.routineId == routineId) delete(crossRef)
         }
     }
 
