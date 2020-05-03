@@ -46,6 +46,10 @@ class Repository private constructor(application: Application) {
         }
     }
 
+    fun getExerciseIdsByRoutineId(routineId: Int) = runBlocking {
+        routineDao.getExerciseIdsByRoutineId(routineId)
+    }
+
     /**
      * Exercises
      */

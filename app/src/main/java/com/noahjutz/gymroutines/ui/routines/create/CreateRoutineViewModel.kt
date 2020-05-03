@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import androidx.lifecycle.*
+import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineWithExercises
@@ -20,7 +21,7 @@ class CreateRoutineViewModel(
      * @see save
      */
     private val _rwe = MediatorLiveData<RoutineWithExercises>()
-    private val rwe: LiveData<RoutineWithExercises>
+    val rwe: LiveData<RoutineWithExercises>
         get() = _rwe
 
     /**
@@ -52,14 +53,26 @@ class CreateRoutineViewModel(
     private fun isRoutineEmpty(): Boolean {
         val rwe = rwe.value!!
         return (rwe.routine.name.isEmpty()
-            && rwe.routine.description.isEmpty()
-            && rwe.exercises.isEmpty())
+                && rwe.routine.description.isEmpty()
+                && rwe.exercises.isEmpty())
     }
 
     private fun initRwe() {
         _rwe.run {
             value = getRoutineWithExercisesById(routineId)
                 ?: RoutineWithExercises(Routine(""), listOf())
+
+            val allExercises: List<Exercise> = repository.exercises.value ?: listOf()
+            val exercisesToAdd = ArrayList<Exercise>()
+            for (id in repository.getExerciseIdsByRoutineId(routineId)) {
+                val nextExercise = allExercises.find { it.exerciseId == id }
+                if (nextExercise != null) exercisesToAdd.add(nextExercise)
+            }
+
+            value = RoutineWithExercises(
+                value!!.routine,
+                exercisesToAdd
+            )
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value.also {

@@ -24,6 +24,10 @@ abstract class RoutineDao {
     @Query("SELECT * from routineexercisecrossref")
     abstract suspend fun getRoutineExerciseCrossRefs(): List<RoutineExerciseCrossRef>
 
+    suspend fun getExerciseIdsByRoutineId(routineId: Int): List<Int> {
+        return getRoutineExerciseCrossRefs().filter { it.routineId == routineId }.map { it.exerciseId }
+    }
+
     @Delete
     abstract suspend fun delete(routineExerciseCrossRef: RoutineExerciseCrossRef)
 
