@@ -10,6 +10,7 @@ import android.widget.Switch
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
+import com.noahjutz.gymroutines.data.dao.RoutineDao_Impl
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
+import com.noahjutz.gymroutines.ui.routines.RoutinesFragmentDirections
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -116,7 +119,8 @@ class CreateRoutineFragment : Fragment() {
     }
 
     fun addExercise() {
-        // TODO
+        val action = CreateRoutineFragmentDirections.addExercise(args.routineId)
+        findNavController().navigate(action)
     }
 
     /**

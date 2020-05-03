@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
-import com.google.gson.Gson
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
@@ -99,9 +98,7 @@ class PickExerciseFragment : Fragment() {
     }
 
     fun pickExercise() {
-        val gson = Gson()
-        val listString = gson.toJson(pickExerciseViewModel.exercises.value)
-        val action = PickExerciseFragmentDirections.addExercise(args.routineId, listString)
+        val action = PickExerciseFragmentDirections.addExercise(args.routineId)
         findNavController().navigate(action)
     }
 }
