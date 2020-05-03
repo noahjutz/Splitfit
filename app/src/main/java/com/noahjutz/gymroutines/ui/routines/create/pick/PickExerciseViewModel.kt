@@ -22,4 +22,11 @@ class PickExerciseViewModel(private val repository: Repository) : ViewModel() {
     fun removeExercise(exercise: Exercise) {
         _exercises.value = (exercises.value as ArrayList).apply { remove(exercise) }
     }
+
+    fun assignExercisesToRoutine(routineId: Int) {
+        repository.assignExercisesToRoutine(
+            routineId,
+            exercises.value!!.map { it.exerciseId }
+        )
+    }
 }

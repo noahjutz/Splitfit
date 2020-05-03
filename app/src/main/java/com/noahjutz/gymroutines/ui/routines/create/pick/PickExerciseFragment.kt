@@ -98,6 +98,7 @@ class PickExerciseFragment : Fragment() {
     }
 
     fun pickExercise() {
+        pickExerciseViewModel.assignExercisesToRoutine(args.routineId)
         val action = PickExerciseFragmentDirections.addExercise(args.routineId)
         findNavController().navigate(action)
     }
