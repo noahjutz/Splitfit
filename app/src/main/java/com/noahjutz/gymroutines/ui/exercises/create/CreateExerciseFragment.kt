@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
+import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,8 +26,8 @@ private const val TAG = "CreateExerciseFragment"
 class CreateExerciseFragment : Fragment() {
 
     private val viewModel: CreateExerciseViewModel by viewModels { viewModelFactory }
-    private val viewModelFactory: ViewModelFactory by lazy {
-        InjectorUtils.provideViewModelFactory(requireActivity().application)
+    private val viewModelFactory: CreateViewModelFactory by lazy {
+        InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.exerciseId)
     }
     private val args: CreateExerciseFragmentArgs by navArgs()
 
@@ -64,10 +65,5 @@ class CreateExerciseFragment : Fragment() {
         binding.fragment = this
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = viewModel
-    }
-
-    fun debugShow(view: View) {
-        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
-        debug_textview.visibility = isVisible
     }
 }

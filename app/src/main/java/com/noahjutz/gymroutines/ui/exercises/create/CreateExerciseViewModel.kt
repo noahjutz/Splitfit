@@ -13,7 +13,8 @@ import kotlinx.coroutines.runBlocking
 private const val TAG = "CreateExerciseViewModel"
 
 class CreateExerciseViewModel(
-    private val repository: Repository
+    private val repository: Repository,
+    private val exerciseId: Int
 ) : ViewModel() {
     /**
      * The [Exercise] object that is being created/edited
@@ -24,10 +25,6 @@ class CreateExerciseViewModel(
     val exercise: LiveData<Exercise>
         get() = _exercise
 
-    private val _debugText = MediatorLiveData<String>()
-    val debugText: LiveData<String>
-        get() = _debugText
-
     /**
      * Two-way data binding values
      */
@@ -36,13 +33,6 @@ class CreateExerciseViewModel(
 
     init {
         initExercise()
-        initDebug()
-    }
-
-    private fun initDebug() {
-        _debugText.addSource(exercise) { exercise ->
-            _debugText.value = "Exercise:\n$exercise"
-        }
     }
 
     private fun initExercise() {

@@ -52,6 +52,7 @@ class CreateRoutineViewModel(
                     it?.routine?.name = name.trim()
                 }
             }
+
             addSource(description) { description ->
                 _rwe.value = _rwe.value.also {
                     it?.routine?.description = description.trim()
