@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Exercise
 
-class PickExerciseViewModel() : ViewModel() {
+private const val TAG = "PickExerciseViewModel"
+
+class PickExerciseViewModel : ViewModel() {
     private val _exercises: MutableLiveData<List<Exercise>> = MutableLiveData()
     val exercises: LiveData<List<Exercise>>
         get() = _exercises
