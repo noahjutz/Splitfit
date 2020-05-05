@@ -130,14 +130,4 @@ class CreateRoutineFragment : Fragment() {
         val action = CreateRoutineFragmentDirections.addExercise(args.routineId)
         findNavController().navigate(action)
     }
-
-    /**
-     * Debug
-     */
-    fun debugShow(view: View) {
-        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
-        debug_button_insert.visibility = isVisible
-        debug_button_clear.visibility = isVisible
-        debug_textview.visibility = isVisible
-    }
 }
