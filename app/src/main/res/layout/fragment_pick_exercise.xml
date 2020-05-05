@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.noahjutz.gymroutines.ui.routines.create.pick.PickExerciseViewModel" />
+            type="com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel" />
 
         <variable
             name="fragment"

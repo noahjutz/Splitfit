@@ -3,10 +3,8 @@ package com.noahjutz.gymroutines.util
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.noahjutz.gymroutines.data.Repository
-import com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
-import com.noahjutz.gymroutines.ui.routines.create.pick.PickExerciseViewModel
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(

@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
@@ -27,7 +26,7 @@ private const val TAG = "PickExerciseFragment"
 class PickExerciseFragment : Fragment() {
 
     private val exercisesViewModel: ExercisesViewModel by viewModels { viewModelFactory }
-    private val pickExerciseViewModel: PickExerciseViewModel by viewModels()
+    private val sharedExerciseViewModel: SharedExerciseViewModel by viewModels()
     private val viewModelFactory by lazy { InjectorUtils.provideViewModelFactory(requireActivity().application) }
     private lateinit var adapter: ExercisesAdapter
     private lateinit var binding: FragmentPickExerciseBinding
@@ -57,7 +56,7 @@ class PickExerciseFragment : Fragment() {
         exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             adapter.submitList(exercises)
         })
-        pickExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
+        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             (requireActivity() as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(
                 if (exercises.isNotEmpty()) R.drawable.ic_done
                 else R.drawable.ic_close
@@ -76,8 +75,8 @@ class PickExerciseFragment : Fragment() {
         val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
             override fun onExerciseClick(exercise: Exercise, card: MaterialCardView) {
                 card.isChecked = (!card.isChecked)
-                if (card.isChecked) pickExerciseViewModel.addExercise(exercise)
-                else pickExerciseViewModel.removeExercise(exercise)
+                if (card.isChecked) sharedExerciseViewModel.addExercise(exercise)
+                else sharedExerciseViewModel.removeExercise(exercise)
             }
 
             override fun onExerciseLongClick(exercise: Exercise, card: MaterialCardView) {}
