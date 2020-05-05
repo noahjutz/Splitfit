@@ -18,8 +18,6 @@ class ViewModelFactory(
                 RoutinesViewModel(repository) as T
             modelClass.isAssignableFrom(ExercisesViewModel::class.java) ->
                 ExercisesViewModel(repository) as T
-            modelClass.isAssignableFrom(PickExerciseViewModel::class.java) ->
-                PickExerciseViewModel(repository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }
     }

@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Exercise
-import com.noahjutz.gymroutines.data.Repository
 
-class PickExerciseViewModel(private val repository: Repository) : ViewModel() {
+class PickExerciseViewModel() : ViewModel() {
     private val _exercises: MutableLiveData<List<Exercise>> = MutableLiveData()
     val exercises: LiveData<List<Exercise>>
         get() = _exercises
@@ -21,12 +20,5 @@ class PickExerciseViewModel(private val repository: Repository) : ViewModel() {
 
     fun removeExercise(exercise: Exercise) {
         _exercises.value = (exercises.value as ArrayList).apply { remove(exercise) }
-    }
-
-    fun assignExercisesToRoutine(routineId: Int) {
-        repository.assignExercisesToRoutine(
-            routineId,
-            exercises.value!!.map { it.exerciseId }
-        )
     }
 }
