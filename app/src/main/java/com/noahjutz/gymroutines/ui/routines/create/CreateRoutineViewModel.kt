@@ -1,7 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.*
-import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineWithExercises
@@ -13,7 +13,7 @@ private const val TAG = "CreateRoutineViewModel"
 
 class CreateRoutineViewModel(
     private val repository: Repository,
-    private val routineId: Int
+    private var routineId: Int
 ) : ViewModel() {
     /**
      * The [RoutineWithExercises] object that is being created/edited
@@ -26,14 +26,20 @@ class CreateRoutineViewModel(
 
     /**
      * Data binding fields
-     * MediatorLiveData Sources for [rwe]
-     * @see initRwe
+     * [MediatorLiveData] Sources for [rwe]
+     * @see initBinding
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
     init {
         initRwe()
+        initBinding()
+    }
+
+    private fun initBinding() {
+        name.value = rwe.value!!.routine.name
+        description.value = rwe.value!!.routine.description
     }
 
     /**
@@ -42,10 +48,11 @@ class CreateRoutineViewModel(
      */
     private fun initRwe() {
         _rwe.run {
-            value = RoutineWithExercises(
-                Routine(""),
-                listOf()
-            )
+            value = getRweById(routineId)
+                ?: RoutineWithExercises(
+                    Routine(""),
+                    listOf()
+                )
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value.also {
@@ -85,7 +92,7 @@ class CreateRoutineViewModel(
      */
     private fun insert(routine: Routine): Long = runBlocking { repository.insert(routine) }
 
-    private fun getRoutineWithExercisesById(routineId: Int): RoutineWithExercises? =
+    private fun getRweById(routineId: Int): RoutineWithExercises? =
         runBlocking { repository.getRoutineWithExercisesById(routineId) }
 
     private fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) {

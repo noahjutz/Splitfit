@@ -26,25 +26,37 @@ class CreateExerciseViewModel(
         get() = _exercise
 
     /**
-     * Two-way data binding values
+     * Data binding fields
+     * [MediatorLiveData] sources for [exercise]
+     * @see initBinding
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
     init {
         initExercise()
+        initBinding()
+    }
+
+    private fun initBinding() {
+        name.value = exercise.value!!.name
+        description.value = exercise.value!!.description
     }
 
     private fun initExercise() {
-        _exercise.value = Exercise("")
-        _exercise.addSource(name) { name ->
-            _exercise.value = _exercise.value.also {
-                it?.name = name.trim()
+        _exercise.run {
+            value = getExerciseById(exerciseId)
+                ?: Exercise("")
+
+            addSource(name) { name ->
+                _exercise.value = _exercise.value.also {
+                    it?.name = name.trim()
+                }
             }
-        }
-        _exercise.addSource(description) { description ->
-            _exercise.value = _exercise.value.also {
-                it?.description = description.trim()
+            addSource(description) { description ->
+                _exercise.value = _exercise.value.also {
+                    it?.description = description.trim()
+                }
             }
         }
     }
@@ -59,7 +71,7 @@ class CreateExerciseViewModel(
 
     private fun save() {
         insert(exercise.value!!)
-        Log.d(TAG, "exercises: ${repository.exercises.value}")
+        Log.d(TAG, "exercises: ${repository.exercises.value} exercise: ${exercise.value}")
     }
 
     /**
