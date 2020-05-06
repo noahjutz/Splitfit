@@ -1,7 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import androidx.lifecycle.*
+import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineWithExercises
@@ -99,5 +99,20 @@ class CreateRoutineViewModel(
         viewModelScope.launch {
             repository.assignExercisesToRoutine(routineId, exerciseIds)
         }
+    }
+
+    /**
+     * Functions for [CreateRoutineFragment]
+     */
+    fun addExercises(exercises: List<Exercise>) {
+        val currentExercises: ArrayList<Exercise> =
+            rwe.value?.exercises as? ArrayList ?: ArrayList()
+        for (e in exercises) {
+            if (e !in currentExercises) currentExercises.add(e)
+        }
+        _rwe.value = RoutineWithExercises(
+            rwe.value!!.routine,
+            currentExercises
+        )
     }
 }

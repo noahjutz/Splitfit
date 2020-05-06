@@ -67,8 +67,9 @@ class CreateRoutineFragment : Fragment() {
         viewModel.rwe.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.exercises)
         })
-        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer {
-            Log.d(TAG, it.toString())
+        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
+            viewModel.addExercises(exercises)
+            Log.d(TAG, exercises.toString())
         })
     }
 
