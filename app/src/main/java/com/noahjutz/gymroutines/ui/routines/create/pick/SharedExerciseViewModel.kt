@@ -26,10 +26,16 @@ class SharedExerciseViewModel : ViewModel() {
     }
 
     fun addExercise(exercise: Exercise) {
-        _exercises.value = (exercises.value as ArrayList).apply { add(exercise) }
+        _exercises.value = (exercises.value as ArrayList).apply {
+            if (!contains(exercise)) add(exercise)
+        }
     }
 
     fun removeExercise(exercise: Exercise) {
         _exercises.value = (exercises.value as ArrayList).apply { remove(exercise) }
+    }
+
+    fun clearExercises() {
+        _exercises.value = ArrayList()
     }
 }

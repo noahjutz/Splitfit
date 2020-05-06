@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +27,7 @@ private const val TAG = "PickExerciseFragment"
 class PickExerciseFragment : Fragment() {
 
     private val exercisesViewModel: ExercisesViewModel by viewModels { viewModelFactory }
-    private val sharedExerciseViewModel: SharedExerciseViewModel by viewModels()
+    private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModelFactory by lazy { InjectorUtils.provideViewModelFactory(requireActivity().application) }
     private lateinit var adapter: ExercisesAdapter
     private lateinit var binding: FragmentPickExerciseBinding
@@ -56,6 +57,7 @@ class PickExerciseFragment : Fragment() {
         exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             adapter.submitList(exercises)
         })
+        sharedExerciseViewModel.clearExercises()
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             (requireActivity() as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(
                 if (exercises.isNotEmpty()) R.drawable.ic_done

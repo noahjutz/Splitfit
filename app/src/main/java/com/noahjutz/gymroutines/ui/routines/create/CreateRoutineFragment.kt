@@ -1,12 +1,14 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -18,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
+import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,6 +31,7 @@ private const val TAG = "CreateRoutineFragment"
 
 class CreateRoutineFragment : Fragment() {
 
+    private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModel: CreateRoutineViewModel by viewModels { viewModelFactory }
     private val viewModelFactory: CreateViewModelFactory by lazy {
         InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.routineId)
@@ -62,6 +66,9 @@ class CreateRoutineFragment : Fragment() {
     private fun initViewModel() {
         viewModel.rwe.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.exercises)
+        })
+        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, it.toString())
         })
     }
 
