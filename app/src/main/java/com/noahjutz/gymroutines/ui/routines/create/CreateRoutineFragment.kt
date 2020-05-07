@@ -96,6 +96,7 @@ class CreateRoutineFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
                 viewModel.removeExercise(exercise)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") {
                         // TODO: Re-add exercise
