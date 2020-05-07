@@ -57,6 +57,7 @@ class CreateRoutineViewModel(
                     Routine(""),
                     listOf()
                 )
+
             _exercises.value = value?.exercises as? ArrayList<Exercise> ?: ArrayList()
 
             addSource(name) { name ->
@@ -104,6 +105,7 @@ class CreateRoutineViewModel(
     /**
      * [repository] access functions
      */
+
     private fun insert(routine: Routine): Long = runBlocking {
         repository.insert(routine)
     }

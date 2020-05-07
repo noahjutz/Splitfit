@@ -1,7 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -23,6 +22,7 @@ import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
+import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
 
@@ -63,14 +63,12 @@ class CreateRoutineFragment : Fragment() {
         initViewModel()
     }
 
-    private fun initViewModel() {
-        viewModel.rwe.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it.exercises)
-        })
-        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            viewModel.addExercises(exercises)
-            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
-        })
+    private fun initBinding() {
+        binding.apply {
+            fragment = this@CreateRoutineFragment
+            lifecycleOwner = viewLifecycleOwner
+            viewmodel = viewModel
+        }
     }
 
     private fun initActivity() {
@@ -106,7 +104,7 @@ class CreateRoutineFragment : Fragment() {
             }
         }
 
-        val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
+        val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
             override fun onExerciseClick(exercise: Exercise) {}
             override fun onExerciseLongClick(exercise: Exercise) {}
         }
@@ -117,19 +115,22 @@ class CreateRoutineFragment : Fragment() {
             adapter = this@CreateRoutineFragment.adapter
             layoutManager = LinearLayoutManager(this@CreateRoutineFragment.requireContext())
             addItemDecoration(
-                MarginItemDecoration(
-                    resources.getDimension(R.dimen.any_margin_default).toInt()
-                )
+                MarginItemDecoration(resources.getDimension(R.dimen.any_margin_default).toInt())
             )
             isNestedScrollingEnabled = false
             ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
-    private fun initBinding() {
-        binding.fragment = this
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = viewModel
+    private fun initViewModel() {
+        viewModel.rwe.observe(viewLifecycleOwner, Observer { rwe ->
+            adapter.submitList(rwe.exercises)
+        })
+
+        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
+            viewModel.addExercises(exercises)
+            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
+        })
     }
 
     fun addExercise() {

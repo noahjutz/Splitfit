@@ -15,8 +15,8 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentPickExerciseBinding
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
-import com.noahjutz.gymroutines.ui.routines.create.MarginItemDecoration
 import com.noahjutz.gymroutines.util.InjectorUtils
+import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.fragment_pick_exercise.*
 
 @Suppress("unused")
@@ -64,7 +64,7 @@ class PickExerciseFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
+        val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
             override fun onExerciseClick(exercise: Exercise, card: MaterialCardView) {
                 card.isChecked = (!card.isChecked)
                 if (card.isChecked) sharedExerciseViewModel.addExercise(exercise)
