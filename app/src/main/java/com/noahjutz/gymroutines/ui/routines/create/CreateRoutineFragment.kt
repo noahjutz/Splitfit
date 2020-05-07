@@ -99,7 +99,8 @@ class CreateRoutineFragment : Fragment() {
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") {
-                        // TODO: Re-add exercise
+                        viewModel.addExercise(exercise)
+                        adapter.notifyItemInserted(adapter.itemCount)
                     }
                     .show()
             }
