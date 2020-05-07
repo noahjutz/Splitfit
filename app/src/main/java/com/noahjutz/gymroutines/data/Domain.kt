@@ -36,3 +36,8 @@ data class RoutineWithExercises(
     )
     val exercises: List<Exercise>
 )
+
+@Entity(tableName = "exercise_wrapper_table")
+data class ExerciseWrapper(
+    val exerciseId: Int
+)
