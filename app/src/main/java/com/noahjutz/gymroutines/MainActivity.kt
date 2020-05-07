@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initBottomNavigation()
-        initAppBar()
+        //initAppBar() TODO
     }
 
     private fun initAppBar() {
