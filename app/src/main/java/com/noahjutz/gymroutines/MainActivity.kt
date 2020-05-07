@@ -23,10 +23,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initBottomNavigation()
-        //initAppBar() TODO
+        initAppBar()
     }
 
     private fun initAppBar() {
+        setSupportActionBar(app_bar)
         appBarConfiguration = AppBarConfiguration.Builder(
             R.id.routinesFragment,
             R.id.exercisesFragment
