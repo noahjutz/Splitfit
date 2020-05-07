@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -106,15 +107,32 @@ class CreateRoutineViewModel(
         repository.assignExercisesToRoutine(routineId, exerciseIds)
     }
 
+    private fun unassignExercisesFromRoutine(routineId: Int) = runBlocking {
+        repository.unassignExercisesFromRoutine(routineId)
+    }
+
     /**
      * Functions for [CreateRoutineFragment]
      */
     fun addExercises(exercises: List<Exercise>) {
-        val currentExercises = rwe.value?.exercises as? ArrayList ?: ArrayList()
-        for (e in exercises) if (e !in currentExercises) currentExercises.add(e)
+        for (e in exercises) addExercise(e)
+    }
+
+    fun removeExercise(exercise: Exercise) {
+        val exercisesList = rwe.value?.exercises as? ArrayList ?: ArrayList()
+        if (exercise in exercisesList) exercisesList.remove(exercise)
         _rwe.value = RoutineWithExercises(
             rwe.value!!.routine,
-            currentExercises
+            exercisesList
+        )
+    }
+
+    fun addExercise(exercise: Exercise) {
+        val exercisesList = rwe.value?.exercises as? ArrayList ?: ArrayList()
+        if (exercise !in exercisesList) exercisesList.add(exercise)
+        _rwe.value = RoutineWithExercises(
+            rwe.value!!.routine,
+            exercisesList
         )
     }
 }

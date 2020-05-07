@@ -95,7 +95,7 @@ class CreateRoutineFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
-                // TODO: Remove Exercise
+                viewModel.removeExercise(exercise)
                 Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") {
                         // TODO: Re-add exercise
@@ -120,7 +120,7 @@ class CreateRoutineFragment : Fragment() {
                 )
             )
             isNestedScrollingEnabled = false
-            // TODO: ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
+            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 

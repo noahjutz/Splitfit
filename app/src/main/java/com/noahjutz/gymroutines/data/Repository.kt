@@ -46,6 +46,11 @@ class Repository private constructor(application: Application) {
         }
     }
 
+    fun unassignExercisesFromRoutine(routineId: Int) {
+        CoroutineScope(IO).launch {
+            routineDao.unassignExercisesFromRoutine(routineId)
+        }
+    }
     /**
      * Exercises
      */

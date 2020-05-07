@@ -12,6 +12,7 @@ private const val TAG = "RoutineDao"
 @Dao
 abstract class RoutineDao {
     suspend fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) {
+        unassignExercisesFromRoutine(routineId)
         for (exerciseId in exerciseIds) {
             val crossRef = RoutineExerciseCrossRef(routineId, exerciseId)
             insert(crossRef)
