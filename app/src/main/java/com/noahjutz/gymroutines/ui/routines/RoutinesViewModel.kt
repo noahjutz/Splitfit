@@ -40,7 +40,6 @@ class RoutinesViewModel(
     }
 
     fun delete(routineWithExercises: RoutineWithExercises) {
-        repository.assignExercisesToRoutine(routineWithExercises.routine.routineId, listOf())
         repository.delete(routineWithExercises.routine)
     }
 }
