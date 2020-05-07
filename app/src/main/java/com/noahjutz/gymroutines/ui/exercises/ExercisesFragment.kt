@@ -3,10 +3,8 @@ package com.noahjutz.gymroutines.ui.exercises
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Switch
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -90,7 +88,7 @@ class ExercisesFragment : Fragment() {
             }
         }
 
-        val onItemClickListener = object : ExercisesAdapter.OnItemClickListener {
+        val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
             override fun onExerciseClick(exercise: Exercise) {
                 val action = ExercisesFragmentDirections.addExercise(exercise.exerciseId)
                 findNavController().navigate(action)
@@ -116,7 +114,6 @@ class ExercisesFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            viewModel.updateDebugText()
             adapter.submitList(exercises)
         })
     }

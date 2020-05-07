@@ -40,19 +40,20 @@ class CreateExerciseFragment : Fragment() {
             container,
             false
         )
+        initBinding()
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         initActivity()
-        initBinding()
         initViewModel()
     }
 
-    private fun initViewModel() {
-        viewModel.exercise.observe(viewLifecycleOwner, Observer {})
+    private fun initBinding() {
+        binding.fragment = this
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
     }
 
     private fun initActivity() {
@@ -62,9 +63,7 @@ class CreateExerciseFragment : Fragment() {
         }
     }
 
-    private fun initBinding() {
-        binding.fragment = this
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = viewModel
+    private fun initViewModel() {
+        viewModel.exercise.observe(viewLifecycleOwner, Observer {})
     }
 }
