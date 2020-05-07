@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -35,6 +34,8 @@ class CreateRoutineViewModel(
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
+    private val _exercises = MutableLiveData<ArrayList<Exercise>>()
+
     init {
         initRwe()
         initBinding()
@@ -56,17 +57,25 @@ class CreateRoutineViewModel(
                     Routine(""),
                     listOf()
                 )
+            _exercises.value = value?.exercises as? ArrayList<Exercise> ?: ArrayList()
 
             addSource(name) { name ->
-                _rwe.value = _rwe.value.also {
-                    it?.routine?.name = name.trim()
+                _rwe.value = _rwe.value!!.apply {
+                    routine.name = name.trim()
                 }
             }
 
             addSource(description) { description ->
-                _rwe.value = _rwe.value.also {
-                    it?.routine?.description = description.trim()
+                _rwe.value = _rwe.value!!.apply {
+                    routine.description = description.trim()
                 }
+            }
+
+            addSource(_exercises) { exercises ->
+                _rwe.value = RoutineWithExercises(
+                    _rwe.value!!.routine,
+                    exercises
+                )
             }
         }
     }
@@ -119,20 +128,12 @@ class CreateRoutineViewModel(
     }
 
     fun removeExercise(exercise: Exercise) {
-        val exercisesList = rwe.value?.exercises as? ArrayList ?: ArrayList()
-        if (exercise in exercisesList) exercisesList.remove(exercise)
-        _rwe.value = RoutineWithExercises(
-            rwe.value!!.routine,
-            exercisesList
-        )
+        if (exercise in _exercises.value!!)
+            _exercises.value = _exercises.value!!.apply { remove(exercise) }
     }
 
     fun addExercise(exercise: Exercise) {
-        val exercisesList = rwe.value?.exercises as? ArrayList ?: ArrayList()
-        if (exercise !in exercisesList) exercisesList.add(exercise)
-        _rwe.value = RoutineWithExercises(
-            rwe.value!!.routine,
-            exercisesList
-        )
+        if (exercise !in _exercises.value!!)
+            _exercises.value = _exercises.value!!.apply { add(exercise) }
     }
 }
