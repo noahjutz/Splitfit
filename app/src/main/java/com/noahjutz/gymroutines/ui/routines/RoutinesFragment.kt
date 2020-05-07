@@ -3,10 +3,8 @@ package com.noahjutz.gymroutines.ui.routines
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Switch
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,12 +14,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.util.ViewModelFactory
-import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineWithExercises
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
+import com.noahjutz.gymroutines.util.InjectorUtils
+import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
 
@@ -127,30 +124,6 @@ class RoutinesFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.fragment = this
-    }
-
-    fun debugShow(view: View) {
-        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
-        debug_button_insert.visibility = isVisible
-        debug_button_clear.visibility = isVisible
-        debug_textview.visibility = isVisible
-    }
-
-    fun debugInsertRoutine() {
-        val names = listOf("Push", "Pull", "Legs")
-        val descriptions = listOf("", "Very cool routine", "My new routine")
-
-        val routine = Routine(
-            names.shuffled().first(),
-            descriptions.shuffled().first()
-        )
-
-        val rwe = RoutineWithExercises(
-            routine,
-            listOf()
-        )
-
-        viewModel.insert(rwe)
     }
 
     fun addRoutine() {

@@ -127,25 +127,6 @@ class ExercisesFragment : Fragment() {
         binding.fragment = this
     }
 
-    fun debugShow(view: View) {
-        val isVisible = if ((view as Switch).isChecked) VISIBLE else GONE
-        debug_button_insert.visibility = isVisible
-        debug_button_clear.visibility = isVisible
-        debug_textview.visibility = isVisible
-    }
-
-    fun debugInsertExercise() {
-        val names = listOf("Squats", "Lunges", "Push ups")
-        val descriptions = listOf("", "Exhausting", "Easy")
-
-        val exercise = Exercise(
-            names.shuffled().first(),
-            descriptions.shuffled().first()
-        )
-
-        viewModel.insert(exercise)
-    }
-
     fun addExercise() {
         val action = ExercisesFragmentDirections.addExercise(-1)
         findNavController().navigate(action)
