@@ -1,12 +1,13 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
 import com.noahjutz.gymroutines.data.RoutineWithExercises
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @Suppress("unused")
@@ -79,7 +80,9 @@ class CreateRoutineViewModel(
 
     /**
      * Inserts the [rwe]'s [Routine].
-     * Assigns the exerciseIds of rwe.exercises to routines with cross references.
+     * @see insert
+     * Assigns the [rwe]'s [Exercise] list to routines with cross references.
+     * @see assignExercisesToRoutine
      */
     private fun save() {
         val routine = rwe.value!!.routine
@@ -91,26 +94,24 @@ class CreateRoutineViewModel(
     /**
      * [repository] access functions
      */
-    private fun insert(routine: Routine): Long = runBlocking { repository.insert(routine) }
+    private fun insert(routine: Routine): Long = runBlocking {
+        repository.insert(routine)
+    }
 
-    private fun getRweById(routineId: Int): RoutineWithExercises? =
-        runBlocking { repository.getRoutineWithExercisesById(routineId) }
+    private fun getRweById(routineId: Int): RoutineWithExercises? = runBlocking {
+        repository.getRweById(routineId)
+    }
 
-    private fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) {
-        runBlocking {
-            repository.assignExercisesToRoutine(routineId, exerciseIds)
-        }
+    private fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) = runBlocking {
+        repository.assignExercisesToRoutine(routineId, exerciseIds)
     }
 
     /**
      * Functions for [CreateRoutineFragment]
      */
     fun addExercises(exercises: List<Exercise>) {
-        val currentExercises: ArrayList<Exercise> =
-            rwe.value?.exercises as? ArrayList ?: ArrayList()
-        for (e in exercises) {
-            if (e !in currentExercises) currentExercises.add(e)
-        }
+        val currentExercises = rwe.value?.exercises as? ArrayList ?: ArrayList()
+        for (e in exercises) if (e !in currentExercises) currentExercises.add(e)
         _rwe.value = RoutineWithExercises(
             rwe.value!!.routine,
             currentExercises
