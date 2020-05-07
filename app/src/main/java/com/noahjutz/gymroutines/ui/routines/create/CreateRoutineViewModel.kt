@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
@@ -96,7 +97,7 @@ class CreateRoutineViewModel(
         runBlocking { repository.getRoutineWithExercisesById(routineId) }
 
     private fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) {
-        viewModelScope.launch {
+        runBlocking {
             repository.assignExercisesToRoutine(routineId, exerciseIds)
         }
     }
