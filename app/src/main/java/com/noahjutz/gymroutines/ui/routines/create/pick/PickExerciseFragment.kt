@@ -57,13 +57,11 @@ class PickExerciseFragment : Fragment() {
         exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             adapter.submitList(exercises)
         })
-        sharedExerciseViewModel.clearExercises()
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             (requireActivity() as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(
                 if (exercises.isNotEmpty()) R.drawable.ic_done
                 else R.drawable.ic_close
             )
-            Log.d(TAG, exercises.toString())
         })
     }
 

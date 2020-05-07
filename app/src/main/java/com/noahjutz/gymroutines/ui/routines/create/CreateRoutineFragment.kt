@@ -69,7 +69,7 @@ class CreateRoutineFragment : Fragment() {
         })
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             viewModel.addExercises(exercises)
-            Log.d(TAG, exercises.toString())
+            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         })
     }
 
