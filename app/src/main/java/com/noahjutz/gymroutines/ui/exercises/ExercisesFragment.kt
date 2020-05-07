@@ -19,7 +19,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.util.ViewModelFactory
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
-import com.noahjutz.gymroutines.ui.routines.MarginItemDecoration
+import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
 

@@ -18,6 +18,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.RoutineWithExercises
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
+import com.noahjutz.gymroutines.util.MarginItemDecoration
 import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
@@ -43,16 +44,23 @@ class RoutinesFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_routines, container, false
         )
+        initBinding()
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         initActivity()
         initRecyclerView()
         initViewModel()
-        initBinding()
+    }
+
+    private fun initBinding() {
+        binding.apply {
+            viewmodel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+            fragment = this@RoutinesFragment
+        }
     }
 
     private fun initActivity() {
@@ -79,23 +87,19 @@ class RoutinesFragment : Fragment() {
                 val rwe = adapter.getRweAt(viewHolder.adapterPosition)
                 viewModel.delete(rwe)
                 Snackbar.make(recycler_view, "Deleted ${rwe.routine.name}", Snackbar.LENGTH_SHORT)
-                    .setAction("Undo") {
-                        viewModel.insert(rwe)
-                    }
+                    .setAction("Undo") { viewModel.insert(rwe) }
                     .setAnchorView(fab_pick_exercises)
                     .show()
             }
         }
 
-        val onItemClickListener = object : RweAdapter.OnItemClickListener {
+        val onItemClickListener = object : RweAdapter.OnRoutineClickListener {
             override fun onRoutineClick(rwe: RoutineWithExercises) {
                 val action = RoutinesFragmentDirections.addRoutine(rwe.routine.routineId)
                 findNavController().navigate(action)
             }
 
-            override fun onRoutineLongClick(rwe: RoutineWithExercises) {
-                // TODO
-            }
+            override fun onRoutineLongClick(rwe: RoutineWithExercises) {}
         }
 
         adapter = RweAdapter(onItemClickListener)
@@ -115,19 +119,12 @@ class RoutinesFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel.routinesWithExercises.observe(viewLifecycleOwner, Observer { rwe ->
-            viewModel.updateDebugText()
             adapter.submitList(rwe)
         })
     }
 
-    private fun initBinding() {
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.fragment = this
-    }
-
     fun addRoutine() {
-        val action = RoutinesFragmentDirections.addRoutine(-1)
+        val action = RoutinesFragmentDirections.addRoutine()
         findNavController().navigate(action)
     }
 }
