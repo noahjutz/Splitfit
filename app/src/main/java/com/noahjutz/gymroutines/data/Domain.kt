@@ -39,5 +39,8 @@ data class RoutineWithExercises(
 
 @Entity(tableName = "exercise_wrapper_table")
 data class ExerciseWrapper(
-    val exerciseId: Int
+    val exerciseId: Int,
+
+    @PrimaryKey(autoGenerate = true)
+    val id: Int
 )

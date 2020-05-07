@@ -15,9 +15,6 @@ abstract class ExerciseWrapperDao {
     @Delete
     abstract suspend fun delete(exerciseWrapper: ExerciseWrapper)
 
-    @Update
-    abstract suspend fun update(exerciseWrapper: ExerciseWrapper)
-
     @Query("SELECT * FROM exercise_wrapper_table")
-    abstract suspend fun getExerciseWrappers(): LiveData<List<ExerciseWrapper>>
+    abstract fun getExerciseWrappers(): LiveData<List<ExerciseWrapper>>
 }
