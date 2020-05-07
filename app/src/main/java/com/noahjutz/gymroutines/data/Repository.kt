@@ -1,11 +1,15 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
+import com.noahjutz.gymroutines.data.dao.ExerciseDao
+import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
+import com.noahjutz.gymroutines.data.dao.RoutineDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+@Suppress("unused")
 private const val TAG = "Repository"
 
 class Repository private constructor(application: Application) {
@@ -13,6 +17,7 @@ class Repository private constructor(application: Application) {
 
     private val exerciseDao = database.exerciseDao
     private val routineDao = database.routineDao
+    private val exerciseWrapperDao = database.exerciseWrapperDao
 
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
@@ -30,11 +35,11 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * Routines
+     * [RoutineDao]
      */
+
     fun insert(routine: Routine): Long = runBlocking { routineDao.insert(routine) }
     fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
-    fun clearRoutines() = CoroutineScope(IO).launch { routineDao.clearRoutines() }
 
     fun getRweById(routineId: Int): RoutineWithExercises? = runBlocking {
         routineDao.getRweById(routineId)
@@ -51,11 +56,24 @@ class Repository private constructor(application: Application) {
             routineDao.unassignExercisesFromRoutine(routineId)
         }
     }
+
     /**
-     * Exercises
+     * [ExerciseDao]
      */
+
     fun insert(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
     fun delete(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.delete(exercise) }
-    fun clearExercises() = CoroutineScope(IO).launch { exerciseDao.clearExercises() }
     fun getExerciseById(id: Int): Exercise? = runBlocking { exerciseDao.getExerciseById(id) }
+
+    /**
+     * [ExerciseWrapperDao]
+     */
+
+    fun insert(exerciseWrapper: ExerciseWrapper) {
+        CoroutineScope(IO).launch { exerciseWrapperDao.insert(exerciseWrapper) }
+    }
+
+    fun delete(exerciseWrapper: ExerciseWrapper) {
+        CoroutineScope(IO).launch { exerciseWrapperDao.delete(exerciseWrapper) }
+    }
 }
