@@ -1,11 +1,9 @@
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -56,12 +54,6 @@ class PickExerciseFragment : Fragment() {
     private fun initViewModel() {
         exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             adapter.submitList(exercises)
-        })
-        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            (requireActivity() as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(
-                if (exercises.isNotEmpty()) R.drawable.ic_done
-                else R.drawable.ic_close
-            )
         })
     }
 
