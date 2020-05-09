@@ -21,20 +21,20 @@ data class Exercise(
     val exerciseId: Int = 0
 )
 
-@Entity(primaryKeys = ["routineId", "exerciseId"])
+@Entity(primaryKeys = ["routineId", "exerciseWrapperId"])
 data class RoutineExerciseCrossRef(
     val routineId: Int,
-    val exerciseId: Int
+    val exerciseWrapperId: Int
 )
 
-data class RoutineWithExercises(
+data class Rwe(
     @Embedded val routine: Routine,
     @Relation(
         parentColumn = "routineId",
-        entityColumn = "exerciseId",
+        entityColumn = "exerciseWrapperId",
         associateBy = Junction(RoutineExerciseCrossRef::class)
     )
-    val exercises: List<Exercise>
+    val exerciseWrappers: List<ExerciseWrapper>
 )
 
 @Entity(tableName = "exercise_wrapper_table")
@@ -42,5 +42,5 @@ data class ExerciseWrapper(
     val exerciseId: Int,
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int
+    val exerciseWrapperId: Int
 )

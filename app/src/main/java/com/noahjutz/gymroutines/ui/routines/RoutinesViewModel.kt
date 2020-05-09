@@ -1,12 +1,9 @@
 package com.noahjutz.gymroutines.ui.routines
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.noahjutz.gymroutines.data.Repository
-import com.noahjutz.gymroutines.data.RoutineWithExercises
-import kotlinx.coroutines.launch
+import com.noahjutz.gymroutines.data.Rwe
 
 @Suppress("unused")
 private const val TAG = "RoutinesViewModel"
@@ -15,14 +12,14 @@ class RoutinesViewModel(
     private val repository: Repository
 ) : ViewModel() {
 
-    val routinesWithExercises: LiveData<List<RoutineWithExercises>>
+    val routinesWithExercises: LiveData<List<Rwe>>
         get() = repository.routinesWithExercises
 
-    fun insert(rwe: RoutineWithExercises) {
+    fun insert(rwe: Rwe) {
         repository.insert(rwe.routine)
     }
 
-    fun delete(routineWithExercises: RoutineWithExercises) {
-        repository.delete(routineWithExercises.routine)
+    fun delete(rwe: Rwe) {
+        repository.delete(rwe.routine)
     }
 }

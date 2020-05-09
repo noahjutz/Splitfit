@@ -8,28 +8,28 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.RoutineWithExercises
+import com.noahjutz.gymroutines.data.Rwe
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
 private const val TAG = "RoutinesAdapter"
 
-private val diffUtil = object : DiffUtil.ItemCallback<RoutineWithExercises>() {
+private val diffUtil = object : DiffUtil.ItemCallback<Rwe>() {
     override fun areItemsTheSame(
-        oldItem: RoutineWithExercises,
-        newItem: RoutineWithExercises
+        oldItem: Rwe,
+        newItem: Rwe
     ): Boolean = oldItem.routine.routineId == newItem.routine.routineId
 
     override fun areContentsTheSame(
-        oldItem: RoutineWithExercises,
-        newItem: RoutineWithExercises
+        oldItem: Rwe,
+        newItem: Rwe
     ): Boolean = oldItem == newItem
 }
 
 class RweAdapter(
     private val onRoutineClickListener: OnRoutineClickListener
-) : ListAdapter<RoutineWithExercises, RweAdapter.RweHolder>(diffUtil) {
-    fun getRweAt(pos: Int): RoutineWithExercises = getItem(pos)
+) : ListAdapter<Rwe, RweAdapter.RweHolder>(diffUtil) {
+    fun getRweAt(pos: Int): Rwe = getItem(pos)
 
     inner class RweHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
@@ -70,7 +70,7 @@ class RweAdapter(
     }
 
     interface OnRoutineClickListener {
-        fun onRoutineClick(rwe: RoutineWithExercises)
-        fun onRoutineLongClick(rwe: RoutineWithExercises)
+        fun onRoutineClick(rwe: Rwe)
+        fun onRoutineLongClick(rwe: Rwe)
     }
 }

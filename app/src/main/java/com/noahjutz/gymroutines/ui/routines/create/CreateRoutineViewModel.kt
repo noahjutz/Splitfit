@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.Routine
-import com.noahjutz.gymroutines.data.RoutineWithExercises
+import com.noahjutz.gymroutines.data.Rwe
 import kotlinx.coroutines.runBlocking
 
 @Suppress("unused")
@@ -18,12 +18,12 @@ class CreateRoutineViewModel(
     private var routineId: Int
 ) : ViewModel() {
     /**
-     * The [RoutineWithExercises] object that is being created/edited
+     * The [Rwe] object that is being created/edited
      * @see initRwe
      * @see save
      */
-    private val _rwe = MediatorLiveData<RoutineWithExercises>()
-    val rwe: LiveData<RoutineWithExercises>
+    private val _rwe = MediatorLiveData<Rwe>()
+    val rwe: LiveData<Rwe>
         get() = _rwe
 
     /**
@@ -47,13 +47,13 @@ class CreateRoutineViewModel(
     }
 
     /**
-     * Initializes [RoutineWithExercises] Object
+     * Initializes [Rwe] Object
      * Adds [name] and [description] as source
      */
     private fun initRwe() {
         _rwe.run {
             value = getRweById(routineId)
-                ?: RoutineWithExercises(
+                ?: Rwe(
                     Routine(""),
                     listOf()
                 )
@@ -73,7 +73,7 @@ class CreateRoutineViewModel(
             }
 
             addSource(_exercises) { exercises ->
-                _rwe.value = RoutineWithExercises(
+                _rwe.value = Rwe(
                     _rwe.value!!.routine,
                     exercises
                 )
@@ -110,7 +110,7 @@ class CreateRoutineViewModel(
         repository.insert(routine)
     }
 
-    private fun getRweById(routineId: Int): RoutineWithExercises? = runBlocking {
+    private fun getRweById(routineId: Int): Rwe? = runBlocking {
         repository.getRweById(routineId)
     }
 
