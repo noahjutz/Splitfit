@@ -10,7 +10,7 @@ private const val TAG = "ExerciseWrapperDao"
 @Dao
 abstract class ExerciseWrapperDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(exerciseWrapper: ExerciseWrapper)
+    abstract suspend fun insert(exerciseWrapper: ExerciseWrapper): Long
 
     @Delete
     abstract suspend fun delete(exerciseWrapper: ExerciseWrapper)

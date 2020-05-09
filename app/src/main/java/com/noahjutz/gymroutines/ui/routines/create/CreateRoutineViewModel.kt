@@ -1,11 +1,13 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.*
 import kotlinx.coroutines.runBlocking
+import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -89,14 +91,15 @@ class CreateRoutineViewModel(
     /**
      * Inserts the [rwe]'s [Routine].
      * @see insert
-     * Assigns the [rwe]'s [Exercise] list to routines with cross references.
-     * @see assignExercisesToRoutine
+     * Inserts the [rwe]'s [ExerciseWrapper] list to the [AppDatabase] using [ExerciseWrapperDao]
+     * Assigns the [rwe]'s [ExerciseWrapper] list to routines with cross references.
+     * @see assign
      */
     private fun save() {
         val routine = rwe.value!!.routine
         val routineId = insert(routine).toInt()
-        val exerciseIds = rwe.value!!.exerciseWrappers.map { it.exerciseId }
-        assignExercisesToRoutine(routineId, exerciseIds)
+        val exerciseWrappers = rwe.value!!.exerciseWrappers
+        assign(routineId, exerciseWrappers)
     }
 
     /**
@@ -107,12 +110,28 @@ class CreateRoutineViewModel(
         repository.insert(routine)
     }
 
+    private fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
+        repository.insert(exerciseWrapper)
+    }
+
     private fun getRweById(routineId: Int): Rwe? = runBlocking {
         repository.getRweById(routineId)
     }
 
-    private fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) = runBlocking {
-        repository.assignExercisesToRoutine(routineId, exerciseIds)
+    /**
+     * Inserts the [ExerciseWrapper]s and creates [RoutineExerciseCrossRef]s
+     * @param routineId is used for the [RoutineExerciseCrossRef]s
+     * @param exerciseWrappers are inserted and then assigned to [RoutineExerciseCrossRef]s
+     */
+    private fun assign(
+        routineId: Int,
+        exerciseWrappers: List<ExerciseWrapper>
+    ) = runBlocking {
+        val exerciseWrapperIds = ArrayList<Int>()
+        for (e in exerciseWrappers) {
+            exerciseWrapperIds.add(insert(e).toInt())
+        }
+        repository.assignExercisesToRoutine(routineId, exerciseWrapperIds)
     }
 
     private fun unassignExercisesFromRoutine(routineId: Int) = runBlocking {

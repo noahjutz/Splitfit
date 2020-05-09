@@ -21,6 +21,7 @@ class Repository private constructor(application: Application) {
 
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
+    val exerciseWrappers = exerciseWrapperDao.getExerciseWrappers()
 
     val routinesWithExercises = routineDao.getRoutinesWithExercises()
 
@@ -69,8 +70,8 @@ class Repository private constructor(application: Application) {
      * [ExerciseWrapperDao]
      */
 
-    fun insert(exerciseWrapper: ExerciseWrapper) {
-        CoroutineScope(IO).launch { exerciseWrapperDao.insert(exerciseWrapper) }
+    fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
+        exerciseWrapperDao.insert(exerciseWrapper)
     }
 
     fun delete(exerciseWrapper: ExerciseWrapper) {
