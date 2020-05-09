@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.noahjutz.gymroutines.data.Exercise
-import com.noahjutz.gymroutines.data.Repository
-import com.noahjutz.gymroutines.data.Routine
-import com.noahjutz.gymroutines.data.Rwe
+import com.noahjutz.gymroutines.data.*
 import kotlinx.coroutines.runBlocking
 
 @Suppress("unused")
@@ -34,7 +31,7 @@ class CreateRoutineViewModel(
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
-    private val _exercises = MutableLiveData<ArrayList<Exercise>>()
+    private val _exercises = MutableLiveData<ArrayList<ExerciseWrapper>>()
 
     init {
         initRwe()
@@ -58,7 +55,7 @@ class CreateRoutineViewModel(
                     listOf()
                 )
 
-            _exercises.value = value?.exercises as? ArrayList<Exercise> ?: ArrayList()
+            _exercises.value = value?.exerciseWrappers as? ArrayList<ExerciseWrapper> ?: ArrayList()
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value!!.apply {
@@ -98,7 +95,7 @@ class CreateRoutineViewModel(
     private fun save() {
         val routine = rwe.value!!.routine
         val routineId = insert(routine).toInt()
-        val exerciseIds = rwe.value!!.exercises.map { it.exerciseId }
+        val exerciseIds = rwe.value!!.exerciseWrappers.map { it.exerciseId }
         assignExercisesToRoutine(routineId, exerciseIds)
     }
 
@@ -125,17 +122,17 @@ class CreateRoutineViewModel(
     /**
      * Functions for [CreateRoutineFragment]
      */
-    fun addExercises(exercises: List<Exercise>) {
-        for (e in exercises) addExercise(e)
+    fun addExercises(exerciseWrappers: List<ExerciseWrapper>) {
+        for (e in exerciseWrappers) addExercise(e)
     }
 
-    fun removeExercise(exercise: Exercise) {
-        if (exercise in _exercises.value!!)
-            _exercises.value = _exercises.value!!.apply { remove(exercise) }
+    fun removeExercise(exerciseWrapper: ExerciseWrapper) {
+        if (exerciseWrapper in _exercises.value!!)
+            _exercises.value = _exercises.value!!.apply { remove(exerciseWrapper) }
     }
 
-    fun addExercise(exercise: Exercise) {
-        if (exercise !in _exercises.value!!)
-            _exercises.value = _exercises.value!!.apply { add(exercise) }
+    fun addExercise(exerciseWrapper: ExerciseWrapper) {
+        if (exerciseWrapper !in _exercises.value!!)
+            _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
     }
 }
