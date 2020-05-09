@@ -110,8 +110,8 @@ class CreateRoutineFragment : Fragment() {
         }
 
         val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
-            override fun onExerciseClick(exercise: Exercise) {}
-            override fun onExerciseLongClick(exercise: Exercise) {}
+            override fun onExerciseClick(exerciseWrapper: ExerciseWrapper) {}
+            override fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper) {}
         }
 
         adapter = ExercisesAdapter(onItemClickListener)
