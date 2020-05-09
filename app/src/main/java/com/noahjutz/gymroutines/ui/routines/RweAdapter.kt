@@ -53,9 +53,9 @@ class RweAdapter(
         val rwe = getItem(position)
 
         val exercisesSb = StringBuilder()
-        for (i in rwe.exercises.indices) {
-            exercisesSb.append(rwe.exercises[i].name)
-            if (i != rwe.exercises.size - 1)
+        for (i in rwe.exerciseWrappers.indices) {
+            exercisesSb.append(rwe.exerciseWrappers[i].exerciseId) // TODO: Show name instead of id
+            if (i != rwe.exerciseWrappers.size - 1)
                 exercisesSb.append("\n")
         }
 
@@ -65,7 +65,7 @@ class RweAdapter(
             itemView.exercises.text = exercisesSb.toString()
 
             if (rwe.routine.description.trim().isEmpty()) itemView.description.visibility = GONE
-            if (rwe.exercises.isEmpty()) itemView.exercises.visibility = GONE
+            if (rwe.exerciseWrappers.isEmpty()) itemView.exercises.visibility = GONE
         }
     }
 
