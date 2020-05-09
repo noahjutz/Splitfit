@@ -132,7 +132,6 @@ class CreateRoutineViewModel(
     }
 
     fun addExercise(exerciseWrapper: ExerciseWrapper) {
-        if (exerciseWrapper !in _exercises.value!!)
-            _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
+        _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
     }
 }
