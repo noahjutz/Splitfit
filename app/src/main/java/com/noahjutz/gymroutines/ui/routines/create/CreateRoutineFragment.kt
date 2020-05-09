@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
+import com.noahjutz.gymroutines.data.ExerciseWrapper
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
@@ -92,12 +93,16 @@ class CreateRoutineFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
-                viewModel.removeExercise(exercise)
+                val exerciseWrapper = adapter.getExerciseWrapperAt(viewHolder.adapterPosition)
+                viewModel.removeExercise(exerciseWrapper)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
+                Snackbar.make(
+                    recycler_view,
+                    "Deleted ${exerciseWrapper.exerciseId}",
+                    Snackbar.LENGTH_SHORT
+                ) // TODO: Replace id with name
                     .setAction("Undo") {
-                        viewModel.addExercise(exercise)
+                        viewModel.addExercise(exerciseWrapper)
                         adapter.notifyItemInserted(adapter.itemCount)
                     }
                     .show()
@@ -124,11 +129,14 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel.rwe.observe(viewLifecycleOwner, Observer { rwe ->
-            adapter.submitList(rwe.exercises)
+            adapter.submitList(rwe.exerciseWrappers)
         })
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            viewModel.addExercises(exercises)
+            val ewList = ArrayList<ExerciseWrapper>()
+            for (e in exercises) ewList.add(ExerciseWrapper(e.exerciseId))
+            viewModel.addExercises(ewList)
+
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         })
     }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.Exercise
+import com.noahjutz.gymroutines.data.ExerciseWrapper
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 @Suppress("unused")
@@ -27,7 +28,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
 class ExercisesAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
-    fun getExerciseAt(pos: Int): Exercise = getItem(pos)
+    fun getExerciseWrapperAt(pos: Int): ExerciseWrapper = getItem(pos)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {

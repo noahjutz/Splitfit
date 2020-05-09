@@ -42,5 +42,5 @@ data class ExerciseWrapper(
     val exerciseId: Int,
 
     @PrimaryKey(autoGenerate = true)
-    val exerciseWrapperId: Int
+    val exerciseWrapperId: Int = 0
 )
