@@ -8,26 +8,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.ExerciseWrapper
+import com.noahjutz.gymroutines.data.Exercise
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 @Suppress("unused")
 private const val TAG = "ExercisesAdapter"
 
-private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
-    override fun areItemsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
+private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
+    override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
         return oldItem.exerciseId == newItem.exerciseId
     }
 
-    override fun areContentsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
+    override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
         return oldItem == newItem
     }
 }
 
 class ExercisesAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
-) : ListAdapter<ExerciseWrapper, ExercisesAdapter.ExerciseHolder>(diffUtil) {
-    fun getExerciseWrapperAt(pos: Int): ExerciseWrapper = getItem(pos)
+) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
+    fun getExerciseAt(pos: Int): Exercise = getItem(pos)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
@@ -50,19 +50,19 @@ class ExercisesAdapter(
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        val exerciseWrapper = getItem(position)
+        val exercise = getItem(position)
 
         holder.apply {
-            holder.itemView.name.text = exerciseWrapper.exerciseId.toString() // TODO: replace id with name
-            holder.itemView.description.text = "TODO" // TODO: Replace TODO with desc
+            holder.itemView.name.text = exercise.name
+            holder.itemView.description.text = exercise.description
 
-            // if (exerciseWrapper.description.trim().isEmpty()) TODO
-            //     holder.itemView.description.visibility = GONE
+            if (exercise.description.trim().isEmpty())
+                holder.itemView.description.visibility = GONE
         }
     }
 
     interface OnExerciseClickListener {
-        fun onExerciseClick(exerciseWrapper: ExerciseWrapper)
-        fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper)
+        fun onExerciseClick(exercise: Exercise)
+        fun onExerciseLongClick(exercise: Exercise)
     }
 }
