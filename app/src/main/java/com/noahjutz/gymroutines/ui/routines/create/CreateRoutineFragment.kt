@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.Exercise
 import com.noahjutz.gymroutines.data.ExerciseWrapper
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
@@ -94,13 +93,14 @@ class CreateRoutineFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val exerciseWrapper = adapter.getExerciseWrapperAt(viewHolder.adapterPosition)
+                val exercise = viewModel.getExerciseById(exerciseWrapper.exerciseId)
                 viewModel.removeExercise(exerciseWrapper)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Snackbar.make(
                     recycler_view,
-                    "Deleted ${exerciseWrapper.exerciseId}",
+                    "Deleted ${exercise?.name}",
                     Snackbar.LENGTH_SHORT
-                ) // TODO: Replace id with name
+                )
                     .setAction("Undo") {
                         viewModel.addExercise(exerciseWrapper)
                         adapter.notifyItemInserted(adapter.itemCount)
