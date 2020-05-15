@@ -9,29 +9,34 @@
     android:focusable="true"
     app:cardElevation="0dp"
     app:strokeColor="@color/color_stroke"
-    app:strokeWidth="1dp">
+    app:strokeWidth="1dp"
+    tools:layout_margin="16dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="@dimen/any_padding_default">
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Lunge" />
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            tools:text="Leg Day" />
 
         <TextView
             android:id="@+id/description"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
             tools:text="Quads and stuff" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
