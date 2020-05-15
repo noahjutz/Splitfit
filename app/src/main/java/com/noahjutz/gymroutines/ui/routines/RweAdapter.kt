@@ -52,20 +52,11 @@ class RweAdapter(
     override fun onBindViewHolder(holder: RweHolder, position: Int) {
         val rwe = getItem(position)
 
-        val exercisesSb = StringBuilder()
-        for (i in rwe.exerciseWrappers.indices) {
-            exercisesSb.append(rwe.exerciseWrappers[i].exerciseId) // TODO: Show name instead of id
-            if (i != rwe.exerciseWrappers.size - 1)
-                exercisesSb.append("\n")
-        }
-
         holder.apply {
             holder.itemView.name.text = rwe.routine.name
             holder.itemView.description.text = rwe.routine.description
-            itemView.exercises.text = exercisesSb.toString()
 
             if (rwe.routine.description.trim().isEmpty()) itemView.description.visibility = GONE
-            if (rwe.exerciseWrappers.isEmpty()) itemView.exercises.visibility = GONE
         }
     }
 
