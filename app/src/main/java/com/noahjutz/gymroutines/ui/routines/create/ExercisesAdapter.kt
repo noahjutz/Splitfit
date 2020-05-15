@@ -2,7 +2,6 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -25,7 +24,8 @@ private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
 }
 
 class ExercisesAdapter(
-    private val onExerciseClickListener: OnExerciseClickListener
+    private val onExerciseClickListener: OnExerciseClickListener,
+    private val viewModel: CreateRoutineViewModel
 ) : ListAdapter<ExerciseWrapper, ExercisesAdapter.ExerciseHolder>(diffUtil) {
     fun getExerciseWrapperAt(pos: Int): ExerciseWrapper = getItem(pos)
 

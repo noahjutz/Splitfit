@@ -114,7 +114,7 @@ class CreateRoutineFragment : Fragment() {
             override fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper) {}
         }
 
-        adapter = ExercisesAdapter(onItemClickListener)
+        adapter = ExercisesAdapter(onItemClickListener, viewModel)
 
         recycler_view.apply {
             adapter = this@CreateRoutineFragment.adapter
