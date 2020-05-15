@@ -2,6 +2,7 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.ExerciseWrapper
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
+import java.lang.NullPointerException
 
 @Suppress("unused")
 private const val TAG = "ExercisesAdapter"
@@ -50,14 +52,16 @@ class ExercisesAdapter(
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        val exerciseWrapper = getItem(position)
+        val id = getItem(position).exerciseId
+        val exercise = viewModel.getExerciseById(id)
+            ?: throw NullPointerException("ExerciseWrapper linked to Exercise that doesn't exist")
 
         holder.apply {
-            holder.itemView.name.text = exerciseWrapper.exerciseId.toString() // TODO: replace id with name
-            holder.itemView.description.text = "TODO" // TODO: Replace TODO with desc
+            holder.itemView.name.text = exercise.name
+            holder.itemView.description.text = exercise.description
 
-            // if (exerciseWrapper.description.trim().isEmpty()) TODO
-            //     holder.itemView.description.visibility = GONE
+            if (exercise.description.trim().isEmpty())
+                holder.itemView.description.visibility = GONE
         }
     }
 
