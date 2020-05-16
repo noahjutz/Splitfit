@@ -78,10 +78,10 @@ class ExercisesFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
-                viewModel.delete(exercise)
+                viewModel.hide(exercise, true)
                 Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") {
-                        viewModel.insert(exercise)
+                        viewModel.hide(exercise, false)
                     }
                     .setAnchorView(fab_pick_exercises)
                     .show()
