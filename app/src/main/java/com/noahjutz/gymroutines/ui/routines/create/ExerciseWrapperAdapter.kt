@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.ExerciseWrapper
-import kotlinx.android.synthetic.main.listitem_exercise.view.*
+import kotlinx.android.synthetic.main.listitem_exercise.view.description
+import kotlinx.android.synthetic.main.listitem_exercise.view.name
+import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*
 import java.lang.NullPointerException
 
 @Suppress("unused")
@@ -52,16 +54,19 @@ class ExerciseWrapperAdapter(
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        val id = getItem(position).exerciseId
-        val exercise = viewModel.getExerciseById(id)
+        val exerciseId = getItem(position).exerciseId
+        val exercise = viewModel.getExerciseById(exerciseId)
             ?: throw NullPointerException("ExerciseWrapper linked to Exercise that doesn't exist")
 
-        holder.apply {
-            holder.itemView.name.text = exercise.name
-            holder.itemView.description.text = exercise.description
+        holder.itemView.apply {
+            name.text = exercise.name
+            description.text = exercise.description
 
             if (exercise.description.trim().isEmpty())
-                holder.itemView.description.visibility = GONE
+                description.visibility = GONE
+
+            val exerciseWrapperId = getItem(position).exerciseWrapperId
+            button_add_set.setOnClickListener { viewModel.addSet(exerciseWrapperId) }
         }
     }
 

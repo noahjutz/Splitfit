@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -139,9 +140,6 @@ class CreateRoutineViewModel(
         repository.unassignExercisesFromRoutine(routineId)
     }
 
-    /**
-     * Functions for [CreateRoutineFragment]
-     */
     fun addExercises(exerciseWrappers: List<ExerciseWrapper>) {
         for (e in exerciseWrappers) addExercise(e)
     }
@@ -159,5 +157,12 @@ class CreateRoutineViewModel(
         withContext(Dispatchers.IO) {
             repository.getExerciseById(id)
         }
+    }
+
+    /**
+     * @param id: [ExerciseWrapper] id to assign the set to
+     */
+    fun addSet(id: Int) {
+        Log.d(TAG, "Clicked! $id")
     }
 }
