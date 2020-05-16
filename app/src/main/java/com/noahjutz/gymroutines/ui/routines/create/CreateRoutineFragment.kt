@@ -39,7 +39,7 @@ class CreateRoutineFragment : Fragment() {
     private val args: CreateRoutineFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentCreateRoutineBinding
-    private lateinit var adapter: ExercisesAdapter
+    private lateinit var adapter: ExerciseWrapperAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,12 +109,12 @@ class CreateRoutineFragment : Fragment() {
             }
         }
 
-        val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
+        val onItemClickListener = object : ExerciseWrapperAdapter.OnExerciseClickListener {
             override fun onExerciseClick(exerciseWrapper: ExerciseWrapper) {}
             override fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper) {}
         }
 
-        adapter = ExercisesAdapter(onItemClickListener, viewModel)
+        adapter = ExerciseWrapperAdapter(onItemClickListener, viewModel)
 
         recycler_view.apply {
             adapter = this@CreateRoutineFragment.adapter

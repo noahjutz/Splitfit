@@ -25,20 +25,20 @@ private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
     }
 }
 
-class ExercisesAdapter(
+class ExerciseWrapperAdapter(
     private val onExerciseClickListener: OnExerciseClickListener,
     private val viewModel: CreateRoutineViewModel
-) : ListAdapter<ExerciseWrapper, ExercisesAdapter.ExerciseHolder>(diffUtil) {
+) : ListAdapter<ExerciseWrapper, ExerciseWrapperAdapter.ExerciseHolder>(diffUtil) {
     fun getExerciseWrapperAt(pos: Int): ExerciseWrapper = getItem(pos)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                this@ExercisesAdapter.onExerciseClickListener
+                this@ExerciseWrapperAdapter.onExerciseClickListener
                     .onExerciseClick(getItem(adapterPosition))
             }
             itemView.setOnLongClickListener {
-                this@ExercisesAdapter.onExerciseClickListener
+                this@ExerciseWrapperAdapter.onExerciseClickListener
                     .onExerciseLongClick(getItem(adapterPosition))
                 true
             }
@@ -47,7 +47,7 @@ class ExercisesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
         val viewModel = LayoutInflater.from(parent.context)
-            .inflate(R.layout.listitem_exercise, parent, false)
+            .inflate(R.layout.listitem_exercise_wrapper, parent, false)
         return ExerciseHolder(viewModel)
     }
 
