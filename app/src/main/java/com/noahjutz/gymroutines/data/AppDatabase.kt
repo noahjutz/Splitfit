@@ -9,8 +9,14 @@ import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
 
 @Database(
-    entities = [Exercise::class, Routine::class, RoutineExerciseCrossRef::class, ExerciseWrapper::class],
-    version = 4
+    entities = [
+        Exercise::class,
+        Routine::class,
+        RoutineExerciseCrossRef::class,
+        ExerciseWrapper::class,
+        Set::class
+    ],
+    version = 5
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao

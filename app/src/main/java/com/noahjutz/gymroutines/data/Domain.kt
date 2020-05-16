@@ -44,3 +44,11 @@ data class ExerciseWrapper(
     @PrimaryKey(autoGenerate = true)
     val exerciseWrapperId: Int = 0
 )
+
+@Entity(tableName = "set_table")
+data class Set(
+    val exerciseWrapperId: Int,
+
+    @PrimaryKey(autoGenerate = true)
+    val setId: Int = 0
+)
