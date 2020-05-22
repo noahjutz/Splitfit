@@ -153,10 +153,12 @@ class CreateRoutineViewModel(
     fun removeExercise(exerciseWrapper: ExerciseWrapper) {
         if (exerciseWrapper in _exercises.value!!)
             _exercises.value = _exercises.value!!.apply { remove(exerciseWrapper) }
+        repository.delete(exerciseWrapper)
     }
 
-    fun addExercise(exerciseWrapper: ExerciseWrapper) {
+    fun addExercise(exerciseWrapper: ExerciseWrapper): Int {
         _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
+        return repository.insert(exerciseWrapper).toInt()
     }
 
     /**
