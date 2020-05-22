@@ -116,8 +116,14 @@ class CreateRoutineViewModel(
         repository.insert(exerciseWrapper)
     }
 
-    private fun getRweById(routineId: Int): Rwe? = runBlocking {
-        repository.getRweById(routineId)
+    private fun getRweById(rweId: Int): Rwe? = runBlocking {
+        repository.getRweById(rweId)
+    }
+
+    fun getExerciseById(id: Int): Exercise? = runBlocking {
+        withContext(Dispatchers.IO) {
+            repository.getExerciseById(id)
+        }
     }
 
     /**
@@ -136,10 +142,6 @@ class CreateRoutineViewModel(
         repository.assignExercisesToRoutine(routineId, exerciseWrapperIds)
     }
 
-    private fun unassignExercisesFromRoutine(routineId: Int) = runBlocking {
-        repository.unassignExercisesFromRoutine(routineId)
-    }
-
     fun addExercises(exerciseWrappers: List<ExerciseWrapper>) {
         for (e in exerciseWrappers) addExercise(e)
     }
@@ -151,12 +153,6 @@ class CreateRoutineViewModel(
 
     fun addExercise(exerciseWrapper: ExerciseWrapper) {
         _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
-    }
-
-    fun getExerciseById(id: Int): Exercise? = runBlocking {
-        withContext(Dispatchers.IO) {
-            repository.getExerciseById(id)
-        }
     }
 
     /**
