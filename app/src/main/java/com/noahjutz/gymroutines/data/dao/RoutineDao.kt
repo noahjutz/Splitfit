@@ -19,6 +19,10 @@ abstract class RoutineDao {
         }
     }
 
+    fun assignExerciseToRoutine(routineId: Int, exerciseWrapperId: Int) {
+        TODO("Not yet implemented")
+    }
+
     suspend fun unassignExercisesFromRoutine(routineId: Int) {
         for (crossRef in getRoutineExerciseCrossRefs()) {
             if (crossRef.routineId == routineId) delete(crossRef)

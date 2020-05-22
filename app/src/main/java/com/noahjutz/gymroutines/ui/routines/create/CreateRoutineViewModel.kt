@@ -1,13 +1,11 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.*
 import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -140,6 +138,12 @@ class CreateRoutineViewModel(
             exerciseWrapperIds.add(insert(e).toInt())
         }
         repository.assignExercisesToRoutine(routineId, exerciseWrapperIds)
+    }
+
+    private fun assign(routineId: Int, exerciseWrapperId: Int) {
+        viewModelScope.launch {
+            repository.assignExerciseToRoutine(routineId, exerciseWrapperId)
+        }
     }
 
     fun addExercises(exerciseWrappers: List<ExerciseWrapper>) {
