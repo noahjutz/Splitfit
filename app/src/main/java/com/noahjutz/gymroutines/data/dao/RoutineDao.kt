@@ -19,7 +19,7 @@ abstract class RoutineDao {
         }
     }
 
-    fun assignExerciseToRoutine(routineId: Int, exerciseWrapperId: Int) {
+    fun assignEW(routineId: Int, exerciseWrapperId: Int) {
         TODO("Not yet implemented")
     }
 

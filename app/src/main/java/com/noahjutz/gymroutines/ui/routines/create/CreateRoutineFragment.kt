@@ -94,7 +94,7 @@ class CreateRoutineFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val exerciseWrapper = adapter.getExerciseWrapperAt(viewHolder.adapterPosition)
                 val exercise = viewModel.getExerciseById(exerciseWrapper.exerciseId)
-                viewModel.removeExercise(exerciseWrapper)
+                viewModel.removeEW(exerciseWrapper)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 Snackbar.make(
                     recycler_view,
@@ -102,7 +102,7 @@ class CreateRoutineFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 )
                     .setAction("Undo") {
-                        viewModel.addExercise(exerciseWrapper)
+                        viewModel.addEW(exerciseWrapper)
                         adapter.notifyItemInserted(adapter.itemCount)
                     }
                     .show()
@@ -135,7 +135,7 @@ class CreateRoutineFragment : Fragment() {
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             val ewList = ArrayList<ExerciseWrapper>()
             for (e in exercises) ewList.add(ExerciseWrapper(e.exerciseId))
-            viewModel.addExercises(ewList)
+            viewModel.addEWs(ewList)
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         })

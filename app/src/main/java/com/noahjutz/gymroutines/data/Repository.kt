@@ -52,9 +52,9 @@ class Repository private constructor(application: Application) {
         }
     }
 
-    fun assignExerciseToRoutine(routineId: Int, exerciseWrapperId: Int) {
+    fun assignEW(routineId: Int, exerciseWrapperId: Int) {
         CoroutineScope(IO).launch {
-            routineDao.assignExerciseToRoutine(routineId, exerciseWrapperId)
+            routineDao.assignEW(routineId, exerciseWrapperId)
         }
     }
 

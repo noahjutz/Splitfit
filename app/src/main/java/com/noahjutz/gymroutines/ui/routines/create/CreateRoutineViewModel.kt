@@ -142,21 +142,21 @@ class CreateRoutineViewModel(
 
     private fun assign(routineId: Int, exerciseWrapperId: Int) {
         viewModelScope.launch {
-            repository.assignExerciseToRoutine(routineId, exerciseWrapperId)
+            repository.assignEW(routineId, exerciseWrapperId)
         }
     }
 
-    fun addExercises(exerciseWrappers: List<ExerciseWrapper>) {
-        for (e in exerciseWrappers) addExercise(e)
+    fun addEWs(exerciseWrappers: List<ExerciseWrapper>) {
+        for (e in exerciseWrappers) addEW(e)
     }
 
-    fun removeExercise(exerciseWrapper: ExerciseWrapper) {
+    fun removeEW(exerciseWrapper: ExerciseWrapper) {
         if (exerciseWrapper in _exercises.value!!)
             _exercises.value = _exercises.value!!.apply { remove(exerciseWrapper) }
         repository.delete(exerciseWrapper)
     }
 
-    fun addExercise(exerciseWrapper: ExerciseWrapper): Int {
+    fun addEW(exerciseWrapper: ExerciseWrapper): Int {
         _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
         return repository.insert(exerciseWrapper).toInt()
     }
