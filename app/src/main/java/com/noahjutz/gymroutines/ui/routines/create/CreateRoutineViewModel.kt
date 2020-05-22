@@ -35,6 +35,8 @@ class CreateRoutineViewModel(
 
     private val _exercises = MutableLiveData<ArrayList<ExerciseWrapper>>()
 
+    private val _ewIds = MutableLiveData<ArrayList<Int>>()
+
     init {
         initRwe()
         initBinding()
@@ -58,6 +60,8 @@ class CreateRoutineViewModel(
                 )
 
             _exercises.value = value?.exerciseWrappers as? ArrayList<ExerciseWrapper> ?: ArrayList()
+
+            _ewIds.value = value?.exerciseWrappers?.map { it.exerciseWrapperId } as ArrayList<Int>
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value!!.apply {
@@ -156,9 +160,9 @@ class CreateRoutineViewModel(
         repository.delete(exerciseWrapper)
     }
 
-    fun addEW(exerciseWrapper: ExerciseWrapper): Int {
+    fun addEW(exerciseWrapper: ExerciseWrapper) {
         _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
-        return repository.insert(exerciseWrapper).toInt()
+        _ewIds.value?.add(repository.insert(exerciseWrapper).toInt())
     }
 
     /**
