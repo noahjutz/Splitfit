@@ -102,8 +102,7 @@ class CreateRoutineViewModel(
     private fun save() {
         val routine = rwe.value!!.routine
         val routineId = insert(routine).toInt()
-        val exerciseWrappers = rwe.value!!.exerciseWrappers
-        assign(routineId, exerciseWrappers)
+        // TODO: assign [_ewIds] with routineId
     }
 
     /**
@@ -128,20 +127,9 @@ class CreateRoutineViewModel(
         }
     }
 
-    /**
-     * Inserts the [ExerciseWrapper]s and creates [RoutineExerciseCrossRef]s
-     * @param routineId is used for the [RoutineExerciseCrossRef]s
-     * @param exerciseWrappers are inserted and then assigned to [RoutineExerciseCrossRef]s
-     */
-    private fun assign(
-        routineId: Int,
-        exerciseWrappers: List<ExerciseWrapper>
-    ) = runBlocking {
-        val exerciseWrapperIds = ArrayList<Int>()
-        for (e in exerciseWrappers) {
-            exerciseWrapperIds.add(insert(e).toInt())
-        }
-        repository.assignExercisesToRoutine(routineId, exerciseWrapperIds)
+    private fun assign(routineId: Int, exerciseWrapperIds: List<Int>) {
+        for (ewId in exerciseWrapperIds)
+            assign(routineId, ewId)
     }
 
     private fun assign(routineId: Int, exerciseWrapperId: Int) {
