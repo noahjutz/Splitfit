@@ -158,14 +158,10 @@ class CreateRoutineViewModel(
      * @param ewId: [ExerciseWrapper] id to assign the set to
      */
     fun addSet(ewId: Int) {
-        Log.d(TAG, "Clicked! $ewId")
         val s = Set(ewId)
-        val setId = repository.insert(s)
+        val setId = repository.insert(s).toInt()
         val set = repository.getSetById(setId)
-        _sets.value!!.add(set)
-        // TODO:
-        // - add repository.insert(Set)
-        // - add repository.getSetById(Int): Set?
-        // - add CreateRoutineViewModel._sets: ArrayList<Set>
+        Log.d(TAG, "ewId: $ewId, setId: $setId, set: $set")
+        // TODO: Display sets in the EW cards, inside of [ExerciseWrapperAdapter]
     }
 }
