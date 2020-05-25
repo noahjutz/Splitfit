@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.data.dao
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.Routine
@@ -12,31 +11,13 @@ private const val TAG = "RoutineDao"
 
 @Dao
 abstract class RoutineDao {
-    suspend fun assignExercisesToRoutine(routineId: Int, exerciseWrapperIds: List<Int>) {
-        unassignExercisesFromRoutine(routineId)
-        for (exerciseId in exerciseWrapperIds) {
-            val crossRef = RoutineExerciseCrossRef(routineId, exerciseId)
-            insert(crossRef)
-        }
-    }
-
     suspend fun assignEW(routineId: Int, exerciseWrapperId: Int) {
         val crossRef = RoutineExerciseCrossRef(routineId, exerciseWrapperId)
         insert(crossRef)
     }
 
-    suspend fun unassignExercisesFromRoutine(routineId: Int) {
-        for (crossRef in getRoutineExerciseCrossRefs()) {
-            if (crossRef.routineId == routineId) delete(crossRef)
-        }
-    }
-
     @Query("SELECT * from routineexercisecrossref")
     abstract suspend fun getRoutineExerciseCrossRefs(): List<RoutineExerciseCrossRef>
-
-        suspend fun getExerciseWrapperIdsByRoutineId(routineId: Int): List<Int> {
-        return getRoutineExerciseCrossRefs().filter { it.routineId == routineId }.map { it.exerciseWrapperId }
-    }
 
     @Delete
     abstract suspend fun delete(routineExerciseCrossRef: RoutineExerciseCrossRef)

@@ -47,12 +47,6 @@ class Repository private constructor(application: Application) {
         routineDao.getRweById(routineId)
     }
 
-    fun assignExercisesToRoutine(routineId: Int, exerciseIds: List<Int>) {
-        CoroutineScope(IO).launch {
-            routineDao.assignExercisesToRoutine(routineId, exerciseIds)
-        }
-    }
-
     fun assignEW(routineId: Int, exerciseWrapperId: Int) {
         CoroutineScope(IO).launch {
             routineDao.assignEW(routineId, exerciseWrapperId)
