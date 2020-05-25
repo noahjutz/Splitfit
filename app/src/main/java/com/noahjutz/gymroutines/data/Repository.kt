@@ -4,6 +4,7 @@ import android.app.Application
 import com.noahjutz.gymroutines.data.dao.ExerciseDao
 import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
+import com.noahjutz.gymroutines.data.dao.SetDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -77,6 +78,24 @@ class Repository private constructor(application: Application) {
     fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
         withContext(IO) {
             exerciseWrapperDao.getExerciseWrapperById(id)
+        }
+    }
+
+    /**
+     * [SetDao]
+     */
+
+    fun insert(set: Set): Long = runBlocking {
+        setDao.insert(set)
+    }
+
+    fun delete(set: Set) {
+        CoroutineScope(IO).launch { setDao.delete(set) }
+    }
+
+    fun getSetById(id: Int): Set? = runBlocking {
+        withContext(IO) {
+            setDao.getSetById(id)
         }
     }
 }
