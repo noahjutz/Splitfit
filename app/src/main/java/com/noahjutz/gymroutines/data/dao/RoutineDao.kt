@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.data.dao
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.Routine
@@ -19,8 +20,9 @@ abstract class RoutineDao {
         }
     }
 
-    fun assignEW(routineId: Int, exerciseWrapperId: Int) {
-        TODO("Not yet implemented")
+    suspend fun assignEW(routineId: Int, exerciseWrapperId: Int) {
+        val crossRef = RoutineExerciseCrossRef(routineId, exerciseWrapperId)
+        insert(crossRef)
     }
 
     suspend fun unassignExercisesFromRoutine(routineId: Int) {

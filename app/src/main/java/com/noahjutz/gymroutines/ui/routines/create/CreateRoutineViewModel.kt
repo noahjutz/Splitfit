@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.*
 import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -102,7 +103,7 @@ class CreateRoutineViewModel(
     private fun save() {
         val routine = rwe.value!!.routine
         val routineId = insert(routine).toInt()
-        // TODO: assign [_ewIds] with routineId
+        assign(routineId, _ewIds.value!!)
     }
 
     /**
@@ -133,8 +134,10 @@ class CreateRoutineViewModel(
     }
 
     private fun assign(routineId: Int, exerciseWrapperId: Int) {
-        viewModelScope.launch {
-            repository.assignEW(routineId, exerciseWrapperId)
+        runBlocking {
+            withContext(IO) {
+                repository.assignEW(routineId, exerciseWrapperId)
+            }
         }
     }
 
@@ -150,7 +153,8 @@ class CreateRoutineViewModel(
 
     fun addEW(exerciseWrapper: ExerciseWrapper) {
         _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
-        _ewIds.value?.add(repository.insert(exerciseWrapper).toInt())
+        val id = repository.insert(exerciseWrapper).toInt()
+        _ewIds.value?.add(id)
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
+import android.util.Log
 import com.noahjutz.gymroutines.data.dao.ExerciseDao
 import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
