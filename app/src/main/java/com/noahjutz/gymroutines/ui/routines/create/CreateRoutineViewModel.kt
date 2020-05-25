@@ -152,9 +152,10 @@ class CreateRoutineViewModel(
     }
 
     fun addEW(exerciseWrapper: ExerciseWrapper) {
-        _exercises.value = _exercises.value!!.apply { add(exerciseWrapper) }
         val id = repository.insert(exerciseWrapper).toInt()
         _ewIds.value?.add(id)
+        val ew = repository.getExerciseWrapperById(id) // TODO: Create this function
+        _exercises.value = _exercises.value!!.apply { add(ew) }
     }
 
     /**
