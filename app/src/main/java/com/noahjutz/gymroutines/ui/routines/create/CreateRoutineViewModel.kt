@@ -1,15 +1,15 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.*
 import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.lang.NullPointerException
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -37,8 +37,6 @@ class CreateRoutineViewModel(
 
     private val _exercises = MutableLiveData<ArrayList<ExerciseWrapper>>()
 
-    private val _ewIds = MutableLiveData<ArrayList<Int>>()
-
     init {
         initRwe()
         initBinding()
@@ -62,8 +60,6 @@ class CreateRoutineViewModel(
                 )
 
             _exercises.value = value?.exerciseWrappers as? ArrayList<ExerciseWrapper> ?: ArrayList()
-
-            _ewIds.value = value?.exerciseWrappers?.map { it.exerciseWrapperId } as ArrayList<Int>
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value!!.apply {
@@ -104,7 +100,7 @@ class CreateRoutineViewModel(
     private fun save() {
         val routine = rwe.value!!.routine
         val routineId = insert(routine).toInt()
-        assign(routineId, _ewIds.value!!)
+        assign(routineId, _exercises.value!!.map { it.exerciseWrapperId })
     }
 
     /**
@@ -124,7 +120,7 @@ class CreateRoutineViewModel(
     }
 
     fun getExerciseById(id: Int): Exercise? = runBlocking {
-        withContext(Dispatchers.IO) {
+        withContext(IO) {
             repository.getExerciseById(id)
         }
     }
@@ -154,9 +150,8 @@ class CreateRoutineViewModel(
 
     fun addEW(exerciseWrapper: ExerciseWrapper) {
         val id = repository.insert(exerciseWrapper).toInt()
-        _ewIds.value?.add(id)
         val ew = repository.getExerciseWrapperById(id)
-        _exercises.value = _exercises.value!!.apply { add(ew ?: throw NullPointerException("The ExerciseWrapper that was just added could not be retrieved by its id. This should not happen.")) }
+        _exercises.value = _exercises.value!!.apply { add(ew!!) }
     }
 
     /**
