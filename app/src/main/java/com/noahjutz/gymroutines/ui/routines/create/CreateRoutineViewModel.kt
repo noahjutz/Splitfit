@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import java.lang.NullPointerException
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -154,8 +155,8 @@ class CreateRoutineViewModel(
     fun addEW(exerciseWrapper: ExerciseWrapper) {
         val id = repository.insert(exerciseWrapper).toInt()
         _ewIds.value?.add(id)
-        val ew = repository.getExerciseWrapperById(id) // TODO: Create this function
-        _exercises.value = _exercises.value!!.apply { add(ew) }
+        val ew = repository.getExerciseWrapperById(id)
+        _exercises.value = _exercises.value!!.apply { add(ew ?: throw NullPointerException("The ExerciseWrapper that was just added could not be retrieved by its id. This should not happen.")) }
     }
 
     /**

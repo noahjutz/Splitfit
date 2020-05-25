@@ -1,7 +1,6 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
-import android.util.Log
 import com.noahjutz.gymroutines.data.dao.ExerciseDao
 import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
@@ -9,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 @Suppress("unused")
 private const val TAG = "Repository"
@@ -77,5 +77,11 @@ class Repository private constructor(application: Application) {
 
     fun delete(exerciseWrapper: ExerciseWrapper) {
         CoroutineScope(IO).launch { exerciseWrapperDao.delete(exerciseWrapper) }
+    }
+
+    fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
+        withContext(IO) {
+            exerciseWrapperDao.getExerciseWrapperById(id)
+        }
     }
 }

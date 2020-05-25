@@ -17,4 +17,7 @@ abstract class ExerciseWrapperDao {
 
     @Query("SELECT * FROM exercise_wrapper_table")
     abstract fun getExerciseWrappers(): LiveData<List<ExerciseWrapper>>
+
+    @Query("SELECT * FROM exercise_wrapper_table WHERE exerciseWrapperId == :id")
+    abstract fun getExerciseWrapperById(id: Int): ExerciseWrapper?
 }
