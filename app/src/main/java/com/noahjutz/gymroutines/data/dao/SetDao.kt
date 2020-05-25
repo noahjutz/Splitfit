@@ -19,5 +19,5 @@ interface SetDao {
     suspend fun getSetById(id: Int): Set?
 
     @Query("SELECT * FROM set_table")
-    suspend fun getSets(): LiveData<List<Set>>
+    fun getSets(): LiveData<List<Set>>
 }

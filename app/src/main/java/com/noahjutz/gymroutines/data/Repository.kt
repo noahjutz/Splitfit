@@ -19,11 +19,12 @@ class Repository private constructor(application: Application) {
     private val exerciseDao = database.exerciseDao
     private val routineDao = database.routineDao
     private val exerciseWrapperDao = database.exerciseWrapperDao
+    private val setDao = database.setDao
 
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
     val exerciseWrappers = exerciseWrapperDao.getExerciseWrappers()
-
+    val sets = setDao.getSets()
     val routinesWithExercises = routineDao.getRoutinesWithExercises()
 
     companion object {

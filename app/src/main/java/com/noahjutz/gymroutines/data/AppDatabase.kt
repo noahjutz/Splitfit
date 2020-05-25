@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import com.noahjutz.gymroutines.data.dao.ExerciseDao
 import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
+import com.noahjutz.gymroutines.data.dao.SetDao
 
 @Database(
     entities = [
@@ -22,6 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val routineDao: RoutineDao
     abstract val exerciseWrapperDao: ExerciseWrapperDao
+    abstract val setDao: SetDao
 
     companion object {
         @Volatile
