@@ -155,9 +155,17 @@ class CreateRoutineViewModel(
     }
 
     /**
-     * @param id: [ExerciseWrapper] id to assign the set to
+     * @param ewId: [ExerciseWrapper] id to assign the set to
      */
-    fun addSet(id: Int) {
-        Log.d(TAG, "Clicked! $id")
+    fun addSet(ewId: Int) {
+        Log.d(TAG, "Clicked! $ewId")
+        val s = Set(ewId)
+        val setId = repository.insert(s)
+        val set = repository.getSetById(setId)
+        _sets.value!!.add(set)
+        // TODO:
+        // - add repository.insert(Set)
+        // - add repository.getSetById(Int): Set?
+        // - add CreateRoutineViewModel._sets: ArrayList<Set>
     }
 }
