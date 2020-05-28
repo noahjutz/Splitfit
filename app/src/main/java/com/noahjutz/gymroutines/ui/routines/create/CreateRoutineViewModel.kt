@@ -125,6 +125,12 @@ class CreateRoutineViewModel(
         }
     }
 
+    fun getSetsById(ewId: Int): List<com.noahjutz.gymroutines.data.Set> = runBlocking {
+        withContext(IO) {
+            repository.getSetsById(ewId)
+        }
+    }
+
     private fun assign(routineId: Int, exerciseWrapperIds: List<Int>) {
         for (ewId in exerciseWrapperIds)
             assign(routineId, ewId)

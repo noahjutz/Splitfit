@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -55,8 +56,12 @@ class ExerciseWrapperAdapter(
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exerciseId = getItem(position).exerciseId
+        val ewId = getItem(position).exerciseWrapperId
         val exercise = viewModel.getExerciseById(exerciseId)
             ?: throw NullPointerException("ExerciseWrapper linked to Exercise that doesn't exist")
+
+        val setList = viewModel.getSetsById(ewId)
+        Log.d(TAG, "ewId: $ewId, sets: $setList")
 
         holder.itemView.apply {
             name.text = exercise.name

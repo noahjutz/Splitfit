@@ -98,4 +98,11 @@ class Repository private constructor(application: Application) {
             setDao.getSetById(id)
         }
     }
+
+    fun getSetsById(ewId: Int) = runBlocking {
+        withContext(IO) {
+            setDao.getSetsById(ewId)
+        }
+    }
+
 }

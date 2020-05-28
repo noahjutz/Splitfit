@@ -20,4 +20,7 @@ interface SetDao {
 
     @Query("SELECT * FROM set_table")
     fun getSets(): LiveData<List<Set>>
+
+    @Query("SELECT * FROM set_table WHERE exerciseWrapperId == :ewId")
+    suspend fun getSetsById(ewId: Int): List<Set>
 }
