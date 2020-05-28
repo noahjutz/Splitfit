@@ -47,10 +47,18 @@
                 android:textColor="?android:attr/textColorSecondary"
                 tools:text="Quads and stuff" />
 
+            <TextView
+                android:id="@+id/sets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="?android:attr/textColorSecondary"
+                tools:text="Set 1\nSet 2\nSet 3" />
 
             <Button
                 android:id="@+id/button_add_set"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Set" />
