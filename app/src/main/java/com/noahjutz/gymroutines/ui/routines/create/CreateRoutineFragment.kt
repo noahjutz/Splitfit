@@ -130,6 +130,7 @@ class CreateRoutineFragment : Fragment() {
     private fun initViewModel() {
         viewModel.rwe.observe(viewLifecycleOwner, Observer { rwe ->
             adapter.submitList(rwe.exerciseWrappers)
+            viewModel.save()
         })
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->

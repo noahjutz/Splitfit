@@ -82,15 +82,7 @@ class CreateRoutineViewModel(
         }
     }
 
-    /**
-     * Auto-save
-     */
-    override fun onCleared() {
-        super.onCleared()
-        save()
-    }
-
-    private fun save() {
+    fun save() {
         repository.insert(rwe.value!!)
     }
 

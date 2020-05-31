@@ -77,7 +77,7 @@ class Repository private constructor(application: Application) {
         }
     }
 
-    fun assignEW(routineId: Int, exerciseWrapperId: Int) = runBlocking {
+    private fun assignEW(routineId: Int, exerciseWrapperId: Int) = runBlocking {
         CoroutineScope(IO).launch {
             rweDao.assignEW(routineId, exerciseWrapperId)
         }
