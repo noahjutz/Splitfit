@@ -37,6 +37,20 @@ class Repository private constructor(application: Application) {
     }
 
     /**
+     * Utility functions
+     */
+
+    fun insert(rwe: Rwe) {
+        val routineId = insert(rwe.routine).toInt()
+        for (ewId in rwe.exerciseWrappers.map { it.exerciseWrapperId })
+            assignEW(routineId, ewId)
+    }
+
+    /**
+     * Direct Dao access functions
+     */
+
+    /**
      * [RoutineDao]
      */
 
