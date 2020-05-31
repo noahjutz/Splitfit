@@ -98,9 +98,7 @@ class CreateRoutineViewModel(
      * @see assign
      */
     private fun save() {
-        val routine = rwe.value!!.routine
-        val routineId = insert(routine).toInt()
-        assign(routineId, _exercises.value!!.map { it.exerciseWrapperId })
+        repository.insert(rwe.value!!)
     }
 
     /**
