@@ -54,8 +54,17 @@ class Repository private constructor(application: Application) {
      * [RoutineDao]
      */
 
-    fun insert(routine: Routine): Long = runBlocking { routineDao.insert(routine) }
-    fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
+    fun insert(routine: Routine): Long = runBlocking {
+        withContext(IO) {
+            routineDao.insert(routine)
+        }
+    }
+
+    fun delete(routine: Routine) = runBlocking {
+        withContext(IO) {
+            routineDao.delete(routine)
+        }
+    }
 
 
     /**
@@ -63,10 +72,12 @@ class Repository private constructor(application: Application) {
      */
 
     fun getRweById(routineId: Int): Rwe? = runBlocking {
-        rweDao.getRweById(routineId)
+        withContext(IO) {
+            rweDao.getRweById(routineId)
+        }
     }
 
-    fun assignEW(routineId: Int, exerciseWrapperId: Int) {
+    fun assignEW(routineId: Int, exerciseWrapperId: Int) = runBlocking {
         CoroutineScope(IO).launch {
             rweDao.assignEW(routineId, exerciseWrapperId)
         }
@@ -76,20 +87,38 @@ class Repository private constructor(application: Application) {
      * [ExerciseDao]
      */
 
-    fun insert(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.insert(exercise) }
-    fun delete(exercise: Exercise) = CoroutineScope(IO).launch { exerciseDao.delete(exercise) }
-    fun getExerciseById(id: Int): Exercise? = runBlocking { exerciseDao.getExerciseById(id) }
+    fun insert(exercise: Exercise) = runBlocking {
+        withContext(IO) {
+            exerciseDao.insert(exercise)
+        }
+    }
+
+    fun delete(exercise: Exercise) = runBlocking {
+        withContext(IO) {
+            exerciseDao.delete(exercise)
+        }
+    }
+
+    fun getExerciseById(id: Int): Exercise? = runBlocking {
+        withContext(IO) {
+            exerciseDao.getExerciseById(id)
+        }
+    }
 
     /**
      * [ExerciseWrapperDao]
      */
 
     fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
-        exerciseWrapperDao.insert(exerciseWrapper)
+        withContext(IO) {
+            exerciseWrapperDao.insert(exerciseWrapper)
+        }
     }
 
-    fun delete(exerciseWrapper: ExerciseWrapper) {
-        CoroutineScope(IO).launch { exerciseWrapperDao.delete(exerciseWrapper) }
+    fun delete(exerciseWrapper: ExerciseWrapper) = runBlocking {
+        withContext(IO) {
+            exerciseWrapperDao.delete(exerciseWrapper)
+        }
     }
 
     fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
@@ -103,11 +132,15 @@ class Repository private constructor(application: Application) {
      */
 
     fun insert(set: Set): Long = runBlocking {
-        setDao.insert(set)
+        withContext(IO) {
+            setDao.insert(set)
+        }
     }
 
-    fun delete(set: Set) {
-        CoroutineScope(IO).launch { setDao.delete(set) }
+    fun delete(set: Set) = runBlocking {
+        withContext(IO) {
+            setDao.delete(set)
+        }
     }
 
     fun getSetById(id: Int): Set? = runBlocking {
