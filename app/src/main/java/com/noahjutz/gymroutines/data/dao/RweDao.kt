@@ -5,6 +5,9 @@ import androidx.room.*
 import com.noahjutz.gymroutines.data.RoutineExerciseCrossRef
 import com.noahjutz.gymroutines.data.Rwe
 
+@Suppress("unused")
+private const val TAG = "RoutineDao"
+
 @Dao
 abstract class RweDao {
     suspend fun assignEW(routineId: Int, exerciseWrapperId: Int) {
