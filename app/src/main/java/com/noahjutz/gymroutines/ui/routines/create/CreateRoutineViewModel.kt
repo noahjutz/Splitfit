@@ -6,7 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.*
-import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
+import com.noahjutz.gymroutines.data.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -49,7 +49,7 @@ class CreateRoutineViewModel(
 
     /**
      * Initializes [Rwe] Object
-     * Adds [name] and [description] as source
+     * Adds [name] and [description] and [_exercises] as source
      */
     private fun initRwe() {
         _rwe.run {
@@ -90,13 +90,6 @@ class CreateRoutineViewModel(
         save()
     }
 
-    /**
-     * Inserts the [rwe]'s [Routine].
-     * @see insert
-     * Inserts the [rwe]'s [ExerciseWrapper] list to the [AppDatabase] using [ExerciseWrapperDao]
-     * Assigns the [rwe]'s [ExerciseWrapper] list to routines with cross references.
-     * @see assign
-     */
     private fun save() {
         repository.insert(rwe.value!!)
     }
@@ -104,14 +97,6 @@ class CreateRoutineViewModel(
     /**
      * [repository] access functions
      */
-
-    private fun insert(routine: Routine): Long = runBlocking {
-        repository.insert(routine)
-    }
-
-    private fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
-        repository.insert(exerciseWrapper)
-    }
 
     private fun getRweById(rweId: Int): Rwe? = runBlocking {
         repository.getRweById(rweId)
@@ -123,22 +108,9 @@ class CreateRoutineViewModel(
         }
     }
 
-    fun getSetsById(ewId: Int): List<com.noahjutz.gymroutines.data.Set> = runBlocking {
+    fun getSetsById(ewId: Int): List<Set> = runBlocking {
         withContext(IO) {
             repository.getSetsById(ewId)
-        }
-    }
-
-    private fun assign(routineId: Int, exerciseWrapperIds: List<Int>) {
-        for (ewId in exerciseWrapperIds)
-            assign(routineId, ewId)
-    }
-
-    private fun assign(routineId: Int, exerciseWrapperId: Int) {
-        runBlocking {
-            withContext(IO) {
-                repository.assignEW(routineId, exerciseWrapperId)
-            }
         }
     }
 
