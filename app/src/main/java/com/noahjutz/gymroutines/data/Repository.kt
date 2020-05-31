@@ -1,10 +1,7 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
-import com.noahjutz.gymroutines.data.dao.ExerciseDao
-import com.noahjutz.gymroutines.data.dao.ExerciseWrapperDao
-import com.noahjutz.gymroutines.data.dao.RoutineDao
-import com.noahjutz.gymroutines.data.dao.SetDao
+import com.noahjutz.gymroutines.data.dao.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -21,12 +18,13 @@ class Repository private constructor(application: Application) {
     private val routineDao = database.routineDao
     private val exerciseWrapperDao = database.exerciseWrapperDao
     private val setDao = database.setDao
+    private val rweDao = database.rweDao
 
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
     val exerciseWrappers = exerciseWrapperDao.getExerciseWrappers()
     val sets = setDao.getSets()
-    val routinesWithExercises = routineDao.getRoutinesWithExercises()
+    val routinesWithExercises = rweDao.getRoutinesWithExercises()
 
     companion object {
         @Volatile
@@ -45,13 +43,18 @@ class Repository private constructor(application: Application) {
     fun insert(routine: Routine): Long = runBlocking { routineDao.insert(routine) }
     fun delete(routine: Routine) = CoroutineScope(IO).launch { routineDao.delete(routine) }
 
+
+    /**
+     * [RweDao]
+     */
+
     fun getRweById(routineId: Int): Rwe? = runBlocking {
-        routineDao.getRweById(routineId)
+        rweDao.getRweById(routineId)
     }
 
     fun assignEW(routineId: Int, exerciseWrapperId: Int) {
         CoroutineScope(IO).launch {
-            routineDao.assignEW(routineId, exerciseWrapperId)
+            rweDao.assignEW(routineId, exerciseWrapperId)
         }
     }
 
