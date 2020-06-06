@@ -1,9 +1,7 @@
 package com.noahjutz.gymroutines.data.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.noahjutz.gymroutines.data.*
 import com.noahjutz.gymroutines.data.Set
 
@@ -30,6 +28,9 @@ abstract class RwEwSDao {
         for (ews in rwews.ews)
             delete(ews, rwews.routine.routineId)
     }
+
+    @Query("SELECT * FROM routine_table")
+    abstract suspend fun getRwEwS(): LiveData<List<RwEwS>>
 
     /**
      * [EwS]
