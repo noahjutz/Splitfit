@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.Rwe
+import com.noahjutz.gymroutines.data.RwE
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
@@ -94,12 +94,12 @@ class RoutinesFragment : Fragment() {
         }
 
         val onItemClickListener = object : RweAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(rwe: Rwe) {
+            override fun onRoutineClick(rwe: RwE) {
                 val action = RoutinesFragmentDirections.addRoutine(rwe.routine.routineId)
                 findNavController().navigate(action)
             }
 
-            override fun onRoutineLongClick(rwe: Rwe) {}
+            override fun onRoutineLongClick(rwe: RwE) {}
         }
 
         adapter = RweAdapter(onItemClickListener)

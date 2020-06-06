@@ -30,7 +30,7 @@ data class RoutineExerciseCrossRef(
 /**
  * [Routine] with [ExerciseWrapper]s
  */
-data class Rwe(
+data class RwE(
     @Embedded val routine: Routine,
     @Relation(
         parentColumn = "routineId",
@@ -59,7 +59,7 @@ data class Set(
 /**
  * [ExerciseWrapper] with [Set]s
  */
-data class Ews(
+data class EwS(
     @Embedded val exerciseWrapper: ExerciseWrapper,
     @Relation(
         entity = Set::class,
@@ -69,7 +69,10 @@ data class Ews(
     val sets: List<Set>
 )
 
-data class RwEws(
+/**
+ * [Routine] with [EwS]s
+ */
+data class RwEwS(
     @Embedded val routine: Routine,
     @Relation(
         parentColumn = "routineId",

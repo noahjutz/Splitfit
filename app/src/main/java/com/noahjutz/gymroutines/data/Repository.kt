@@ -40,7 +40,7 @@ class Repository private constructor(application: Application) {
      * Utility functions
      */
 
-    fun insert(rwe: Rwe) {
+    fun insert(rwe: RwE) {
         val routineId = insert(rwe.routine).toInt()
         for (ewId in rwe.exerciseWrappers.map { it.exerciseWrapperId })
             assignEW(routineId, ewId)
@@ -71,7 +71,7 @@ class Repository private constructor(application: Application) {
      * [RweDao]
      */
 
-    fun getRweById(routineId: Int): Rwe? = runBlocking {
+    fun getRweById(routineId: Int): RwE? = runBlocking {
         withContext(IO) {
             rweDao.getRweById(routineId)
         }

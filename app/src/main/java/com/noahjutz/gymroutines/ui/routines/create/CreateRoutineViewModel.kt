@@ -19,12 +19,12 @@ class CreateRoutineViewModel(
     private var routineId: Int
 ) : ViewModel() {
     /**
-     * The [Rwe] object that is being created/edited
+     * The [RwE] object that is being created/edited
      * @see initRwe
      * @see save
      */
-    private val _rwe = MediatorLiveData<Rwe>()
-    val rwe: LiveData<Rwe>
+    private val _rwe = MediatorLiveData<RwE>()
+    val rwe: LiveData<RwE>
         get() = _rwe
 
     /**
@@ -48,13 +48,13 @@ class CreateRoutineViewModel(
     }
 
     /**
-     * Initializes [Rwe] Object
+     * Initializes [RwE] Object
      * Adds [name] and [description] and [_exercises] as source
      */
     private fun initRwe() {
         _rwe.run {
             value = getRweById(routineId)
-                ?: Rwe(
+                ?: RwE(
                     Routine(""),
                     listOf()
                 )
@@ -74,7 +74,7 @@ class CreateRoutineViewModel(
             }
 
             addSource(_exercises) { exercises ->
-                _rwe.value = Rwe(
+                _rwe.value = RwE(
                     _rwe.value!!.routine,
                     exercises
                 )
@@ -90,7 +90,7 @@ class CreateRoutineViewModel(
      * [repository] access functions
      */
 
-    private fun getRweById(rweId: Int): Rwe? = runBlocking {
+    private fun getRweById(rweId: Int): RwE? = runBlocking {
         repository.getRweById(rweId)
     }
 

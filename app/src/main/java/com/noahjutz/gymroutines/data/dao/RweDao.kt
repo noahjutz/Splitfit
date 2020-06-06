@@ -3,7 +3,7 @@ package com.noahjutz.gymroutines.data.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.RoutineExerciseCrossRef
-import com.noahjutz.gymroutines.data.Rwe
+import com.noahjutz.gymroutines.data.RwE
 
 @Suppress("unused")
 private const val TAG = "RoutineDao"
@@ -23,9 +23,9 @@ abstract class RweDao {
 
     @Transaction
     @Query("SELECT * FROM routine_table")
-    abstract fun getRoutinesWithExercises(): LiveData<List<Rwe>>
+    abstract fun getRoutinesWithExercises(): LiveData<List<RwE>>
 
     @Transaction
     @Query("SELECT * FROM routine_table WHERE routineId == :id")
-    abstract suspend fun getRweById(id: Int): Rwe
+    abstract suspend fun getRweById(id: Int): RwE
 }
