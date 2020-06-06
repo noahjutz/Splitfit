@@ -23,6 +23,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseWrapperDao: ExerciseWrapperDao
     abstract val setDao: SetDao
     abstract val rweDao: RweDao
+    // TODO: Remove all of the above
+    abstract val dao: RwEwSDao
 
     companion object {
         @Volatile

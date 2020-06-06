@@ -19,6 +19,8 @@ class Repository private constructor(application: Application) {
     private val exerciseWrapperDao = database.exerciseWrapperDao
     private val setDao = database.setDao
     private val rweDao = database.rweDao
+    // TODO: Remove all of the above
+    private val dao = database.dao
 
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
