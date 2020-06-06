@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.data.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import com.noahjutz.gymroutines.data.*
@@ -26,6 +27,12 @@ abstract class RwEwSDao {
             insert(ews, rwews.routine.routineId)
     }
 
+    suspend fun delete(rwews: RwEwS) {
+        delete(rwews.routine)
+        for (ews in rwews.ews)
+            delete(ews, rwews.routine.routineId)
+    }
+
     /**
      * [EwS]
      */
@@ -46,12 +53,22 @@ abstract class RwEwSDao {
         }
     }
 
+    suspend fun delete(ews: EwS, routineId: Int) {
+        delete(ews.exerciseWrapper)
+        delete(RoutineExerciseCrossRef(routineId, ews.exerciseWrapper.exerciseWrapperId))
+        for (set in ews.sets)
+            delete(set)
+    }
+
     /**
      * [ExerciseWrapper]
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(exerciseWrapper: ExerciseWrapper)
+
+    @Delete
+    abstract suspend fun delete(exerciseWrapper: ExerciseWrapper)
 
     /**
      * [Routine]
@@ -60,6 +77,9 @@ abstract class RwEwSDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(routine: Routine)
 
+    @Delete
+    abstract suspend fun delete(routine: Routine)
+
     /**
      * [RoutineExerciseCrossRef]
      */
@@ -67,12 +87,18 @@ abstract class RwEwSDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef)
 
+    @Delete
+    abstract suspend fun delete(routineExerciseCrossRef: RoutineExerciseCrossRef)
+
     /**
      * [Set]
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(set: Set)
+
+    @Delete
+    abstract suspend fun delete(set: Set)
 
     /**
      * [Exercise]
