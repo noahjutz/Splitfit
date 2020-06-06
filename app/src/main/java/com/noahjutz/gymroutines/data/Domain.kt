@@ -68,3 +68,13 @@ data class Ews(
     )
     val sets: List<Set>
 )
+
+data class RwEws(
+    @Embedded val routine: Routine,
+    @Relation(
+        parentColumn = "routineId",
+        entityColumn = "exerciseWrapperId",
+        associateBy = Junction(RoutineExerciseCrossRef::class)
+    )
+    val exerciseWrappers: List<ExerciseWrapper>
+)
