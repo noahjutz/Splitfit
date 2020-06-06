@@ -22,20 +22,27 @@ abstract class RwEwSDao {
         // Insert the [Routine]
         insert(rwews.routine)
 
-        for (ews in rwews.ews) {
-            // Insert the [ExerciseWrapper]s
-            insert(ews.exerciseWrapper)
-            // Insert the [RoutineExerciseCrossRef]s
-            insert(
-                RoutineExerciseCrossRef(
-                    rwews.routine.routineId,
-                    ews.exerciseWrapper.exerciseWrapperId
-                )
+        for (ews in rwews.ews)
+            insert(ews, rwews.routine.routineId)
+    }
+
+    /**
+     * [EwS]
+     */
+
+    suspend fun insert(ews: EwS, routineId: Int) {
+        // Insert the [ExerciseWrapper]s
+        insert(ews.exerciseWrapper)
+        // Insert the [RoutineExerciseCrossRef]s
+        insert(
+            RoutineExerciseCrossRef(
+                routineId,
+                ews.exerciseWrapper.exerciseWrapperId
             )
-            // Insert the [Set]s
-            for (set in ews.sets) {
-                insert(Set(ews.exerciseWrapper.exerciseWrapperId))
-            }
+        )
+        // Insert the [Set]s
+        for (set in ews.sets) {
+            insert(Set(ews.exerciseWrapper.exerciseWrapperId))
         }
     }
 
