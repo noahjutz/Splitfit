@@ -27,6 +27,9 @@ data class RoutineExerciseCrossRef(
     val exerciseWrapperId: Int
 )
 
+/**
+ * [Routine] with [ExerciseWrapper]s
+ */
 data class Rwe(
     @Embedded val routine: Routine,
     @Relation(
@@ -51,4 +54,17 @@ data class Set(
 
     @PrimaryKey(autoGenerate = true)
     val setId: Int = 0
+)
+
+/**
+ * [ExerciseWrapper] with [Set]s
+ */
+data class Ews(
+    @Embedded val exerciseWrapper: ExerciseWrapper,
+    @Relation(
+        entity = Set::class,
+        parentColumn = "exerciseWrapperId",
+        entityColumn = "exerciseWrapperId"
+    )
+    val sets: List<Set>
 )
