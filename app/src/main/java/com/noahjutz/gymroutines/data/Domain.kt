@@ -79,5 +79,5 @@ data class RwEwS(
         entityColumn = "exerciseWrapperId",
         associateBy = Junction(RoutineExerciseCrossRef::class)
     )
-    val exerciseWrappers: List<ExerciseWrapper>
+    val ews: List<EwS>
 )
