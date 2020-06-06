@@ -94,5 +94,9 @@ abstract class RwEwSDao {
      * [Exercise]
      */
 
-    // TODO: Migrate from [ExerciseDao] here.
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insert(exercise: Exercise)
+
+    @Delete
+    abstract suspend fun delete(exercise: Exercise)
 }
