@@ -9,8 +9,15 @@ import com.noahjutz.gymroutines.data.Set
 @Suppress("unused")
 private const val TAG = "RwEwSDao"
 
+/**
+ * A [Dao] for the following domain model objects:
+ * [RwEwS] [RwE] [EwS] [Routine] [Exercise] [ExerciseWrapper] [Set]
+ */
 @Dao
 abstract class RwEwSDao {
+    /**
+     * [RwEwS]
+     */
     suspend fun insert(rwews: RwEwS) {
         // Insert the [Routine]
         insert(rwews.routine)
@@ -32,15 +39,37 @@ abstract class RwEwSDao {
         }
     }
 
+    /**
+     * [ExerciseWrapper]
+     */
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(exerciseWrapper: ExerciseWrapper)
+
+    /**
+     * [Routine]
+     */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(routine: Routine)
 
+    /**
+     * [RoutineExerciseCrossRef]
+     */
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef)
 
+    /**
+     * [Set]
+     */
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(set: Set)
+
+    /**
+     * [Exercise]
+     */
+
+    // TODO: Migrate from [ExerciseDao] here.
 }
