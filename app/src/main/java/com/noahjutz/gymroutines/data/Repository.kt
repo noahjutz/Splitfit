@@ -4,6 +4,7 @@ import android.app.Application
 import com.noahjutz.gymroutines.data.dao.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -19,6 +20,7 @@ class Repository private constructor(application: Application) {
     private val exerciseWrapperDao = database.exerciseWrapperDao
     private val setDao = database.setDao
     private val rweDao = database.rweDao
+
     // TODO: Remove all of the above
     private val dao = database.dao
 
@@ -44,7 +46,17 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * Utility functions
+     * [RwEwS]
+     */
+
+    fun insert(rwews: RwEwS) {
+        CoroutineScope(IO).launch {
+            dao.insert(rwews)
+        }
+    }
+
+    /**
+     * [RwE]
      */
 
     fun insert(rwe: RwE) {
@@ -52,10 +64,6 @@ class Repository private constructor(application: Application) {
         for (ewId in rwe.exerciseWrappers.map { it.exerciseWrapperId })
             assignEW(routineId, ewId)
     }
-
-    /**
-     * Direct Dao access functions
-     */
 
     /**
      * [RoutineDao]
