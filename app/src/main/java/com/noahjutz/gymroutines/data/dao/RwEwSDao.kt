@@ -17,6 +17,7 @@ abstract class RwEwSDao {
     /**
      * [RwEwS]
      */
+
     suspend fun insert(rwews: RwEwS) {
         insert(rwews.routine)
         for (ews in rwews.ews)
@@ -29,8 +30,8 @@ abstract class RwEwSDao {
             delete(ews, rwews.routine.routineId)
     }
 
-    @Query("SELECT * FROM routine_table")
-    abstract fun getRwEwS(): LiveData<List<RwEwS>>
+    // @Query("SELECT * FROM routine_table")
+    // abstract suspend fun getRwEwS(): LiveData<List<RwEwS>>
 
     /**
      * [EwS]

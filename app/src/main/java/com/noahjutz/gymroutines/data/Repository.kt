@@ -27,7 +27,7 @@ class Repository private constructor(application: Application) {
 
     val routines = dao.getRoutines()
     val exercises = dao.getExercises()
-    val rwews = dao.getRwEwS()
+    // val rwews = dao.getRwEwS() TODO
 
     companion object {
         @Volatile

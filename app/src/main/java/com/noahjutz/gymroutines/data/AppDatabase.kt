@@ -18,7 +18,6 @@ import com.noahjutz.gymroutines.data.dao.*
     version = 6
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract val exerciseDao: ExerciseDao
     abstract val routineDao: RoutineDao
     abstract val exerciseWrapperDao: ExerciseWrapperDao
     abstract val setDao: SetDao
