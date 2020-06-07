@@ -15,7 +15,6 @@ private const val TAG = "Repository"
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
 
-    private val exerciseDao = database.exerciseDao
     private val routineDao = database.routineDao
     private val exerciseWrapperDao = database.exerciseWrapperDao
     private val setDao = database.setDao
@@ -99,19 +98,19 @@ class Repository private constructor(application: Application) {
 
     fun insert(exercise: Exercise) = runBlocking {
         withContext(IO) {
-            exerciseDao.insert(exercise)
+            dao.insert(exercise)
         }
     }
 
     fun delete(exercise: Exercise) = runBlocking {
         withContext(IO) {
-            exerciseDao.delete(exercise)
+            dao.delete(exercise)
         }
     }
 
-    fun getExerciseById(id: Int): Exercise? = runBlocking {
+    fun getExercise(id: Int): Exercise? = runBlocking {
         withContext(IO) {
-            exerciseDao.getExerciseById(id)
+            dao.getExercise(id)
         }
     }
 

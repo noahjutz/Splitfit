@@ -96,7 +96,7 @@ class CreateRoutineViewModel(
 
     fun getExerciseById(id: Int): Exercise? = runBlocking {
         withContext(IO) {
-            repository.getExerciseById(id)
+            repository.getExercise(id)
         }
     }
 

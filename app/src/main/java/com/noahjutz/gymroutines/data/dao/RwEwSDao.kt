@@ -106,4 +106,7 @@ abstract class RwEwSDao {
 
     @Query("SELECT * FROM exercise_table")
     abstract fun getExercises(): LiveData<List<Exercise>>
+
+    @Query("SELECT * FROM exercise_table WHERE exerciseId == :id")
+    abstract fun getExercise(id: Int): Exercise?
 }

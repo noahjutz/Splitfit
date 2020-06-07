@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.exercises.create
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -82,5 +81,5 @@ class CreateExerciseViewModel(
         repository.insert(exercise)
     }
 
-    private fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExerciseById(id) }
+    private fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExercise(id) }
 }
