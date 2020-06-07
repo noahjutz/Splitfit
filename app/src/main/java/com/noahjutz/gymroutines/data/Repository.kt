@@ -20,16 +20,11 @@ class Repository private constructor(application: Application) {
     private val exerciseWrapperDao = database.exerciseWrapperDao
     private val setDao = database.setDao
     private val rweDao = database.rweDao
-
     // TODO: Remove all of the above
+
     private val dao = database.dao
 
-    // val routines = routineDao.getRoutines()
-    // val exercises = exerciseDao.getExercises()
-    val exerciseWrappers = exerciseWrapperDao.getExerciseWrappers()
-    val sets = setDao.getSets()
-    val routinesWithExercises = rweDao.getRoutinesWithExercises()
-    // TODO: Remove the above
+    val routinesWithExercises = rweDao.getRoutinesWithExercises() // TODO: Remove
 
     val routines = dao.getRoutines()
     val exercises = dao.getExercises()
@@ -66,7 +61,7 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * [RoutineDao]
+     * [Routine]
      */
 
     fun insert(routine: Routine): Long = runBlocking {
@@ -83,7 +78,7 @@ class Repository private constructor(application: Application) {
 
 
     /**
-     * [RweDao]
+     * [RwE]
      */
 
     fun getRweById(routineId: Int): RwE? = runBlocking {
@@ -99,7 +94,7 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * [ExerciseDao]
+     * [Exercise]
      */
 
     fun insert(exercise: Exercise) = runBlocking {
@@ -121,7 +116,7 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * [ExerciseWrapperDao]
+     * [ExerciseWrapper]
      */
 
     fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
@@ -143,7 +138,7 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * [SetDao]
+     * [Set]
      */
 
     fun insert(set: Set): Long = runBlocking {
