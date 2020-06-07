@@ -30,7 +30,7 @@ abstract class RwEwSDao {
     }
 
     @Query("SELECT * FROM routine_table")
-    abstract suspend fun getRwEwS(): LiveData<List<RwEwS>>
+    abstract fun getRwEwS(): LiveData<List<RwEwS>>
 
     /**
      * [EwS]
@@ -71,6 +71,9 @@ abstract class RwEwSDao {
     @Delete
     abstract suspend fun delete(routine: Routine)
 
+    @Query("SELECT * FROM routine_table")
+    abstract fun getRoutines(): LiveData<List<Routine>>
+
     /**
      * [RoutineExerciseCrossRef]
      */
@@ -100,4 +103,7 @@ abstract class RwEwSDao {
 
     @Delete
     abstract suspend fun delete(exercise: Exercise)
+
+    @Query("SELECT * FROM exercise_table")
+    abstract fun getExercises(): LiveData<List<Exercise>>
 }

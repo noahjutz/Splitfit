@@ -22,11 +22,16 @@ class Repository private constructor(application: Application) {
     // TODO: Remove all of the above
     private val dao = database.dao
 
-    val routines = routineDao.getRoutines()
-    val exercises = exerciseDao.getExercises()
+    // val routines = routineDao.getRoutines()
+    // val exercises = exerciseDao.getExercises()
     val exerciseWrappers = exerciseWrapperDao.getExerciseWrappers()
     val sets = setDao.getSets()
     val routinesWithExercises = rweDao.getRoutinesWithExercises()
+    // TODO: Remove the above
+
+    val routines = dao.getRoutines()
+    val exercises = dao.getExercises()
+    val rwews = dao.getRwEwS()
 
     companion object {
         @Volatile
