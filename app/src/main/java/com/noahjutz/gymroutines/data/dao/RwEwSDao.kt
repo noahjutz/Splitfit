@@ -27,6 +27,14 @@ abstract class RwEwSDao {
         }
     }
 
+    @Transaction
+    @Query("SELECT * FROM routine_table")
+    abstract fun getRwEs(): LiveData<List<RwE>>
+
+    @Transaction
+    @Query("SELECT * FROM routine_table WHERE routineId == :id")
+    abstract suspend fun getRwEById(id: Int): RwE
+
     /**
      * [RwEwS]
      */
