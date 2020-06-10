@@ -13,7 +13,7 @@ private const val TAG = "RwEwSDao"
  * [RwEwS] [RwE] [EwS] [Routine] [Exercise] [ExerciseWrapper] [Set]
  */
 @Dao
-abstract class RwEwSDao {
+abstract class MainDao {
 
     /**
      * [RwE]
