@@ -10,11 +10,6 @@ private const val TAG = "Repository"
 
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
-
-    private val exerciseWrapperDao = database.exerciseWrapperDao
-    private val setDao = database.setDao
-    // TODO: Remove all of the above
-
     private val dao = database.dao
 
     val rwes = dao.getRwEs()
@@ -118,7 +113,7 @@ class Repository private constructor(application: Application) {
 
     fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
         withContext(IO) {
-            exerciseWrapperDao.getExerciseWrapperById(id)
+            dao.getExerciseWrapperById(id)
         }
     }
 
@@ -140,13 +135,13 @@ class Repository private constructor(application: Application) {
 
     fun getSetById(id: Int): Set? = runBlocking {
         withContext(IO) {
-            setDao.getSetById(id)
+            dao.getSetById(id)
         }
     }
 
     fun getSetsById(ewId: Int) = runBlocking {
         withContext(IO) {
-            setDao.getSetsById(ewId)
+            dao.getSetsById(ewId)
         }
     }
 

@@ -83,6 +83,9 @@ abstract class RwEwSDao {
     @Delete
     abstract suspend fun delete(exerciseWrapper: ExerciseWrapper)
 
+    @Query("SELECT * FROM exercise_wrapper_table WHERE exerciseWrapperId == :id")
+    abstract suspend fun getExerciseWrapperById(id: Int): ExerciseWrapper
+
     /**
      * [Routine]
      */
@@ -115,6 +118,12 @@ abstract class RwEwSDao {
 
     @Delete
     abstract suspend fun delete(set: Set)
+
+    @Query("SELECT * FROM set_table WHERE setId == :id")
+    abstract suspend fun getSetById(id: Int): Set
+
+    @Query("SELECT * FROM set_table WHERE exerciseWrapperId == :id")
+    abstract suspend fun getSetsById(id: Int): List<Set>
 
     /**
      * [Exercise]
