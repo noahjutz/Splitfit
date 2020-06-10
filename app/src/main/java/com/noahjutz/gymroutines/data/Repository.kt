@@ -1,11 +1,7 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
-import com.noahjutz.gymroutines.data.dao.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -15,19 +11,15 @@ private const val TAG = "Repository"
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
 
-    private val routineDao = database.routineDao
     private val exerciseWrapperDao = database.exerciseWrapperDao
     private val setDao = database.setDao
-    private val rweDao = database.rweDao
     // TODO: Remove all of the above
 
     private val dao = database.dao
 
-    val routinesWithExercises = rweDao.getRoutinesWithExercises() // TODO: Remove
-
+    val rwes = dao.getRwEs()
     val routines = dao.getRoutines()
     val exercises = dao.getExercises()
-    // val rwews = dao.getRwEwS() TODO
 
     companion object {
         @Volatile
@@ -43,20 +35,20 @@ class Repository private constructor(application: Application) {
      * [RwEwS]
      */
 
-    fun insert(rwews: RwEwS) {
-        CoroutineScope(IO).launch {
-            dao.insert(rwews)
-        }
-    }
+    // fun insert(rwews: RwEwS) {
+    //     CoroutineScope(IO).launch {
+    //         dao.insert(rwews)
+    //     }
+    // }
 
     /**
      * [RwE]
      */
 
-    fun insert(rwe: RwE) {
-        val routineId = insert(rwe.routine).toInt()
-        for (ewId in rwe.exerciseWrappers.map { it.exerciseWrapperId })
-            assignEW(routineId, ewId)
+    fun insert(rwe: RwE) = runBlocking {
+        withContext(IO) {
+            dao.insert(rwe)
+        }
     }
 
     /**
@@ -65,13 +57,13 @@ class Repository private constructor(application: Application) {
 
     fun insert(routine: Routine): Long = runBlocking {
         withContext(IO) {
-            routineDao.insert(routine)
+            dao.insert(routine)
         }
     }
 
     fun delete(routine: Routine) = runBlocking {
         withContext(IO) {
-            routineDao.delete(routine)
+            dao.delete(routine)
         }
     }
 
@@ -82,13 +74,7 @@ class Repository private constructor(application: Application) {
 
     fun getRweById(routineId: Int): RwE? = runBlocking {
         withContext(IO) {
-            rweDao.getRweById(routineId)
-        }
-    }
-
-    private fun assignEW(routineId: Int, exerciseWrapperId: Int) = runBlocking {
-        CoroutineScope(IO).launch {
-            rweDao.assignEW(routineId, exerciseWrapperId)
+            dao.getRwEById(routineId)
         }
     }
 
@@ -120,13 +106,13 @@ class Repository private constructor(application: Application) {
 
     fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
         withContext(IO) {
-            exerciseWrapperDao.insert(exerciseWrapper)
+            dao.insert(exerciseWrapper)
         }
     }
 
     fun delete(exerciseWrapper: ExerciseWrapper) = runBlocking {
         withContext(IO) {
-            exerciseWrapperDao.delete(exerciseWrapper)
+            dao.delete(exerciseWrapper)
         }
     }
 
@@ -142,13 +128,13 @@ class Repository private constructor(application: Application) {
 
     fun insert(set: Set): Long = runBlocking {
         withContext(IO) {
-            setDao.insert(set)
+            dao.insert(set)
         }
     }
 
     fun delete(set: Set) = runBlocking {
         withContext(IO) {
-            setDao.delete(set)
+            dao.delete(set)
         }
     }
 

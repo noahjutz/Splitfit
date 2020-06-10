@@ -13,7 +13,7 @@ class RoutinesViewModel(
 ) : ViewModel() {
 
     val routinesWithExercises: LiveData<List<RwE>>
-        get() = repository.routinesWithExercises
+        get() = repository.rwes
 
     fun insert(rwe: RwE) {
         repository.insert(rwe.routine)
