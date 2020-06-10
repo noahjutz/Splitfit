@@ -78,7 +78,7 @@ abstract class RwEwSDao {
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(exerciseWrapper: ExerciseWrapper)
+    abstract suspend fun insert(exerciseWrapper: ExerciseWrapper): Long
 
     @Delete
     abstract suspend fun delete(exerciseWrapper: ExerciseWrapper)
@@ -88,7 +88,7 @@ abstract class RwEwSDao {
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(routine: Routine)
+    abstract suspend fun insert(routine: Routine): Long
 
     @Delete
     abstract suspend fun delete(routine: Routine)
@@ -101,7 +101,7 @@ abstract class RwEwSDao {
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef)
+    abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef): Long
 
     @Delete
     abstract suspend fun delete(routineExerciseCrossRef: RoutineExerciseCrossRef)
@@ -111,7 +111,7 @@ abstract class RwEwSDao {
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(set: Set)
+    abstract suspend fun insert(set: Set): Long
 
     @Delete
     abstract suspend fun delete(set: Set)
@@ -121,7 +121,7 @@ abstract class RwEwSDao {
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(exercise: Exercise)
+    abstract suspend fun insert(exercise: Exercise): Long
 
     @Delete
     abstract suspend fun delete(exercise: Exercise)
