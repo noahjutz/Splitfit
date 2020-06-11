@@ -39,39 +39,42 @@ abstract class MainDao {
      * [RwEwS]
      */
 
-    // suspend fun insert(rwews: RwEwS) {
-    //     insert(rwews.routine)
-    //     for (ews in rwews.ews)
-    //         insert(ews, rwews.routine.routineId)
-    // }
+    suspend fun insert(rwews: RwEwS) {
+        insert(rwews.routine)
+        for (ews in rwews.ews)
+            insert(ews, rwews.routine.routineId)
+    }
 
-    // suspend fun delete(rwews: RwEwS) {
-    //     delete(rwews.routine)
-    //     for (ews in rwews.ews)
-    //         delete(ews, rwews.routine.routineId)
-    // }
+    suspend fun delete(rwews: RwEwS) {
+        delete(rwews.routine)
+        for (ews in rwews.ews)
+            delete(ews, rwews.routine.routineId)
+    }
 
-    // @Query("SELECT * FROM routine_table")
-    // abstract suspend fun getRwEwS(): LiveData<List<RwEwS>>
+    // Throws error currently
+    // Because of incorrect setup in [Domain]
+    @Transaction
+    @Query("SELECT * FROM routine_table")
+    abstract fun getRwEwS(): LiveData<List<RwEwS>>
 
     /**
      * [EwS]
      */
 
-    // suspend fun insert(ews: EwS, routineId: Int) {
-    //     insert(ews.exerciseWrapper)
-    //     insert(RoutineExerciseCrossRef(routineId, ews.exerciseWrapper.exerciseWrapperId))
-    //     for (set in ews.sets) {
-    //         insert(Set(ews.exerciseWrapper.exerciseWrapperId))
-    //     }
-    // }
+    private suspend fun insert(ews: EwS, routineId: Int) {
+        insert(ews.exerciseWrapper)
+        insert(RoutineExerciseCrossRef(routineId, ews.exerciseWrapper.exerciseWrapperId))
+        for (set in ews.sets) {
+            insert(Set(ews.exerciseWrapper.exerciseWrapperId))
+        }
+    }
 
-    // suspend fun delete(ews: EwS, routineId: Int) {
-    //     delete(ews.exerciseWrapper)
-    //     delete(RoutineExerciseCrossRef(routineId, ews.exerciseWrapper.exerciseWrapperId))
-    //     for (set in ews.sets)
-    //         delete(set)
-    // }
+    private suspend fun delete(ews: EwS, routineId: Int) {
+        delete(ews.exerciseWrapper)
+        delete(RoutineExerciseCrossRef(routineId, ews.exerciseWrapper.exerciseWrapperId))
+        for (set in ews.sets)
+            delete(set)
+    }
 
     /**
      * [ExerciseWrapper]
