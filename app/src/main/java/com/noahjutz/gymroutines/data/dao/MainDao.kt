@@ -16,9 +16,8 @@ private const val TAG = "RwEwSDao"
 abstract class MainDao {
 
     /**
-     * [RwE]
+     * [RwE] TODO move to LegacyDao
      */
-    // TODO: Remove RwE, replace with RwEwS
 
     suspend fun insert(rwe: RwE) {
         insert(rwe.routine)
@@ -91,7 +90,7 @@ abstract class MainDao {
     // }
 
     /**
-     * [ExerciseWrapper]
+     * [ExerciseWrapper] TODO move to LegacyDao
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -117,7 +116,7 @@ abstract class MainDao {
     abstract fun getRoutines(): LiveData<List<Routine>>
 
     /**
-     * [RoutineExerciseCrossRef]
+     * [RoutineExerciseCrossRef] TODO: Move to LegacyDao
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -125,6 +124,16 @@ abstract class MainDao {
 
     @Delete
     abstract suspend fun delete(routineExerciseCrossRef: RoutineExerciseCrossRef)
+
+    /**
+     * [RoutineAndExercise]
+     */
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insert(routineAndExercise: RoutineAndExercise): Long
+
+    @Delete
+    abstract suspend fun delete(routineAndExercise: RoutineAndExercise)
 
     /**
      * [Set]
