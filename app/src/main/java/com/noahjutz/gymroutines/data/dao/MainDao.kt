@@ -18,6 +18,7 @@ abstract class MainDao {
     /**
      * [RwE]
      */
+    // TODO: Remove RwE, replace with RwEwS
 
     suspend fun insert(rwe: RwE) {
         insert(rwe.routine)

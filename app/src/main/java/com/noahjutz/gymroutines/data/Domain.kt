@@ -21,6 +21,7 @@ data class Exercise(
     val exerciseId: Int = 0
 )
 
+// TODO: Remove RoutineExerciseCrossRef
 @Entity(primaryKeys = ["routineId", "exerciseWrapperId"])
 data class RoutineExerciseCrossRef(
     val routineId: Int,
@@ -30,6 +31,7 @@ data class RoutineExerciseCrossRef(
 /**
  * [Routine] with [ExerciseWrapper]s
  */
+// TODO: Remove RwE and replace it with RwEwS
 data class RwE(
     @Embedded val routine: Routine,
     @Relation(
@@ -60,6 +62,9 @@ data class Set(
 /**
  * [ExerciseWrapper] with [Set]s
  */
+// TODO: Add @Embedded val exercise: Exercise instead of exerciseWrapper
+// TODO: Remove the ExerciseWrapper class because EwS replaces it
+// TODO: Create an associative entity between Exercise and Routine (not ExerciseWrapper)
 data class EwS(
     @Embedded val exerciseWrapper: ExerciseWrapper,
     @Relation(

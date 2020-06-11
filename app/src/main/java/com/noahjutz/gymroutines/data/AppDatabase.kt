@@ -10,7 +10,7 @@ import com.noahjutz.gymroutines.data.dao.*
     entities = [
         Exercise::class,
         Routine::class,
-        RoutineExerciseCrossRef::class,
+        RoutineExerciseCrossRef::class, // TODO: replace with Cross ref between Routine and Exercise, not ExerciseWrapper
         ExerciseWrapper::class,
         Set::class
     ],
