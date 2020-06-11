@@ -15,54 +15,48 @@ private const val TAG = "RwEwSDao"
 @Dao
 abstract class MainDao {
 
-    // /**
-    //  * [FullRoutine]
-    //  */
+    /**
+     * [FullRoutine]
+     */
 
-    // suspend fun insert(fullRoutine: FullRoutine) {
-    //     insert(fullRoutine.routine)
-    //     for (ews in fullRoutine.ews)
-    //         insert(ews, fullRoutine.routine.routineId)
-    // }
+    suspend fun insert(fullRoutine: FullRoutine) {
+        insert(fullRoutine.routine)
+        for (ews in fullRoutine.ews)
+            insert(ews, fullRoutine.routine.routineId)
+    }
 
-    // suspend fun delete(fullRoutine: FullRoutine) {
-    //     delete(fullRoutine.routine)
-    //     for (ews in fullRoutine.ews)
-    //         delete(ews, fullRoutine.routine.routineId)
-    // }
+    suspend fun delete(fullRoutine: FullRoutine) {
+        delete(fullRoutine.routine)
+        for (ews in fullRoutine.ews)
+            delete(ews, fullRoutine.routine.routineId)
+    }
 
-    // @Transaction
-    // @Query("SELECT * FROM routine_table")
-    // abstract fun getFullRoutines(): LiveData<List<FullRoutine>>
+    @Transaction
+    @Query("SELECT * FROM routine_table")
+    abstract fun getFullRoutines(): LiveData<List<FullRoutine>>
 
-    // /**
-    //  * [ExerciseImpl]
-    //  */
+    /**
+     * [ExerciseImpl]
+     */
 
-    // private suspend fun insert(exerciseImpl: ExerciseImpl, routineId: Int) {
-    //     insert(exerciseImpl.exercise)
-    //     insert(
-    //         RoutineExerciseCrossRef(
-    //             routineId,
-    //             exerciseImpl.exercise.exerciseWrapperId
-    //         )
-    //     )
-    //     for (set in exerciseImpl.sets) {
-    //         insert(Set(exerciseImpl.exercise.exerciseWrapperId))
-    //     }
-    // }
+    private suspend fun insert(exerciseImpl: ExerciseImpl, routineId: Int) {
+        insert(exerciseImpl.exercise)
+        insert(
+            RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId)
+        )
+        for (set in exerciseImpl.sets) {
+            insert(Set(exerciseImpl.exercise.exerciseId))
+        }
+    }
 
-    // private suspend fun delete(exerciseImpl: ExerciseImpl, routineId: Int) {
-    //     delete(exerciseImpl.exercise)
-    //     delete(
-    //         RoutineExerciseCrossRef(
-    //             routineId,
-    //             exerciseImpl.exercise.exerciseWrapperId
-    //         )
-    //     )
-    //     for (set in exerciseImpl.sets)
-    //         delete(set)
-    // }
+    private suspend fun delete(exerciseImpl: ExerciseImpl, routineId: Int) {
+        delete(exerciseImpl.exercise)
+        delete(
+            RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId)
+        )
+        for (set in exerciseImpl.sets)
+            delete(set)
+    }
 
     /**
      * [Routine]
