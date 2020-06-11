@@ -2,33 +2,6 @@ package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.*
 
-@Entity(tableName = "routine_table")
-data class Routine(
-    var name: String,
-    var description: String = "",
-
-    @PrimaryKey(autoGenerate = true)
-    val routineId: Int = 0
-)
-
-@Entity(tableName = "exercise_table")
-data class Exercise(
-    var name: String,
-    var description: String = "",
-    var hidden: Boolean = false,
-
-    @PrimaryKey(autoGenerate = true)
-    val exerciseId: Int = 0
-)
-
-@Entity(tableName = "set_table")
-data class Set(
-    val exerciseWrapperId: Int,
-
-    @PrimaryKey(autoGenerate = true)
-    val setId: Int = 0
-)
-
 /**
  * [ExerciseWrapper] with [Set]s
  */
