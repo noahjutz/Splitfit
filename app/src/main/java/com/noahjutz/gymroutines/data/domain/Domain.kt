@@ -2,11 +2,11 @@ package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.*
 
-// @Entity(tableName = "routine_and_exercise", primaryKeys = ["routineId", "exerciseId"])
-// data class RoutineAndExercise(
-//     val routineId: Int,
-//     val exerciseId: Int
-// )
+@Entity(tableName = "routine_and_exercise", primaryKeys = ["routineId", "exerciseId"])
+data class RoutineAndExercise(
+    val routineId: Int,
+    val exerciseId: Int
+)
 
 /**
  * [ExerciseWrapper] with [Set]s
@@ -29,7 +29,8 @@ data class RwEwS(
     @Relation(
         entity = Exercise::class,
         parentColumn = "routineId",
-        entityColumn = "exerciseId"
+        entityColumn = "exerciseId",
+        associateBy = Junction(RoutineAndExercise::class)
     )
     val ews: List<EwS>
 )
