@@ -5,21 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.noahjutz.gymroutines.data.dao.*
-import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
-import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.data.domain.RoutineExerciseCrossRef
+import com.noahjutz.gymroutines.data.domain.*
 import com.noahjutz.gymroutines.data.domain.Set
 
 @Database(
     entities = [
         Exercise::class,
         Routine::class,
-        RoutineExerciseCrossRef::class, // TODO: replace with Cross ref between Routine and Exercise, not ExerciseWrapper
+        RoutineExerciseCrossRef::class,
+        RoutineAndExercise::class,
         ExerciseWrapper::class,
         Set::class
     ],
-    version = 7
+    version = 8
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val dao: MainDao
