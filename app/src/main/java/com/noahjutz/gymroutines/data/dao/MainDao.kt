@@ -51,8 +51,6 @@ abstract class MainDao {
             delete(ews, rwews.routine.routineId)
     }
 
-    // Throws error currently
-    // Because of incorrect setup in [Domain]
     @Transaction
     @Query("SELECT * FROM routine_table")
     abstract fun getRwEwS(): LiveData<List<RwEwS>>

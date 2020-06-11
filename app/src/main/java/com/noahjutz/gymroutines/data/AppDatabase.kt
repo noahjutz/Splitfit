@@ -14,7 +14,7 @@ import com.noahjutz.gymroutines.data.dao.*
         ExerciseWrapper::class,
         Set::class
     ],
-    version = 6
+    version = 7
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val dao: MainDao

@@ -43,6 +43,7 @@ data class RwE(
 @Entity(tableName = "exercise_wrapper_table")
 data class ExerciseWrapper(
     val exerciseId: Int,
+    val routineId: Int,
 
     @PrimaryKey(autoGenerate = true)
     val exerciseWrapperId: Int = 0
@@ -75,9 +76,9 @@ data class EwS(
 data class RwEwS(
     @Embedded val routine: Routine,
     @Relation(
+        entity = ExerciseWrapper::class,
         parentColumn = "routineId",
-        entityColumn = "exerciseWrapperId",
-        associateBy = Junction(RoutineExerciseCrossRef::class)
+        entityColumn = "exerciseWrapperId"
     )
     val ews: List<EwS>
 )

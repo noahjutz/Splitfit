@@ -135,7 +135,12 @@ class CreateRoutineFragment : Fragment() {
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             val ewList = ArrayList<ExerciseWrapper>()
-            for (e in exercises) ewList.add(ExerciseWrapper(e.exerciseId))
+            for (e in exercises) ewList.add(
+                ExerciseWrapper(
+                    e.exerciseId,
+                    viewModel.rwe.value!!.routine.routineId
+                )
+            )
             viewModel.addEWs(ewList)
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
