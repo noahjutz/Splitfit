@@ -49,19 +49,15 @@ abstract class MainDao {
 
     private suspend fun insert(exerciseImpl: ExerciseImpl, routineId: Int) {
         insert(exerciseImpl.exercise)
-        insert(
-            RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId)
-        )
+        insert(RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId))
         for (set in exerciseImpl.sets) {
-            insert(Set(exerciseImpl.exercise.exerciseId))
+            insert(set)
         }
     }
 
     private suspend fun delete(exerciseImpl: ExerciseImpl, routineId: Int) {
         delete(exerciseImpl.exercise)
-        delete(
-            RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId)
-        )
+        delete(RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId))
         for (set in exerciseImpl.sets)
             delete(set)
     }
