@@ -1,12 +1,11 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
-import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
-import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.data.domain.RwE
+import com.noahjutz.gymroutines.data.domain.*
 import com.noahjutz.gymroutines.data.domain.Set
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -33,14 +32,20 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * [RwEwS]
+     * [FullRoutine]
      */
 
-    // fun insert(rwews: RwEwS) {
-    //     CoroutineScope(IO).launch {
-    //         dao.insert(rwews)
-    //     }
-    // }
+    fun insert(fullRoutine: FullRoutine) = runBlocking {
+        withContext(IO) {
+            dao.insert(fullRoutine)
+        }
+    }
+
+    fun delete(fullRoutine: FullRoutine) = runBlocking {
+        withContext(IO) {
+            dao.delete(fullRoutine)
+        }
+    }
 
     /**
      * [Routine]
