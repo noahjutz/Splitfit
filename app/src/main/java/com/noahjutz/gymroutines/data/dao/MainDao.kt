@@ -15,31 +15,6 @@ private const val TAG = "RwEwSDao"
 @Dao
 abstract class MainDao {
 
-    /**
-     * [RwE] TODO move to LegacyDao
-     */
-
-    suspend fun insert(rwe: RwE) {
-        insert(rwe.routine)
-        for (e in rwe.exerciseWrappers) {
-            insert(e)
-            insert(
-                RoutineExerciseCrossRef(
-                    rwe.routine.routineId,
-                    e.exerciseWrapperId
-                )
-            )
-        }
-    }
-
-    @Transaction
-    @Query("SELECT * FROM routine_table")
-    abstract fun getRwEs(): LiveData<List<RwE>>
-
-    @Transaction
-    @Query("SELECT * FROM routine_table WHERE routineId == :id")
-    abstract suspend fun getRwEById(id: Int): RwE
-
     // /**
     //  * [FullRoutine]
     //  */
@@ -90,19 +65,6 @@ abstract class MainDao {
     // }
 
     /**
-     * [ExerciseWrapper] TODO move to LegacyDao
-     */
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(exerciseWrapper: ExerciseWrapper): Long
-
-    @Delete
-    abstract suspend fun delete(exerciseWrapper: ExerciseWrapper)
-
-    @Query("SELECT * FROM exercise_wrapper_table WHERE exerciseWrapperId == :id")
-    abstract suspend fun getExerciseWrapperById(id: Int): ExerciseWrapper
-
-    /**
      * [Routine]
      */
 
@@ -114,16 +76,6 @@ abstract class MainDao {
 
     @Query("SELECT * FROM routine_table")
     abstract fun getRoutines(): LiveData<List<Routine>>
-
-    /**
-     * [RoutineExerciseCrossRef] TODO: Move to LegacyDao
-     */
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(routineExerciseCrossRef: RoutineExerciseCrossRef): Long
-
-    @Delete
-    abstract suspend fun delete(routineExerciseCrossRef: RoutineExerciseCrossRef)
 
     /**
      * [RoutineAndExercise]
