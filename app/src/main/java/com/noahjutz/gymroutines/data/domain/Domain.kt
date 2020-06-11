@@ -2,6 +2,7 @@ package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.*
 
+// TODO: Add me to the database
 @Entity(tableName = "routine_and_exercise", primaryKeys = ["routineId", "exerciseId"])
 data class RoutineAndExercise(
     val routineId: Int,
