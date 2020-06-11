@@ -2,14 +2,20 @@ package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.*
 
+// @Entity(tableName = "routine_and_exercise", primaryKeys = ["routineId", "exerciseId"])
+// data class RoutineAndExercise(
+//     val routineId: Int,
+//     val exerciseId: Int
+// )
+
 /**
  * [ExerciseWrapper] with [Set]s
  */
 data class EwS(
-    @Embedded val exerciseWrapper: ExerciseWrapper,
+    @Embedded val exercise: Exercise,
     @Relation(
         entity = Set::class,
-        parentColumn = "exerciseWrapperId",
+        parentColumn = "exerciseId",
         entityColumn = "exerciseWrapperId"
     )
     val sets: List<Set>
@@ -21,9 +27,9 @@ data class EwS(
 data class RwEwS(
     @Embedded val routine: Routine,
     @Relation(
-        entity = ExerciseWrapper::class,
+        entity = Exercise::class,
         parentColumn = "routineId",
-        entityColumn = "exerciseWrapperId"
+        entityColumn = "exerciseId"
     )
     val ews: List<EwS>
 )

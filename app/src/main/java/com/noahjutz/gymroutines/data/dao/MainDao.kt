@@ -41,54 +41,54 @@ abstract class MainDao {
     @Query("SELECT * FROM routine_table WHERE routineId == :id")
     abstract suspend fun getRwEById(id: Int): RwE
 
-    /**
-     * [RwEwS]
-     */
+    // /**
+    //  * [RwEwS]
+    //  */
 
-    suspend fun insert(rwews: RwEwS) {
-        insert(rwews.routine)
-        for (ews in rwews.ews)
-            insert(ews, rwews.routine.routineId)
-    }
+    // suspend fun insert(rwews: RwEwS) {
+    //     insert(rwews.routine)
+    //     for (ews in rwews.ews)
+    //         insert(ews, rwews.routine.routineId)
+    // }
 
-    suspend fun delete(rwews: RwEwS) {
-        delete(rwews.routine)
-        for (ews in rwews.ews)
-            delete(ews, rwews.routine.routineId)
-    }
+    // suspend fun delete(rwews: RwEwS) {
+    //     delete(rwews.routine)
+    //     for (ews in rwews.ews)
+    //         delete(ews, rwews.routine.routineId)
+    // }
 
-    @Transaction
-    @Query("SELECT * FROM routine_table")
-    abstract fun getRwEwS(): LiveData<List<RwEwS>>
+    // @Transaction
+    // @Query("SELECT * FROM routine_table")
+    // abstract fun getRwEwS(): LiveData<List<RwEwS>>
 
-    /**
-     * [EwS]
-     */
+    // /**
+    //  * [EwS]
+    //  */
 
-    private suspend fun insert(ews: EwS, routineId: Int) {
-        insert(ews.exerciseWrapper)
-        insert(
-            RoutineExerciseCrossRef(
-                routineId,
-                ews.exerciseWrapper.exerciseWrapperId
-            )
-        )
-        for (set in ews.sets) {
-            insert(Set(ews.exerciseWrapper.exerciseWrapperId))
-        }
-    }
+    // private suspend fun insert(ews: EwS, routineId: Int) {
+    //     insert(ews.exercise)
+    //     insert(
+    //         RoutineExerciseCrossRef(
+    //             routineId,
+    //             ews.exercise.exerciseWrapperId
+    //         )
+    //     )
+    //     for (set in ews.sets) {
+    //         insert(Set(ews.exercise.exerciseWrapperId))
+    //     }
+    // }
 
-    private suspend fun delete(ews: EwS, routineId: Int) {
-        delete(ews.exerciseWrapper)
-        delete(
-            RoutineExerciseCrossRef(
-                routineId,
-                ews.exerciseWrapper.exerciseWrapperId
-            )
-        )
-        for (set in ews.sets)
-            delete(set)
-    }
+    // private suspend fun delete(ews: EwS, routineId: Int) {
+    //     delete(ews.exercise)
+    //     delete(
+    //         RoutineExerciseCrossRef(
+    //             routineId,
+    //             ews.exercise.exerciseWrapperId
+    //         )
+    //     )
+    //     for (set in ews.sets)
+    //         delete(set)
+    // }
 
     /**
      * [ExerciseWrapper]
