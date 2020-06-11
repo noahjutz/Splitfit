@@ -43,16 +43,6 @@ class Repository private constructor(application: Application) {
     // }
 
     /**
-     * [RwE] TODO: Move to bottom
-     */
-
-    fun insert(rwe: RwE) = runBlocking {
-        withContext(IO) {
-            legacyDao.insert(rwe)
-        }
-    }
-
-    /**
      * [Routine]
      */
 
@@ -65,17 +55,6 @@ class Repository private constructor(application: Application) {
     fun delete(routine: Routine) = runBlocking {
         withContext(IO) {
             dao.delete(routine)
-        }
-    }
-
-
-    /**
-     * [RwE] TODO: Move up to other RwE function
-     */
-
-    fun getRweById(routineId: Int): RwE? = runBlocking {
-        withContext(IO) {
-            legacyDao.getRwEById(routineId)
         }
     }
 
@@ -98,28 +77,6 @@ class Repository private constructor(application: Application) {
     fun getExercise(id: Int): Exercise? = runBlocking {
         withContext(IO) {
             dao.getExercise(id)
-        }
-    }
-
-    /**
-     * [ExerciseWrapper] TODO: move to bottom
-     */
-
-    fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
-        withContext(IO) {
-            legacyDao.insert(exerciseWrapper)
-        }
-    }
-
-    fun delete(exerciseWrapper: ExerciseWrapper) = runBlocking {
-        withContext(IO) {
-            legacyDao.delete(exerciseWrapper)
-        }
-    }
-
-    fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
-        withContext(IO) {
-            legacyDao.getExerciseWrapperById(id)
         }
     }
 
@@ -151,4 +108,46 @@ class Repository private constructor(application: Application) {
         }
     }
 
+    /**
+     * Legacy functions
+     */
+
+    /**
+     * [ExerciseWrapper]
+     */
+
+    fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
+        withContext(IO) {
+            legacyDao.insert(exerciseWrapper)
+        }
+    }
+
+    fun delete(exerciseWrapper: ExerciseWrapper) = runBlocking {
+        withContext(IO) {
+            legacyDao.delete(exerciseWrapper)
+        }
+    }
+
+    fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
+        withContext(IO) {
+            legacyDao.getExerciseWrapperById(id)
+        }
+    }
+
+
+    /**
+     * [RwE]
+     */
+
+    fun getRweById(routineId: Int): RwE? = runBlocking {
+        withContext(IO) {
+            legacyDao.getRwEById(routineId)
+        }
+    }
+
+    fun insert(rwe: RwE) = runBlocking {
+        withContext(IO) {
+            legacyDao.insert(rwe)
+        }
+    }
 }
