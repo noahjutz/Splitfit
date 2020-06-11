@@ -16,8 +16,9 @@ private const val TAG = "Repository"
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
     private val dao = database.dao
+    private val legacyDao = database.legacyDao
 
-    val rwes = dao.getRwEs()
+    val rwes = legacyDao.getRwEs()
     val routines = dao.getRoutines()
     val exercises = dao.getExercises()
 
@@ -42,12 +43,12 @@ class Repository private constructor(application: Application) {
     // }
 
     /**
-     * [RwE]
+     * [RwE] TODO: Move to bottom
      */
 
     fun insert(rwe: RwE) = runBlocking {
         withContext(IO) {
-            dao.insert(rwe)
+            legacyDao.insert(rwe)
         }
     }
 
@@ -69,12 +70,12 @@ class Repository private constructor(application: Application) {
 
 
     /**
-     * [RwE]
+     * [RwE] TODO: Move up to other RwE function
      */
 
     fun getRweById(routineId: Int): RwE? = runBlocking {
         withContext(IO) {
-            dao.getRwEById(routineId)
+            legacyDao.getRwEById(routineId)
         }
     }
 
@@ -101,24 +102,24 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * [ExerciseWrapper]
+     * [ExerciseWrapper] TODO: move to bottom
      */
 
     fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
         withContext(IO) {
-            dao.insert(exerciseWrapper)
+            legacyDao.insert(exerciseWrapper)
         }
     }
 
     fun delete(exerciseWrapper: ExerciseWrapper) = runBlocking {
         withContext(IO) {
-            dao.delete(exerciseWrapper)
+            legacyDao.delete(exerciseWrapper)
         }
     }
 
     fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
         withContext(IO) {
-            dao.getExerciseWrapperById(id)
+            legacyDao.getExerciseWrapperById(id)
         }
     }
 

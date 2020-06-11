@@ -21,6 +21,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val dao: MainDao
+    abstract val legacyDao: LegacyDao
 
     companion object {
         @Volatile
