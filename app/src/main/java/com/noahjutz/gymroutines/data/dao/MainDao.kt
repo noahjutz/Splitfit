@@ -10,7 +10,15 @@ private const val TAG = "RwEwSDao"
 
 /**
  * A [Dao] for the following domain model objects:
- * [FullRoutine] [RwE] [ExerciseImpl] [Routine] [Exercise] [ExerciseWrapper] [Set]
+ * - Entities:
+ *   - [Routine]
+ *   - [Exercise]
+ *   - [Set]
+ * - Data classes:
+ *   - [FullRoutine]
+ *   - [ExerciseImpl]
+ * - Associative entities
+ *   - [RoutineAndExercise]
  */
 @Dao
 abstract class MainDao {
