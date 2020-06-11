@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.RwE
+import com.noahjutz.gymroutines.data.domain.RwE
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")

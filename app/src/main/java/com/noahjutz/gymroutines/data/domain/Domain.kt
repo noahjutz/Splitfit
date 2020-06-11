@@ -1,4 +1,4 @@
-package com.noahjutz.gymroutines.data
+package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.*
 

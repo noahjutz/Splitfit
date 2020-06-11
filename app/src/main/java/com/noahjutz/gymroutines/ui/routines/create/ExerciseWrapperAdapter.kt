@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.ExerciseWrapper
+import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*

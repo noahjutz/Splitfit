@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
-import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.Exercise
+import com.noahjutz.gymroutines.data.domain.Exercise
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 @Suppress("unused")

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.noahjutz.gymroutines.data.Exercise
+import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.Repository
 import kotlinx.coroutines.runBlocking
 

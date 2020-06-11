@@ -1,6 +1,11 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
+import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
+import com.noahjutz.gymroutines.data.domain.Routine
+import com.noahjutz.gymroutines.data.domain.RwE
+import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext

@@ -2,8 +2,8 @@ package com.noahjutz.gymroutines.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.noahjutz.gymroutines.data.*
-import com.noahjutz.gymroutines.data.Set
+import com.noahjutz.gymroutines.data.domain.*
+import com.noahjutz.gymroutines.data.domain.Set
 
 @Suppress("unused")
 private const val TAG = "RwEwSDao"
@@ -24,7 +24,12 @@ abstract class MainDao {
         insert(rwe.routine)
         for (e in rwe.exerciseWrappers) {
             insert(e)
-            insert(RoutineExerciseCrossRef(rwe.routine.routineId, e.exerciseWrapperId))
+            insert(
+                RoutineExerciseCrossRef(
+                    rwe.routine.routineId,
+                    e.exerciseWrapperId
+                )
+            )
         }
     }
 
@@ -62,7 +67,12 @@ abstract class MainDao {
 
     private suspend fun insert(ews: EwS, routineId: Int) {
         insert(ews.exerciseWrapper)
-        insert(RoutineExerciseCrossRef(routineId, ews.exerciseWrapper.exerciseWrapperId))
+        insert(
+            RoutineExerciseCrossRef(
+                routineId,
+                ews.exerciseWrapper.exerciseWrapperId
+            )
+        )
         for (set in ews.sets) {
             insert(Set(ews.exerciseWrapper.exerciseWrapperId))
         }
@@ -70,7 +80,12 @@ abstract class MainDao {
 
     private suspend fun delete(ews: EwS, routineId: Int) {
         delete(ews.exerciseWrapper)
-        delete(RoutineExerciseCrossRef(routineId, ews.exerciseWrapper.exerciseWrapperId))
+        delete(
+            RoutineExerciseCrossRef(
+                routineId,
+                ews.exerciseWrapper.exerciseWrapperId
+            )
+        )
         for (set in ews.sets)
             delete(set)
     }

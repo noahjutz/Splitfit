@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.util.ViewModelFactory
-import com.noahjutz.gymroutines.data.Exercise
+import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*

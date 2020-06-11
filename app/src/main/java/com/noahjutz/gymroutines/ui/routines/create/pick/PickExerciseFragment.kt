@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.Exercise
+import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentPickExerciseBinding
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.util.InjectorUtils

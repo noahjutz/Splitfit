@@ -3,7 +3,7 @@ package com.noahjutz.gymroutines.ui.routines
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
-import com.noahjutz.gymroutines.data.RwE
+import com.noahjutz.gymroutines.data.domain.RwE
 
 @Suppress("unused")
 private const val TAG = "RoutinesViewModel"

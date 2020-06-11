@@ -6,7 +6,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.*
-import com.noahjutz.gymroutines.data.Set
+import com.noahjutz.gymroutines.data.domain.*
+import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext

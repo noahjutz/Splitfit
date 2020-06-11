@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.ExerciseWrapper
+import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
