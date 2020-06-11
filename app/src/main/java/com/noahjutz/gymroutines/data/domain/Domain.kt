@@ -12,7 +12,7 @@ data class RoutineAndExercise(
 /**
  * [ExerciseWrapper] with [Set]s
  */
-data class EwS(
+data class ExerciseImpl(
     @Embedded val exercise: Exercise,
     @Relation(
         entity = Set::class,
@@ -23,9 +23,9 @@ data class EwS(
 )
 
 /**
- * [Routine] with [EwS]s
+ * [Routine] with [ExerciseImpl]s
  */
-data class RwEwS(
+data class FullRoutine(
     @Embedded val routine: Routine,
     @Relation(
         entity = Exercise::class,
@@ -33,5 +33,5 @@ data class RwEwS(
         entityColumn = "exerciseId",
         associateBy = Junction(RoutineAndExercise::class)
     )
-    val ews: List<EwS>
+    val ews: List<ExerciseImpl>
 )

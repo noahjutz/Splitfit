@@ -10,7 +10,7 @@ private const val TAG = "RwEwSDao"
 
 /**
  * A [Dao] for the following domain model objects:
- * [RwEwS] [RwE] [EwS] [Routine] [Exercise] [ExerciseWrapper] [Set]
+ * [FullRoutine] [RwE] [ExerciseImpl] [Routine] [Exercise] [ExerciseWrapper] [Set]
  */
 @Dao
 abstract class MainDao {
@@ -42,16 +42,16 @@ abstract class MainDao {
     abstract suspend fun getRwEById(id: Int): RwE
 
     // /**
-    //  * [RwEwS]
+    //  * [FullRoutine]
     //  */
 
-    // suspend fun insert(rwews: RwEwS) {
+    // suspend fun insert(rwews: FullRoutine) {
     //     insert(rwews.routine)
     //     for (ews in rwews.ews)
     //         insert(ews, rwews.routine.routineId)
     // }
 
-    // suspend fun delete(rwews: RwEwS) {
+    // suspend fun delete(rwews: FullRoutine) {
     //     delete(rwews.routine)
     //     for (ews in rwews.ews)
     //         delete(ews, rwews.routine.routineId)
@@ -59,13 +59,13 @@ abstract class MainDao {
 
     // @Transaction
     // @Query("SELECT * FROM routine_table")
-    // abstract fun getRwEwS(): LiveData<List<RwEwS>>
+    // abstract fun getRwEwS(): LiveData<List<FullRoutine>>
 
     // /**
-    //  * [EwS]
+    //  * [ExerciseImpl]
     //  */
 
-    // private suspend fun insert(ews: EwS, routineId: Int) {
+    // private suspend fun insert(ews: ExerciseImpl, routineId: Int) {
     //     insert(ews.exercise)
     //     insert(
     //         RoutineExerciseCrossRef(
@@ -78,7 +78,7 @@ abstract class MainDao {
     //     }
     // }
 
-    // private suspend fun delete(ews: EwS, routineId: Int) {
+    // private suspend fun delete(ews: ExerciseImpl, routineId: Int) {
     //     delete(ews.exercise)
     //     delete(
     //         RoutineExerciseCrossRef(
