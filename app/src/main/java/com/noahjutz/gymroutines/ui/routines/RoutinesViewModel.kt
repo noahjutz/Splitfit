@@ -25,15 +25,15 @@ class RoutinesViewModel(
     }
 
     // Legacy
-    // TODO: Remove vvv
-    val routinesWithExercises: LiveData<List<RwE>>
-        get() = repository.rwes
+    // TODO: Remove vvv DONE
+    // val routinesWithExercises: LiveData<List<RwE>>
+    //     get() = repository.rwes
 
-    fun insert(rwe: RwE) {
-        repository.insert(rwe.routine)
-    }
+    // fun insert(rwe: RwE) {
+    //     repository.insert(rwe.routine)
+    // }
 
-    fun delete(rwe: RwE) {
-        repository.delete(rwe.routine)
-    }
+    // fun delete(rwe: RwE) {
+    //     repository.delete(rwe.routine)
+    // }
 }

@@ -11,7 +11,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.RwE
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
-// TODO: Replace with [RoutineAdapter]
+// TODO: Replace with [RoutineAdapter] DONE
 
 @Suppress("unused")
 private const val TAG = "RweAdapter"
