@@ -56,7 +56,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/any_margin_default"
-                    android:layout_marginTop="@dimen/any_margin_default"
                     android:layout_marginEnd="@dimen/any_margin_default"
                     app:startIconDrawable="@drawable/ic_short_text">
 
