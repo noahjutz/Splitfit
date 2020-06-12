@@ -18,16 +18,6 @@ import java.lang.NullPointerException
 @Suppress("unused")
 private const val TAG = "ExerciseAdapter"
 
-private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
-    override fun areItemsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
-        return oldItem.exerciseId == newItem.exerciseId
-    }
-
-    override fun areContentsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
-        return oldItem == newItem
-    }
-}
-
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener,
     private val viewModel: CreateRoutineViewModel
@@ -78,5 +68,15 @@ class ExerciseAdapter(
     interface OnExerciseClickListener {
         fun onExerciseClick(exerciseWrapper: ExerciseWrapper)
         fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper)
+    }
+}
+
+private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
+    override fun areItemsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
+        return oldItem.exerciseId == newItem.exerciseId
+    }
+
+    override fun areContentsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
+        return oldItem == newItem
     }
 }
