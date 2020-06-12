@@ -10,20 +10,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*
-import java.lang.NullPointerException
 
 @Suppress("unused")
 private const val TAG = "ExerciseAdapter"
 
 class ExerciseAdapter(
-    private val onExerciseClickListener: OnExerciseClickListener,
-    private val viewModel: CreateRoutineViewModel
-) : ListAdapter<ExerciseWrapper, ExerciseAdapter.ExerciseHolder>(diffUtil) {
-    fun getExerciseWrapperAt(pos: Int): ExerciseWrapper = getItem(pos)
+    private val onExerciseClickListener: OnExerciseClickListener
+) : ListAdapter<Exercise, ExerciseAdapter.ExerciseHolder>(diffUtil) {
+    fun getExercise(pos: Int): Exercise = getItem(pos)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
@@ -46,13 +43,7 @@ class ExerciseAdapter(
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        val exerciseId = getItem(position).exerciseId
-        val ewId = getItem(position).exerciseWrapperId
-        val exercise = viewModel.getExerciseById(exerciseId)
-            ?: throw NullPointerException("ExerciseWrapper linked to Exercise that doesn't exist")
-
-        val setList = viewModel.getSetsById(ewId)
-        Log.d(TAG, "ewId: $ewId, sets: $setList")
+        val exercise = getItem(position)
 
         holder.itemView.apply {
             name.text = exercise.name
@@ -61,14 +52,15 @@ class ExerciseAdapter(
             if (exercise.description.trim().isEmpty())
                 description.visibility = GONE
 
-            val exerciseWrapperId = getItem(position).exerciseWrapperId
-            button_add_set.setOnClickListener { viewModel.addSet(exerciseWrapperId) }
+            button_add_set.setOnClickListener {
+                Log.d(TAG, "add set button clicked.")
+            }
         }
     }
 
     interface OnExerciseClickListener {
-        fun onExerciseClick(exerciseWrapper: ExerciseWrapper)
-        fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper)
+        fun onExerciseClick(exercise: Exercise)
+        fun onExerciseLongClick(exercise: Exercise)
     }
 }
 
