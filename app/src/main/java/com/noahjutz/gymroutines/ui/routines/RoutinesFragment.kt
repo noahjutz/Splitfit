@@ -133,6 +133,10 @@ class RoutinesFragment : Fragment() {
         viewModel.routinesWithExercises.observe(viewLifecycleOwner, Observer { rwe ->
             adapterLegacy.submitList(rwe)
         })
+        // TODO: Replace ^ with v
+        viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
+            adapter.submitList(fullRoutines)
+        })
     }
 
     fun addRoutine() {
