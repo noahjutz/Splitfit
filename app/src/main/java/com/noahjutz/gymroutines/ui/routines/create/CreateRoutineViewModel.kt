@@ -8,7 +8,10 @@ import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.*
 import com.noahjutz.gymroutines.data.domain.Set
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.lang.NullPointerException
@@ -178,6 +181,14 @@ class CreateRoutineViewModel(
         val ew = repository.getExerciseWrapperById(id)
         _exercisesLegacy.value = _exercisesLegacy.value!!.apply { add(ew!!) }
     }
+    // TODO: Replace ^ with v
+    // fun addExercise(exerciseImpl: ExerciseImpl) {
+    //     _exercises.value = _exercises.value!!.apply { add(exerciseImpl) }
+    // }
+    //
+    // fun removeExercise(exerciseImpl: ExerciseImpl) {
+    //     _exercises.value = _exercises.value!!.apply { remove(exerciseImpl) }
+    // }
 
     /**
      * @param ewId: [ExerciseWrapper] id to assign the set to
