@@ -136,6 +136,7 @@ class CreateRoutineFragment : Fragment() {
                         viewModel.addExercise(exercise)
                         adapter.notifyItemInserted(adapter.itemCount)
                     }
+                    .show()
             }
         }
 
