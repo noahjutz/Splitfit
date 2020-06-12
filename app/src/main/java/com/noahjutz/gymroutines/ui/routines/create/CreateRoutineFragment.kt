@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
@@ -80,37 +81,7 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val itemTouchHelperCallbackLegacy = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val exerciseWrapper = adapterLegacy.getExerciseWrapperAt(viewHolder.adapterPosition)
-                val exercise = viewModel.getExerciseById(exerciseWrapper.exerciseId)
-                viewModel.removeEW(exerciseWrapper)
-                adapterLegacy.notifyItemRemoved(viewHolder.adapterPosition)
-                Snackbar.make(
-                    recycler_view,
-                    "Deleted ${exercise?.name}",
-                    Snackbar.LENGTH_SHORT
-                )
-                    .setAction("Undo") {
-                        viewModel.addEW(exerciseWrapper)
-                        adapterLegacy.notifyItemInserted(adapterLegacy.itemCount)
-                    }
-                    .show()
-            }
-        }
-        // TODO: Replace ^ with v
-        // val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+        // val itemTouchHelperCallbackLegacy = object : ItemTouchHelper.SimpleCallback(
         //     0,
         //     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         // ) {
@@ -123,76 +94,108 @@ class CreateRoutineFragment : Fragment() {
         //     }
 
         //     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        //         val exercise = adapter.getExercise(viewHolder.adapterPosition)
-        //         viewModel.removeExercise(exercise)
-        //         adapter.notifyItemRemoved(viewHolder.adapterPosition)
+        //         val exerciseWrapper = adapterLegacy.getExerciseWrapperAt(viewHolder.adapterPosition)
+        //         val exercise = viewModel.getExerciseById(exerciseWrapper.exerciseId)
+        //         viewModel.removeEW(exerciseWrapper)
+        //         adapterLegacy.notifyItemRemoved(viewHolder.adapterPosition)
         //         Snackbar.make(
         //             recycler_view,
-        //             "Deleted ${exercise.exercise.name}",
+        //             "Deleted ${exercise?.name}",
         //             Snackbar.LENGTH_SHORT
         //         )
         //             .setAction("Undo") {
-        //                 viewModel.addExercise(exercise)
-        //                 adapter.notifyItemInserted(adapter.itemCount)
+        //                 viewModel.addEW(exerciseWrapper)
+        //                 adapterLegacy.notifyItemInserted(adapterLegacy.itemCount)
         //             }
+        //             .show()
         //     }
         // }
+        // TODO: Replace ^ with v DONE
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
 
-        val onItemClickListenerLegacy = object : ExerciseWrapperAdapter.OnExerciseClickListener {
-            override fun onExerciseClick(exerciseWrapper: ExerciseWrapper) {}
-            override fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper) {}
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val exercise = adapter.getExercise(viewHolder.adapterPosition)
+                viewModel.removeExercise(exercise)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                Snackbar.make(
+                    recycler_view,
+                    "Deleted ${exercise.exercise.name}",
+                    Snackbar.LENGTH_SHORT
+                )
+                    .setAction("Undo") {
+                        viewModel.addExercise(exercise)
+                        adapter.notifyItemInserted(adapter.itemCount)
+                    }
+            }
         }
-        // TODO: Replace ^ with v
-        // val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
-        //     override fun onExerciseClick(exercise: ExerciseImpl) {}
-        //     override fun onExerciseLongClick(exercise: ExerciseImpl) {}
-        // }
 
-        adapterLegacy = ExerciseWrapperAdapter(onItemClickListenerLegacy, viewModel)
-        // TODO: Replace ^ with v
-        // adapter = ExerciseAdapter(onItemClickListener)
+        // val onItemClickListenerLegacy = object : ExerciseWrapperAdapter.OnExerciseClickListener {
+        //     override fun onExerciseClick(exerciseWrapper: ExerciseWrapper) {}
+        //     override fun onExerciseLongClick(exerciseWrapper: ExerciseWrapper) {}
+        // }
+        // TODO: Replace ^ with v DONE
+        val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
+            override fun onExerciseClick(exercise: ExerciseImpl) {}
+            override fun onExerciseLongClick(exercise: ExerciseImpl) {}
+        }
+
+        // adapterLegacy = ExerciseWrapperAdapter(onItemClickListenerLegacy, viewModel)
+        // TODO: Replace ^ with v DONE
+        adapter = ExerciseAdapter(onItemClickListener)
 
         recycler_view.apply {
-            adapter = this@CreateRoutineFragment.adapterLegacy
+            // adapter = this@CreateRoutineFragment.adapterLegacy
+            // TODO: Replace ^ with v DONE
+            adapter = this@CreateRoutineFragment.adapter
             layoutManager = LinearLayoutManager(this@CreateRoutineFragment.requireContext())
             addItemDecoration(
                 MarginItemDecoration(resources.getDimension(R.dimen.any_margin_default).toInt())
             )
             isNestedScrollingEnabled = false
-            ItemTouchHelper(itemTouchHelperCallbackLegacy).attachToRecyclerView(this)
-            // TODO: Replace ^ with v
-            // ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
+            // ItemTouchHelper(itemTouchHelperCallbackLegacy).attachToRecyclerView(this)
+            // TODO: Replace ^ with v DONE
+            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
     private fun initViewModel() {
-        viewModel.rwe.observe(viewLifecycleOwner, Observer { rwe ->
-            adapterLegacy.submitList(rwe.exerciseWrappers)
-            viewModel.saveLegacy()
-        })
-
-        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            val ewList = ArrayList<ExerciseWrapper>()
-            for (e in exercises) ewList.add(
-                ExerciseWrapper(
-                    e.exerciseId,
-                    viewModel.rwe.value!!.routine.routineId
-                )
-            )
-            viewModel.addEWs(ewList)
-
-            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
-        })
-        // TODO: Replace ^ with v
-        // viewModel.fullRoutine.observe(viewLifecycleOwner, Observer { fullRoutine ->
-        //     adapter.submitList(fullRoutine.exercises)
-        //     viewModel.save()
+        // viewModel.rwe.observe(viewLifecycleOwner, Observer { rwe ->
+        //     adapterLegacy.submitList(rwe.exerciseWrappers)
+        //     viewModel.saveLegacy()
         // })
 
         // sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-        //     for (e in exercises)
-        //         viewModel.addExercise(e)
+        //     val ewList = ArrayList<ExerciseWrapper>()
+        //     for (e in exercises) ewList.add(
+        //         ExerciseWrapper(
+        //             e.exerciseId,
+        //             viewModel.rwe.value!!.routine.routineId
+        //         )
+        //     )
+        //     viewModel.addEWs(ewList)
+
+        //     if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         // })
+        // TODO: Replace ^ with v DONE
+        viewModel.fullRoutine.observe(viewLifecycleOwner, Observer { fullRoutine ->
+            adapter.submitList(fullRoutine.exercises)
+            viewModel.save()
+        })
+
+        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
+            for (e in exercises)
+                viewModel.addExercise(ExerciseImpl(e, listOf()))
+        })
     }
 
     fun addExercise() {

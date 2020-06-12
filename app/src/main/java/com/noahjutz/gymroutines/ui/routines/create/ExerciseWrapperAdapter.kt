@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*
 
-// TODO: Replace with [ExerciseAdapter]
+// TODO: Replace with [ExerciseAdapter] DONE
 
 @Suppress("unused")
 private const val TAG = "ExerciseWrapperAdapter"
