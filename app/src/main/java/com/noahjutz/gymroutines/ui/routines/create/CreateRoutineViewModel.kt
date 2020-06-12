@@ -11,6 +11,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import java.lang.NullPointerException
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -97,9 +98,20 @@ class CreateRoutineViewModel(
     // TODO: Replace ^ with v
     private fun initFullRoutine() {
         _fullRoutine.run {
-            value = null // TODO
+            /**
+             * Either edit the routine with [routineId] or create a new one.
+             */
+            value = repository.getFullRoutine(routineId)
+                ?: repository.getFullRoutine(
+                    repository.insert(
+                        FullRoutine(
+                            Routine(""),
+                            listOf()
+                        )
+                    ).toInt()
+                )!!
 
-            _exercises.value = value?.exercises as? ArrayList<ExerciseImpl> ?: ArrayList()
+            _exercises.value = value?.exercises as ArrayList<ExerciseImpl>
 
             addSource(name) { name ->
                 value = value!!.apply {
