@@ -13,7 +13,6 @@ import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*
-import java.lang.NullPointerException
 
 // TODO: Replace with [ExerciseAdapter]
 

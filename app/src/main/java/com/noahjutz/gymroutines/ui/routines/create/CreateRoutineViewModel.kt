@@ -8,13 +8,9 @@ import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.*
 import com.noahjutz.gymroutines.data.domain.Set
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.lang.NullPointerException
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"

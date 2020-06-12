@@ -49,7 +49,8 @@ class RoutineAdapter(
             holder.itemView.name.text = fullRoutine.routine.name
             holder.itemView.description.text = fullRoutine.routine.description
 
-            if (fullRoutine.routine.description.trim().isEmpty()) itemView.description.visibility = GONE
+            if (fullRoutine.routine.description.trim().isEmpty()) itemView.description.visibility =
+                GONE
         }
     }
 

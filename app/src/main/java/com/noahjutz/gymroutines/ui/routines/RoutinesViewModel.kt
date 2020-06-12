@@ -16,8 +16,13 @@ class RoutinesViewModel(
     val fullRoutines: LiveData<List<FullRoutine>>
         get() = repository.fullRoutines
 
-    fun insert(fullRoutine: FullRoutine) { repository.insert(fullRoutine) }
-    fun delete (fullRoutine: FullRoutine) { repository.delete(fullRoutine) }
+    fun insert(fullRoutine: FullRoutine) {
+        repository.insert(fullRoutine)
+    }
+
+    fun delete(fullRoutine: FullRoutine) {
+        repository.delete(fullRoutine)
+    }
 
     // Legacy
     // TODO: Remove vvv
