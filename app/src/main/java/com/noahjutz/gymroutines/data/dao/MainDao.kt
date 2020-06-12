@@ -44,8 +44,10 @@ abstract class MainDao {
 
     suspend fun delete(fullRoutine: FullRoutine) {
         delete(fullRoutine.routine)
-        for (exerciseImpl in fullRoutine.exercises)
-            delete(exerciseImpl, fullRoutine.routine.routineId)
+        for (exerciseImpl in fullRoutine.exercises) {
+            delete(exerciseImpl)
+            delete(RoutineAndExercise(fullRoutine.routine.routineId, exerciseImpl.exercise.exerciseId))
+        }
     }
 
     @Transaction
@@ -69,9 +71,8 @@ abstract class MainDao {
         return exerciseId
     }
 
-    private suspend fun delete(exerciseImpl: ExerciseImpl, routineId: Int) {
+    private suspend fun delete(exerciseImpl: ExerciseImpl) {
         delete(exerciseImpl.exercise)
-        delete(RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId))
         for (set in exerciseImpl.sets)
             delete(set)
     }
