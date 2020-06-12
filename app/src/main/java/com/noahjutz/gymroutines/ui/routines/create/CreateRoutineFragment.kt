@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -196,6 +197,8 @@ class CreateRoutineFragment : Fragment() {
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             for (e in exercises)
                 viewModel.addExercise(ExerciseImpl(e, listOf()))
+
+            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         })
     }
 
