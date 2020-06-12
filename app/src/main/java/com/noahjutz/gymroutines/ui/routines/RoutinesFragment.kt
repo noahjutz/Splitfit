@@ -34,7 +34,8 @@ class RoutinesFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentRoutinesBinding
-    private lateinit var adapter: RweAdapter
+    private lateinit var adapterLegacy: RweAdapter
+    private lateinit var adapter: RoutineAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,7 +85,7 @@ class RoutinesFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val rwe = adapter.getRweAt(viewHolder.adapterPosition)
+                val rwe = adapterLegacy.getRweAt(viewHolder.adapterPosition)
                 viewModel.delete(rwe)
                 Snackbar.make(recycler_view, "Deleted ${rwe.routine.name}", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") { viewModel.insert(rwe) }
@@ -102,10 +103,10 @@ class RoutinesFragment : Fragment() {
             override fun onRoutineLongClick(rwe: RwE) {}
         }
 
-        adapter = RweAdapter(onItemClickListener)
+        adapterLegacy = RweAdapter(onItemClickListener)
 
         recycler_view.apply {
-            adapter = this@RoutinesFragment.adapter
+            adapter = this@RoutinesFragment.adapterLegacy
             layoutManager = LinearLayoutManager(this@RoutinesFragment.requireContext())
             setHasFixedSize(true)
             addItemDecoration(
@@ -119,7 +120,7 @@ class RoutinesFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel.routinesWithExercises.observe(viewLifecycleOwner, Observer { rwe ->
-            adapter.submitList(rwe)
+            adapterLegacy.submitList(rwe)
         })
     }
 
