@@ -8,29 +8,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.RwE
-import kotlinx.android.synthetic.main.listitem_routine.view.*
 import com.noahjutz.gymroutines.data.domain.FullRoutine
+import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
 private const val TAG = "RoutinesAdapter"
 
 /**
  * [ListAdapter] for [FullRoutine]
- * TODO: Replace [RwE] with [FullRoutine]
  */
 class RoutineAdapter(
     private val onRoutineClickListener: OnRoutineClickListener
-) : ListAdapter<RwE, RoutineAdapter.RoutineHolder>(diffUtil) {
-    fun getRoutine(pos: Int): RwE = getItem(pos)
+) : ListAdapter<FullRoutine, RoutineAdapter.RoutineHolder>(diffUtil) {
+    fun getRoutine(pos: Int): FullRoutine = getItem(pos)
 
     inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                this@RoutineAdapter.onRoutineClickListener.onRoutineClick(getItem(adapterPosition))
+                this@RoutineAdapter.onRoutineClickListener
+                    .onRoutineClick(getItem(adapterPosition))
             }
             itemView.setOnLongClickListener {
-                this@RoutineAdapter.onRoutineClickListener.onRoutineLongClick(getItem(adapterPosition))
+                this@RoutineAdapter.onRoutineClickListener
+                    .onRoutineLongClick(getItem(adapterPosition))
                 true
             }
         }
@@ -54,19 +54,19 @@ class RoutineAdapter(
     }
 
     interface OnRoutineClickListener {
-        fun onRoutineClick(rwe: RwE)
-        fun onRoutineLongClick(rwe: RwE)
+        fun onRoutineClick(rwe: FullRoutine)
+        fun onRoutineLongClick(rwe: FullRoutine)
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<RwE>() {
+private val diffUtil = object : DiffUtil.ItemCallback<FullRoutine>() {
     override fun areItemsTheSame(
-        oldItem: RwE,
-        newItem: RwE
+        oldItem: FullRoutine,
+        newItem: FullRoutine
     ): Boolean = oldItem.routine.routineId == newItem.routine.routineId
 
     override fun areContentsTheSame(
-        oldItem: RwE,
-        newItem: RwE
+        oldItem: FullRoutine,
+        newItem: FullRoutine
     ): Boolean = oldItem == newItem
 }
