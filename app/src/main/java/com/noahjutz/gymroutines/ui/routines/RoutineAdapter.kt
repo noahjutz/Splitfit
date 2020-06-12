@@ -43,19 +43,19 @@ class RoutineAdapter(
     }
 
     override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
-        val rwe = getItem(position)
+        val fullRoutine = getItem(position)
 
         holder.apply {
-            holder.itemView.name.text = rwe.routine.name
-            holder.itemView.description.text = rwe.routine.description
+            holder.itemView.name.text = fullRoutine.routine.name
+            holder.itemView.description.text = fullRoutine.routine.description
 
-            if (rwe.routine.description.trim().isEmpty()) itemView.description.visibility = GONE
+            if (fullRoutine.routine.description.trim().isEmpty()) itemView.description.visibility = GONE
         }
     }
 
     interface OnRoutineClickListener {
-        fun onRoutineClick(rwe: FullRoutine)
-        fun onRoutineLongClick(rwe: FullRoutine)
+        fun onRoutineClick(fullRoutine: FullRoutine)
+        fun onRoutineLongClick(fullRoutine: FullRoutine)
     }
 }
 
