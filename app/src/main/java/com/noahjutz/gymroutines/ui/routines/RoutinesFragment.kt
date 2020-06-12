@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.RwE
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
@@ -94,7 +95,7 @@ class RoutinesFragment : Fragment() {
             }
         }
 
-        val onItemClickListener = object : RweAdapter.OnRoutineClickListener {
+        val onItemClickListenerLegacy = object : RweAdapter.OnRoutineClickListener {
             override fun onRoutineClick(rwe: RwE) {
                 val action = RoutinesFragmentDirections.addRoutine(rwe.routine.routineId)
                 findNavController().navigate(action)
@@ -103,7 +104,17 @@ class RoutinesFragment : Fragment() {
             override fun onRoutineLongClick(rwe: RwE) {}
         }
 
-        adapterLegacy = RweAdapter(onItemClickListener)
+        val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
+            override fun onRoutineClick(fullRoutine: FullRoutine) {
+                val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
+                findNavController().navigate(action)
+            }
+
+            override fun onRoutineLongClick(fullRoutine: FullRoutine) {}
+        }
+
+        adapterLegacy = RweAdapter(onItemClickListenerLegacy)
+        adapter = RoutineAdapter(onItemClickListener)
 
         recycler_view.apply {
             adapter = this@RoutinesFragment.adapterLegacy
