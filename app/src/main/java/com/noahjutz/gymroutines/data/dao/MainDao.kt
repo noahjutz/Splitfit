@@ -34,8 +34,10 @@ abstract class MainDao {
         for (exerciseId in getExerciseIdsBy(routineId.toInt()))
             delete(RoutineAndExercise(exerciseId, routineId.toInt()))
 
-        for (exerciseImpl in fullRoutine.exercises)
-            insert(exerciseImpl, fullRoutine.routine.routineId)
+        for (exerciseImpl in fullRoutine.exercises) {
+            val exerciseId = insert(exerciseImpl)
+            insert(RoutineAndExercise(routineId.toInt(), exerciseId.toInt()))
+        }
 
         return routineId
     }
@@ -58,12 +60,13 @@ abstract class MainDao {
      * [ExerciseImpl]
      */
 
-    private suspend fun insert(exerciseImpl: ExerciseImpl, routineId: Int) {
-        insert(exerciseImpl.exercise)
-        insert(RoutineAndExercise(routineId, exerciseImpl.exercise.exerciseId))
+    private suspend fun insert(exerciseImpl: ExerciseImpl): Long {
+        val exerciseId = insert(exerciseImpl.exercise)
         for (set in exerciseImpl.sets) {
             insert(set)
         }
+
+        return exerciseId
     }
 
     private suspend fun delete(exerciseImpl: ExerciseImpl, routineId: Int) {
