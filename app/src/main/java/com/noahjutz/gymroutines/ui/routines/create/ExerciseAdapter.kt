@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.ExerciseWrapper
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
@@ -71,12 +72,12 @@ class ExerciseAdapter(
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
-    override fun areItemsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
+private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
+    override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
         return oldItem.exerciseId == newItem.exerciseId
     }
 
-    override fun areContentsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
+    override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
         return oldItem == newItem
     }
 }
