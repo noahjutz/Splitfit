@@ -27,10 +27,12 @@ abstract class MainDao {
      * [FullRoutine]
      */
 
-    suspend fun insert(fullRoutine: FullRoutine) {
-        insert(fullRoutine.routine)
+    suspend fun insert(fullRoutine: FullRoutine): Long {
+        val routineId = insert(fullRoutine.routine)
         for (ews in fullRoutine.exercises)
             insert(ews, fullRoutine.routine.routineId)
+
+        return routineId
     }
 
     suspend fun delete(fullRoutine: FullRoutine) {
