@@ -32,5 +32,5 @@ data class FullRoutine(
         entityColumn = "exerciseId",
         associateBy = Junction(RoutineAndExercise::class)
     )
-    val ews: List<ExerciseImpl>
+    val exercises: List<ExerciseImpl>
 )

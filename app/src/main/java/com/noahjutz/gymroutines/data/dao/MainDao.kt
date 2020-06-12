@@ -29,13 +29,13 @@ abstract class MainDao {
 
     suspend fun insert(fullRoutine: FullRoutine) {
         insert(fullRoutine.routine)
-        for (ews in fullRoutine.ews)
+        for (ews in fullRoutine.exercises)
             insert(ews, fullRoutine.routine.routineId)
     }
 
     suspend fun delete(fullRoutine: FullRoutine) {
         delete(fullRoutine.routine)
-        for (ews in fullRoutine.ews)
+        for (ews in fullRoutine.exercises)
             delete(ews, fullRoutine.routine.routineId)
     }
 
