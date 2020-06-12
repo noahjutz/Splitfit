@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.data.dao
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.domain.*
@@ -29,6 +30,10 @@ abstract class MainDao {
 
     suspend fun insert(fullRoutine: FullRoutine): Long {
         val routineId = insert(fullRoutine.routine)
+
+        for (exerciseId in getExerciseIdsBy(routineId.toInt()))
+            delete(RoutineAndExercise(exerciseId, routineId.toInt()))
+
         for (exerciseImpl in fullRoutine.exercises)
             insert(exerciseImpl, fullRoutine.routine.routineId)
 
@@ -91,6 +96,12 @@ abstract class MainDao {
     @Delete
     abstract suspend fun delete(routineAndExercise: RoutineAndExercise)
 
+    @Query("SELECT exerciseId FROM routine_and_exercise WHERE routineId == :routineId")
+    abstract suspend fun getExerciseIdsBy(routineId: Int): List<Int>
+
+    @Query("SELECT routineId FROM routine_and_exercise WHERE exerciseId == :exerciseId")
+    abstract suspend fun getRoutineIdsBy(exerciseId: Int): List<Int>
+
     /**
      * [Set]
      */
@@ -122,4 +133,7 @@ abstract class MainDao {
 
     @Query("SELECT * FROM exercise_table WHERE exerciseId == :id")
     abstract fun getExercise(id: Int): Exercise?
+
+    @Query("SELECT * FROM exercise_table WHERE exerciseId IN (SELECT exerciseId FROM routine_and_exercise WHERE routineId == :routineId)")
+    abstract suspend fun getExercisesIn(routineId: Int): List<Exercise>
 }
