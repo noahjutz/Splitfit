@@ -30,9 +30,9 @@ class CreateRoutineViewModel(
         get() = _rwe
 
     // TODO: Replace ^ with v
-    private val _fullRoutine = MediatorLiveData<FullRoutine>()
-    val fullRoutine: LiveData<FullRoutine>
-        get() = _fullRoutine
+    // private val _fullRoutine = MediatorLiveData<FullRoutine>()
+    // val fullRoutine: LiveData<FullRoutine>
+    //     get() = _fullRoutine
 
     /**
      * Data binding fields
@@ -45,12 +45,12 @@ class CreateRoutineViewModel(
     private val _exercisesLegacy = MutableLiveData<ArrayList<ExerciseWrapper>>()
 
     // TODO: Replace ^ with v
-    private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
+    // private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
 
     init {
         initRwe()
         // TODO: Replace ^ with v
-        initFullRoutine()
+        // initFullRoutine()
         initBinding()
     }
 
@@ -96,52 +96,52 @@ class CreateRoutineViewModel(
     }
 
     // TODO: Replace ^ with v
-    private fun initFullRoutine() {
-        _fullRoutine.run {
-            /**
-             * Either edit the routine with [routineId] or create a new one.
-             */
-            value = repository.getFullRoutine(routineId)
-                ?: repository.getFullRoutine(
-                    repository.insert(
-                        FullRoutine(
-                            Routine(""),
-                            listOf()
-                        )
-                    ).toInt()
-                )!!
+    // private fun initFullRoutine() {
+    //     _fullRoutine.run {
+    //         /**
+    //          * Either edit the routine with [routineId] or create a new one.
+    //          */
+    //         value = repository.getFullRoutine(routineId)
+    //             ?: repository.getFullRoutine(
+    //                 repository.insert(
+    //                     FullRoutine(
+    //                         Routine(""),
+    //                         listOf()
+    //                     )
+    //                 ).toInt()
+    //             )!!
 
-            _exercises.value = value?.exercises as ArrayList<ExerciseImpl>
+    //         _exercises.value = value?.exercises as ArrayList<ExerciseImpl>
 
-            addSource(name) { name ->
-                value = value!!.apply {
-                    routine.name = name.trim()
-                }
-            }
+    //         addSource(name) { name ->
+    //             value = value!!.apply {
+    //                 routine.name = name.trim()
+    //             }
+    //         }
 
-            addSource(description) { description ->
-                value = value!!.apply {
-                    routine.description = description.trim()
-                }
-            }
+    //         addSource(description) { description ->
+    //             value = value!!.apply {
+    //                 routine.description = description.trim()
+    //             }
+    //         }
 
-            addSource(_exercises) { exercises ->
-                value = FullRoutine(
-                    value!!.routine,
-                    exercises
-                )
-            }
-        }
-    }
+    //         addSource(_exercises) { exercises ->
+    //             value = FullRoutine(
+    //                 value!!.routine,
+    //                 exercises
+    //             )
+    //         }
+    //     }
+    // }
 
     fun saveLegacy() {
         repository.insert(rwe.value!!)
     }
 
     // TODO: Replace ^ with v
-    fun save() {
-        repository.insert(fullRoutine.value!!)
-    }
+    // fun save() {
+    //     repository.insert(fullRoutine.value!!)
+    // }
 
     /**
      * [repository] access functions
