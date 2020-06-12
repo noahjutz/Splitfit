@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.noahjutz.gymroutines.data.*
+import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.*
 import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
@@ -22,11 +22,16 @@ class CreateRoutineViewModel(
     /**
      * The [RwE] object that is being created/edited
      * @see initRwe
-     * @see save
+     * @see saveLegacy
      */
     private val _rwe = MediatorLiveData<RwE>()
     val rwe: LiveData<RwE>
         get() = _rwe
+
+    // TODO: Replace ^ with v
+    private val _fullRoutine = MediatorLiveData<FullRoutine>()
+    val fullRoutine: LiveData<FullRoutine>
+        get() = _fullRoutine
 
     /**
      * Data binding fields
@@ -36,10 +41,15 @@ class CreateRoutineViewModel(
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
 
-    private val _exercises = MutableLiveData<ArrayList<ExerciseWrapper>>()
+    private val _exercisesLegacy = MutableLiveData<ArrayList<ExerciseWrapper>>()
+
+    // TODO: Replace ^ with v
+    private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
 
     init {
         initRwe()
+        // TODO: Replace ^ with v
+        initFullRoutine()
         initBinding()
     }
 
@@ -50,7 +60,7 @@ class CreateRoutineViewModel(
 
     /**
      * Initializes [RwE] Object
-     * Adds [name] and [description] and [_exercises] as source
+     * Adds [name] and [description] and [_exercisesLegacy] as source
      */
     private fun initRwe() {
         _rwe.run {
@@ -60,7 +70,8 @@ class CreateRoutineViewModel(
                     listOf()
                 )
 
-            _exercises.value = value?.exerciseWrappers as? ArrayList<ExerciseWrapper> ?: ArrayList()
+            _exercisesLegacy.value =
+                value?.exerciseWrappers as? ArrayList<ExerciseWrapper> ?: ArrayList()
 
             addSource(name) { name ->
                 _rwe.value = _rwe.value!!.apply {
@@ -74,7 +85,7 @@ class CreateRoutineViewModel(
                 }
             }
 
-            addSource(_exercises) { exercises ->
+            addSource(_exercisesLegacy) { exercises ->
                 _rwe.value = RwE(
                     _rwe.value!!.routine,
                     exercises
@@ -83,8 +94,41 @@ class CreateRoutineViewModel(
         }
     }
 
-    fun save() {
+    // TODO: Replace ^ with v
+    private fun initFullRoutine() {
+        _fullRoutine.run {
+            value = null // TODO
+
+            _exercises.value = value?.exercises as? ArrayList<ExerciseImpl> ?: ArrayList()
+
+            addSource(name) { name ->
+                value = value!!.apply {
+                    routine.name = name.trim()
+                }
+            }
+
+            addSource(description) { description ->
+                value = value!!.apply {
+                    routine.description = description.trim()
+                }
+            }
+
+            addSource(_exercises) { exercises ->
+                value = FullRoutine(
+                    value!!.routine,
+                    exercises
+                )
+            }
+        }
+    }
+
+    fun saveLegacy() {
         repository.insert(rwe.value!!)
+    }
+
+    // TODO: Replace ^ with v
+    fun save() {
+        repository.insert(fullRoutine.value!!)
     }
 
     /**
@@ -112,15 +156,15 @@ class CreateRoutineViewModel(
     }
 
     fun removeEW(exerciseWrapper: ExerciseWrapper) {
-        if (exerciseWrapper in _exercises.value!!)
-            _exercises.value = _exercises.value!!.apply { remove(exerciseWrapper) }
+        if (exerciseWrapper in _exercisesLegacy.value!!)
+            _exercisesLegacy.value = _exercisesLegacy.value!!.apply { remove(exerciseWrapper) }
         repository.delete(exerciseWrapper)
     }
 
     fun addEW(exerciseWrapper: ExerciseWrapper) {
         val id = repository.insert(exerciseWrapper).toInt()
         val ew = repository.getExerciseWrapperById(id)
-        _exercises.value = _exercises.value!!.apply { add(ew!!) }
+        _exercisesLegacy.value = _exercisesLegacy.value!!.apply { add(ew!!) }
     }
 
     /**
