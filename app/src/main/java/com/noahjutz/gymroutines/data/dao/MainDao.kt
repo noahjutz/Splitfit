@@ -6,7 +6,7 @@ import com.noahjutz.gymroutines.data.domain.*
 import com.noahjutz.gymroutines.data.domain.Set
 
 @Suppress("unused")
-private const val TAG = "RwEwSDao"
+private const val TAG = "MainDao"
 
 /**
  * A [Dao] for the following domain model objects:
@@ -29,16 +29,16 @@ abstract class MainDao {
 
     suspend fun insert(fullRoutine: FullRoutine): Long {
         val routineId = insert(fullRoutine.routine)
-        for (ews in fullRoutine.exercises)
-            insert(ews, fullRoutine.routine.routineId)
+        for (exerciseImpl in fullRoutine.exercises)
+            insert(exerciseImpl, fullRoutine.routine.routineId)
 
         return routineId
     }
 
     suspend fun delete(fullRoutine: FullRoutine) {
         delete(fullRoutine.routine)
-        for (ews in fullRoutine.exercises)
-            delete(ews, fullRoutine.routine.routineId)
+        for (exerciseImpl in fullRoutine.exercises)
+            delete(exerciseImpl, fullRoutine.routine.routineId)
     }
 
     @Transaction
