@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*
@@ -19,8 +20,8 @@ private const val TAG = "ExerciseAdapter"
 
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
-) : ListAdapter<Exercise, ExerciseAdapter.ExerciseHolder>(diffUtil) {
-    fun getExercise(pos: Int): Exercise = getItem(pos)
+) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
+    fun getExercise(pos: Int): ExerciseImpl = getItem(pos)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
@@ -46,10 +47,10 @@ class ExerciseAdapter(
         val exercise = getItem(position)
 
         holder.itemView.apply {
-            name.text = exercise.name
-            description.text = exercise.description
+            name.text = exercise.exercise.name
+            description.text = exercise.exercise.description
 
-            if (exercise.description.trim().isEmpty())
+            if (exercise.exercise.description.trim().isEmpty())
                 description.visibility = GONE
 
             button_add_set.setOnClickListener {
@@ -59,17 +60,17 @@ class ExerciseAdapter(
     }
 
     interface OnExerciseClickListener {
-        fun onExerciseClick(exercise: Exercise)
-        fun onExerciseLongClick(exercise: Exercise)
+        fun onExerciseClick(exercise: ExerciseImpl)
+        fun onExerciseLongClick(exercise: ExerciseImpl)
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
-    override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-        return oldItem.exerciseId == newItem.exerciseId
+private val diffUtil = object : DiffUtil.ItemCallback<ExerciseImpl>() {
+    override fun areItemsTheSame(oldItem: ExerciseImpl, newItem: ExerciseImpl): Boolean {
+        return oldItem.exercise.exerciseId == newItem.exercise.exerciseId
     }
 
-    override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+    override fun areContentsTheSame(oldItem: ExerciseImpl, newItem: ExerciseImpl): Boolean {
         return oldItem == newItem
     }
 }
