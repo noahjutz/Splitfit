@@ -21,10 +21,10 @@ private const val TAG = "RoutinesAdapter"
  */
 class RoutineAdapter(
     private val onRoutineClickListener: OnRoutineClickListener
-) : ListAdapter<RwE, RoutineAdapter.RweHolder>(diffUtil) {
-    fun getRweAt(pos: Int): RwE = getItem(pos)
+) : ListAdapter<RwE, RoutineAdapter.RoutineHolder>(diffUtil) {
+    fun getRoutine(pos: Int): RwE = getItem(pos)
 
-    inner class RweHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
                 this@RoutineAdapter.onRoutineClickListener.onRoutineClick(getItem(adapterPosition))
@@ -36,13 +36,13 @@ class RoutineAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RweHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.listitem_routine, parent, false)
-        return RweHolder(view)
+        return RoutineHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RweHolder, position: Int) {
+    override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
         val rwe = getItem(position)
 
         holder.apply {
