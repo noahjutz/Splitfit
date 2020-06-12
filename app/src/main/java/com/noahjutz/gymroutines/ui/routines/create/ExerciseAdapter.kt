@@ -15,10 +15,8 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*
 import java.lang.NullPointerException
 
-// TODO: Replace with [ExerciseAdapter]
-
 @Suppress("unused")
-private const val TAG = "ExerciseWrapperAdapter"
+private const val TAG = "ExerciseAdapter"
 
 private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
     override fun areItemsTheSame(oldItem: ExerciseWrapper, newItem: ExerciseWrapper): Boolean {
@@ -30,20 +28,20 @@ private val diffUtil = object : DiffUtil.ItemCallback<ExerciseWrapper>() {
     }
 }
 
-class ExerciseWrapperAdapter(
+class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener,
     private val viewModel: CreateRoutineViewModel
-) : ListAdapter<ExerciseWrapper, ExerciseWrapperAdapter.ExerciseHolder>(diffUtil) {
+) : ListAdapter<ExerciseWrapper, ExerciseAdapter.ExerciseHolder>(diffUtil) {
     fun getExerciseWrapperAt(pos: Int): ExerciseWrapper = getItem(pos)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                this@ExerciseWrapperAdapter.onExerciseClickListener
+                this@ExerciseAdapter.onExerciseClickListener
                     .onExerciseClick(getItem(adapterPosition))
             }
             itemView.setOnLongClickListener {
-                this@ExerciseWrapperAdapter.onExerciseClickListener
+                this@ExerciseAdapter.onExerciseClickListener
                     .onExerciseLongClick(getItem(adapterPosition))
                 true
             }
