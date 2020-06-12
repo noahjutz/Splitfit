@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.RwE
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
@@ -94,28 +93,28 @@ class RoutinesFragment : Fragment() {
                     .show()
             }
         }
+        // TODO: Replace ^ with v
+        // val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+        //     0,
+        //     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        // ) {
+        //     override fun onMove(
+        //         recyclerView: RecyclerView,
+        //         viewHolder: RecyclerView.ViewHolder,
+        //         target: RecyclerView.ViewHolder
+        //     ): Boolean {
+        //         return false
+        //     }
 
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val routine = adapter.getRoutine(viewHolder.adapterPosition)
-                viewModel.delete(routine)
-                Snackbar.make(recycler_view, "Deleted ${routine.routine.name}", Snackbar.LENGTH_SHORT)
-                    .setAction("Undo") { viewModel.insert(routine) }
-                    .setAnchorView(fab_pick_exercises)
-                    .show()
-            }
-        }
+        //     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        //         val routine = adapter.getRoutine(viewHolder.adapterPosition)
+        //         viewModel.delete(routine)
+        //         Snackbar.make(recycler_view, "Deleted ${routine.routine.name}", Snackbar.LENGTH_SHORT)
+        //             .setAction("Undo") { viewModel.insert(routine) }
+        //             .setAnchorView(fab_pick_exercises)
+        //             .show()
+        //     }
+        // }
 
         val onItemClickListenerLegacy = object : RweAdapter.OnRoutineClickListener {
             override fun onRoutineClick(rwe: RwE) {
@@ -125,21 +124,24 @@ class RoutinesFragment : Fragment() {
 
             override fun onRoutineLongClick(rwe: RwE) {}
         }
+        // TODO: Replace ^ with v
+        // val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
+        //     override fun onRoutineClick(fullRoutine: FullRoutine) {
+        //         val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
+        //         findNavController().navigate(action)
+        //     }
 
-        val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(fullRoutine: FullRoutine) {
-                val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
-                findNavController().navigate(action)
-            }
-
-            override fun onRoutineLongClick(fullRoutine: FullRoutine) {}
-        }
+        //      override fun onRoutineLongClick(fullRoutine: FullRoutine) {}
+        //  }
 
         adapterLegacy = RweAdapter(onItemClickListenerLegacy)
-        adapter = RoutineAdapter(onItemClickListener)
+        // TODO: Replace ^ with v
+        //  adapter = RoutineAdapter(onItemClickListener)
 
         recycler_view.apply {
-            adapter = this@RoutinesFragment.adapterLegacy // TODO: Replace with adapter
+            adapter = this@RoutinesFragment.adapterLegacy
+            // TODO: ^ with v
+            // adapter = this@RoutinesFragment.adapter
             layoutManager = LinearLayoutManager(this@RoutinesFragment.requireContext())
             setHasFixedSize(true)
             addItemDecoration(
@@ -158,9 +160,9 @@ class RoutinesFragment : Fragment() {
             adapterLegacy.submitList(rwe)
         })
         // TODO: Replace ^ with v
-        viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
-            adapter.submitList(fullRoutines)
-        })
+        // viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
+        //     adapter.submitList(fullRoutines)
+        // })
     }
 
     fun addRoutine() {
