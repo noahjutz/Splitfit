@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.listitem_routine.view.*
 // TODO: Replace with [RoutineAdapter]
 
 @Suppress("unused")
-private const val TAG = "RoutinesAdapter"
+private const val TAG = "RweAdapter"
 
 private val diffUtil = object : DiffUtil.ItemCallback<RwE>() {
     override fun areItemsTheSame(

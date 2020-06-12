@@ -12,7 +12,7 @@ import com.noahjutz.gymroutines.data.domain.FullRoutine
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
-private const val TAG = "RoutinesAdapter"
+private const val TAG = "RoutineAdapter"
 
 /**
  * [ListAdapter] for [FullRoutine]
