@@ -73,7 +73,7 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+        val itemTouchHelperCallbackLegacy = object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
@@ -90,6 +90,28 @@ class RoutinesFragment : Fragment() {
                 viewModel.delete(rwe)
                 Snackbar.make(recycler_view, "Deleted ${rwe.routine.name}", Snackbar.LENGTH_SHORT)
                     .setAction("Undo") { viewModel.insert(rwe) }
+                    .setAnchorView(fab_pick_exercises)
+                    .show()
+            }
+        }
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val routine = adapter.getRoutine(viewHolder.adapterPosition)
+                viewModel.delete(routine)
+                Snackbar.make(recycler_view, "Deleted ${routine.routine.name}", Snackbar.LENGTH_SHORT)
+                    .setAction("Undo") { viewModel.insert(routine) }
                     .setAnchorView(fab_pick_exercises)
                     .show()
             }
@@ -117,7 +139,7 @@ class RoutinesFragment : Fragment() {
         adapter = RoutineAdapter(onItemClickListener)
 
         recycler_view.apply {
-            adapter = this@RoutinesFragment.adapterLegacy
+            adapter = this@RoutinesFragment.adapterLegacy // TODO: Replace with adapter
             layoutManager = LinearLayoutManager(this@RoutinesFragment.requireContext())
             setHasFixedSize(true)
             addItemDecoration(
@@ -125,7 +147,9 @@ class RoutinesFragment : Fragment() {
                     resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
-            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
+            ItemTouchHelper(itemTouchHelperCallbackLegacy).attachToRecyclerView(this)
+            // TODO: Replace ^ with v
+            // ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
