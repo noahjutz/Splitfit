@@ -35,7 +35,6 @@ class RoutinesFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentRoutinesBinding
-    private lateinit var adapterLegacy: RweAdapter
     private lateinit var adapter: RoutineAdapter
 
     override fun onCreateView(
@@ -73,28 +72,6 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        // val itemTouchHelperCallbackLegacy = object : ItemTouchHelper.SimpleCallback(
-        //     0,
-        //     ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        // ) {
-        //     override fun onMove(
-        //         recyclerView: RecyclerView,
-        //         viewHolder: RecyclerView.ViewHolder,
-        //         target: RecyclerView.ViewHolder
-        //     ): Boolean {
-        //         return false
-        //     }
-
-        //     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        //         val rwe = adapterLegacy.getRweAt(viewHolder.adapterPosition)
-        //         viewModel.delete(rwe)
-        //         Snackbar.make(recycler_view, "Deleted ${rwe.routine.name}", Snackbar.LENGTH_SHORT)
-        //             .setAction("Undo") { viewModel.insert(rwe) }
-        //             .setAnchorView(fab_pick_exercises)
-        //             .show()
-        //     }
-        // }
-        // TODO: Replace ^ with v DONE
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -121,15 +98,6 @@ class RoutinesFragment : Fragment() {
             }
         }
 
-        // val onItemClickListenerLegacy = object : RweAdapter.OnRoutineClickListener {
-        //     override fun onRoutineClick(rwe: RwE) {
-        //         val action = RoutinesFragmentDirections.addRoutine(rwe.routine.routineId)
-        //         findNavController().navigate(action)
-        //     }
-
-        //     override fun onRoutineLongClick(rwe: RwE) {}
-        // }
-        // TODO: Replace ^ with v DONE
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
             override fun onRoutineClick(fullRoutine: FullRoutine) {
                 val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
@@ -139,13 +107,9 @@ class RoutinesFragment : Fragment() {
             override fun onRoutineLongClick(fullRoutine: FullRoutine) {}
         }
 
-        // adapterLegacy = RweAdapter(onItemClickListenerLegacy)
-        // TODO: Replace ^ with v DONE
         adapter = RoutineAdapter(onItemClickListener)
 
         recycler_view.apply {
-            // adapter = this@RoutinesFragment.adapterLegacy
-            // TODO: ^ with v DONE
             adapter = this@RoutinesFragment.adapter
             layoutManager = LinearLayoutManager(this@RoutinesFragment.requireContext())
             setHasFixedSize(true)
@@ -154,17 +118,11 @@ class RoutinesFragment : Fragment() {
                     resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
-            // ItemTouchHelper(itemTouchHelperCallbackLegacy).attachToRecyclerView(this)
-            // TODO: Replace ^ with v DONE
             ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
         }
     }
 
     private fun initViewModel() {
-        // viewModel.routinesWithExercises.observe(viewLifecycleOwner, Observer { rwe ->
-        //     adapterLegacy.submitList(rwe)
-        // })
-        // TODO: Replace ^ with v DONE
         viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
             adapter.submitList(fullRoutines)
         })

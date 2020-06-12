@@ -12,7 +12,6 @@ private const val TAG = "RoutinesViewModel"
 class RoutinesViewModel(
     private val repository: Repository
 ) : ViewModel() {
-
     val fullRoutines: LiveData<List<FullRoutine>>
         get() = repository.fullRoutines
 
@@ -23,17 +22,4 @@ class RoutinesViewModel(
     fun delete(fullRoutine: FullRoutine) {
         repository.delete(fullRoutine)
     }
-
-    // Legacy
-    // TODO: Remove vvv DONE
-    // val routinesWithExercises: LiveData<List<RwE>>
-    //     get() = repository.rwes
-
-    // fun insert(rwe: RwE) {
-    //     repository.insert(rwe.routine)
-    // }
-
-    // fun delete(rwe: RwE) {
-    //     repository.delete(rwe.routine)
-    // }
 }
