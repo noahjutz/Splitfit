@@ -124,7 +124,7 @@ class CreateRoutineFragment : Fragment() {
 
         //     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         //         val exercise = adapter.getExercise(viewHolder.adapterPosition)
-        //         viewModel.remove(exercise) // TODO: Add viewModel.remove function
+        //         viewModel.removeExercise(exercise)
         //         adapter.notifyItemRemoved(viewHolder.adapterPosition)
         //         Snackbar.make(
         //             recycler_view,
@@ -132,7 +132,7 @@ class CreateRoutineFragment : Fragment() {
         //             Snackbar.LENGTH_SHORT
         //         )
         //             .setAction("Undo") {
-        //                 viewModel.add(exercise) // TODO: Add viewModel.add function
+        //                 viewModel.addExercise(exercise)
         //                 adapter.notifyItemInserted(adapter.itemCount)
         //             }
         //     }
@@ -191,7 +191,7 @@ class CreateRoutineFragment : Fragment() {
 
         // sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
         //     for (e in exercises)
-        //         viewModel.add(e) // TODO: Add viewModel.add Function
+        //         viewModel.addExercise(e)
         // })
     }
 
