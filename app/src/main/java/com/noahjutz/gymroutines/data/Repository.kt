@@ -48,6 +48,12 @@ class Repository private constructor(application: Application) {
         }
     }
 
+    fun getFullRoutine(routineId: Int) = runBlocking {
+        withContext(IO) {
+            dao.getFullRoutine(routineId)
+        }
+    }
+
     /**
      * [Routine]
      */

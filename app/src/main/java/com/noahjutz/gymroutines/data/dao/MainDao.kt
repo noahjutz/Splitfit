@@ -43,6 +43,10 @@ abstract class MainDao {
     @Query("SELECT * FROM routine_table")
     abstract fun getFullRoutines(): LiveData<List<FullRoutine>>
 
+    @Transaction
+    @Query("SELECT * FROM routine_table WHERE routineId == :id")
+    abstract suspend fun getFullRoutine(id: Int): FullRoutine?
+
     /**
      * [ExerciseImpl]
      */
