@@ -10,22 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.RwE
 import kotlinx.android.synthetic.main.listitem_routine.view.*
+import com.noahjutz.gymroutines.data.domain.FullRoutine
 
 @Suppress("unused")
 private const val TAG = "RoutinesAdapter"
 
-private val diffUtil = object : DiffUtil.ItemCallback<RwE>() {
-    override fun areItemsTheSame(
-        oldItem: RwE,
-        newItem: RwE
-    ): Boolean = oldItem.routine.routineId == newItem.routine.routineId
-
-    override fun areContentsTheSame(
-        oldItem: RwE,
-        newItem: RwE
-    ): Boolean = oldItem == newItem
-}
-
+/**
+ * [ListAdapter] for [FullRoutine]
+ * TODO: Replace [RwE] with [FullRoutine]
+ */
 class RoutineAdapter(
     private val onRoutineClickListener: OnRoutineClickListener
 ) : ListAdapter<RwE, RoutineAdapter.RweHolder>(diffUtil) {
@@ -64,4 +57,16 @@ class RoutineAdapter(
         fun onRoutineClick(rwe: RwE)
         fun onRoutineLongClick(rwe: RwE)
     }
+}
+
+private val diffUtil = object : DiffUtil.ItemCallback<RwE>() {
+    override fun areItemsTheSame(
+        oldItem: RwE,
+        newItem: RwE
+    ): Boolean = oldItem.routine.routineId == newItem.routine.routineId
+
+    override fun areContentsTheSame(
+        oldItem: RwE,
+        newItem: RwE
+    ): Boolean = oldItem == newItem
 }
