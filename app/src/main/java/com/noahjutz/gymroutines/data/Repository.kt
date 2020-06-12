@@ -1,11 +1,11 @@
 package com.noahjutz.gymroutines.data
 
 import android.app.Application
-import com.noahjutz.gymroutines.data.domain.*
+import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.data.domain.FullRoutine
+import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -15,9 +15,7 @@ private const val TAG = "Repository"
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
     private val dao = database.dao
-    private val legacyDao = database.legacyDao
 
-    val rwes = legacyDao.getRwEs()
     val routines = dao.getRoutines()
     val exercises = dao.getExercises()
     val fullRoutines = dao.getFullRoutines()
@@ -117,49 +115,6 @@ class Repository private constructor(application: Application) {
     fun getSetsById(ewId: Int) = runBlocking {
         withContext(IO) {
             dao.getSetsById(ewId)
-        }
-    }
-
-    /**
-     * Legacy functions
-     */
-
-    /**
-     * [ExerciseWrapper]
-     */
-
-    fun insert(exerciseWrapper: ExerciseWrapper): Long = runBlocking {
-        withContext(IO) {
-            legacyDao.insert(exerciseWrapper)
-        }
-    }
-
-    fun delete(exerciseWrapper: ExerciseWrapper) = runBlocking {
-        withContext(IO) {
-            legacyDao.delete(exerciseWrapper)
-        }
-    }
-
-    fun getExerciseWrapperById(id: Int): ExerciseWrapper? = runBlocking {
-        withContext(IO) {
-            legacyDao.getExerciseWrapperById(id)
-        }
-    }
-
-
-    /**
-     * [RwE]
-     */
-
-    fun getRweById(routineId: Int): RwE? = runBlocking {
-        withContext(IO) {
-            legacyDao.getRwEById(routineId)
-        }
-    }
-
-    fun insert(rwe: RwE) = runBlocking {
-        withContext(IO) {
-            legacyDao.insert(rwe)
         }
     }
 }

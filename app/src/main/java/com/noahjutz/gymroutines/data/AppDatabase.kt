@@ -12,16 +12,13 @@ import com.noahjutz.gymroutines.data.domain.Set
     entities = [
         Exercise::class,
         Routine::class,
-        RoutineExerciseCrossRef::class,
         RoutineAndExercise::class,
-        ExerciseWrapper::class,
         Set::class
     ],
-    version = 8
+    version = 9
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val dao: MainDao
-    abstract val legacyDao: LegacyDao
 
     companion object {
         @Volatile
