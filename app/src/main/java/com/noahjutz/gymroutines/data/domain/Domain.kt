@@ -9,7 +9,7 @@ data class RoutineAndExercise(
 )
 
 /**
- * [ExerciseWrapper] with [Set]s
+ * [Exercise] with [Set]s
  */
 data class ExerciseImpl(
     @Embedded val exercise: Exercise,
