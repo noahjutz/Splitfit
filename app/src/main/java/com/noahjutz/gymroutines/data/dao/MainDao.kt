@@ -28,7 +28,9 @@ abstract class MainDao {
     suspend fun insert(fullRoutine: FullRoutine): Long {
         val routineId = insert(fullRoutine.routine)
 
-        // TODO: Clear exercises before adding new ones
+        val currentExerciseImpls = getExerciseImplsIn(routineId.toInt())
+        for (exerciseImpl in currentExerciseImpls)
+            delete(exerciseImpl)
 
         for (exerciseImpl in fullRoutine.exercises)
             insert(exerciseImpl)
@@ -70,6 +72,9 @@ abstract class MainDao {
         for (set in exerciseImpl.sets)
             delete(set)
     }
+
+    @Query("SELECT * FROM exercise_holder_table WHERE routineId == :routineId")
+    abstract suspend fun getExerciseImplsIn(routineId: Int): List<ExerciseImpl>
 
     /**
      * [Routine]
