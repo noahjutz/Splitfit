@@ -3,9 +3,7 @@ package com.noahjutz.gymroutines.data.domain
 import androidx.room.*
 
 /**
- * [ExerciseHolder] n..1 [Routine]
- * [ExerciseHolder] n..1 [Exercise]
- * [ExerciseHolder] 1..n [Set]
+ * TODO
  */
 @Entity(tableName = "exercise_holder_table")
 data class ExerciseHolder(
