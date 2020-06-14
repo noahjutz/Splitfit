@@ -91,8 +91,9 @@ class CreateRoutineFragment : Fragment() {
             ): Boolean {
                 val fromPos = viewHolder.adapterPosition
                 val toPos = target.adapterPosition
-                // TODO: Rearrange in [viewModel._exercises]
-                return false
+                adapter.notifyItemMoved(fromPos, toPos)
+                viewModel.swapExercises(fromPos, toPos)
+                return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

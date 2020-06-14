@@ -9,6 +9,8 @@ import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineViewModel"
@@ -84,9 +86,10 @@ class CreateRoutineViewModel(
     }
 
     fun save() {
+        Log.d(TAG, "List: ${_exercises.value!!.map { it.exercise.name }}")
         for (i in 0 until _exercises.value!!.size) {
             _exercises.value!![i].exerciseHolder.position = i
-            Log.d(TAG, _exercises.value!![i].exerciseHolder.position.toString())
+            Log.d(TAG, "index: ${_exercises.value!![i].exerciseHolder.position} | i: $i | name: ${_exercises.value!![i].exercise.name}")
         }
         Log.d(TAG, "--")
         repository.insert(fullRoutine.value!!)
@@ -98,5 +101,11 @@ class CreateRoutineViewModel(
 
     fun removeExercise(exerciseImpl: ExerciseImpl) {
         _exercises.value = _exercises.value!!.apply { remove(exerciseImpl) }
+    }
+
+    fun swapExercises(i: Int, j: Int) {
+        _exercises.value = _exercises.value!!.apply {
+            Collections.swap(this, i, j)
+        }
     }
 }
