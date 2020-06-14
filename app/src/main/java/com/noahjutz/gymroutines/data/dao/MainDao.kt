@@ -28,6 +28,8 @@ abstract class MainDao {
     suspend fun insert(fullRoutine: FullRoutine): Long {
         val routineId = insert(fullRoutine.routine)
 
+        // TODO: Clear exercises before adding new ones
+
         for (exerciseImpl in fullRoutine.exercises)
             insert(exerciseImpl)
 

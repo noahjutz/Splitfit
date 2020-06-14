@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.domain.ExerciseHolder
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
@@ -133,8 +134,11 @@ class CreateRoutineFragment : Fragment() {
         })
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            for (e in exercises)
-                //viewModel.addExercise(ExerciseImpl(e, listOf())) TODO
+            for (e in exercises) {
+                val exerciseHolder = ExerciseHolder(e.exerciseId, viewModel.fullRoutine.value!!.routine.routineId)
+                val exerciseImpl = ExerciseImpl(exerciseHolder, e, listOf())
+                viewModel.addExercise(exerciseImpl)
+            }
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         })

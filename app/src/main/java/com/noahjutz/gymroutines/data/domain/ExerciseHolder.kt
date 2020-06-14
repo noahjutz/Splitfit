@@ -11,5 +11,5 @@ import androidx.room.*
 data class ExerciseHolder(
     val exerciseId: Int,
     val routineId: Int,
-    @PrimaryKey(autoGenerate = true) val exerciseHolderId: Int
+    @PrimaryKey(autoGenerate = true) val exerciseHolderId: Int = 0
 )
