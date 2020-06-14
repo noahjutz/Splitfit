@@ -2,12 +2,6 @@ package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.*
 
-@Entity(tableName = "routine_and_exercise", primaryKeys = ["routineId", "exerciseId"])
-data class RoutineAndExercise(
-    val routineId: Int,
-    val exerciseId: Int
-)
-
 /**
  * [ExerciseHolder] with [Exercise] and [Set]s
  */

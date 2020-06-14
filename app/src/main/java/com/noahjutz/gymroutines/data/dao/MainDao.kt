@@ -17,8 +17,6 @@ private const val TAG = "MainDao"
  * - Data classes:
  *   - [FullRoutine]
  *   - [ExerciseImpl]
- * - Associative entities
- *   - [RoutineAndExercise]
  */
 @Dao
 abstract class MainDao {
@@ -30,12 +28,8 @@ abstract class MainDao {
     suspend fun insert(fullRoutine: FullRoutine): Long {
         val routineId = insert(fullRoutine.routine)
 
-        for (exerciseId in getExerciseIdsBy(routineId.toInt()))
-            delete(RoutineAndExercise(exerciseId, routineId.toInt()))
-
         for (exerciseImpl in fullRoutine.exercises) {
             val exerciseId = insert(exerciseImpl)
-            insert(RoutineAndExercise(routineId.toInt(), exerciseId.toInt()))
         }
 
         return routineId
@@ -45,7 +39,6 @@ abstract class MainDao {
         delete(fullRoutine.routine)
         for (exerciseImpl in fullRoutine.exercises) {
             delete(exerciseImpl)
-            delete(RoutineAndExercise(fullRoutine.routine.routineId, exerciseImpl.exerciseHolder.exerciseId))
         }
     }
 
@@ -90,22 +83,6 @@ abstract class MainDao {
     abstract fun getRoutines(): LiveData<List<Routine>>
 
     /**
-     * [RoutineAndExercise]
-     */
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(routineAndExercise: RoutineAndExercise): Long
-
-    @Delete
-    abstract suspend fun delete(routineAndExercise: RoutineAndExercise)
-
-    @Query("SELECT exerciseId FROM routine_and_exercise WHERE routineId == :routineId")
-    abstract suspend fun getExerciseIdsBy(routineId: Int): List<Int>
-
-    @Query("SELECT routineId FROM routine_and_exercise WHERE exerciseId == :exerciseId")
-    abstract suspend fun getRoutineIdsBy(exerciseId: Int): List<Int>
-
-    /**
      * [Set]
      */
 
@@ -136,9 +113,6 @@ abstract class MainDao {
 
     @Query("SELECT * FROM exercise_table WHERE exerciseId == :id")
     abstract fun getExercise(id: Int): Exercise?
-
-    @Query("SELECT * FROM exercise_table WHERE exerciseId IN (SELECT exerciseId FROM routine_and_exercise WHERE routineId == :routineId)")
-    abstract suspend fun getExercisesIn(routineId: Int): List<Exercise>
 
     /**
      * [ExerciseHolder]

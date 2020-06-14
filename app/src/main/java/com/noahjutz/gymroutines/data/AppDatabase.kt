@@ -12,11 +12,10 @@ import com.noahjutz.gymroutines.data.domain.Set
     entities = [
         Exercise::class,
         Routine::class,
-        RoutineAndExercise::class,
         ExerciseHolder::class,
         Set::class
     ],
-    version = 12
+    version = 13
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val dao: MainDao
