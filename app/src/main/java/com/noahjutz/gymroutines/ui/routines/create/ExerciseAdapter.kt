@@ -66,7 +66,7 @@ class ExerciseAdapter(
 
 private val diffUtil = object : DiffUtil.ItemCallback<ExerciseImpl>() {
     override fun areItemsTheSame(oldItem: ExerciseImpl, newItem: ExerciseImpl): Boolean {
-        return oldItem.exercise.exerciseId == newItem.exercise.exerciseId
+        return oldItem.exerciseHolder.exerciseId == newItem.exerciseHolder.exerciseId // TODO: Replace with exerciseHolderId
     }
 
     override fun areContentsTheSame(oldItem: ExerciseImpl, newItem: ExerciseImpl): Boolean {

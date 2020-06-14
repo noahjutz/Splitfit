@@ -9,16 +9,20 @@ data class RoutineAndExercise(
 )
 
 /**
- * [Exercise] with [Set]s
+ * [ExerciseHolder] with [Exercise] and [Set]s
  */
 data class ExerciseImpl(
-    @Embedded val exercise: Exercise,
+    @Embedded val exerciseHolder: ExerciseHolder,
     @Relation(
-        entity = Set::class,
+        entity = Exercise::class,
         parentColumn = "exerciseId",
         entityColumn = "exerciseId"
-    )
-    val sets: List<Set>
+    ) val exercise: Exercise,
+    @Relation(
+        entity = Set::class,
+        parentColumn = "exerciseHolderId",
+        entityColumn = "exerciseHolderId"
+    ) val sets: List<Set>
 )
 
 /**
@@ -27,10 +31,8 @@ data class ExerciseImpl(
 data class FullRoutine(
     @Embedded val routine: Routine,
     @Relation(
-        entity = Exercise::class,
+        entity = ExerciseHolder::class,
         parentColumn = "routineId",
-        entityColumn = "exerciseId",
-        associateBy = Junction(RoutineAndExercise::class)
-    )
-    val exercises: List<ExerciseImpl>
+        entityColumn = "routineId"
+    ) val exercises: List<ExerciseImpl>
 )
