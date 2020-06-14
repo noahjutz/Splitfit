@@ -16,7 +16,7 @@ data class ExerciseImpl(
     @Relation(
         entity = Set::class,
         parentColumn = "exerciseId",
-        entityColumn = "exerciseWrapperId" // TODO: Rename in [Set]
+        entityColumn = "exerciseId"
     )
     val sets: List<Set>
 )
