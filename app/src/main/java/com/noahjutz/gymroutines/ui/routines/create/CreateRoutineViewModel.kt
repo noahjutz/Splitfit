@@ -62,7 +62,9 @@ class CreateRoutineViewModel(
                     ).toInt()
                 )!!
 
-            _exercises.value = value?.exercises as ArrayList<ExerciseImpl>
+            _exercises.value = (value?.exercises as ArrayList<ExerciseImpl>).apply {
+                sortBy { it.exerciseHolder.position }
+            }
 
             addSource(name) { name ->
                 value = value!!.apply {
@@ -86,12 +88,9 @@ class CreateRoutineViewModel(
     }
 
     fun save() {
-        Log.d(TAG, "List: ${_exercises.value!!.map { it.exercise.name }}")
-        for (i in 0 until _exercises.value!!.size) {
+        for (i in 0 until _exercises.value!!.size)
             _exercises.value!![i].exerciseHolder.position = i
-            Log.d(TAG, "index: ${_exercises.value!![i].exerciseHolder.position} | i: $i | name: ${_exercises.value!![i].exercise.name}")
-        }
-        Log.d(TAG, "--")
+
         repository.insert(fullRoutine.value!!)
     }
 
