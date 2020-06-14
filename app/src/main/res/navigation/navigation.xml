@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_routines">
         <action
             android:id="@+id/add_routine"
-            app:destination="@id/createRoutineFragment" />
+            app:destination="@id/createRoutineFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/exercisesFragment"
@@ -20,7 +24,11 @@
         tools:layout="@layout/fragment_exercises">
         <action
             android:id="@+id/add_exercise"
-            app:destination="@id/createExerciseFragment" />
+            app:destination="@id/createExerciseFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/createRoutineFragment"
@@ -32,7 +40,11 @@
             app:argType="integer" />
         <action
             android:id="@+id/add_exercise"
-            app:destination="@id/add_exercise" />
+            app:destination="@id/add_exercise"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/createExerciseFragment"
