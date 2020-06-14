@@ -10,7 +10,9 @@
     app:cardElevation="0dp"
     app:strokeColor="@color/color_stroke"
     app:strokeWidth="1dp"
-    tools:layout_margin="16dp">
+    tools:layout_marginEnd="16dp"
+    tools:layout_marginStart="16dp"
+    tools:layout_marginTop="16dp">
 
     <LinearLayout
         android:id="@+id/parent_layout"
