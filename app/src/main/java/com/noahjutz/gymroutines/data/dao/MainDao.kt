@@ -28,18 +28,17 @@ abstract class MainDao {
     suspend fun insert(fullRoutine: FullRoutine): Long {
         val routineId = insert(fullRoutine.routine)
 
-        for (exerciseImpl in fullRoutine.exercises) {
-            val exerciseId = insert(exerciseImpl)
-        }
+        for (exerciseImpl in fullRoutine.exercises)
+            insert(exerciseImpl)
 
         return routineId
     }
 
     suspend fun delete(fullRoutine: FullRoutine) {
         delete(fullRoutine.routine)
-        for (exerciseImpl in fullRoutine.exercises) {
+
+        for (exerciseImpl in fullRoutine.exercises)
             delete(exerciseImpl)
-        }
     }
 
     @Transaction
@@ -56,15 +55,16 @@ abstract class MainDao {
 
     private suspend fun insert(exerciseImpl: ExerciseImpl): Long {
         val exerciseId = insert(exerciseImpl.exerciseHolder)
-        for (set in exerciseImpl.sets) {
+
+        for (set in exerciseImpl.sets)
             insert(set)
-        }
 
         return exerciseId
     }
 
     private suspend fun delete(exerciseImpl: ExerciseImpl) {
         delete(exerciseImpl.exerciseHolder)
+
         for (set in exerciseImpl.sets)
             delete(set)
     }
