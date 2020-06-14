@@ -14,6 +14,7 @@ private const val TAG = "MainDao"
  *   - [Routine]
  *   - [Exercise]
  *   - [Set]
+ *   - [ExerciseHolder]
  * - Data classes:
  *   - [FullRoutine]
  *   - [ExerciseImpl]
@@ -28,12 +29,12 @@ abstract class MainDao {
     suspend fun insert(fullRoutine: FullRoutine): Long {
         val routineId = insert(fullRoutine.routine)
 
-        val currentExerciseImpls = getExerciseImplsIn(routineId.toInt())
-        for (exerciseImpl in currentExerciseImpls)
-            delete(exerciseImpl)
+        val exerciseImpls = getExerciseImplsIn(routineId.toInt())
+        for (e in exerciseImpls)
+            delete(e)
 
-        for (exerciseImpl in fullRoutine.exercises)
-            insert(exerciseImpl)
+        for (e in fullRoutine.exercises)
+            insert(e)
 
         return routineId
     }
@@ -41,8 +42,9 @@ abstract class MainDao {
     suspend fun delete(fullRoutine: FullRoutine) {
         delete(fullRoutine.routine)
 
-        for (exerciseImpl in fullRoutine.exercises)
-            delete(exerciseImpl)
+        val exerciseImpls = getExerciseImplsIn(fullRoutine.routine.routineId)
+        for (e in exerciseImpls)
+            delete(e)
     }
 
     @Transaction
