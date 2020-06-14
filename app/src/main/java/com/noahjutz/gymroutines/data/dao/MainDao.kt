@@ -140,4 +140,17 @@ abstract class MainDao {
 
     @Query("SELECT * FROM exercise_table WHERE exerciseId IN (SELECT exerciseId FROM routine_and_exercise WHERE routineId == :routineId)")
     abstract suspend fun getExercisesIn(routineId: Int): List<Exercise>
+
+    /**
+     * [ExerciseHolder]
+     */
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insert(exerciseHolder: ExerciseHolder): Long
+
+    @Delete
+    abstract suspend fun delete(exerciseHolder: ExerciseHolder)
+
+    @Query("SELECT * FROM exercise_holder_table")
+    abstract fun getExerciseHolders(): LiveData<List<ExerciseHolder>>
 }
