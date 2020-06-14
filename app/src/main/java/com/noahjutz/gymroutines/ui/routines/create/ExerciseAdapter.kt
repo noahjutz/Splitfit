@@ -55,7 +55,7 @@ class ExerciseAdapter(
                 description.visibility = GONE
 
             button_add_set.setOnClickListener {
-                Log.d(TAG, "add set button clicked.")
+                onExerciseClickListener.onAddSetClick(exercise)
             }
         }
     }
@@ -63,6 +63,7 @@ class ExerciseAdapter(
     interface OnExerciseClickListener {
         fun onExerciseClick(exercise: ExerciseImpl)
         fun onExerciseLongClick(exercise: ExerciseImpl)
+        fun onAddSetClick(exercise: ExerciseImpl)
     }
 }
 

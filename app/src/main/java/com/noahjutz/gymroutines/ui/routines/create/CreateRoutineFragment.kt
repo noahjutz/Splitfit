@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -116,6 +117,9 @@ class CreateRoutineFragment : Fragment() {
         val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
             override fun onExerciseClick(exercise: ExerciseImpl) {}
             override fun onExerciseLongClick(exercise: ExerciseImpl) {}
+            override fun onAddSetClick(exercise: ExerciseImpl) {
+                Log.d(TAG, "Add set clicked.")
+            }
         }
 
         adapter = ExerciseAdapter(onItemClickListener)
