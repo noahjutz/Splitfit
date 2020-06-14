@@ -119,8 +119,9 @@ class CreateRoutineFragment : Fragment() {
             override fun onExerciseClick(exercise: ExerciseImpl) {}
             override fun onExerciseLongClick(exercise: ExerciseImpl) {}
             override fun onAddSetClick(exercise: ExerciseImpl) {
-                val set = Set(exercise.exerciseHolder.exerciseHolderId) // TODO: Fix bug where Sets are assigned to exerciseHolderId 0 when creating a new ExerciseHolder
-                viewModel.addSet(set)
+                val set =
+                    Set(exercise.exerciseHolder.exerciseHolderId) // TODO: Fix bug where Sets are assigned to exerciseHolderId 0 when creating a new ExerciseHolder
+                // viewModel.addSet(set)
             }
         }
 
@@ -141,12 +142,13 @@ class CreateRoutineFragment : Fragment() {
         viewModel.fullRoutine.observe(viewLifecycleOwner, Observer { fullRoutine ->
             viewModel.save()
             adapter.submitList(fullRoutine.exercises)
-            adapter.notifyDataSetChanged() // TODO: Remove this, use a diffUtil instead
+            // adapter.notifyDataSetChanged() // TODO: Remove this, use a diffUtil instead
         })
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             for (e in exercises) {
-                val exerciseHolder = ExerciseHolder(e.exerciseId, viewModel.fullRoutine.value!!.routine.routineId)
+                val exerciseHolder =
+                    ExerciseHolder(e.exerciseId, viewModel.fullRoutine.value!!.routine.routineId)
                 val exerciseImpl = ExerciseImpl(exerciseHolder, e, listOf())
                 viewModel.addExercise(exerciseImpl)
             }
