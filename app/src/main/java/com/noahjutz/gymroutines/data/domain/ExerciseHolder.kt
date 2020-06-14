@@ -9,5 +9,6 @@ import androidx.room.*
 data class ExerciseHolder(
     val exerciseId: Int,
     val routineId: Int,
+    var position: Int = -1,
     @PrimaryKey(autoGenerate = true) val exerciseHolderId: Int = 0
 )

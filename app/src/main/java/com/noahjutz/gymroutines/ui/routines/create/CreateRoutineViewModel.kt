@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -83,6 +84,11 @@ class CreateRoutineViewModel(
     }
 
     fun save() {
+        for (i in 0 until _exercises.value!!.size) {
+            _exercises.value!![i].exerciseHolder.position = i
+            Log.d(TAG, _exercises.value!![i].exerciseHolder.position.toString())
+        }
+        Log.d(TAG, "--")
         repository.insert(fullRoutine.value!!)
     }
 
