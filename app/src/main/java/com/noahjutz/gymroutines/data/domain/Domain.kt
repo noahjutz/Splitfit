@@ -3,6 +3,23 @@ package com.noahjutz.gymroutines.data.domain
 import androidx.room.*
 
 /**
+ * Utility classes for using the class hierarchy in code.
+ *
+ *                   +-------------+
+ *               1 +-+ FullRoutine +-+ 1
+ *                 | +-------------+ |
+ *               1 |                 | n
+ * +---------------+---+      +------+-------+
+ * | @Embedded Routine |  1 +-+ ExerciseImpl +-+ 1
+ * +-------------------+    | +------+-------+ |
+ *                          |      1 |         |
+ *                        1 |      n |         | 1
+ * +------------------------+-+  +---+---+  +--+-------+
+ * | @Embedded ExerciseHolder |  |  Set  |  | Exercise |
+ * +--------------------------+  +-------+  +----------+
+ */
+
+/**
  * [ExerciseHolder] with [Exercise] and [Set]s
  */
 data class ExerciseImpl(
