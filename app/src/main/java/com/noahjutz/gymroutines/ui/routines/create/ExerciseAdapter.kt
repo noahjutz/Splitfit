@@ -37,9 +37,9 @@ class ExerciseAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
-        val viewModel = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.listitem_exercise_wrapper, parent, false)
-        return ExerciseHolder(viewModel)
+        return ExerciseHolder(view)
     }
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
@@ -48,6 +48,8 @@ class ExerciseAdapter(
         holder.itemView.apply {
             name.text = exercise.exercise.name
             description.text = exercise.exercise.description
+
+            sets.text = exercise.sets.toString()
 
             if (exercise.exercise.description.trim().isEmpty())
                 description.visibility = GONE
