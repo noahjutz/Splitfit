@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +8,7 @@ import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
+import com.noahjutz.gymroutines.data.domain.Set
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,6 +32,7 @@ class CreateRoutineViewModel(
     val description = MutableLiveData<String>()
 
     private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
+    private val _sets = MutableLiveData<ArrayList<Set>>()
 
     init {
         initFullRoutine()
@@ -66,6 +67,12 @@ class CreateRoutineViewModel(
                 sortBy { it.exerciseHolder.position }
             }
 
+            _sets.value = ArrayList()
+
+            for (e in value!!.exercises)
+                for (s in e.sets)
+                    addSet(s)
+
             addSource(name) { name ->
                 value = value!!.apply {
                     routine.name = name.trim()
@@ -82,6 +89,18 @@ class CreateRoutineViewModel(
                 value = FullRoutine(
                     value!!.routine,
                     exercises
+                )
+            }
+
+            addSource(_sets) { sets ->
+                value = FullRoutine(
+                    value!!.routine,
+                    value!!.exercises.apply {
+                        for (e in this) {
+                            e.sets =
+                                sets.filter { it.exerciseHolderId == e.exerciseHolder.exerciseHolderId }
+                        }
+                    }
                 )
             }
         }
@@ -106,5 +125,9 @@ class CreateRoutineViewModel(
         _exercises.value = _exercises.value!!.apply {
             Collections.swap(this, i, j)
         }
+    }
+
+    fun addSet(set: Set) {
+        _sets.value = _sets.value!!.apply { add(set) }
     }
 }

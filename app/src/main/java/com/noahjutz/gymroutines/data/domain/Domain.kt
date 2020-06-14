@@ -48,7 +48,7 @@ data class ExerciseImpl(
         entity = Set::class,
         parentColumn = "exerciseHolderId",
         entityColumn = "exerciseHolderId"
-    ) val sets: List<Set>
+    ) var sets: List<Set>
 )
 
 /**

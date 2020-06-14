@@ -20,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseHolder
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
+import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
@@ -118,7 +119,8 @@ class CreateRoutineFragment : Fragment() {
             override fun onExerciseClick(exercise: ExerciseImpl) {}
             override fun onExerciseLongClick(exercise: ExerciseImpl) {}
             override fun onAddSetClick(exercise: ExerciseImpl) {
-                Log.d(TAG, "Add set clicked.")
+                val set = Set(exercise.exerciseHolder.exerciseHolderId) // TODO: Fix bug where Sets are assigned to exerciseHolderId 0 when creating a new ExerciseHolder
+                viewModel.addSet(set)
             }
         }
 
@@ -137,8 +139,9 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel.fullRoutine.observe(viewLifecycleOwner, Observer { fullRoutine ->
-            adapter.submitList(fullRoutine.exercises)
             viewModel.save()
+            adapter.submitList(fullRoutine.exercises)
+            adapter.notifyDataSetChanged() // TODO: Remove this, use a diffUtil instead
         })
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
