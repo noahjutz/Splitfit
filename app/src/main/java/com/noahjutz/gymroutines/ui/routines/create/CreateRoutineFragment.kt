@@ -81,7 +81,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initRecyclerView() {
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
             override fun onMove(
@@ -89,6 +89,9 @@ class CreateRoutineFragment : Fragment() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
+                val fromPos = viewHolder.adapterPosition
+                val toPos = target.adapterPosition
+                // TODO: Rearrange in [viewModel._exercises]
                 return false
             }
 
