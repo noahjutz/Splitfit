@@ -134,7 +134,7 @@ class CreateRoutineFragment : Fragment() {
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             for (e in exercises)
-                //viewModel.addExercise(ExerciseImpl(e, listOf()))
+                //viewModel.addExercise(ExerciseImpl(e, listOf())) TODO
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         })
