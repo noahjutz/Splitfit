@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
@@ -56,8 +57,10 @@ class RoutineAdapter(
                 GONE
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
-            button_expand.setOnClickListener { onRoutineClickListener.onExpandClick(this as CardView) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
+            button_expand.addOnCheckedChangeListener { button, isChecked ->
+                onRoutineClickListener.onExpandClick(button, isChecked)
+            }
         }
     }
 
@@ -66,7 +69,7 @@ class RoutineAdapter(
         fun onRoutineLongClick(fullRoutine: FullRoutine)
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
-        fun onExpandClick(cardView: CardView)
+        fun onExpandClick(button: Button, isChecked: Boolean)
     }
 }
 

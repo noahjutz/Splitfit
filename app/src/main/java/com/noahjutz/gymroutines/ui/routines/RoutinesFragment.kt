@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
@@ -117,7 +118,7 @@ class RoutinesFragment : Fragment() {
                 Toast.makeText(context, "launch", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onExpandClick(cardView: CardView) {
+            override fun onExpandClick(button: Button, isChecked: Boolean) {
                 Toast.makeText(context, "expand", Toast.LENGTH_SHORT).show()
             }
         }
