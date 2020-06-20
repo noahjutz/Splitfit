@@ -70,6 +70,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_launch"
                 style="@style/Widget.App.Button.TextButton.IconOnly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,6 +78,7 @@
                 app:icon="@drawable/ic_launch" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_edit"
                 style="@style/Widget.App.Button.TextButton.IconOnly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,6 +86,7 @@
                 app:icon="@drawable/ic_edit" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_expand"
                 style="@style/Widget.App.Button.TextButton.IconOnly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

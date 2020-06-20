@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -45,12 +46,22 @@ class RoutineAdapter(
     override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
         val fullRoutine = getItem(position)
 
-        holder.apply {
-            holder.itemView.name.text = fullRoutine.routine.name
-            holder.itemView.description.text = fullRoutine.routine.description
+        holder.itemView.apply {
+            name.text = fullRoutine.routine.name
+            description.text = fullRoutine.routine.description
 
-            if (fullRoutine.routine.description.trim().isEmpty()) itemView.description.visibility =
+            if (fullRoutine.routine.description.trim().isEmpty()) description.visibility =
                 GONE
+
+            button_edit.setOnClickListener {
+                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show()
+            }
+            button_expand.setOnClickListener {
+                Toast.makeText(context, "Expand", Toast.LENGTH_SHORT).show()
+            }
+            button_launch.setOnClickListener {
+                Toast.makeText(context, "Launch", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
