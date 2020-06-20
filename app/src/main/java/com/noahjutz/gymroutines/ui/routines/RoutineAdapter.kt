@@ -5,9 +5,11 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import kotlinx.android.synthetic.main.listitem_routine.view.*
@@ -53,21 +55,18 @@ class RoutineAdapter(
             if (fullRoutine.routine.description.trim().isEmpty()) description.visibility =
                 GONE
 
-            button_edit.setOnClickListener {
-                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show()
-            }
-            button_expand.setOnClickListener {
-                Toast.makeText(context, "Expand", Toast.LENGTH_SHORT).show()
-            }
-            button_launch.setOnClickListener {
-                Toast.makeText(context, "Launch", Toast.LENGTH_SHORT).show()
-            }
+            button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
+            button_expand.setOnClickListener { onRoutineClickListener.onExpandClick(this as CardView) }
+            button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
         }
     }
 
     interface OnRoutineClickListener {
         fun onRoutineClick(fullRoutine: FullRoutine)
         fun onRoutineLongClick(fullRoutine: FullRoutine)
+        fun onEditClick(fullRoutine: FullRoutine)
+        fun onLaunchClick(fullRoutine: FullRoutine)
+        fun onExpandClick(cardView: CardView)
     }
 }
 

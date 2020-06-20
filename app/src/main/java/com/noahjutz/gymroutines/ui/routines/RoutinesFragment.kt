@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -103,7 +105,21 @@ class RoutinesFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-            override fun onRoutineLongClick(fullRoutine: FullRoutine) {}
+            override fun onRoutineLongClick(fullRoutine: FullRoutine) {
+                // -
+            }
+
+            override fun onEditClick(fullRoutine: FullRoutine) {
+                Toast.makeText(context, "edit", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onLaunchClick(fullRoutine: FullRoutine) {
+                Toast.makeText(context, "launch", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onExpandClick(cardView: CardView) {
+                Toast.makeText(context, "expand", Toast.LENGTH_SHORT).show()
+            }
         }
 
         adapter = RoutineAdapter(onItemClickListener)
