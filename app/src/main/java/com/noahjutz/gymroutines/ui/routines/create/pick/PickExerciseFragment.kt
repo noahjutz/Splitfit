@@ -53,7 +53,8 @@ class PickExerciseFragment : Fragment() {
 
     private fun initViewModel() {
         exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            adapter.submitList(exercises)
+            val e = exercises.filter { !it.hidden }
+            adapter.submitList(e)
         })
     }
 
