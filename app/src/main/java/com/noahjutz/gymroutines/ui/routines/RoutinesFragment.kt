@@ -3,11 +3,12 @@ package com.noahjutz.gymroutines.ui.routines
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.cardview.widget.CardView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.FullRoutine
@@ -25,6 +27,7 @@ import com.noahjutz.gymroutines.util.MarginItemDecoration
 import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
+import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
 private const val TAG = "RoutinesFragment"
@@ -118,8 +121,17 @@ class RoutinesFragment : Fragment() {
                 Toast.makeText(context, "launch", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onExpandClick(button: Button, isChecked: Boolean) {
-                Toast.makeText(context, "expand", Toast.LENGTH_SHORT).show()
+            override fun onExpandClick(
+                button: Button,
+                isChecked: Boolean,
+                cardView: MaterialCardView
+            ) {
+                val visibility = if (isChecked) VISIBLE else GONE
+                cardView.description.visibility = visibility
+                cardView.exercises.visibility = visibility
+
+                val drawable = if (isChecked) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+                cardView.button_expand.icon = ResourcesCompat.getDrawable(resources, drawable, null)
             }
         }
 

@@ -59,7 +59,7 @@ class RoutineAdapter(
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
             button_expand.addOnCheckedChangeListener { button, isChecked ->
-                onRoutineClickListener.onExpandClick(button, isChecked)
+                onRoutineClickListener.onExpandClick(button, isChecked, this as MaterialCardView)
             }
         }
     }
@@ -69,7 +69,7 @@ class RoutineAdapter(
         fun onRoutineLongClick(fullRoutine: FullRoutine)
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
-        fun onExpandClick(button: Button, isChecked: Boolean)
+        fun onExpandClick(button: Button, isChecked: Boolean, cardView: MaterialCardView)
     }
 }
 
