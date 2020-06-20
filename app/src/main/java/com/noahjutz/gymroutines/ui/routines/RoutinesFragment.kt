@@ -105,8 +105,7 @@ class RoutinesFragment : Fragment() {
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
             override fun onRoutineClick(fullRoutine: FullRoutine) {
-                val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
-                findNavController().navigate(action)
+                // -
             }
 
             override fun onRoutineLongClick(fullRoutine: FullRoutine) {
@@ -114,7 +113,8 @@ class RoutinesFragment : Fragment() {
             }
 
             override fun onEditClick(fullRoutine: FullRoutine) {
-                Toast.makeText(context, "edit", Toast.LENGTH_SHORT).show()
+                val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
+                findNavController().navigate(action)
             }
 
             override fun onLaunchClick(fullRoutine: FullRoutine) {
