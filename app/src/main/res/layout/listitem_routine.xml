@@ -44,6 +44,7 @@
                 android:maxLines="1"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"
+                android:visibility="gone"
                 tools:text="Quads and stuff" />
 
             <TextView
@@ -53,7 +54,8 @@
                 android:layout_marginTop="16dp"
                 android:text="Supporting text"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary"
+                android:visibility="gone" />
 
         </LinearLayout>
 
