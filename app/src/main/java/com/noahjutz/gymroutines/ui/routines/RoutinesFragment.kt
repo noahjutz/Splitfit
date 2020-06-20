@@ -105,11 +105,7 @@ class RoutinesFragment : Fragment() {
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
             override fun onRoutineClick(fullRoutine: FullRoutine) {
-                // -
-            }
-
-            override fun onRoutineLongClick(fullRoutine: FullRoutine) {
-                // -
+                // TODO: Launch ViewRoutineFragment
             }
 
             override fun onEditClick(fullRoutine: FullRoutine) {
@@ -118,7 +114,7 @@ class RoutinesFragment : Fragment() {
             }
 
             override fun onLaunchClick(fullRoutine: FullRoutine) {
-                Toast.makeText(context, "launch", Toast.LENGTH_SHORT).show()
+                // TODO
             }
 
             override fun onExpandClick(

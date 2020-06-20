@@ -32,11 +32,6 @@ class RoutineAdapter(
                 this@RoutineAdapter.onRoutineClickListener
                     .onRoutineClick(getItem(adapterPosition))
             }
-            itemView.setOnLongClickListener {
-                this@RoutineAdapter.onRoutineClickListener
-                    .onRoutineLongClick(getItem(adapterPosition))
-                true
-            }
         }
     }
 
@@ -66,7 +61,6 @@ class RoutineAdapter(
 
     interface OnRoutineClickListener {
         fun onRoutineClick(fullRoutine: FullRoutine)
-        fun onRoutineLongClick(fullRoutine: FullRoutine)
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
         fun onExpandClick(button: Button, isChecked: Boolean, cardView: MaterialCardView)
