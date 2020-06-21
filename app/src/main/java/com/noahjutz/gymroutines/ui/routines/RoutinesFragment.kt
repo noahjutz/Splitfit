@@ -28,6 +28,7 @@ import com.noahjutz.gymroutines.util.MarginItemDecoration
 import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
+import kotlinx.android.synthetic.main.listitem_routine.*
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
@@ -105,7 +106,7 @@ class RoutinesFragment : Fragment() {
         }
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(cardView: MaterialCardView) {
+            override fun onRoutineClick(cardView: MaterialCardView, check: Boolean) {
                 cardView.apply {
                     val ic =
                         if (button_expand.isChecked) R.drawable.ic_expand_more else R.drawable.ic_expand_less
@@ -132,17 +133,22 @@ class RoutinesFragment : Fragment() {
             }
 
             override fun onExpandClick(
-                button: Button,
-                isChecked: Boolean,
+                button: Button, // TODO: Remove parameter
+                isChecked: Boolean, // TODO: Remove parameter
                 cardView: MaterialCardView
             ) {
-                val visibility = if (isChecked) VISIBLE else GONE
-                cardView.description.visibility = visibility
-                cardView.exercises.visibility = visibility
+                val ic =
+                    if (!button_expand.isChecked) R.drawable.ic_expand_more else R.drawable.ic_expand_less
+                val v =
+                    if (!button_expand.isChecked) GONE else VISIBLE
 
-                val drawable =
-                    if (isChecked) R.drawable.ic_expand_less else R.drawable.ic_expand_more
-                cardView.button_expand.icon = ResourcesCompat.getDrawable(resources, drawable, null)
+                button_expand.apply {
+                    icon = ResourcesCompat.getDrawable(resources, ic, null)
+                }
+
+                description.visibility = v
+                exercises.visibility = v
+                // TODO: merge with onRoutineClick, very similar code
             }
         }
 
