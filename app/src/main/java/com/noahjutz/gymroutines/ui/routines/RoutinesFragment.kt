@@ -106,7 +106,8 @@ class RoutinesFragment : Fragment() {
         }
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(cardView: MaterialCardView, check: Boolean) {
+            override fun onRoutineClick(cardView: MaterialCardView) {
+                // TODO
                 // cardView.apply {
                 //     val ic =
                 //         if (button_expand.isChecked) R.drawable.ic_expand_more else R.drawable.ic_expand_less
@@ -130,21 +131,6 @@ class RoutinesFragment : Fragment() {
 
             override fun onLaunchClick(fullRoutine: FullRoutine) {
                 // TODO
-            }
-
-            override fun onExpandClick(cardView: MaterialCardView) {
-                // val ic =
-                //     if (!button_expand.isChecked) R.drawable.ic_expand_more else R.drawable.ic_expand_less
-                // val v =
-                //     if (!button_expand.isChecked) GONE else VISIBLE
-
-                // button_expand.apply {
-                //     icon = ResourcesCompat.getDrawable(resources, ic, null)
-                // }
-
-                // description.visibility = v
-                // exercises.visibility = v
-                // // TODO: merge with onRoutineClick, very similar code
             }
         }
 
