@@ -132,11 +132,7 @@ class RoutinesFragment : Fragment() {
                 // TODO
             }
 
-            override fun onExpandClick(
-                button: Button, // TODO: Remove parameter
-                isChecked: Boolean, // TODO: Remove parameter
-                cardView: MaterialCardView
-            ) {
+            override fun onExpandClick(cardView: MaterialCardView) {
                 val ic =
                     if (!button_expand.isChecked) R.drawable.ic_expand_more else R.drawable.ic_expand_less
                 val v =
