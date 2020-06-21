@@ -30,7 +30,7 @@ class RoutineAdapter(
         init {
             itemView.setOnClickListener {
                 this@RoutineAdapter.onRoutineClickListener
-                    .onRoutineClick(getItem(adapterPosition))
+                    .onRoutineClick(getItem(adapterPosition), itemView as MaterialCardView)
             }
         }
     }
@@ -62,7 +62,7 @@ class RoutineAdapter(
     }
 
     interface OnRoutineClickListener {
-        fun onRoutineClick(fullRoutine: FullRoutine)
+        fun onRoutineClick(fullRoutine: FullRoutine, cardView: MaterialCardView)
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
         fun onExpandClick(button: Button, isChecked: Boolean, cardView: MaterialCardView)

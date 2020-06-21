@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -104,8 +105,18 @@ class RoutinesFragment : Fragment() {
         }
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(fullRoutine: FullRoutine) {
-                // TODO: Launch ViewRoutineFragment
+            override fun onRoutineClick(fullRoutine: FullRoutine, cardView: MaterialCardView) {
+                if (cardView.button_expand.isChecked) {
+                    cardView.description.visibility = GONE
+                    cardView.exercises.visibility = GONE
+                    cardView.button_expand.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_expand_more, null)
+                    cardView.button_expand.isChecked = false
+                } else {
+                    cardView.description.visibility = VISIBLE
+                    cardView.exercises.visibility = VISIBLE
+                    cardView.button_expand.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_expand_less, null)
+                    cardView.button_expand.isChecked = true
+                }
             }
 
             override fun onEditClick(fullRoutine: FullRoutine) {
