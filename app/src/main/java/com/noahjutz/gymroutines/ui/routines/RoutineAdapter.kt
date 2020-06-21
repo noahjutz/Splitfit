@@ -29,8 +29,7 @@ class RoutineAdapter(
     inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                this@RoutineAdapter.onRoutineClickListener
-                    .onRoutineClick(getItem(adapterPosition), itemView as MaterialCardView)
+                this@RoutineAdapter.onRoutineClickListener.onRoutineClick(itemView as MaterialCardView)
             }
         }
     }
@@ -48,7 +47,8 @@ class RoutineAdapter(
             name.text = fullRoutine.routine.name
             description.text = fullRoutine.routine.description
 
-            exercises.text = fullRoutine.exercises.map { it.exercise.name }.toString() // TODO: Pretty format
+            exercises.text =
+                fullRoutine.exercises.map { it.exercise.name }.toString() // TODO: Pretty format
 
             if (fullRoutine.routine.description.trim().isEmpty()) description.visibility =
                 GONE
@@ -62,7 +62,7 @@ class RoutineAdapter(
     }
 
     interface OnRoutineClickListener {
-        fun onRoutineClick(fullRoutine: FullRoutine, cardView: MaterialCardView)
+        fun onRoutineClick(cardView: MaterialCardView)
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
         fun onExpandClick(button: Button, isChecked: Boolean, cardView: MaterialCardView)
