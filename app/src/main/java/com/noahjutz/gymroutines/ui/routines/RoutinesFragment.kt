@@ -105,17 +105,22 @@ class RoutinesFragment : Fragment() {
         }
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(fullRoutine: FullRoutine, cardView: MaterialCardView) {
-                if (cardView.button_expand.isChecked) {
-                    cardView.description.visibility = GONE
-                    cardView.exercises.visibility = GONE
-                    cardView.button_expand.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_expand_more, null)
-                    cardView.button_expand.isChecked = false
-                } else {
-                    cardView.description.visibility = VISIBLE
-                    cardView.exercises.visibility = VISIBLE
-                    cardView.button_expand.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_expand_less, null)
-                    cardView.button_expand.isChecked = true
+            override fun onRoutineClick(
+                fullRoutine: FullRoutine,
+                cardView: MaterialCardView
+            ) { // TODO: Remove parameter fullRoutine
+                cardView.apply {
+                    val ic =
+                        if (button_expand.isChecked) R.drawable.ic_expand_more else R.drawable.ic_expand_less
+                    val v =
+                        if (button_expand.isChecked) GONE else VISIBLE
+
+                    button_expand.apply {
+                        isChecked = (!button_expand.isChecked)
+                        icon = ResourcesCompat.getDrawable(resources, ic, null)
+                    }
+                    description.visibility = v
+                    exercises.visibility = v
                 }
             }
 
@@ -137,7 +142,8 @@ class RoutinesFragment : Fragment() {
                 cardView.description.visibility = visibility
                 cardView.exercises.visibility = visibility
 
-                val drawable = if (isChecked) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+                val drawable =
+                    if (isChecked) R.drawable.ic_expand_less else R.drawable.ic_expand_more
                 cardView.button_expand.icon = ResourcesCompat.getDrawable(resources, drawable, null)
             }
         }
