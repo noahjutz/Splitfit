@@ -67,6 +67,13 @@
                         android:text="@={viewmodel.description}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/any_margin_default"
+                    android:background="?android:attr/listDivider" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
