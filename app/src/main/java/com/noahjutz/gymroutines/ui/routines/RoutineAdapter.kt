@@ -55,9 +55,7 @@ class RoutineAdapter(
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
-            button_expand.addOnCheckedChangeListener { _, _ ->
-                onRoutineClickListener.onRoutineClick(this as MaterialCardView)
-            }
+            button_expand.setOnClickListener { onRoutineClickListener.onRoutineClick(this as MaterialCardView) }
         }
     }
 
