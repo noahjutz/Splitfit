@@ -108,9 +108,9 @@ class RoutinesFragment : Fragment() {
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
             override fun onRoutineClick(fullRoutine: FullRoutine) {
-                // TODO:
-                //  - Add val FullRoutine.expanded and set it true here.
-                //  - Set all other routines to expanded = false
+                // TODO: Expand / Collapse according to current view.visibility
+                //  if (view.visibility == View.GONE) view.visibility = View.VISIBLE
+                //  etc...
             }
 
             override fun onEditClick(fullRoutine: FullRoutine) {
