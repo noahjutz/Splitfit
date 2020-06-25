@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -16,9 +15,6 @@
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
-        app:cardElevation="0dp"
-        app:strokeColor="@color/color_stroke"
-        app:strokeWidth="1dp"
         tools:layout_marginEnd="16dp"
         tools:layout_marginStart="16dp"
         tools:layout_marginTop="16dp">

@@ -7,9 +7,6 @@
     android:checkable="true"
     android:clickable="true"
     android:focusable="true"
-    app:cardElevation="0dp"
-    app:strokeColor="@color/color_stroke"
-    app:strokeWidth="1dp"
     tools:layout_marginEnd="16dp"
     tools:layout_marginStart="16dp"
     tools:layout_marginTop="16dp">
