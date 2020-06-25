@@ -26,11 +26,7 @@ class RoutineAdapter(
 ) : ListAdapter<FullRoutine, RoutineAdapter.RoutineHolder>(diffUtil) {
     fun getRoutine(pos: Int): FullRoutine = getItem(pos)
 
-    inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            // TODO: Remove
-        }
-    }
+    inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineHolder {
         val view = LayoutInflater.from(parent.context)
