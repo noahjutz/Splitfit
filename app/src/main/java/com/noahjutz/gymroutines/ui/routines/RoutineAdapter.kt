@@ -28,9 +28,7 @@ class RoutineAdapter(
 
     inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnClickListener {
-                this@RoutineAdapter.onRoutineClickListener.onRoutineClick(itemView as MaterialCardView)
-            }
+            // TODO: Remove
         }
     }
 
@@ -55,12 +53,13 @@ class RoutineAdapter(
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
-            button_expand.setOnClickListener { onRoutineClickListener.onRoutineClick(this as MaterialCardView) }
+            button_expand.setOnClickListener { onRoutineClickListener.onRoutineClick(fullRoutine) }
+            this.setOnClickListener { onRoutineClickListener.onRoutineClick(fullRoutine)}
         }
     }
 
     interface OnRoutineClickListener {
-        fun onRoutineClick(cardView: MaterialCardView)
+        fun onRoutineClick(fullRoutine: FullRoutine)
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
     }

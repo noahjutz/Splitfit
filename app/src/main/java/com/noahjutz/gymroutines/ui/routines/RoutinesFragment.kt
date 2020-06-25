@@ -2,6 +2,7 @@ package com.noahjutz.gymroutines.ui.routines
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -106,8 +107,10 @@ class RoutinesFragment : Fragment() {
         }
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(cardView: MaterialCardView) {
-                // TODO
+            override fun onRoutineClick(fullRoutine: FullRoutine) {
+                // TODO:
+                //  - Add val FullRoutine.expanded and set it true here.
+                //  - Set all other routines to expanded = false
             }
 
             override fun onEditClick(fullRoutine: FullRoutine) {
