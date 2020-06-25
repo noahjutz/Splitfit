@@ -28,6 +28,8 @@ import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
+import kotlinx.android.synthetic.main.fragment_create_routine.recycler_view
+import kotlinx.android.synthetic.main.fragment_routines.*
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineFragment"
@@ -119,9 +121,10 @@ class CreateRoutineFragment : Fragment() {
             override fun onExerciseClick(exercise: ExerciseImpl) {}
             override fun onExerciseLongClick(exercise: ExerciseImpl) {}
             override fun onAddSetClick(exercise: ExerciseImpl) {
-                val set =
-                    Set(exercise.exerciseHolder.exerciseHolderId) // TODO: Fix bug where Sets are assigned to exerciseHolderId 0 when creating a new ExerciseHolder
-                // viewModel.addSet(set)
+                Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
+                    .setAnchorView(fab_pick_exercises)
+                    .show()
+                // TODO
             }
         }
 

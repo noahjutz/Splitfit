@@ -41,9 +41,6 @@ class RoutineAdapter(
             name.text = fullRoutine.routine.name
             description.text = fullRoutine.routine.description
 
-            exercises.text =
-                fullRoutine.exercises.map { it.exercise.name }.toString() // TODO: Pretty format
-
             if (fullRoutine.routine.description.trim().isEmpty()) description.visibility =
                 GONE
 

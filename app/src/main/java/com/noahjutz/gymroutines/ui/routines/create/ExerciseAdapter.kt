@@ -49,8 +49,6 @@ class ExerciseAdapter(
             name.text = exercise.exercise.name
             description.text = exercise.exercise.description
 
-            sets.text = exercise.sets.toString()
-
             if (exercise.exercise.description.trim().isEmpty())
                 description.visibility = GONE
 
