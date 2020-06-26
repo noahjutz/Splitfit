@@ -120,7 +120,6 @@ class CreateRoutineFragment : Fragment() {
                 // TODO
             }
 
-            override fun onExerciseLongClick(exercise: ExerciseImpl) {}
             override fun onAddSetClick(exercise: ExerciseImpl) {
                 Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
                     .show()

@@ -23,15 +23,7 @@ class ExerciseAdapter(
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
     fun getExercise(pos: Int): ExerciseImpl = getItem(pos)
 
-    inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnLongClickListener {
-                this@ExerciseAdapter.onExerciseClickListener
-                    .onExerciseLongClick(getItem(adapterPosition))
-                true
-            }
-        } // TODO: Remove
-    }
+    inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
         val view = LayoutInflater.from(parent.context)
@@ -58,7 +50,6 @@ class ExerciseAdapter(
 
     interface OnExerciseClickListener {
         fun onExerciseClick(card: MaterialCardView)
-        fun onExerciseLongClick(exercise: ExerciseImpl)
         fun onAddSetClick(exercise: ExerciseImpl)
         fun onEditExerciseClick(exercise: ExerciseImpl)
     }
