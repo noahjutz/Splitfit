@@ -17,6 +17,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
@@ -29,6 +31,8 @@ import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
+import kotlinx.android.synthetic.main.fragment_create_routine.recycler_view
+import kotlinx.android.synthetic.main.fragment_routines.*
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
@@ -119,6 +123,7 @@ class CreateRoutineFragment : Fragment() {
 
         val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
             override fun onExerciseClick(card: MaterialCardView) {
+                TransitionManager.beginDelayedTransition(recycler_view, AutoTransition())
                 val v = if (card.description.visibility == VISIBLE) GONE else VISIBLE
                 card.apply {
                     description.visibility = v

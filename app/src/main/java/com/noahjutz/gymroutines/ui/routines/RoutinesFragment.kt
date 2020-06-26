@@ -19,6 +19,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
@@ -108,6 +110,7 @@ class RoutinesFragment : Fragment() {
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
             override fun onRoutineClick(card: MaterialCardView) {
+                TransitionManager.beginDelayedTransition(recycler_view, AutoTransition())
                 val v = if (card.description.visibility == GONE) VISIBLE else GONE
                 card.apply {
                     description.visibility = v
