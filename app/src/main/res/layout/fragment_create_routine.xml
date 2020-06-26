@@ -24,9 +24,9 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/edit_name"
@@ -78,19 +78,26 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="64dp"
                     tools:itemCount="3"
                     tools:listitem="@layout/listitem_exercise" />
 
-                <Button
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/any_margin_default"
-                    android:onClick="@{() -> fragment.addExercise()}"
-                    android:text="Add Exercise" />
+
             </LinearLayout>
+
         </androidx.core.widget.NestedScrollView>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/any_margin_default"
+            android:layout_marginTop="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:layout_marginBottom="@dimen/any_margin_default"
+            android:onClick="@{() -> fragment.addExercise()}"
+            android:text="Add Exercise" />
     </RelativeLayout>
 </layout>
