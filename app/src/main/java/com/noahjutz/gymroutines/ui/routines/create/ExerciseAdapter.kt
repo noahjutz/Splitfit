@@ -12,7 +12,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
-import kotlinx.android.synthetic.main.listitem_exercise_wrapper.view.*
+import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 
 @Suppress("unused")
 private const val TAG = "ExerciseAdapter"
@@ -38,7 +38,7 @@ class ExerciseAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.listitem_exercise_wrapper, parent, false)
+            .inflate(R.layout.listitem_exercise_holder, parent, false)
         return ExerciseHolder(view)
     }
 
