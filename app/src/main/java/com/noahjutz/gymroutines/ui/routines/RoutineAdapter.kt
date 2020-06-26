@@ -41,12 +41,17 @@ class RoutineAdapter(
             name.text = fullRoutine.routine.name
             description.text = fullRoutine.routine.description
 
-            if (fullRoutine.routine.description.trim().isEmpty()) description.visibility =
-                GONE
+            val list = fullRoutine.exercises.map { it.exercise.name }
+            val sb = StringBuilder()
+            for (i in list.indices) {
+                sb.append(list[i])
+                if (i < list.size - 1) sb.append("\n")
+            }
+            exercises.text = sb.toString()
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
-            setOnClickListener { onRoutineClickListener.onRoutineClick(this as MaterialCardView)}
+            setOnClickListener { onRoutineClickListener.onRoutineClick(this as MaterialCardView) }
         }
     }
 
