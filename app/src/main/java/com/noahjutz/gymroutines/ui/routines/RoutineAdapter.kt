@@ -46,7 +46,6 @@ class RoutineAdapter(
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
-            button_expand.setOnClickListener { onRoutineClickListener.onRoutineClick(fullRoutine) }
             this.setOnClickListener { onRoutineClickListener.onRoutineClick(fullRoutine)}
         }
     }
