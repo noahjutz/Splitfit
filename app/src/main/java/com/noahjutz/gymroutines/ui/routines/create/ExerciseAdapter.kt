@@ -52,9 +52,8 @@ class ExerciseAdapter(
             if (exercise.exercise.description.trim().isEmpty())
                 description.visibility = GONE
 
-            button_add_set.setOnClickListener {
-                onExerciseClickListener.onAddSetClick(exercise)
-            }
+            button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exercise) }
+            button_edit_exercise.setOnClickListener { onExerciseClickListener.onEditExerciseClick(exercise) }
         }
     }
 
@@ -62,6 +61,7 @@ class ExerciseAdapter(
         fun onExerciseClick(exercise: ExerciseImpl)
         fun onExerciseLongClick(exercise: ExerciseImpl)
         fun onAddSetClick(exercise: ExerciseImpl)
+        fun onEditExerciseClick(exercise: ExerciseImpl)
     }
 }
 

@@ -122,7 +122,12 @@ class CreateRoutineFragment : Fragment() {
             override fun onExerciseLongClick(exercise: ExerciseImpl) {}
             override fun onAddSetClick(exercise: ExerciseImpl) {
                 Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
-                    .setAnchorView(fab_pick_exercises)
+                    .show()
+                // TODO
+            }
+
+            override fun onEditExerciseClick(exercise: ExerciseImpl) {
+                Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
                     .show()
                 // TODO
             }
