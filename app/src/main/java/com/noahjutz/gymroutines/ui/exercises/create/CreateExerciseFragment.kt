@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +17,7 @@ import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_create_exercise.*
 
 @Suppress("unused")
 private const val TAG = "CreateExerciseFragment"
@@ -48,6 +51,13 @@ class CreateExerciseFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initActivity()
         initViewModel()
+        initViews()
+    }
+
+    private fun initViews() {
+        val items = listOf("Material", "Design", "Components", "Android")
+        val adapter = ArrayAdapter(requireContext(), R.layout.listitem_dropdown, items)
+        (edit_type.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     private fun initBinding() {
