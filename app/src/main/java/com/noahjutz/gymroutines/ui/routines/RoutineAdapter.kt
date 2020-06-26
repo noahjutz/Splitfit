@@ -46,12 +46,12 @@ class RoutineAdapter(
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
-            this.setOnClickListener { onRoutineClickListener.onRoutineClick(fullRoutine)}
+            this.setOnClickListener { onRoutineClickListener.onRoutineClick(this as MaterialCardView)}
         }
     }
 
     interface OnRoutineClickListener {
-        fun onRoutineClick(fullRoutine: FullRoutine)
+        fun onRoutineClick(card: MaterialCardView)
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
     }

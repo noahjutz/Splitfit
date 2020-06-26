@@ -107,7 +107,7 @@ class RoutinesFragment : Fragment() {
         }
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(fullRoutine: FullRoutine) {
+            override fun onRoutineClick(card: MaterialCardView) {
                 // TODO: Expand / Collapse according to current view.visibility
                 //  if (view.visibility == View.GONE) view.visibility = View.VISIBLE
                 //  etc...
