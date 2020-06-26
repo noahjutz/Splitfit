@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -28,6 +29,7 @@ import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
+import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineFragment"
@@ -117,7 +119,12 @@ class CreateRoutineFragment : Fragment() {
 
         val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
             override fun onExerciseClick(card: MaterialCardView) {
-                // TODO
+                val v = if (card.description.visibility == VISIBLE) GONE else VISIBLE
+                card.apply {
+                    description.visibility = v
+                    buttons.visibility = v
+                    divider.visibility = v
+                }
             }
 
             override fun onAddSetClick(exercise: ExerciseImpl) {
