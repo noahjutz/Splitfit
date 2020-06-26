@@ -108,16 +108,12 @@ class RoutinesFragment : Fragment() {
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
             override fun onRoutineClick(card: MaterialCardView) {
-                if (card.description.visibility == GONE) {
-                    card.description.visibility = VISIBLE
-                    card.exercises.visibility = VISIBLE
-                    card.buttons.visibility = VISIBLE
-                    card.divider.visibility = VISIBLE
-                } else {
-                    card.description.visibility = GONE
-                    card.exercises.visibility = GONE
-                    card.buttons.visibility = GONE
-                    card.divider.visibility = GONE
+                val v = if (card.description.visibility == GONE) VISIBLE else GONE
+                card.apply {
+                    description.visibility = v
+                    exercises.visibility = v
+                    buttons.visibility = v
+                    divider.visibility = v
                 }
             }
 
