@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
@@ -24,16 +25,12 @@ class ExerciseAdapter(
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnClickListener {
-                this@ExerciseAdapter.onExerciseClickListener
-                    .onExerciseClick(getItem(adapterPosition))
-            }
             itemView.setOnLongClickListener {
                 this@ExerciseAdapter.onExerciseClickListener
                     .onExerciseLongClick(getItem(adapterPosition))
                 true
             }
-        }
+        } // TODO: Remove
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
@@ -54,11 +51,13 @@ class ExerciseAdapter(
 
             button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exercise) }
             button_edit_exercise.setOnClickListener { onExerciseClickListener.onEditExerciseClick(exercise) }
+
+            setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
         }
     }
 
     interface OnExerciseClickListener {
-        fun onExerciseClick(exercise: ExerciseImpl)
+        fun onExerciseClick(card: MaterialCardView)
         fun onExerciseLongClick(exercise: ExerciseImpl)
         fun onAddSetClick(exercise: ExerciseImpl)
         fun onEditExerciseClick(exercise: ExerciseImpl)

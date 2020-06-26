@@ -1,11 +1,11 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,11 +16,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseHolder
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
-import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
@@ -28,8 +28,6 @@ import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
-import kotlinx.android.synthetic.main.fragment_create_routine.recycler_view
-import kotlinx.android.synthetic.main.fragment_routines.*
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineFragment"
@@ -118,7 +116,10 @@ class CreateRoutineFragment : Fragment() {
         }
 
         val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
-            override fun onExerciseClick(exercise: ExerciseImpl) {}
+            override fun onExerciseClick(card: MaterialCardView) {
+                // TODO
+            }
+
             override fun onExerciseLongClick(exercise: ExerciseImpl) {}
             override fun onAddSetClick(exercise: ExerciseImpl) {
                 Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
