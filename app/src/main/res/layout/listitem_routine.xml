@@ -63,7 +63,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/buttons"
@@ -72,7 +73,8 @@
             android:layout_gravity="end"
             android:layout_margin="8dp"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_launch"
