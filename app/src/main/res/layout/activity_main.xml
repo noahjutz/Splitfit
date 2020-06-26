@@ -37,6 +37,7 @@
             tools:ignore="FragmentTagUsage" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <!-- TODO cleaner background solution -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
@@ -44,6 +45,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
+        android:background="?android:attr/actionBarItemBackground"
         app:menu="@menu/bottom_nav" />
 </RelativeLayout>
