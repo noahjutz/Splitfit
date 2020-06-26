@@ -110,10 +110,15 @@ class RoutinesFragment : Fragment() {
             override fun onRoutineClick(card: MaterialCardView) {
                 if (card.description.visibility == GONE) {
                     card.description.visibility = VISIBLE
+                    card.exercises.visibility = VISIBLE
+                    card.buttons.visibility = VISIBLE
+                    card.divider.visibility = VISIBLE
                 } else {
                     card.description.visibility = GONE
+                    card.exercises.visibility = GONE
+                    card.buttons.visibility = GONE
+                    card.divider.visibility = GONE
                 }
-                // TODO: Hide/reveal other layout items
             }
 
             override fun onEditClick(fullRoutine: FullRoutine) {
