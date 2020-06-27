@@ -63,29 +63,15 @@ class CreateExerciseFragment : Fragment() {
      *   - radio_band
      */
     private fun initPickers() {
-        group_base.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.radio_reps -> Log.d(TAG, "Reps")
-                R.id.radio_duration -> Log.d(TAG, "Duration")
-            }
-        }
-
-        group_type.setOnCheckedChangeListener { group, checkedId ->
-            val v = if (checkedId == R.id.radio_machine
-                || checkedId == R.id.radio_band
+        viewModel.type.observe(viewLifecycleOwner, Observer {type ->
+            val v = if (type == R.id.radio_machine
+                || type == R.id.radio_band
             ) VISIBLE else GONE
 
             TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
             group_resisted.visibility = v
             seperator_resisted.visibility = v
-        }
-
-        group_resisted.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.radio_assisted -> Log.d(TAG, "Assisted")
-                R.id.radio_resisted -> Log.d(TAG, "Resisted")
-            }
-        }
+        })
     }
 
     private fun initBinding() {
