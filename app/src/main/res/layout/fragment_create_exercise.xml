@@ -15,10 +15,12 @@
     </data>
 
     <ScrollView
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.routines.CreateRoutineActivity">
@@ -144,6 +146,7 @@
                     </RadioGroup>
 
                     <View
+                        android:id="@+id/seperator_resisted"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/any_margin_default"

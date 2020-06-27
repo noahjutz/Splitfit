@@ -5,18 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
 import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_exercise.*
+import kotlinx.android.synthetic.main.fragment_routines.*
 
 @Suppress("unused")
 private const val TAG = "CreateExerciseFragment"
@@ -62,11 +66,11 @@ class CreateExerciseFragment : Fragment() {
         }
 
         group_type.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.radio_weight -> Log.d(TAG, "Weight")
-                R.id.radio_band -> Log.d(TAG, "Band")
-                R.id.radio_none -> Log.d(TAG, "None")
-            }
+            val v = if (checkedId == R.id.radio_none) GONE else VISIBLE
+
+            TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
+            group_resisted.visibility = v
+            seperator_resisted.visibility = v
         }
 
         group_resisted.setOnCheckedChangeListener { group, checkedId ->
