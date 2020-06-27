@@ -58,4 +58,8 @@
         android:id="@+id/add_exercise"
         android:name="com.noahjutz.gymroutines.ui.routines.create.pick.PickExerciseFragment"
         tools:layout="@layout/fragment_pick_exercise"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.noahjutz.gymroutines.ui.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
