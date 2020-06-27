@@ -76,51 +76,87 @@
                 android:layout_marginTop="@dimen/any_margin_default"
                 android:background="?android:attr/listDivider" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkbox_band"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_base"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/seperator"
                 android:layout_marginStart="@dimen/any_margin_default"
                 android:layout_marginTop="@dimen/any_margin_default"
                 android:layout_marginEnd="@dimen/any_margin_default"
-                android:text="Band" />
+                android:layout_marginBottom="@dimen/any_margin_default">
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkbox_weight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/checkbox_band"
-                android:layout_marginStart="@dimen/any_margin_default"
-                android:layout_marginEnd="@dimen/any_margin_default"
-                android:text="Weight" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkbox_reps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/checkbox_weight"
-                android:layout_marginStart="@dimen/any_margin_default"
-                android:layout_marginEnd="@dimen/any_margin_default"
-                android:text="Reps" />
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkbox_duration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/checkbox_reps"
-                android:layout_marginStart="@dimen/any_margin_default"
-                android:layout_marginEnd="@dimen/any_margin_default"
-                android:text="Duration" />
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Reps" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/checkbox_distance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/checkbox_duration"
-                android:layout_marginStart="@dimen/any_margin_default"
-                android:layout_marginEnd="@dimen/any_margin_default"
-                android:text="Distance" />
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Duration" />
+                    </RadioGroup>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/any_margin_default"
+                        android:layout_marginBottom="@dimen/any_margin_default"
+                        android:background="?android:attr/listDivider" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Weight" />
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Band" />
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="None" />
+                    </RadioGroup>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/any_margin_default"
+                        android:layout_marginBottom="@dimen/any_margin_default"
+                        android:background="?android:attr/listDivider" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Resisted" />
+
+                        <RadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Assisted" />
+                    </RadioGroup>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
     </ScrollView>
 </layout>
