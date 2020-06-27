@@ -55,15 +55,25 @@ class CreateExerciseFragment : Fragment() {
 
     private fun initPickers() {
         group_base.setOnCheckedChangeListener { group, checkedId ->
-            Log.d(TAG, "$group $checkedId")
-        }
-
-        group_resisted.setOnCheckedChangeListener { group, checkedId ->
-            Log.d(TAG, "$group $checkedId")
+            when (checkedId) {
+                R.id.radio_reps -> Log.d(TAG, "Reps")
+                R.id.radio_duration -> Log.d(TAG, "Duration")
+            }
         }
 
         group_type.setOnCheckedChangeListener { group, checkedId ->
-            Log.d(TAG, "$group $checkedId")
+            when (checkedId) {
+                R.id.radio_weight -> Log.d(TAG, "Weight")
+                R.id.radio_band -> Log.d(TAG, "Band")
+                R.id.radio_none -> Log.d(TAG, "None")
+            }
+        }
+
+        group_resisted.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.radio_assisted -> Log.d(TAG, "Assisted")
+                R.id.radio_resisted -> Log.d(TAG, "Resisted")
+            }
         }
     }
 
