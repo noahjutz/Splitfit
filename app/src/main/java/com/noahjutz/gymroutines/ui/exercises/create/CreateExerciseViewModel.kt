@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.exercises.create
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,7 +46,7 @@ class CreateExerciseViewModel(
     private fun initExercise() {
         _exercise.run {
             value = getExerciseById(exerciseId)
-                ?: Exercise("")
+                ?: Exercise("", "", -1, -1, -1) // TODO
 
             addSource(name) { nameSource ->
                 _exercise.value = _exercise.value!!.apply {
