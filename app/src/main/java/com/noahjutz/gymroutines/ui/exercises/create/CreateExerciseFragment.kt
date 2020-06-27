@@ -65,23 +65,20 @@ class CreateExerciseFragment : Fragment() {
             }
         }
 
+        group_type.setOnCheckedChangeListener { group, checkedId ->
+            val v = if (checkedId == R.id.radio_none) GONE else VISIBLE
+
+            TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
+            group_resisted.visibility = v
+            seperator_resisted.visibility = v
+        }
+
         group_resisted.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radio_assisted -> Log.d(TAG, "Assisted")
                 R.id.radio_resisted -> Log.d(TAG, "Resisted")
             }
         }
-
-        checkbox_band.setOnCheckedChangeListener { _, _ -> revealResisted() }
-        checkbox_weight.setOnCheckedChangeListener { _, _ -> revealResisted() }
-    }
-
-    private fun revealResisted() {
-        val v = if (!checkbox_band.isChecked && !checkbox_weight.isChecked) GONE else VISIBLE
-
-        TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
-        group_resisted.visibility = v
-        seperator_resisted.visibility = v
     }
 
     private fun initBinding() {
