@@ -120,30 +120,18 @@
                         android:layout_marginBottom="@dimen/any_margin_default"
                         android:background="?android:attr/listDivider" />
 
-                    <RadioGroup
-                        android:id="@+id/group_type"
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/radio_weight">
+                        android:checked="true"
+                        android:text="Weight" />
 
-                        <RadioButton
-                            android:id="@+id/radio_weight"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Weight" />
-
-                        <RadioButton
-                            android:id="@+id/radio_band"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Band" />
-
-                        <RadioButton
-                            android:id="@+id/radio_none"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="None" />
-                    </RadioGroup>
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox_band"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Band" />
 
                     <View
                         android:id="@+id/seperator_resisted"
