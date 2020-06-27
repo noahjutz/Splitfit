@@ -1,12 +1,11 @@
 package com.noahjutz.gymroutines.ui.exercises.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -51,13 +50,21 @@ class CreateExerciseFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initActivity()
         initViewModel()
-        initViews()
+        initPickers()
     }
 
-    private fun initViews() {
-        // val items = listOf("Material", "Design", "Components", "Android")
-        // val adapter = ArrayAdapter(requireContext(), R.layout.listitem_dropdown, items)
-        // (edit_type.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+    private fun initPickers() {
+        group_base.setOnCheckedChangeListener { group, checkedId ->
+            Log.d(TAG, "$group $checkedId")
+        }
+
+        group_resisted.setOnCheckedChangeListener { group, checkedId ->
+            Log.d(TAG, "$group $checkedId")
+        }
+
+        group_type.setOnCheckedChangeListener { group, checkedId ->
+            Log.d(TAG, "$group $checkedId")
+        }
     }
 
     private fun initBinding() {
