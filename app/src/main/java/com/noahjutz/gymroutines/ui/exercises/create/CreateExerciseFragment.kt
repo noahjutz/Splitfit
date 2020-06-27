@@ -56,6 +56,12 @@ class CreateExerciseFragment : Fragment() {
         initPickers()
     }
 
+    /**
+     * Radio buttons:
+     * - group_resisted visible if:
+     *   - radio_machine
+     *   - radio_band
+     */
     private fun initPickers() {
         group_base.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
@@ -65,7 +71,9 @@ class CreateExerciseFragment : Fragment() {
         }
 
         group_type.setOnCheckedChangeListener { group, checkedId ->
-            val v = if (checkedId == R.id.radio_other) GONE else VISIBLE
+            val v = if (checkedId == R.id.radio_machine
+                || checkedId == R.id.radio_band
+            ) VISIBLE else GONE
 
             TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
             group_resisted.visibility = v
