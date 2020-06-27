@@ -41,7 +41,9 @@ class RoutineAdapter(
             name.text = fullRoutine.routine.name
             description.text = fullRoutine.routine.description
 
-            val list = fullRoutine.exercises.map { it.exercise.name }
+            val list = fullRoutine.exercises
+                .sortedBy { it.exerciseHolder.position }
+                .map { it.exercise.name }
             val sb = StringBuilder()
             for (i in list.indices) {
                 sb.append(list[i])
