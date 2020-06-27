@@ -124,13 +124,13 @@
                         android:id="@+id/group_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/radio_weight">
+                        android:checkedButton="@id/radio_machine">
 
                         <RadioButton
-                            android:id="@+id/radio_weight"
+                            android:id="@+id/radio_machine"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Weight" />
+                            android:text="Machine" />
 
                         <RadioButton
                             android:id="@+id/radio_band"
@@ -139,10 +139,34 @@
                             android:text="Band" />
 
                         <RadioButton
-                            android:id="@+id/radio_none"
+                            android:id="@+id/radio_dumbbell"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="None" />
+                            android:text="Dumbbell" />
+
+                        <RadioButton
+                            android:id="@+id/radio_barbell"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Barbell" />
+
+                        <RadioButton
+                            android:id="@+id/radio_kettlebell"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kettlebell" />
+
+                        <RadioButton
+                            android:id="@+id/radio_bodyweight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bodyweight" />
+
+                        <RadioButton
+                            android:id="@+id/radio_other"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Other" />
                     </RadioGroup>
 
                     <View

@@ -20,7 +20,6 @@ import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_exercise.*
-import kotlinx.android.synthetic.main.fragment_routines.*
 
 @Suppress("unused")
 private const val TAG = "CreateExerciseFragment"
@@ -66,7 +65,7 @@ class CreateExerciseFragment : Fragment() {
         }
 
         group_type.setOnCheckedChangeListener { group, checkedId ->
-            val v = if (checkedId == R.id.radio_none) GONE else VISIBLE
+            val v = if (checkedId == R.id.radio_other) GONE else VISIBLE
 
             TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
             group_resisted.visibility = v
