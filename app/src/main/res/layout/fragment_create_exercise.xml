@@ -14,108 +14,113 @@
             type="com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseFragment" />
     </data>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.routines.CreateRoutineActivity">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginLeft="@dimen/any_margin_default"
-            android:layout_marginTop="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            android:layout_marginRight="@dimen/any_margin_default"
-            app:endIconMode="clear_text"
-            app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_title">
+            android:layout_height="match_parent"
+            tools:context=".ui.routines.CreateRoutineActivity">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/create_routine_hint_title"
-                android:inputType="textPersonName"
-                android:text="@={viewmodel.name}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/any_margin_default"
+                android:layout_marginLeft="@dimen/any_margin_default"
+                android:layout_marginTop="@dimen/any_margin_default"
+                android:layout_marginEnd="@dimen/any_margin_default"
+                android:layout_marginRight="@dimen/any_margin_default"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:startIconDrawable="@drawable/ic_title">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_description"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edit_name"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            app:startIconDrawable="@drawable/ic_short_text">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/create_routine_hint_title"
+                    android:inputType="textPersonName"
+                    android:text="@={viewmodel.name}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/create_routine_hint_description"
-                android:inputType="textMultiLine"
-                android:text="@={viewmodel.description}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_below="@id/edit_name"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/any_margin_default"
+                android:layout_marginEnd="@dimen/any_margin_default"
+                app:startIconDrawable="@drawable/ic_short_text">
 
-        <View
-            android:id="@+id/seperator"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/edit_description"
-            android:layout_marginTop="@dimen/any_margin_default"
-            android:background="?android:attr/listDivider" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/create_routine_hint_description"
+                    android:inputType="textMultiLine"
+                    android:text="@={viewmodel.description}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_band"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/seperator"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginTop="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            android:text="Band" />
+            <View
+                android:id="@+id/seperator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/edit_description"
+                android:layout_marginTop="@dimen/any_margin_default"
+                android:background="?android:attr/listDivider" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_weight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/checkbox_band"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            android:text="Weight" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_band"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/seperator"
+                android:layout_marginStart="@dimen/any_margin_default"
+                android:layout_marginTop="@dimen/any_margin_default"
+                android:layout_marginEnd="@dimen/any_margin_default"
+                android:text="Band" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_reps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/checkbox_weight"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            android:text="Reps" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkbox_band"
+                android:layout_marginStart="@dimen/any_margin_default"
+                android:layout_marginEnd="@dimen/any_margin_default"
+                android:text="Weight" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/checkbox_reps"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            android:text="Duration" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_reps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkbox_weight"
+                android:layout_marginStart="@dimen/any_margin_default"
+                android:layout_marginEnd="@dimen/any_margin_default"
+                android:text="Reps" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/checkbox_distance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/checkbox_duration"
-            android:layout_marginStart="@dimen/any_margin_default"
-            android:layout_marginEnd="@dimen/any_margin_default"
-            android:text="Distance" />
-    </RelativeLayout>
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkbox_reps"
+                android:layout_marginStart="@dimen/any_margin_default"
+                android:layout_marginEnd="@dimen/any_margin_default"
+                android:text="Duration" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/checkbox_duration"
+                android:layout_marginStart="@dimen/any_margin_default"
+                android:layout_marginEnd="@dimen/any_margin_default"
+                android:text="Distance" />
+        </RelativeLayout>
+    </ScrollView>
 </layout>
