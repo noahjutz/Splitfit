@@ -98,7 +98,7 @@
                         android:id="@+id/group_base"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@={viewmodel.type}">
+                        android:checkedButton="@={viewmodel.category}">
 
                         <RadioButton
                             android:id="@+id/radio_reps"
@@ -124,7 +124,7 @@
                         android:id="@+id/group_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/radio_machine">
+                        android:checkedButton="@={viewmodel.type}">
 
                         <RadioButton
                             android:id="@+id/radio_machine"
@@ -187,7 +187,7 @@
                         android:id="@+id/group_resisted"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/radio_resisted">
+                        android:checkedButton="@={viewmodel.resisted}">
 
                         <RadioButton
                             android:id="@+id/radio_resisted"

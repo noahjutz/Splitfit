@@ -32,7 +32,9 @@ class CreateExerciseViewModel(
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
+    val category = MutableLiveData<Int>()
     val type = MutableLiveData<Int>()
+    val resisted = MutableLiveData<Int>()
 
     init {
         initExercise()
@@ -42,7 +44,9 @@ class CreateExerciseViewModel(
     private fun initBinding() {
         name.value = exercise.value!!.name
         description.value = exercise.value!!.description
+        category.value = exercise.value!!.category
         type.value = exercise.value!!.type
+        resisted.value = exercise.value!!.resisted
     }
 
     private fun initExercise() {
@@ -65,6 +69,18 @@ class CreateExerciseViewModel(
             addSource(type) { typeSource ->
                 _exercise.value = _exercise.value!!.apply {
                     type = typeSource
+                }
+            }
+
+            addSource(category) { categorySource ->
+                _exercise.value = _exercise.value!!.apply {
+                    category = categorySource
+                }
+            }
+
+            addSource(resisted) { resistedSource ->
+                _exercise.value = _exercise.value!!.apply {
+                    resisted = resistedSource
                 }
             }
         }
