@@ -72,25 +72,50 @@
             android:layout_marginTop="@dimen/any_margin_default"
             android:background="?android:attr/listDivider" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_type"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_band"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/seperator"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/any_margin_default"
             android:layout_marginTop="@dimen/any_margin_default"
             android:layout_marginEnd="@dimen/any_margin_default"
-            app:startIconDrawable="@drawable/ic_dumbbell">
+            android:text="Band" />
 
-            <AutoCompleteTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Type"
-                android:inputType="none" />
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkbox_band"
+            android:layout_marginStart="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:text="Weight" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_reps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkbox_weight"
+            android:layout_marginStart="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:text="Reps" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkbox_reps"
+            android:layout_marginStart="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:text="Duration" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkbox_duration"
+            android:layout_marginStart="@dimen/any_margin_default"
+            android:layout_marginEnd="@dimen/any_margin_default"
+            android:text="Distance" />
     </RelativeLayout>
 </layout>

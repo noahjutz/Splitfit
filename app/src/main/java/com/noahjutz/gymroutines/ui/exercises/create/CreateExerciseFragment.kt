@@ -55,9 +55,9 @@ class CreateExerciseFragment : Fragment() {
     }
 
     private fun initViews() {
-        val items = listOf("Material", "Design", "Components", "Android")
-        val adapter = ArrayAdapter(requireContext(), R.layout.listitem_dropdown, items)
-        (edit_type.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        // val items = listOf("Material", "Design", "Components", "Android")
+        // val adapter = ArrayAdapter(requireContext(), R.layout.listitem_dropdown, items)
+        // (edit_type.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     private fun initBinding() {
