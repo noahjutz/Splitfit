@@ -94,14 +94,17 @@
 
                     <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@id/radio_reps">
 
                         <RadioButton
+                            android:id="@+id/radio_reps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Reps" />
 
                         <RadioButton
+                            android:id="@+id/radio_duration"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Duration" />
@@ -116,19 +119,23 @@
 
                     <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@id/radio_weight">
 
                         <RadioButton
+                            android:id="@+id/radio_weight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Weight" />
 
                         <RadioButton
+                            android:id="@+id/radio_band"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Band" />
 
                         <RadioButton
+                            android:id="@+id/radio_none"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="None" />
@@ -143,14 +150,17 @@
 
                     <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@id/radio_resisted">
 
                         <RadioButton
+                            android:id="@+id/radio_resisted"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Resisted" />
 
                         <RadioButton
+                            android:id="@+id/radio_assisted"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Assisted" />
