@@ -98,7 +98,7 @@
                         android:id="@+id/group_base"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:checkedButton="@id/radio_reps">
+                        android:checkedButton="@={viewmodel.type}">
 
                         <RadioButton
                             android:id="@+id/radio_reps"
