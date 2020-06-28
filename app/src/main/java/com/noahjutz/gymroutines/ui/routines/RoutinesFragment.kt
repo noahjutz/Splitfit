@@ -151,6 +151,14 @@ class RoutinesFragment : Fragment() {
     private fun initViewModel() {
         viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
             adapter.submitList(fullRoutines)
+
+            if (fullRoutines.isEmpty()) {
+                text_blank.visibility = VISIBLE
+                icon_blank.visibility = VISIBLE
+            } else {
+                text_blank.visibility = GONE
+                icon_blank.visibility = GONE
+            }
         })
     }
 
