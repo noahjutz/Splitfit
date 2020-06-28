@@ -153,8 +153,7 @@ class RoutinesFragment : Fragment() {
 
     private fun showEmptyScreen(visibility: Int) {
         TransitionManager.beginDelayedTransition(scene_root, AutoTransition())
-        text_blank.visibility = visibility
-        icon_blank.visibility = visibility
+        screen_routines_empty.visibility = visibility
     }
 
     fun addRoutine() {

@@ -20,26 +20,13 @@
         android:layout_height="match_parent"
         tools:context=".ui.routines.RoutinesFragment">
 
-        <ImageView
-            android:id="@+id/icon_blank"
+        <include
+            android:id="@+id/screen_routines_empty"
+            layout="@layout/screen_routines_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:minWidth="100dp"
-            android:minHeight="100dp"
-            android:tint="?attr/colorPrimary"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_dumbbell" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_blank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/icon_blank"
-            android:layout_centerHorizontal="true"
-            android:text="Nothing here..."
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            android:visibility="gone" />
+            android:layout_centerInParent="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

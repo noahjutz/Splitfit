@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/icon_blank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:minWidth="100dp"
+        android:minHeight="100dp"
+        android:tint="?attr/colorPrimary"
+        app:srcCompat="@drawable/ic_dumbbell" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_blank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Nothing here..."
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+</LinearLayout>
