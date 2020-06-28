@@ -163,10 +163,10 @@
                             android:text="Bodyweight" />
 
                         <RadioButton
-                            android:id="@+id/radio_distance"
+                            android:id="@+id/radio_cardio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Distance" />
+                            android:text="Cardio" />
 
                         <RadioButton
                             android:id="@+id/radio_other"
