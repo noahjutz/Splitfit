@@ -14,14 +14,14 @@
         android:layout_gravity="center"
         android:minWidth="100dp"
         android:minHeight="100dp"
-        android:tint="?attr/colorPrimary"
-        app:srcCompat="@drawable/ic_dumbbell" />
+        android:tint="?android:textColorPrimary"
+        app:srcCompat="@drawable/ic_routine" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_blank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Nothing here..."
+        android:text="Start by adding a routine."
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 </LinearLayout>
