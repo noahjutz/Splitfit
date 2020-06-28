@@ -32,6 +32,7 @@ class CreateExerciseViewModel(
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
+    // TODO: Store enum values instead of directly storing Resource Ids
     val category = MutableLiveData<Int>()
     val type = MutableLiveData<Int>()
     val resisted = MutableLiveData<Int>()
