@@ -1,16 +1,11 @@
 package com.noahjutz.gymroutines.ui.routines
 
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,7 +26,6 @@ import com.noahjutz.gymroutines.util.MarginItemDecoration
 import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
-import kotlinx.android.synthetic.main.listitem_routine.*
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
@@ -152,15 +146,15 @@ class RoutinesFragment : Fragment() {
         viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
             adapter.submitList(fullRoutines)
 
-            TransitionManager.beginDelayedTransition(scene_root, AutoTransition())
-            if (fullRoutines.isEmpty()) {
-                text_blank.visibility = VISIBLE
-                icon_blank.visibility = VISIBLE
-            } else {
-                text_blank.visibility = GONE
-                icon_blank.visibility = GONE
-            }
+            val v = if (fullRoutines.isEmpty()) VISIBLE else GONE
+            showEmptyScreen(v)
         })
+    }
+
+    private fun showEmptyScreen(visibility: Int) {
+        TransitionManager.beginDelayedTransition(scene_root, AutoTransition())
+        text_blank.visibility = visibility
+        icon_blank.visibility = visibility
     }
 
     fun addRoutine() {
