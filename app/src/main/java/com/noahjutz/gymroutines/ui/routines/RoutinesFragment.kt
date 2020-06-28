@@ -152,6 +152,7 @@ class RoutinesFragment : Fragment() {
         viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
             adapter.submitList(fullRoutines)
 
+            TransitionManager.beginDelayedTransition(scene_root, AutoTransition())
             if (fullRoutines.isEmpty()) {
                 text_blank.visibility = VISIBLE
                 icon_blank.visibility = VISIBLE
