@@ -95,111 +95,41 @@
                     android:padding="16dp">
 
                     <RadioGroup
-                        android:id="@+id/group_base"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:checkedButton="@={viewmodel.category}">
-
-                        <RadioButton
-                            android:id="@+id/radio_reps"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Reps" />
-
-                        <RadioButton
-                            android:id="@+id/radio_duration"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Duration" />
-                    </RadioGroup>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/any_margin_default"
-                        android:layout_marginBottom="@dimen/any_margin_default"
-                        android:background="?android:attr/listDivider" />
-
-                    <RadioGroup
                         android:id="@+id/group_type"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:checkedButton="@={viewmodel.type}">
+                        android:layout_height="wrap_content">
 
                         <RadioButton
-                            android:id="@+id/radio_machine"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Machine" />
+                            android:text="Strength" />
 
-                        <RadioButton
-                            android:id="@+id/radio_band"
+                        <RadioGroup
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Band" />
+                            android:layout_marginStart="@dimen/any_margin_large">
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Resisted" />
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Assisted" />
+
+                            <RadioButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Reps only" />
+                        </RadioGroup>
 
                         <RadioButton
-                            android:id="@+id/radio_dumbbell"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Dumbbell" />
-
-                        <RadioButton
-                            android:id="@+id/radio_barbell"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Barbell" />
-
-                        <RadioButton
-                            android:id="@+id/radio_kettlebell"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Kettlebell" />
-
-                        <RadioButton
-                            android:id="@+id/radio_bodyweight"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Bodyweight" />
-
-                        <RadioButton
-                            android:id="@+id/radio_cardio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Cardio" />
 
-                        <RadioButton
-                            android:id="@+id/radio_other"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Other" />
-                    </RadioGroup>
-
-                    <View
-                        android:id="@+id/seperator_resisted"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/any_margin_default"
-                        android:layout_marginBottom="@dimen/any_margin_default"
-                        android:background="?android:attr/listDivider" />
-
-                    <RadioGroup
-                        android:id="@+id/group_resisted"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:checkedButton="@={viewmodel.resisted}">
-
-                        <RadioButton
-                            android:id="@+id/radio_resisted"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Resisted" />
-
-                        <RadioButton
-                            android:id="@+id/radio_assisted"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Assisted" />
                     </RadioGroup>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

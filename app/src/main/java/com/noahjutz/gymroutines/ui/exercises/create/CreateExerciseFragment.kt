@@ -55,31 +55,8 @@ class CreateExerciseFragment : Fragment() {
         initPickers()
     }
 
-    /**
-     * - group_resisted visible if:
-     *   - radio_machine
-     *   - radio_band
-     *
-     * - radio_cardio visible if:
-     *   - radio_duration
-     */
     private fun initPickers() {
-        viewModel.category.observe(viewLifecycleOwner, Observer { category ->
-            val visibilityCardio = if (category == R.id.radio_reps) GONE else VISIBLE
-
-            TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
-            radio_cardio.visibility = visibilityCardio
-        })
-
-        viewModel.type.observe(viewLifecycleOwner, Observer {type ->
-            val visibilityResisted = if (type == R.id.radio_machine
-                || type == R.id.radio_band
-            ) VISIBLE else GONE
-
-            TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
-            group_resisted.visibility = visibilityResisted
-            seperator_resisted.visibility = visibilityResisted
-        })
+        // TODO: Hide / reveal resisted group
     }
 
     private fun initBinding() {

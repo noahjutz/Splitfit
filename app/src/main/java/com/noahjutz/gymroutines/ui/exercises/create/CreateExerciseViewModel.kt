@@ -32,10 +32,7 @@ class CreateExerciseViewModel(
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
-    // TODO: Store enum values instead of directly storing Resource Ids
-    val category = MutableLiveData<Int>()
-    val type = MutableLiveData<Int>()
-    val resisted = MutableLiveData<Int>()
+    // TODO: Add radio group values
 
     init {
         initExercise()
@@ -45,9 +42,6 @@ class CreateExerciseViewModel(
     private fun initBinding() {
         name.value = exercise.value!!.name
         description.value = exercise.value!!.description
-        category.value = exercise.value!!.category
-        type.value = exercise.value!!.type
-        resisted.value = exercise.value!!.resisted
     }
 
     private fun initExercise() {
@@ -64,24 +58,6 @@ class CreateExerciseViewModel(
             addSource(description) { descSource ->
                 _exercise.value = _exercise.value!!.apply {
                     description = descSource.trim()
-                }
-            }
-
-            addSource(type) { typeSource ->
-                _exercise.value = _exercise.value!!.apply {
-                    type = typeSource
-                }
-            }
-
-            addSource(category) { categorySource ->
-                _exercise.value = _exercise.value!!.apply {
-                    category = categorySource
-                }
-            }
-
-            addSource(resisted) { resistedSource ->
-                _exercise.value = _exercise.value!!.apply {
-                    resisted = resistedSource
                 }
             }
         }
