@@ -106,13 +106,14 @@
                             android:text="Strength" />
 
                         <RadioGroup
+                            android:id="@+id/group_strength_type"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/any_margin_large"
                             android:checkedButton="@={viewmodel.radioStrengthType}">
 
                             <RadioButton
-                                android:id="@+id/strengthtype_resisted"
+                                android:id="@+id/strength_type_resisted"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Resisted" />

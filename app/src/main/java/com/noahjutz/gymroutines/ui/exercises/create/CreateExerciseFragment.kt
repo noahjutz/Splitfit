@@ -56,7 +56,11 @@ class CreateExerciseFragment : Fragment() {
     }
 
     private fun initPickers() {
-        // TODO: Hide / reveal resisted group
+        viewModel.radioCategory.observe(viewLifecycleOwner, Observer {
+            val v = if (it == R.id.category_strength) VISIBLE else GONE
+            TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
+            group_strength_type.visibility = v
+        })
     }
 
     private fun initBinding() {
