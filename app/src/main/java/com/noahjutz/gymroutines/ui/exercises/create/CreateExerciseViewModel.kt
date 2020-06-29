@@ -32,7 +32,8 @@ class CreateExerciseViewModel(
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
-    // TODO: Add radio group values
+    val radioCategory = MutableLiveData<Int>()
+    val radioStrengthType = MutableLiveData<Int>()
 
     init {
         initExercise()
@@ -42,6 +43,7 @@ class CreateExerciseViewModel(
     private fun initBinding() {
         name.value = exercise.value!!.name
         description.value = exercise.value!!.description
+        // TODO: Get [radioCategory], [radioStrengthType] from Room
     }
 
     private fun initExercise() {
@@ -59,6 +61,16 @@ class CreateExerciseViewModel(
                 _exercise.value = _exercise.value!!.apply {
                     description = descSource.trim()
                 }
+            }
+
+            addSource(radioCategory) {radioCategory ->
+                Log.d(TAG, radioCategory.toString())
+                // TODO: save to room
+            }
+
+            addSource(radioStrengthType) {radioStrengthType ->
+                Log.d(TAG, radioStrengthType.toString())
+                // TODO: Save to room
             }
         }
     }
