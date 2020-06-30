@@ -53,22 +53,6 @@ class Repository private constructor(application: Application) {
     }
 
     /**
-     * [Routine]
-     */
-
-    fun insert(routine: Routine): Long = runBlocking {
-        withContext(IO) {
-            dao.insert(routine)
-        }
-    }
-
-    fun delete(routine: Routine) = runBlocking {
-        withContext(IO) {
-            dao.delete(routine)
-        }
-    }
-
-    /**
      * [Exercise]
      */
 
@@ -87,34 +71,6 @@ class Repository private constructor(application: Application) {
     fun getExercise(id: Int): Exercise? = runBlocking {
         withContext(IO) {
             dao.getExercise(id)
-        }
-    }
-
-    /**
-     * [Set]
-     */
-
-    fun insert(set: Set): Long = runBlocking {
-        withContext(IO) {
-            dao.insert(set)
-        }
-    }
-
-    fun delete(set: Set) = runBlocking {
-        withContext(IO) {
-            dao.delete(set)
-        }
-    }
-
-    fun getSetById(id: Int): Set? = runBlocking {
-        withContext(IO) {
-            dao.getSetById(id)
-        }
-    }
-
-    fun getSetsById(ewId: Int) = runBlocking {
-        withContext(IO) {
-            dao.getSetsById(ewId)
         }
     }
 }
