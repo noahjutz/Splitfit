@@ -3,6 +3,8 @@ package com.noahjutz.gymroutines.ui.routines.create.pick
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -10,6 +12,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
@@ -18,6 +22,8 @@ import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.fragment_pick_exercise.*
+import kotlinx.android.synthetic.main.fragment_pick_exercise.recycler_view
+import kotlinx.android.synthetic.main.fragment_routines.*
 
 @Suppress("unused")
 private const val TAG = "PickExerciseFragment"
@@ -55,6 +61,9 @@ class PickExerciseFragment : Fragment() {
         exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             val e = exercises.filter { !it.hidden }
             adapter.submitList(e)
+
+            val v = if (e.isEmpty()) VISIBLE else GONE
+            showEmptyScreen(v)
         })
     }
 
@@ -87,5 +96,10 @@ class PickExerciseFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun showEmptyScreen(visibility: Int) {
+        TransitionManager.beginDelayedTransition(pick_exercise_root, AutoTransition())
+        screen_empty.visibility = visibility
     }
 }
