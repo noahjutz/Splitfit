@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.exercises
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,12 +17,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
-import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.util.ViewModelFactory
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
+import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
+import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_routines.*
@@ -120,13 +119,16 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            val e = exercises.filter { !it.hidden }
-            adapter.submitList(e)
+        viewModel.exercises.observe(
+            viewLifecycleOwner,
+            Observer { exercises ->
+                val e = exercises.filter { !it.hidden }
+                adapter.submitList(e)
 
-            val v = if (e.isEmpty()) VISIBLE else GONE
-            showEmptyScreen(v)
-        })
+                val v = if (e.isEmpty()) VISIBLE else GONE
+                showEmptyScreen(v)
+            }
+        )
     }
 
     private fun showEmptyScreen(visibility: Int) {

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.Repository
+import com.noahjutz.gymroutines.data.domain.Exercise
 import kotlinx.coroutines.runBlocking
 
 @Suppress("unused")
@@ -63,12 +63,12 @@ class CreateExerciseViewModel(
                 }
             }
 
-            addSource(radioCategory) {radioCategory ->
+            addSource(radioCategory) { radioCategory ->
                 Log.d(TAG, radioCategory.toString())
                 // TODO: save to room
             }
 
-            addSource(radioStrengthType) {radioStrengthType ->
+            addSource(radioStrengthType) { radioStrengthType ->
                 Log.d(TAG, radioStrengthType.toString())
                 // TODO: Save to room
             }

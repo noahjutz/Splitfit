@@ -37,7 +37,8 @@ class PickExerciseFragment : Fragment() {
     private lateinit var binding: FragmentPickExerciseBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding =
@@ -58,13 +59,16 @@ class PickExerciseFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        exercisesViewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
-            val e = exercises.filter { !it.hidden }
-            adapter.submitList(e)
+        exercisesViewModel.exercises.observe(
+            viewLifecycleOwner,
+            Observer { exercises ->
+                val e = exercises.filter { !it.hidden }
+                adapter.submitList(e)
 
-            val v = if (e.isEmpty()) VISIBLE else GONE
-            showEmptyScreen(v)
-        })
+                val v = if (e.isEmpty()) VISIBLE else GONE
+                showEmptyScreen(v)
+            }
+        )
     }
 
     private fun initActivity() {

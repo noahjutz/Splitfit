@@ -143,12 +143,15 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel.fullRoutines.observe(viewLifecycleOwner, Observer { fullRoutines ->
-            adapter.submitList(fullRoutines)
+        viewModel.fullRoutines.observe(
+            viewLifecycleOwner,
+            Observer { fullRoutines ->
+                adapter.submitList(fullRoutines)
 
-            val v = if (fullRoutines.isEmpty()) VISIBLE else GONE
-            showEmptyScreen(v)
-        })
+                val v = if (fullRoutines.isEmpty()) VISIBLE else GONE
+                showEmptyScreen(v)
+            }
+        )
     }
 
     private fun showEmptyScreen(visibility: Int) {

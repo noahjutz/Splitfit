@@ -3,8 +3,8 @@ package com.noahjutz.gymroutines.ui.exercises
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.Repository
+import com.noahjutz.gymroutines.data.domain.Exercise
 import kotlinx.coroutines.launch
 
 @Suppress("unused")
