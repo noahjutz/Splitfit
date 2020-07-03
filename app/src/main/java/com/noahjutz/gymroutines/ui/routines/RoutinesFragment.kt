@@ -70,7 +70,7 @@ class RoutinesFragment : Fragment() {
 
     private fun initActivity() {
         requireActivity().apply {
-            title = "View Routines"
+            title = "Routines"
             bottom_nav.visibility = VISIBLE
         }
     }

@@ -166,7 +166,6 @@ class CreateRoutineFragment : Fragment() {
             Observer { fullRoutine ->
                 viewModel.save()
                 adapter.submitList(fullRoutine.exercises)
-                // adapter.notifyDataSetChanged() // TODO: Remove this, use a diffUtil instead
             }
         )
 

@@ -64,7 +64,7 @@ class ExercisesFragment : Fragment() {
 
     private fun initActivity() {
         requireActivity().apply {
-            title = "View Exercises"
+            title = "Exercises"
             bottom_nav.visibility = VISIBLE
         }
     }
