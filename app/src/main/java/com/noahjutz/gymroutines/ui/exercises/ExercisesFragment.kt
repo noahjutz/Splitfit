@@ -1,8 +1,10 @@
 package com.noahjutz.gymroutines.ui.exercises
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -13,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.R
@@ -21,7 +25,10 @@ import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_routines.*
+import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
+import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 
 @Suppress("unused")
 private const val TAG = "ExercisesFragment"
@@ -116,7 +123,15 @@ class ExercisesFragment : Fragment() {
         viewModel.exercises.observe(viewLifecycleOwner, Observer { exercises ->
             val e = exercises.filter { !it.hidden }
             adapter.submitList(e)
+
+            val v = if (e.isEmpty()) VISIBLE else GONE
+            showEmptyScreen(v)
         })
+    }
+
+    private fun showEmptyScreen(visibility: Int) {
+        TransitionManager.beginDelayedTransition(exercises_root, AutoTransition())
+        screen_empty.visibility = visibility
     }
 
     private fun initBinding() {
