@@ -23,7 +23,6 @@ import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
-import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
 import kotlinx.android.synthetic.main.listitem_routine.view.*
@@ -33,11 +32,9 @@ private const val TAG = "RoutinesFragment"
 
 class RoutinesFragment : Fragment() {
 
-    private val viewModel: RoutinesViewModel by viewModels { viewModelFactory }
-    private val viewModelFactory: ViewModelFactory by lazy {
+    private val viewModel: RoutinesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
-
     private lateinit var adapter: RoutineAdapter
 
     override fun onCreateView(

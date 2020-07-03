@@ -22,7 +22,6 @@ import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
-import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
@@ -33,8 +32,7 @@ private const val TAG = "ExercisesFragment"
 
 class ExercisesFragment : Fragment() {
 
-    private val viewModel: ExercisesViewModel by viewModels { viewModelFactory }
-    private val viewModelFactory: ViewModelFactory by lazy {
+    private val viewModel: ExercisesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
 

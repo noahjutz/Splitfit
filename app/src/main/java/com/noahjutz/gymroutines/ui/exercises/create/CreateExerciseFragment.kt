@@ -4,29 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
-import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_create_exercise.*
 
 @Suppress("unused")
 private const val TAG = "CreateExerciseFragment"
 
 class CreateExerciseFragment : Fragment() {
 
-    private val viewModel: CreateExerciseViewModel by viewModels { viewModelFactory }
-    private val viewModelFactory: CreateViewModelFactory by lazy {
+    private val viewModel: CreateExerciseViewModel by viewModels {
         InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.exerciseId)
     }
     private val args: CreateExerciseFragmentArgs by navArgs()

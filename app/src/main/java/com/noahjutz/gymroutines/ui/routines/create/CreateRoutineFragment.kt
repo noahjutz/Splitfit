@@ -25,7 +25,6 @@ import com.noahjutz.gymroutines.data.domain.ExerciseHolder
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
-import com.noahjutz.gymroutines.util.CreateViewModelFactory
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,8 +37,7 @@ private const val TAG = "CreateRoutineFragment"
 class CreateRoutineFragment : Fragment() {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
-    private val viewModel: CreateRoutineViewModel by viewModels { viewModelFactory }
-    private val viewModelFactory: CreateViewModelFactory by lazy {
+    private val viewModel: CreateRoutineViewModel by viewModels {
         InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.routineId)
     }
     private val args: CreateRoutineFragmentArgs by navArgs()

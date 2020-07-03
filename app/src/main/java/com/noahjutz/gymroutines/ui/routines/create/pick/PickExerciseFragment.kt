@@ -28,9 +28,10 @@ private const val TAG = "PickExerciseFragment"
 
 class PickExerciseFragment : Fragment() {
 
-    private val exercisesViewModel: ExercisesViewModel by viewModels { viewModelFactory }
+    private val exercisesViewModel: ExercisesViewModel by viewModels {
+        InjectorUtils.provideViewModelFactory(requireActivity().application)
+    }
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
-    private val viewModelFactory by lazy { InjectorUtils.provideViewModelFactory(requireActivity().application) }
     private lateinit var adapter: ExercisesAdapter
 
     override fun onCreateView(
