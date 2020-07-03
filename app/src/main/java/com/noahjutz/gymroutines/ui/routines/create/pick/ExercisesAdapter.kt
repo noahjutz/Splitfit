@@ -28,23 +28,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
 class ExercisesAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
-    fun getExerciseAt(pos: Int): Exercise = getItem(pos)
-
-    inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnClickListener {
-                val card = it as MaterialCardView
-                this@ExercisesAdapter.onExerciseClickListener
-                    .onExerciseClick(getItem(adapterPosition), card)
-            }
-            itemView.setOnLongClickListener {
-                val card = it as MaterialCardView
-                this@ExercisesAdapter.onExerciseClickListener
-                    .onExerciseLongClick(getItem(adapterPosition), card)
-                true
-            }
-        }
-    }
+    inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -55,17 +39,23 @@ class ExercisesAdapter(
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exercise = getItem(position)
 
-        holder.apply {
-            holder.itemView.name.text = exercise.name
-            holder.itemView.description.text = exercise.description
+        holder.itemView.apply {
+            name.text = exercise.name
+            description.text = exercise.description
 
             if (exercise.description.trim().isEmpty())
-                itemView.description.visibility = GONE
+                description.visibility = GONE
+
+            setOnClickListener {
+                onExerciseClickListener.onExerciseClick(
+                    exercise,
+                    this as MaterialCardView
+                )
+            }
         }
     }
 
     interface OnExerciseClickListener {
         fun onExerciseClick(exercise: Exercise, card: MaterialCardView)
-        fun onExerciseLongClick(exercise: Exercise, card: MaterialCardView)
     }
 }

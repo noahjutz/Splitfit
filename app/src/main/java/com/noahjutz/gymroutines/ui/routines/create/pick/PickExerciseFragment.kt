@@ -84,8 +84,6 @@ class PickExerciseFragment : Fragment() {
                 if (card.isChecked) sharedExerciseViewModel.addExercise(exercise)
                 else sharedExerciseViewModel.removeExercise(exercise)
             }
-
-            override fun onExerciseLongClick(exercise: Exercise, card: MaterialCardView) {}
         }
 
         adapter = ExercisesAdapter(onItemClickListener)
