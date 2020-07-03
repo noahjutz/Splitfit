@@ -15,13 +15,13 @@
     </data>
 
     <RelativeLayout
-        android:id="@+id/scene_root"
+        android:id="@+id/routines_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.routines.RoutinesFragment">
 
         <include
-            android:id="@+id/screen_routines_empty"
+            android:id="@+id/routines_empty"
             layout="@layout/screen_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

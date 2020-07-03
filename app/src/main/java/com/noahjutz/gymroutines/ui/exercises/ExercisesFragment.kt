@@ -131,7 +131,7 @@ class ExercisesFragment : Fragment() {
 
     private fun showEmptyScreen(visibility: Int) {
         TransitionManager.beginDelayedTransition(exercises_root, AutoTransition())
-        screen_empty.visibility = visibility
+        exercises_empty.visibility = visibility
     }
 
     private fun initBinding() {

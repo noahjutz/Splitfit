@@ -152,8 +152,8 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun showEmptyScreen(visibility: Int) {
-        TransitionManager.beginDelayedTransition(scene_root, AutoTransition())
-        screen_routines_empty.visibility = visibility
+        TransitionManager.beginDelayedTransition(routines_root, AutoTransition())
+        routines_empty.visibility = visibility
     }
 
     fun addRoutine() {

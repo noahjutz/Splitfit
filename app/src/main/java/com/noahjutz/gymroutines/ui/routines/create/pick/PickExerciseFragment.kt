@@ -100,6 +100,6 @@ class PickExerciseFragment : Fragment() {
 
     private fun showEmptyScreen(visibility: Int) {
         TransitionManager.beginDelayedTransition(pick_exercise_root, AutoTransition())
-        screen_empty.visibility = visibility
+        pick_exercise_empty.visibility = visibility
     }
 }
