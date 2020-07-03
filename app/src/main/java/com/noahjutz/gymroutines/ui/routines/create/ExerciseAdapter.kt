@@ -41,7 +41,6 @@ class ExerciseAdapter(
                 description.visibility = GONE
 
             button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exercise) }
-            button_edit_exercise.setOnClickListener { onExerciseClickListener.onEditExerciseClick(exercise) }
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
         }
@@ -50,7 +49,6 @@ class ExerciseAdapter(
     interface OnExerciseClickListener {
         fun onExerciseClick(card: MaterialCardView)
         fun onAddSetClick(exercise: ExerciseImpl)
-        fun onEditExerciseClick(exercise: ExerciseImpl)
     }
 }
 

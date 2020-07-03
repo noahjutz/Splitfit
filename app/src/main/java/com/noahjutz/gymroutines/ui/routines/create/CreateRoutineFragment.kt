@@ -30,9 +30,6 @@ import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
-import kotlinx.android.synthetic.main.fragment_create_routine.recycler_view
-import kotlinx.android.synthetic.main.fragment_routines.*
-import kotlinx.android.synthetic.main.listitem_exercise_holder.*
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
@@ -138,13 +135,6 @@ class CreateRoutineFragment : Fragment() {
                     .show()
                 // TODO
             }
-
-            override fun onEditExerciseClick(exercise: ExerciseImpl) {
-                Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
-                    .setAnchorView(button_add_exercise)
-                    .show()
-                // TODO
-            }
         }
 
         adapter = ExerciseAdapter(onItemClickListener)
@@ -174,7 +164,10 @@ class CreateRoutineFragment : Fragment() {
             Observer { exercises ->
                 for (e in exercises) {
                     val exerciseHolder =
-                        ExerciseHolder(e.exerciseId, viewModel.fullRoutine.value!!.routine.routineId)
+                        ExerciseHolder(
+                            e.exerciseId,
+                            viewModel.fullRoutine.value!!.routine.routineId
+                        )
                     val exerciseImpl = ExerciseImpl(exerciseHolder, e, listOf())
                     viewModel.addExercise(exerciseImpl)
                 }
