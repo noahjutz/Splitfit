@@ -98,30 +98,16 @@
                         android:orientation="vertical"
                         android:padding="16dp">
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Logging fields"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
-
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:checked="true"
                             android:text="Weight" />
 
                         <com.google.android.material.checkbox.MaterialCheckBox
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:checked="true"
                             android:text="Reps" />
                     </LinearLayout>
-
-                    <View
-                        android:id="@+id/divider2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" />
 
                     <LinearLayout
                         android:id="@+id/buttons"
