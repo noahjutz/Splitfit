@@ -44,7 +44,6 @@ class CreateRoutineFragment : Fragment() {
     }
     private val args: CreateRoutineFragmentArgs by navArgs()
 
-    private lateinit var binding: FragmentCreateRoutineBinding
     private lateinit var adapter: ExerciseAdapter
 
     override fun onCreateView(
@@ -52,13 +51,16 @@ class CreateRoutineFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<FragmentCreateRoutineBinding>(
             inflater,
             R.layout.fragment_create_routine,
             container,
             false
-        )
-        initBinding()
+        ).apply {
+            fragment = this@CreateRoutineFragment
+            lifecycleOwner = viewLifecycleOwner
+            viewmodel = viewModel
+        }
         return binding.root
     }
 
@@ -67,14 +69,6 @@ class CreateRoutineFragment : Fragment() {
         initActivity()
         initRecyclerView()
         initViewModel()
-    }
-
-    private fun initBinding() {
-        binding.apply {
-            fragment = this@CreateRoutineFragment
-            lifecycleOwner = viewLifecycleOwner
-            viewmodel = viewModel
-        }
     }
 
     private fun initActivity() {

@@ -25,7 +25,6 @@ import com.noahjutz.gymroutines.util.MarginItemDecoration
 import com.noahjutz.gymroutines.util.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exercises.*
-import kotlinx.android.synthetic.main.fragment_routines.*
 import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
 import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 
@@ -39,7 +38,6 @@ class ExercisesFragment : Fragment() {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
 
-    private lateinit var binding: FragmentExercisesBinding
     private lateinit var adapter: ExercisesAdapter
 
     override fun onCreateView(
@@ -47,9 +45,13 @@ class ExercisesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<FragmentExercisesBinding>(
             inflater, R.layout.fragment_exercises, container, false
-        )
+        ).apply {
+            viewmodel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+            fragment = this@ExercisesFragment
+        }
         return binding.root
     }
 
@@ -59,7 +61,6 @@ class ExercisesFragment : Fragment() {
         initActivity()
         initRecyclerView()
         initViewModel()
-        initBinding()
     }
 
     private fun initActivity() {
@@ -132,12 +133,6 @@ class ExercisesFragment : Fragment() {
     private fun showEmptyScreen(visibility: Int) {
         TransitionManager.beginDelayedTransition(exercises_root, AutoTransition())
         exercises_empty.visibility = visibility
-    }
-
-    private fun initBinding() {
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.fragment = this
     }
 
     fun addExercise() {

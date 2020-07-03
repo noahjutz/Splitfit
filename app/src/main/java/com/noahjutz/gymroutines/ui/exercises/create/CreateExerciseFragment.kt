@@ -31,20 +31,21 @@ class CreateExerciseFragment : Fragment() {
     }
     private val args: CreateExerciseFragmentArgs by navArgs()
 
-    private lateinit var binding: FragmentCreateExerciseBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<FragmentCreateExerciseBinding>(
             inflater,
             R.layout.fragment_create_exercise,
             container,
             false
-        )
-        initBinding()
+        ).apply {
+            fragment = this@CreateExerciseFragment
+            lifecycleOwner = viewLifecycleOwner
+            viewmodel = viewmodel
+        }
         return binding.root
     }
 
@@ -56,20 +57,7 @@ class CreateExerciseFragment : Fragment() {
     }
 
     private fun initPickers() {
-        // viewModel.radioCategory.observe(
-        //     viewLifecycleOwner,
-        //     Observer {
-        //         val v = if (it == R.id.category_strength) VISIBLE else GONE
-        //         TransitionManager.beginDelayedTransition(parent_layout, AutoTransition())
-        //         group_strength_type.visibility = v
-        //     }
-        // ) TODO: remove viewModel.radioCategory, implement checkbox logic
-    }
-
-    private fun initBinding() {
-        binding.fragment = this
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = viewModel
+        // TODO: remove viewModel.radioCategory, implement checkbox logic
     }
 
     private fun initActivity() {

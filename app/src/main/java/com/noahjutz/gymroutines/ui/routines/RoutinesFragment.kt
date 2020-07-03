@@ -38,7 +38,6 @@ class RoutinesFragment : Fragment() {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
 
-    private lateinit var binding: FragmentRoutinesBinding
     private lateinit var adapter: RoutineAdapter
 
     override fun onCreateView(
@@ -46,10 +45,13 @@ class RoutinesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<FragmentRoutinesBinding>(
             inflater, R.layout.fragment_routines, container, false
-        )
-        initBinding()
+        ).apply {
+            viewmodel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+            fragment = this@RoutinesFragment
+        }
         return binding.root
     }
 
@@ -58,14 +60,6 @@ class RoutinesFragment : Fragment() {
         initActivity()
         initRecyclerView()
         initViewModel()
-    }
-
-    private fun initBinding() {
-        binding.apply {
-            viewmodel = viewModel
-            lifecycleOwner = viewLifecycleOwner
-            fragment = this@RoutinesFragment
-        }
     }
 
     private fun initActivity() {

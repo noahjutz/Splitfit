@@ -22,8 +22,6 @@ import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.fragment_pick_exercise.*
-import kotlinx.android.synthetic.main.fragment_pick_exercise.recycler_view
-import kotlinx.android.synthetic.main.fragment_routines.*
 
 @Suppress("unused")
 private const val TAG = "PickExerciseFragment"
@@ -34,28 +32,27 @@ class PickExerciseFragment : Fragment() {
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModelFactory by lazy { InjectorUtils.provideViewModelFactory(requireActivity().application) }
     private lateinit var adapter: ExercisesAdapter
-    private lateinit var binding: FragmentPickExerciseBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_pick_exercise, container, false)
+        val binding =
+            DataBindingUtil.inflate<FragmentPickExerciseBinding>(
+                inflater,
+                R.layout.fragment_pick_exercise,
+                container,
+                false
+            ).apply { fragment = this@PickExerciseFragment }
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initBinding()
         initRecyclerView()
         initActivity()
         initViewModel()
-    }
-
-    private fun initBinding() {
-        binding.fragment = this
     }
 
     private fun initViewModel() {
