@@ -16,9 +16,6 @@ class ExercisesViewModel(
     val exercises: LiveData<List<Exercise>>
         get() = repository.exercises
 
-    fun insert(exercise: Exercise) = viewModelScope.launch { repository.insert(exercise) }
-    fun delete(exercise: Exercise) = viewModelScope.launch { repository.delete(exercise) }
-
     fun hide(exercise: Exercise, hide: Boolean) =
         viewModelScope.launch { repository.insert(exercise.apply { hidden = hide }) }
 }
