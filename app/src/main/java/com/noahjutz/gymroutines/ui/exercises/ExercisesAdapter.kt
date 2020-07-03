@@ -35,11 +35,6 @@ class ExercisesAdapter(
                 this@ExercisesAdapter.onExerciseClickListener
                     .onExerciseClick(getItem(adapterPosition))
             }
-            itemView.setOnLongClickListener {
-                this@ExercisesAdapter.onExerciseClickListener
-                    .onExerciseLongClick(getItem(adapterPosition))
-                true
-            }
         }
     }
 
@@ -63,6 +58,5 @@ class ExercisesAdapter(
 
     interface OnExerciseClickListener {
         fun onExerciseClick(exercise: Exercise)
-        fun onExerciseLongClick(exercise: Exercise)
     }
 }

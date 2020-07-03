@@ -99,8 +99,6 @@ class ExercisesFragment : Fragment() {
                 val action = ExercisesFragmentDirections.addExercise(exercise.exerciseId)
                 findNavController().navigate(action)
             }
-
-            override fun onExerciseLongClick(exercise: Exercise) {}
         }
 
         adapter = ExercisesAdapter(onItemClickListener)
