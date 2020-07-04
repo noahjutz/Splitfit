@@ -53,16 +53,15 @@ class CreateExerciseViewModel(
             value = getExerciseById(exerciseId)
                 ?: Exercise("", "")
 
-            addSource(name) { nameSource ->
+            addSource(name) { source ->
                 _exercise.value = _exercise.value!!.apply {
-                    name = nameSource.trim()
+                    name = source.trim()
                 }
-                Log.d(TAG, "name: $nameSource")
             }
 
-            addSource(description) { descSource ->
+            addSource(description) { source ->
                 _exercise.value = _exercise.value!!.apply {
-                    description = descSource.trim()
+                    description = source.trim()
                 }
             }
 
