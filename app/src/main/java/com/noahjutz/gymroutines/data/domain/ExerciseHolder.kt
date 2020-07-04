@@ -3,7 +3,7 @@ package com.noahjutz.gymroutines.data.domain
 import androidx.room.*
 
 /**
- * TODO
+ * Holds an exercise and sets. Used in Routines.
  */
 @Entity(tableName = "exercise_holder_table")
 data class ExerciseHolder(
