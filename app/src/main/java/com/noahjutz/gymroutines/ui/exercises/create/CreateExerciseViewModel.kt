@@ -57,6 +57,7 @@ class CreateExerciseViewModel(
                 _exercise.value = _exercise.value!!.apply {
                     name = nameSource.trim()
                 }
+                Log.d(TAG, "name: $nameSource")
             }
 
             addSource(description) { descSource ->
@@ -65,7 +66,21 @@ class CreateExerciseViewModel(
                 }
             }
 
-            // TODO: Add log[...] values as sources
+            addSource(logWeight) { source ->
+                // TODO: Write to database
+            }
+
+            addSource(logReps) { source ->
+                // TODO: Write to database
+            }
+
+            addSource(logTime) { source ->
+                // TODO: Write to database
+            }
+
+            addSource(logDistance) { source ->
+                // TODO: Write to database
+            }
         }
     }
 
