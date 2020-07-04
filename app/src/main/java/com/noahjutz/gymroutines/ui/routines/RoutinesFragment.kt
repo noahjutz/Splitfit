@@ -114,7 +114,6 @@ class RoutinesFragment : Fragment() {
                 Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
                     .setAnchorView(fab_pick_exercises)
                     .show()
-                // TODO
             }
         }
 

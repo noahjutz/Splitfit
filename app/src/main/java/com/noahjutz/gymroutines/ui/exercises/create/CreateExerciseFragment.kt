@@ -47,11 +47,6 @@ class CreateExerciseFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initActivity()
         initViewModel()
-        initPickers()
-    }
-
-    private fun initPickers() {
-        // TODO: remove viewModel.radioCategory, implement checkbox logic
     }
 
     private fun initActivity() {
