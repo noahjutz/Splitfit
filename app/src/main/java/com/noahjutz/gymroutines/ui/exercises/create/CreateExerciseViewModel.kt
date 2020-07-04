@@ -57,39 +57,27 @@ class CreateExerciseViewModel(
                 ?: Exercise("", "")
 
             addSource(name) { source ->
-                _exercise.value = _exercise.value!!.apply {
-                    name = source.trim()
-                }
+                _exercise.value = _exercise.value!!.apply { name = source.trim() }
             }
 
             addSource(description) { source ->
-                _exercise.value = _exercise.value!!.apply {
-                    description = source.trim()
-                }
+                _exercise.value = _exercise.value!!.apply { description = source.trim() }
             }
 
             addSource(logWeight) { source ->
-                _exercise.value = _exercise.value!!.apply {
-                    logWeight = source
-                }
+                _exercise.value = _exercise.value!!.apply { logWeight = source }
             }
 
             addSource(logReps) { source ->
-                _exercise.value = _exercise.value!!.apply {
-                    logReps = source
-                }
+                _exercise.value = _exercise.value!!.apply { logReps = source }
             }
 
             addSource(logTime) { source ->
-                _exercise.value = _exercise.value!!.apply {
-                    logTime = source
-                }
+                _exercise.value = _exercise.value!!.apply { logTime = source }
             }
 
             addSource(logDistance) { source ->
-                _exercise.value = _exercise.value!!.apply {
-                    logDistance = source
-                }
+                _exercise.value = _exercise.value!!.apply { logDistance = source }
             }
         }
     }
