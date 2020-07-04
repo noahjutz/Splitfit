@@ -69,19 +69,27 @@ class CreateExerciseViewModel(
             }
 
             addSource(logWeight) { source ->
-                // TODO: Write to database
+                _exercise.value = _exercise.value!!.apply {
+                    logWeight = source
+                }
             }
 
             addSource(logReps) { source ->
-                // TODO: Write to database
+                _exercise.value = _exercise.value!!.apply {
+                    logReps = source
+                }
             }
 
             addSource(logTime) { source ->
-                // TODO: Write to database
+                _exercise.value = _exercise.value!!.apply {
+                    logTime = source
+                }
             }
 
             addSource(logDistance) { source ->
-                // TODO: Write to database
+                _exercise.value = _exercise.value!!.apply {
+                    logDistance = source
+                }
             }
         }
     }
