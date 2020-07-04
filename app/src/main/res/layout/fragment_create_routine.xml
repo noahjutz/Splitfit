@@ -17,6 +17,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/create_routine_root"
         tools:context=".ui.routines.CreateRoutineActivity">
 
         <androidx.core.widget.NestedScrollView

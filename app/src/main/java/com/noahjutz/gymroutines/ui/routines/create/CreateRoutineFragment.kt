@@ -30,7 +30,11 @@ import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
+import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 import kotlinx.android.synthetic.main.listitem_routine.view.*
+import kotlinx.android.synthetic.main.listitem_routine.view.buttons
+import kotlinx.android.synthetic.main.listitem_routine.view.description
+import kotlinx.android.synthetic.main.listitem_routine.view.divider
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineFragment"
@@ -113,12 +117,13 @@ class CreateRoutineFragment : Fragment() {
 
         val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
             override fun onExerciseClick(card: MaterialCardView) {
-                TransitionManager.beginDelayedTransition(recycler_view, AutoTransition())
+                TransitionManager.beginDelayedTransition(create_routine_root, AutoTransition())
                 val v = if (card.description.visibility == VISIBLE) GONE else VISIBLE
                 card.apply {
                     description.visibility = v
                     buttons.visibility = v
                     divider.visibility = v
+                    set_container.visibility = v
                 }
             }
 
