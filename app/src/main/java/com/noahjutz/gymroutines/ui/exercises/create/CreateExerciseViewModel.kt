@@ -45,7 +45,10 @@ class CreateExerciseViewModel(
     private fun initBinding() {
         name.value = exercise.value!!.name
         description.value = exercise.value!!.description
-        // TODO: init log[...] values
+        logWeight.value = exercise.value!!.logWeight
+        logReps.value = exercise.value!!.logReps
+        logTime.value = exercise.value!!.logTime
+        logDistance.value = exercise.value!!.logDistance
     }
 
     private fun initExercise() {
