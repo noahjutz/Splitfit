@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -121,11 +122,9 @@ class CreateRoutineFragment : Fragment() {
                 }
             }
 
-            override fun onAddSetClick(exercise: ExerciseImpl) {
-                Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
-                    .setAnchorView(button_add_exercise)
-                    .show()
-                // TODO
+            override fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView) {
+                adapter.addViewToCard(card, TextView(requireContext()).apply { text = "Hello World!" })
+                // TODO: Show some sort of set view instead of text view
             }
         }
 

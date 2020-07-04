@@ -11,6 +11,7 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/exercise_holder_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checkable="true"
@@ -51,17 +52,6 @@
                     android:textColor="?android:attr/textColorSecondary"
                     android:visibility="gone"
                     tools:text="Quads and stuff" />
-
-                <TextView
-                    android:id="@+id/sets"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:ellipsize="end"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:visibility="gone"
-                    tools:text="Set 1\nSet 2\nSet 3" />
             </LinearLayout>
 
             <View
