@@ -90,40 +90,32 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <LinearLayout
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox_weight"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Weight" />
-
-                        <com.google.android.material.checkbox.MaterialCheckBox
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Reps" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/buttons"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="8dp"
-                        android:orientation="horizontal">
+                        android:text="Weight" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/button_add_set"
-                            style="@style/Widget.App.Button.TextButton.IconOnly"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:icon="@drawable/ic_add" />
-                    </LinearLayout>
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox_reps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reps" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Time" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/checkbox_distance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Distance" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
