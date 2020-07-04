@@ -104,9 +104,6 @@ abstract class MainDao {
     @Query("SELECT * FROM set_table WHERE setId == :id")
     abstract suspend fun getSetById(id: Int): Set
 
-    @Query("SELECT * FROM set_table WHERE exerciseHolderId == :id")
-    abstract suspend fun getSetsById(id: Int): List<Set>
-
     /**
      * [Exercise]
      */

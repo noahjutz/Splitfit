@@ -60,12 +60,6 @@ class Repository private constructor(application: Application) {
         }
     }
 
-    fun delete(exercise: Exercise) = runBlocking {
-        withContext(IO) {
-            dao.delete(exercise)
-        }
-    }
-
     fun getExercise(id: Int): Exercise? = runBlocking {
         withContext(IO) {
             dao.getExercise(id)
