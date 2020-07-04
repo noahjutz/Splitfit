@@ -10,9 +10,6 @@ import androidx.room.PrimaryKey
 data class Exercise(
     var name: String,
     var description: String,
-    var category: Int, // Duration or Reps
-    var type: Int, // Machine or other...
-    var resisted: Int, // Assisted or resisted
     var hidden: Boolean = false,
 
     @PrimaryKey(autoGenerate = true)

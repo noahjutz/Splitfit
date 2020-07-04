@@ -46,7 +46,7 @@ class CreateExerciseViewModel(
     private fun initExercise() {
         _exercise.run {
             value = getExerciseById(exerciseId)
-                ?: Exercise("", "", -1, -1, -1) // TODO
+                ?: Exercise("", "")
 
             addSource(name) { nameSource ->
                 _exercise.value = _exercise.value!!.apply {
