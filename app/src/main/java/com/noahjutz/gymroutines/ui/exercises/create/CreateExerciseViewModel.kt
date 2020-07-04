@@ -32,6 +32,10 @@ class CreateExerciseViewModel(
      */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
+    val logWeight = MutableLiveData<Boolean>()
+    val logReps = MutableLiveData<Boolean>()
+    val logTime = MutableLiveData<Boolean>()
+    val logDistance = MutableLiveData<Boolean>()
 
     init {
         initExercise()
@@ -41,6 +45,7 @@ class CreateExerciseViewModel(
     private fun initBinding() {
         name.value = exercise.value!!.name
         description.value = exercise.value!!.description
+        // TODO: init log[...] values
     }
 
     private fun initExercise() {
@@ -59,6 +64,8 @@ class CreateExerciseViewModel(
                     description = descSource.trim()
                 }
             }
+
+            // TODO: Add log[...] values as sources
         }
     }
 

@@ -97,24 +97,28 @@
                         android:id="@+id/checkbox_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="@={viewmodel.logWeight}"
                         android:text="Weight" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkbox_reps"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="@={viewmodel.logReps}"
                         android:text="Reps" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkbox_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="@={viewmodel.logTime}"
                         android:text="Time" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/checkbox_distance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:checked="@={viewmodel.logDistance}"
                         android:text="Distance" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
