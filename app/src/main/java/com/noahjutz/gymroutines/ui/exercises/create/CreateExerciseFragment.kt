@@ -38,7 +38,7 @@ class CreateExerciseFragment : Fragment() {
         ).apply {
             fragment = this@CreateExerciseFragment
             lifecycleOwner = viewLifecycleOwner
-            viewmodel = viewmodel
+            viewmodel = viewModel
         }
         return binding.root
     }
