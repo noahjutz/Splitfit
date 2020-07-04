@@ -8,17 +8,6 @@ import com.noahjutz.gymroutines.data.domain.Set
 @Suppress("unused")
 private const val TAG = "MainDao"
 
-/**
- * A [Dao] for the following domain model objects:
- * - Entities:
- *   - [Routine]
- *   - [Exercise]
- *   - [Set]
- *   - [ExerciseHolder]
- * - Data classes:
- *   - [FullRoutine]
- *   - [ExerciseImpl]
- */
 @Dao
 abstract class MainDao {
 
