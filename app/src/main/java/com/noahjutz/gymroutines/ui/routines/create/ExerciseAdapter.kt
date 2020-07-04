@@ -62,7 +62,6 @@ class ExerciseAdapter(
     }
 
     fun addViewToCard(cardView: MaterialCardView, view: View) {
-        TransitionManager.beginDelayedTransition(cardView.exercise_holder_root, AutoTransition())
         cardView.set_container.addView(view)
     }
 }
