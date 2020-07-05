@@ -113,6 +113,10 @@ class CreateRoutineFragment : Fragment() {
             override fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView) {
                 // TODO: ?
             }
+
+            override fun onDeleteClick(position: Int) {
+                deleteExercise(position)
+            }
         }
 
         adapter = ExerciseAdapter(onItemClickListener)

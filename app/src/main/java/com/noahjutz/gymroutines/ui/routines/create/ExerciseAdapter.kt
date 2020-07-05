@@ -48,6 +48,8 @@ class ExerciseAdapter(
                 )
             }
 
+            button_delete.setOnClickListener { onExerciseClickListener.onDeleteClick(holder.adapterPosition) }
+
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
             val myAdapter = SetAdapter()
@@ -68,6 +70,7 @@ class ExerciseAdapter(
     interface OnExerciseClickListener {
         fun onExerciseClick(card: MaterialCardView)
         fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView)
+        fun onDeleteClick(position: Int)
     }
 }
 
