@@ -6,7 +6,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -31,7 +30,6 @@ import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
-import kotlinx.android.synthetic.main.listitem_routine.view.*
 import kotlinx.android.synthetic.main.listitem_routine.view.buttons
 import kotlinx.android.synthetic.main.listitem_routine.view.description
 import kotlinx.android.synthetic.main.listitem_routine.view.divider
@@ -99,19 +97,7 @@ class CreateRoutineFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val exercise = adapter.getExercise(viewHolder.adapterPosition)
-                viewModel.removeExercise(exercise)
-                adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                Snackbar.make(
-                    recycler_view,
-                    "Deleted ${exercise.exercise.name}",
-                    Snackbar.LENGTH_SHORT
-                )
-                    .setAction("Undo") {
-                        viewModel.addExercise(exercise)
-                        adapter.notifyItemInserted(adapter.itemCount)
-                    }
-                    .show()
+                deleteExercise(viewHolder.adapterPosition)
             }
         }
 
@@ -175,5 +161,21 @@ class CreateRoutineFragment : Fragment() {
     fun addExercise() {
         val action = CreateRoutineFragmentDirections.addExercise()
         findNavController().navigate(action)
+    }
+
+    private fun deleteExercise(position: Int) {
+        val exercise = adapter.getExercise(position)
+        viewModel.removeExercise(exercise)
+        adapter.notifyItemRemoved(position)
+        Snackbar.make(
+            recycler_view,
+            "Deleted ${exercise.exercise.name}",
+            Snackbar.LENGTH_SHORT
+        )
+            .setAction("Undo") {
+                viewModel.addExercise(exercise)
+                adapter.notifyItemInserted(adapter.itemCount)
+            }
+            .show()
     }
 }
