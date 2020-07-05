@@ -4,10 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
@@ -53,9 +50,23 @@ class ExerciseAdapter(
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
             val myAdapter = SetAdapter()
+            val itemTouchHelper = object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ) = false
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    // TODO
+                }
+
+            }
             set_container.apply {
                 adapter = myAdapter
                 layoutManager = LinearLayoutManager(context)
+                ItemTouchHelper(itemTouchHelper).attachToRecyclerView(this)
             }
             val sampleData = listOf(
                 com.noahjutz.gymroutines.data.domain.Set(-1, 12),
