@@ -53,11 +53,15 @@
                     android:visibility="gone"
                     tools:text="Quads and stuff" />
 
-                <LinearLayout
+                <!-- TODO replace listitem -->
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/set_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                    android:visibility="gone"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/listitem_exercise"
+                    tools:visibility="visible" />
             </LinearLayout>
 
             <View
