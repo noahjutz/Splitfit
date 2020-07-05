@@ -2,12 +2,16 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
+import kotlinx.android.synthetic.main.listitem_set.view.*
 
 private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
     override fun areItemsTheSame(oldItem: Set, newItem: Set): Boolean {
@@ -32,5 +36,25 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
         return SetHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {}
+    override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
+        val set = getItem(position)
+
+        val setTextUnlessNull: TextInputEditText.(Any?) -> Unit = { value ->
+            apply {
+                if (value == null) {
+                    visibility = GONE
+                } else {
+                    visibility = VISIBLE
+                    setText(value.toString())
+                }
+            }
+        }
+
+        holder.itemView.apply {
+            edit_reps.setTextUnlessNull(set.reps)
+            edit_weight.setTextUnlessNull(set.weight)
+            edit_time.setTextUnlessNull(set.time)
+            edit_distance.setTextUnlessNull(set.distance)
+        }
+    }
 }
