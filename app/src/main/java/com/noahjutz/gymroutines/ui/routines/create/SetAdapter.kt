@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
-import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
     override fun areItemsTheSame(oldItem: Set, newItem: Set): Boolean {
@@ -28,17 +27,10 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     inner class SetHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetAdapter.SetHolder {
-        // TODO: Replace listitem
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.listitem_exercise, parent, false)
+            .inflate(R.layout.listitem_set, parent, false)
         return SetHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
-        val set = getItem(position)
-
-        holder.itemView.apply {
-            name.text = "Set $position: Reps: ${set.reps}"
-        }
-    }
+    override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {}
 }
