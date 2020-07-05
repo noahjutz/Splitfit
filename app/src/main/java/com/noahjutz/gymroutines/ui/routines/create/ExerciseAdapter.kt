@@ -55,10 +55,6 @@ class ExerciseAdapter(
         fun onExerciseClick(card: MaterialCardView)
         fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView)
     }
-
-    fun addViewToCard(cardView: MaterialCardView, view: View) {
-        cardView.set_container.addView(view)
-    }
 }
 
 private val diffUtil = object : DiffUtil.ItemCallback<ExerciseImpl>() {

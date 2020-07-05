@@ -128,12 +128,7 @@ class CreateRoutineFragment : Fragment() {
             }
 
             override fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView) {
-                android.transition.TransitionManager.beginDelayedTransition(
-                    create_routine_root,
-                    android.transition.AutoTransition()
-                )
-                adapter.addViewToCard(card, TextView(requireContext()).apply { text = "Hello World!" })
-                // TODO: Show some sort of set view instead of text view
+                // TODO: ?
             }
         }
 
