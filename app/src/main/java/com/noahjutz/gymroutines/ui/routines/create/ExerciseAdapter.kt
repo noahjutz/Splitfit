@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
@@ -48,6 +49,19 @@ class ExerciseAdapter(
             }
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
+
+            val myAdapter = SetAdapter()
+            set_container.apply {
+                adapter = myAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
+            val sampleData = listOf(
+                com.noahjutz.gymroutines.data.domain.Set(-1, 12),
+                com.noahjutz.gymroutines.data.domain.Set(-1, 22),
+                com.noahjutz.gymroutines.data.domain.Set(-1, 1),
+                com.noahjutz.gymroutines.data.domain.Set(-1)
+            )
+            myAdapter.submitList(sampleData)
         }
     }
 
