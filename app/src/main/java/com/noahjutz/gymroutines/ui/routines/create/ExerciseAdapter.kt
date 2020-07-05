@@ -70,9 +70,9 @@ class ExerciseAdapter(
             }
             val sampleData = listOf(
                 com.noahjutz.gymroutines.data.domain.Set(-1, 12),
-                com.noahjutz.gymroutines.data.domain.Set(-1, 22),
-                com.noahjutz.gymroutines.data.domain.Set(-1, 1),
-                com.noahjutz.gymroutines.data.domain.Set(-1)
+                com.noahjutz.gymroutines.data.domain.Set(-1, null, 32.2, 2),
+                com.noahjutz.gymroutines.data.domain.Set(-1, 1, 2.3, 23, 22.11),
+                com.noahjutz.gymroutines.data.domain.Set(-1, null, null, null, 42.22)
             )
             myAdapter.submitList(sampleData)
         }
