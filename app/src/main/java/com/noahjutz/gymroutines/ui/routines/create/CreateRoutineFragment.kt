@@ -81,8 +81,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initRecyclerView() {
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -96,9 +95,7 @@ class CreateRoutineFragment : Fragment() {
                 return true
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                deleteExercise(viewHolder.adapterPosition)
-            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
         }
 
         val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
