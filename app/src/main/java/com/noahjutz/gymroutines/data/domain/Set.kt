@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "set_table")
 data class Set(
     val exerciseHolderId: Int,
-    val reps: Int = -1,
-    val weight: Double = -1.0,
-    val time: Int = -1,
-    val distance: Double = -1.0,
+    val reps: Int? = null,
+    val weight: Double? = null,
+    val time: Int? = null,
+    val distance: Double? = null,
 
     @PrimaryKey(autoGenerate = true)
     val setId: Int = 0
