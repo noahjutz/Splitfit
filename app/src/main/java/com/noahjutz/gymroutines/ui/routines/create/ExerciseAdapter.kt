@@ -1,16 +1,21 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.lifecycle.observe
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.*
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
+import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
+import java.util.*
 
 @Suppress("unused")
 private const val TAG = "ExerciseAdapter"
@@ -18,6 +23,8 @@ private const val TAG = "ExerciseAdapter"
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
+    private val mAdapter = SetAdapter()
+
     fun getExercise(pos: Int): ExerciseImpl = getItem(pos)
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -49,7 +56,6 @@ class ExerciseAdapter(
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
-            val myAdapter = SetAdapter()
             val itemTouchHelper = object :
                 ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
                 override fun onMove(
@@ -64,13 +70,18 @@ class ExerciseAdapter(
 
             }
             set_container.apply {
-                adapter = myAdapter
+                adapter = mAdapter
                 layoutManager = LinearLayoutManager(context)
                 ItemTouchHelper(itemTouchHelper).attachToRecyclerView(this)
             }
-            // TODO: Observe sets in order to push UI changes
-            myAdapter.submitList(exercise.sets)
         }
+    }
+
+    fun submitSetList(list: List<Set>) {
+        // TODO: Fix bug: Because all ExerciseHolders use the same adapter, all of them have the same sets
+        mAdapter.submitList(list)
+        // TODO: Don't do this, it's bad.
+        mAdapter.notifyDataSetChanged()
     }
 
     interface OnExerciseClickListener {

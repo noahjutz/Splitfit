@@ -34,6 +34,8 @@ class CreateRoutineViewModel(
 
     private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
     private val _sets = MutableLiveData<ArrayList<Set>>()
+    val sets: LiveData<ArrayList<Set>>
+        get() = _sets
 
     init {
         initFullRoutine()

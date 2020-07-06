@@ -142,6 +142,10 @@ class CreateRoutineFragment : Fragment() {
             }
         )
 
+        viewModel.sets.observe(viewLifecycleOwner, Observer { sets ->
+            adapter.submitSetList(sets)
+        })
+
         sharedExerciseViewModel.exercises.observe(
             viewLifecycleOwner,
             Observer { exercises ->
