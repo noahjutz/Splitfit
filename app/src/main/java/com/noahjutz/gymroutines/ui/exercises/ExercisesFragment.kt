@@ -21,6 +21,7 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
+import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exercises.*
@@ -69,29 +70,10 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val exercise = adapter.getExerciseAt(viewHolder.adapterPosition)
-                viewModel.hide(exercise, true)
-                Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
-                    .setAction("Undo") {
-                        viewModel.hide(exercise, false)
-                    }
-                    .setAnchorView(fab_pick_exercises)
-                    .show()
-            }
-        }
+        val itemTouchHelper = ItemTouchHelperBuilder(
+            swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+            onSwiped = { viewHolder, _ -> deleteExercise(viewHolder.adapterPosition) }
+        ).build()
 
         val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
             override fun onExerciseClick(exercise: Exercise) {
@@ -111,7 +93,7 @@ class ExercisesFragment : Fragment() {
                     resources.getDimension(R.dimen.any_margin_default).toInt()
                 )
             )
-            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
+            itemTouchHelper.attachToRecyclerView(this)
         }
     }
 
@@ -136,5 +118,16 @@ class ExercisesFragment : Fragment() {
     fun addExercise() {
         val action = ExercisesFragmentDirections.addExercise(-1)
         findNavController().navigate(action)
+    }
+
+    private fun deleteExercise(position: Int) {
+        val exercise = adapter.getExerciseAt(position)
+        viewModel.hide(exercise, true)
+        Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
+            .setAction("Undo") {
+                viewModel.hide(exercise, false)
+            }
+            .setAnchorView(fab_pick_exercises)
+            .show()
     }
 }
