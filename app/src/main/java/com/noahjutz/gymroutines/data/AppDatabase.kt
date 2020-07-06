@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.noahjutz.gymroutines.data.dao.*
-import com.noahjutz.gymroutines.data.domain.*
+import com.noahjutz.gymroutines.data.dao.MainDao
+import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.data.domain.ExerciseHolder
+import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
 
 @Database(

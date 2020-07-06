@@ -1,12 +1,9 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.lifecycle.observe
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.*
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
@@ -15,7 +12,6 @@ import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
-import java.util.*
 
 @Suppress("unused")
 private const val TAG = "ExerciseAdapter"
