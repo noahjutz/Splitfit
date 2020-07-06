@@ -56,23 +56,9 @@ class ExerciseAdapter(
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
-            val itemTouchHelper = object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ) = false
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    // TODO
-                }
-
-            }
             set_container.apply {
                 adapter = mAdapter
                 layoutManager = LinearLayoutManager(context)
-                ItemTouchHelper(itemTouchHelper).attachToRecyclerView(this)
             }
         }
     }
