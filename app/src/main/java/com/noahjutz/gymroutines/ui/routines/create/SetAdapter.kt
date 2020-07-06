@@ -2,13 +2,10 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.android.synthetic.main.listitem_set.view.*
@@ -39,23 +36,13 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
         val set = getItem(position)
 
-        // TODO: Set visibility according to exercise, not value
-        val setTextUnlessNull: TextInputEditText.(Any?) -> Unit = { value ->
-            apply {
-                if (value == null) {
-                    // (parent.parent as View).visibility = GONE
-                } else {
-                    (parent.parent as View).visibility = VISIBLE
-                    setText(value.toString())
-                }
-            }
-        }
+        // TODO: Hide text fields according to: exercise.logReps, exercise.logWeight, etc.
 
         holder.itemView.apply {
-            edit_reps.setTextUnlessNull(set.reps)
-            edit_weight.setTextUnlessNull(set.weight)
-            edit_time.setTextUnlessNull(set.time)
-            edit_distance.setTextUnlessNull(set.distance)
+            edit_reps.setText(set.reps.toString())
+            edit_weight.setText(set.weight.toString())
+            edit_time.setText(set.time.toString())
+            edit_distance.setText(set.distance.toString())
         }
     }
 }

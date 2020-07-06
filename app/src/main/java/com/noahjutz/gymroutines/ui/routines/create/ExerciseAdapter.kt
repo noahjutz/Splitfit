@@ -68,14 +68,6 @@ class ExerciseAdapter(
                 layoutManager = LinearLayoutManager(context)
                 ItemTouchHelper(itemTouchHelper).attachToRecyclerView(this)
             }
-            //// (sample data)
-            // val sampleData = listOf(
-            //     com.noahjutz.gymroutines.data.domain.Set(-1, 12),
-            //     com.noahjutz.gymroutines.data.domain.Set(-1, null, 32.2, 2),
-            //     com.noahjutz.gymroutines.data.domain.Set(-1, 1, 2.3, 23, 22.11),
-            //     com.noahjutz.gymroutines.data.domain.Set(-1, null, null, null, 42.22)
-            // )
-            // myAdapter.submitList(sampleData)
             // TODO: Observe sets in order to push UI changes
             myAdapter.submitList(exercise.sets)
         }

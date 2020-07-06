@@ -103,7 +103,6 @@ class CreateRoutineViewModel(
                         }
                     }
                 )
-                Log.d(TAG, "$value")
             }
         }
     }
