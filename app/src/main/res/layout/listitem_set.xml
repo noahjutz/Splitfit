@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+TODO: Fix TextInputLayout Paddings
+ Currently, the TextInputLayouts have a paddingStart and paddingEnd, which causes the first and last
+ text field to be pushed toward the center. Paddings should only exist to seperate text fields.
+-->
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,7 +22,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_reps"
@@ -31,7 +37,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_weight"
@@ -44,7 +52,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_time"
@@ -57,7 +67,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_distance"
