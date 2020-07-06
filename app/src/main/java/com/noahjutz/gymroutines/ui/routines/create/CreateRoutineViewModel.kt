@@ -70,6 +70,13 @@ class CreateRoutineViewModel(
             }
 
             _sets.value = ArrayList()
+            value?.let {
+                for (exercise in it.exercises) {
+                    for (set in exercise.sets) {
+                        addSet(set)
+                    }
+                }
+            }
 
             for (e in value!!.exercises)
                 for (s in e.sets)
