@@ -178,6 +178,7 @@ class CreateRoutineFragment : Fragment() {
             "Deleted ${exercise.exercise.name}",
             Snackbar.LENGTH_SHORT
         )
+            .setAnchorView(button_add_exercise)
             .setAction("Undo") {
                 viewModel.addExercise(exercise)
                 adapter.notifyItemInserted(adapter.itemCount)
