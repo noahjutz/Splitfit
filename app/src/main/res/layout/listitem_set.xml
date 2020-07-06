@@ -3,79 +3,70 @@ TODO: Fix TextInputLayout Paddings
  Currently, the TextInputLayouts have a paddingStart and paddingEnd, which causes the first and last
  text field to be pushed toward the center. Paddings should only exist to seperate text fields.
 -->
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/any_margin_default"
-    tools:layout_marginEnd="16dp"
-    tools:layout_marginStart="16dp"
-    tools:layout_marginTop="16dp">
+    android:layout_marginTop="@dimen/any_padding_default">
 
-    <LinearLayout
-        android:id="@+id/parent_layout"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/any_padding_default">
+        android:layout_weight="1"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_reps"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp">
+            android:hint="Reps" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_reps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Reps" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_weight"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp">
+            android:hint="Weight" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_weight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Weight" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_time"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp">
+            android:hint="Time" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Time" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_distance"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_distance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Distance" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+            android:hint="Distance" />
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>
