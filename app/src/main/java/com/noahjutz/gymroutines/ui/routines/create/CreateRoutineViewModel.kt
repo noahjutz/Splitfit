@@ -137,6 +137,8 @@ class CreateRoutineViewModel(
     }
 
     fun addSet(set: Set) {
-        _sets.value = _sets.value!!.apply { add(set) }
+        val setId = repository.insert(set)
+        val newSet = repository.getSet(setId.toInt())
+        _sets.value = _sets.value!!.apply { add(newSet!!) }
     }
 }

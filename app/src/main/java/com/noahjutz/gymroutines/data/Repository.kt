@@ -3,6 +3,7 @@ package com.noahjutz.gymroutines.data
 import android.app.Application
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.FullRoutine
+import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -63,6 +64,22 @@ class Repository private constructor(application: Application) {
     fun getExercise(id: Int): Exercise? = runBlocking {
         withContext(IO) {
             dao.getExercise(id)
+        }
+    }
+
+    /**
+     * [com.noahjutz.gymroutines.data.domain.Set]
+     */
+
+    fun insert(set: Set) = runBlocking {
+        withContext(IO) {
+            dao.insert(set)
+        }
+    }
+
+    fun getSet(id: Int): Set? = runBlocking {
+        withContext(IO) {
+            dao.getSetById(id)
         }
     }
 }
