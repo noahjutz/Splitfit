@@ -42,9 +42,9 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
         val setTextUnlessNull: TextInputEditText.(Any?) -> Unit = { value ->
             apply {
                 if (value == null) {
-                    visibility = GONE
+                    (parent.parent as View).visibility = GONE
                 } else {
-                    visibility = VISIBLE
+                    (parent.parent as View).visibility = VISIBLE
                     setText(value.toString())
                 }
             }
