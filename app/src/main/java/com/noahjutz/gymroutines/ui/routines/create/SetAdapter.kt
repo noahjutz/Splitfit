@@ -23,7 +23,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
     }
 }
 
-class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
+class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     inner class SetHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetAdapter.SetHolder {

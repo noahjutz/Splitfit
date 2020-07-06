@@ -4,7 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
@@ -19,7 +22,7 @@ private const val TAG = "ExerciseAdapter"
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
-    private val mAdapter = SetAdapter()
+    private val mAdapters: ArrayList<SetAdapter> by lazy { ArrayList<SetAdapter>() }
 
     fun getExercise(pos: Int): ExerciseImpl = getItem(pos)
 
@@ -52,18 +55,19 @@ class ExerciseAdapter(
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
+            val setAdapter = SetAdapter(exercise.exerciseHolder.exerciseHolderId)
+            mAdapters.add(setAdapter)
             set_container.apply {
-                adapter = mAdapter
+                adapter = setAdapter
                 layoutManager = LinearLayoutManager(context)
             }
         }
     }
 
     fun submitSetList(list: List<Set>) {
-        // TODO: Fix bug: Because all ExerciseHolders use the same adapter, all of them have the same sets
-        mAdapter.submitList(list)
-        // TODO: Don't do this, it's bad.
-        mAdapter.notifyDataSetChanged()
+        for (adapter in mAdapters) {
+            adapter.submitList(list.filter { it.exerciseHolderId == adapter.exerciseHolderId })
+        }
     }
 
     interface OnExerciseClickListener {
