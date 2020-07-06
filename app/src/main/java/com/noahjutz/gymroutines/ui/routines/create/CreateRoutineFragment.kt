@@ -27,6 +27,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.InjectorUtils
+import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
@@ -81,23 +82,12 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val fromPos = viewHolder.adapterPosition
-                val toPos = target.adapterPosition
-                adapter.notifyItemMoved(fromPos, toPos)
-                viewModel.swapExercises(fromPos, toPos)
-                return true
+        val itemTouchHelper = ItemTouchHelperBuilder(
+            dragDirs = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            onMove = { _, viewHolder, target ->
+                swapExercises(viewHolder.adapterPosition, target.adapterPosition)
             }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
-        }
+        ).build()
 
         val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
             override fun onExerciseClick(card: MaterialCardView) {
@@ -129,7 +119,7 @@ class CreateRoutineFragment : Fragment() {
                 MarginItemDecoration(resources.getDimension(R.dimen.any_margin_default).toInt())
             )
             isNestedScrollingEnabled = false
-            ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
+            itemTouchHelper.attachToRecyclerView(this)
         }
     }
 
@@ -187,5 +177,11 @@ class CreateRoutineFragment : Fragment() {
                 adapter.notifyItemInserted(adapter.itemCount)
             }
             .show()
+    }
+
+    private fun swapExercises(fromPos: Int, toPos: Int): Boolean {
+        adapter.notifyItemMoved(fromPos, toPos)
+        viewModel.swapExercises(fromPos, toPos)
+        return true
     }
 }
