@@ -42,6 +42,7 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
             edit_weight.setText(set.weight.toString())
             edit_time.setText(set.time.toString())
             edit_distance.setText(set.distance.toString())
+            textview_id.text = set.setId.toString()
         }
     }
 }
