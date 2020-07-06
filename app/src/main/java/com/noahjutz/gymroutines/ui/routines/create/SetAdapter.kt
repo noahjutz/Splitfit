@@ -39,10 +39,11 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
         val set = getItem(position)
 
+        // TODO: Set visibility according to exercise, not value
         val setTextUnlessNull: TextInputEditText.(Any?) -> Unit = { value ->
             apply {
                 if (value == null) {
-                    (parent.parent as View).visibility = GONE
+                    // (parent.parent as View).visibility = GONE
                 } else {
                     (parent.parent as View).visibility = VISIBLE
                     setText(value.toString())
