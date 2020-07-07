@@ -48,7 +48,7 @@ abstract class MainDao {
      * [ExerciseImpl]
      */
 
-    private suspend fun insert(exerciseImpl: ExerciseImpl): Long {
+    suspend fun insert(exerciseImpl: ExerciseImpl): Long {
         val exerciseId = insert(exerciseImpl.exerciseHolder)
 
         for (set in exerciseImpl.sets)
@@ -66,6 +66,9 @@ abstract class MainDao {
 
     @Query("SELECT * FROM exercise_holder_table WHERE routineId == :routineId")
     abstract suspend fun getExerciseImplsIn(routineId: Int): List<ExerciseImpl>
+
+    @Query("SELECT * FROM exercise_holder_table WHERE exerciseHolderId == :exerciseHolderId")
+    abstract suspend fun getExerciseImpl(exerciseHolderId: Int): ExerciseImpl?
 
     /**
      * [Routine]

@@ -127,7 +127,9 @@ class CreateRoutineViewModel(
     }
 
     fun addExercise(exerciseImpl: ExerciseImpl) {
-        _exercises.value = _exercises.value!!.apply { add(exerciseImpl) }
+        val id = repository.insert(exerciseImpl)
+        val exercise = repository.getExerciseImpl(id.toInt())
+        _exercises.value = _exercises.value!!.apply { add(exercise!!) }
     }
 
     fun removeExercise(exerciseImpl: ExerciseImpl) {
