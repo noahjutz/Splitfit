@@ -69,7 +69,7 @@ class ExerciseAdapter(
     }
 
     private fun deleteSet(position: Int) {
-        // TODO
+        // TODO: call CreateRoutineViewModel.deleteSet
     }
 
     fun submitSetList(list: List<Set>) {

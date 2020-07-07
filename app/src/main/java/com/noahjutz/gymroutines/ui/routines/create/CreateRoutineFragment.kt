@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -134,6 +135,8 @@ class CreateRoutineFragment : Fragment() {
         viewModel.sets.observe(
             viewLifecycleOwner,
             Observer { sets ->
+                // TODO: Fix bug:
+                //  on initial start submitSetList gets called, but no changes are visible
                 adapter.submitSetList(sets)
             }
         )

@@ -32,6 +32,9 @@ class CreateRoutineViewModel(
     val description = MutableLiveData<String>()
 
     private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
+
+    // TODO: Fix _sets:
+    //  There are duplicate values
     private val _sets = MutableLiveData<ArrayList<Set>>()
     val sets: LiveData<ArrayList<Set>>
         get() = _sets
