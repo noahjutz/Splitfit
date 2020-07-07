@@ -136,7 +136,7 @@ class CreateRoutineFragment : Fragment() {
             viewLifecycleOwner,
             Observer { sets ->
                 // TODO: Fix bug:
-                //  submitSetList doesn't get called initially
+                //  submitSetList doesn't get called initially because the mAdapters list is empty when submitSetList is called
                 adapter.submitSetList(sets)
                 Log.d(TAG, "submitList: ${sets.map { it.setId }}")
             }

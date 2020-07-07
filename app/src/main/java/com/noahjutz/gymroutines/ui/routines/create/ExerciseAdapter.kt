@@ -70,7 +70,8 @@ class ExerciseAdapter(
     }
 
     private fun deleteSet(position: Int) {
-        // TODO: call CreateRoutineViewModel.deleteSet
+        // TODO: call listeners deleteSet function (TODO: Create a listener interface and pass it as
+        //  a dependency)
     }
 
     fun submitSetList(list: List<Set>) {
