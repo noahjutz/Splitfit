@@ -14,6 +14,10 @@ import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 
 @Suppress("unused")
 private const val TAG = "ExerciseAdapter"
@@ -75,9 +79,16 @@ class ExerciseAdapter(
     }
 
     fun submitSetList(list: List<Set>) {
-        for (adapter in mAdapters) {
-            adapter.submitList(list.filter { it.exerciseHolderId == adapter.exerciseHolderId })
-            Log.d(TAG, "submitSetList: ${adapter.exerciseHolderId}: ${list.filter { it.exerciseHolderId == adapter.exerciseHolderId }.map { it.setId }}")
+        // TODO: Find a better way to do this.
+        //  Instead of waiting a hardcoded amount of time, wait until all viewHolders have been bound.
+        CoroutineScope(Default).launch {
+            delay(1000)
+            withContext(Main) {
+                for (adapter in mAdapters) {
+                    adapter.submitList(list.filter { it.exerciseHolderId == adapter.exerciseHolderId })
+                    Log.d(TAG, "submitSetList: ${adapter.exerciseHolderId}: ${list.filter { it.exerciseHolderId == adapter.exerciseHolderId }.map { it.setId }}")
+                }
+            }
         }
     }
 
