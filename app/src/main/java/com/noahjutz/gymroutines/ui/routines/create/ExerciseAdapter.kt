@@ -4,14 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
@@ -55,13 +53,23 @@ class ExerciseAdapter(
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
+            val itemTouchHelper = ItemTouchHelperBuilder(
+                swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                onSwiped = {viewHolder, _ -> deleteSet(viewHolder.adapterPosition) }
+            ).build()
+
             val setAdapter = SetAdapter(exercise.exerciseHolder.exerciseHolderId)
             mAdapters.add(setAdapter)
             set_container.apply {
                 adapter = setAdapter
                 layoutManager = LinearLayoutManager(context)
+                itemTouchHelper.attachToRecyclerView(this)
             }
         }
+    }
+
+    private fun deleteSet(position: Int) {
+        // TODO
     }
 
     fun submitSetList(list: List<Set>) {
