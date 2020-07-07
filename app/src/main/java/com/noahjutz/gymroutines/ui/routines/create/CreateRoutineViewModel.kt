@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -143,5 +144,7 @@ class CreateRoutineViewModel(
         val setId = repository.insert(set)
         val newSet = repository.getSet(setId.toInt())
         _sets.value = _sets.value!!.apply { add(newSet!!) }
+
+        Log.d(TAG, "addSet: ${newSet?.setId}")
     }
 }
