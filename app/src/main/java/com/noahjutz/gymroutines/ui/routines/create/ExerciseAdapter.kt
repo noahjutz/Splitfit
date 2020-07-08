@@ -85,7 +85,7 @@ class ExerciseAdapter(
         // TODO: Find a better way to do this.
         //  Instead of waiting a hardcoded amount of time, wait until all viewHolders have been bound.
         CoroutineScope(Default).launch {
-            delay(1000)
+            delay(25)
             withContext(Main) {
                 for (adapter in mAdapters) {
                     adapter.submitList(list.filter { it.exerciseHolderId == adapter.exerciseHolderId })
