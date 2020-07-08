@@ -140,7 +140,6 @@ class CreateRoutineFragment : Fragment() {
             viewLifecycleOwner,
             Observer { sets ->
                 adapter.submitSetList(sets)
-                Log.d(TAG, "submitList: ${sets.map { it.setId }}")
             }
         )
 

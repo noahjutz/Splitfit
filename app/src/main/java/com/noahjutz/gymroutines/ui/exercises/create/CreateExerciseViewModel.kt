@@ -92,7 +92,6 @@ class CreateExerciseViewModel(
 
     private fun save() {
         insert(exercise.value!!)
-        Log.d(TAG, exercise.value.toString())
     }
 
     /**

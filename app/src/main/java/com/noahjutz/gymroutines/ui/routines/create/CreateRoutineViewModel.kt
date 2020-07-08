@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -149,14 +148,10 @@ class CreateRoutineViewModel(
             if (!contains(newSet))
                 add(newSet!!)
         }
-
-        Log.d(TAG, "addSet: ${newSet?.setId}")
     }
 
     fun removeSet(set: Set) {
-        _sets.value = _sets.value!!.apply {
-            remove(set)
-        }
+        _sets.value = _sets.value!!.apply { remove(set) }
         repository.delete(set)
     }
 }

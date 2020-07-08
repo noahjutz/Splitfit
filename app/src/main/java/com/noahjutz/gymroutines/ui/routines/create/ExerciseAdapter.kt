@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -89,10 +88,6 @@ class ExerciseAdapter(
             withContext(Main) {
                 for (adapter in mAdapters) {
                     adapter.submitList(list.filter { it.exerciseHolderId == adapter.exerciseHolderId })
-                    Log.d(TAG,
-                        "submitSetList: ${adapter.exerciseHolderId}: ${list.filter { it.exerciseHolderId == adapter.exerciseHolderId }
-                            .map { it.setId }}"
-                    )
                 }
             }
         }
