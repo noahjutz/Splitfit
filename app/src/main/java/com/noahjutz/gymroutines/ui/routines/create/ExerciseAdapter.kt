@@ -26,7 +26,7 @@ private const val TAG = "ExerciseAdapter"
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
-    private val mAdapters: ArrayList<SetAdapter> by lazy { ArrayList<SetAdapter>() }
+    val mAdapters: ArrayList<SetAdapter> by lazy { ArrayList<SetAdapter>() }
 
     fun getExercise(pos: Int): ExerciseImpl = getItem(pos)
 
@@ -78,19 +78,6 @@ class ExerciseAdapter(
     private fun deleteSet(position: Int, id: Int) {
         val set = mAdapters.filter { it.exerciseHolderId == id }[0].getItemPublic(position)
         onExerciseClickListener.onDeleteSet(set)
-    }
-
-    fun submitSetList(list: List<Set>) {
-        // TODO: Find a better way to do this.
-        //  Instead of waiting a hardcoded amount of time, wait until all viewHolders have been bound.
-        CoroutineScope(Default).launch {
-            delay(25)
-            withContext(Main) {
-                for (adapter in mAdapters) {
-                    adapter.submitList(list.filter { it.exerciseHolderId == adapter.exerciseHolderId })
-                }
-            }
-        }
     }
 
     interface OnExerciseClickListener {

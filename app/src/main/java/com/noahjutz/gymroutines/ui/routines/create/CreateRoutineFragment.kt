@@ -1,7 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -133,13 +132,13 @@ class CreateRoutineFragment : Fragment() {
             Observer { fullRoutine ->
                 viewModel.save()
                 adapter.submitList(fullRoutine.exercises)
-            }
-        )
 
-        viewModel.sets.observe(
-            viewLifecycleOwner,
-            Observer { sets ->
-                adapter.submitSetList(sets)
+                // TODO: Fix bug:
+                //  Adapters arent initialized in time -> Initial call is ignored
+                for (e in fullRoutine.exercises) {
+                    adapter.mAdapters.filter { it.exerciseHolderId == e.exerciseHolder.exerciseHolderId }
+                        .takeIf { it.isNotEmpty() }?.get(0)?.submitList(e.sets)
+                }
             }
         )
 
