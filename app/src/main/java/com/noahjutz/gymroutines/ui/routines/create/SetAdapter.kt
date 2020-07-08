@@ -44,10 +44,10 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
         // TODO: Hide text fields according to: exercise.logReps, exercise.logWeight, etc.
 
         holder.itemView.apply {
-            edit_reps.setText(set.reps.toString())
-            edit_weight.setText(set.weight.toString())
-            edit_time.setText(set.time.toString())
-            edit_distance.setText(set.distance.toString())
+            // edit_reps.setText(set.reps.toString())
+            // edit_weight.setText(set.weight.toString())
+            // edit_time.setText(set.time.toString())
+            // edit_distance.setText(set.distance.toString())
         }
     }
 }
