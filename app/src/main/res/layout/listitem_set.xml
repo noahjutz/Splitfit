@@ -11,15 +11,6 @@ TODO: Fix TextInputLayout Paddings
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/any_padding_default">
 
-    <!-- Debug textView for id -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/textview_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        tools:text="12" />
-
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="wrap_content"
