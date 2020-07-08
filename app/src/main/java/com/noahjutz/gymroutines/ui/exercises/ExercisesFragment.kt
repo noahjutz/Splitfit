@@ -71,7 +71,7 @@ class ExercisesFragment : Fragment() {
     private fun initRecyclerView() {
         val itemTouchHelper = ItemTouchHelperBuilder(
             swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-            onSwiped = { viewHolder, _ -> deleteExercise(viewHolder.adapterPosition) }
+            onSwiped = { viewHolder, _, _ -> deleteExercise(viewHolder.adapterPosition) }
         ).build()
 
         val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {

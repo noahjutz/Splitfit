@@ -14,10 +14,12 @@ import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Suppress("unused")
 private const val TAG = "ExerciseAdapter"
@@ -58,13 +60,14 @@ class ExerciseAdapter(
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
-            val itemTouchHelper = ItemTouchHelperBuilder(
-                swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                onSwiped = {viewHolder, _ -> deleteSet(viewHolder.adapterPosition) }
-            ).build()
-
             val setAdapter = SetAdapter(exercise.exerciseHolder.exerciseHolderId)
             mAdapters.add(setAdapter)
+            val itemTouchHelper = ItemTouchHelperBuilder(
+                // TODO: See [ItemTouchHelper]
+                itemTouchHelperId = setAdapter.exerciseHolderId,
+                swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                onSwiped = { viewHolder, _, id -> deleteSet(viewHolder.adapterPosition, id) }
+            ).build()
             set_container.apply {
                 adapter = setAdapter
                 layoutManager = LinearLayoutManager(context)
@@ -73,9 +76,9 @@ class ExerciseAdapter(
         }
     }
 
-    private fun deleteSet(position: Int) {
-        // TODO: call listeners deleteSet function (TODO: Create a listener interface and pass it as
-        //  a dependency)
+    private fun deleteSet(position: Int, id: Int) {
+        val set = mAdapters.filter { it.exerciseHolderId == id }[0].getItemPublic(position)
+        onExerciseClickListener.onDeleteSet(set)
     }
 
     fun submitSetList(list: List<Set>) {
@@ -86,7 +89,10 @@ class ExerciseAdapter(
             withContext(Main) {
                 for (adapter in mAdapters) {
                     adapter.submitList(list.filter { it.exerciseHolderId == adapter.exerciseHolderId })
-                    Log.d(TAG, "submitSetList: ${adapter.exerciseHolderId}: ${list.filter { it.exerciseHolderId == adapter.exerciseHolderId }.map { it.setId }}")
+                    Log.d(TAG,
+                        "submitSetList: ${adapter.exerciseHolderId}: ${list.filter { it.exerciseHolderId == adapter.exerciseHolderId }
+                            .map { it.setId }}"
+                    )
                 }
             }
         }
@@ -96,6 +102,7 @@ class ExerciseAdapter(
         fun onExerciseClick(card: MaterialCardView)
         fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView)
         fun onDeleteClick(position: Int)
+        fun onDeleteSet(set: Set)
     }
 }
 

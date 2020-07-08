@@ -69,7 +69,7 @@ class RoutinesFragment : Fragment() {
     private fun initRecyclerView() {
         val itemTouchHelper = ItemTouchHelperBuilder(
             swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-            onSwiped = { viewHolder, _ -> deleteRoutine(viewHolder.adapterPosition) }
+            onSwiped = { viewHolder, _, _ -> deleteRoutine(viewHolder.adapterPosition) }
         ).build()
 
         val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {

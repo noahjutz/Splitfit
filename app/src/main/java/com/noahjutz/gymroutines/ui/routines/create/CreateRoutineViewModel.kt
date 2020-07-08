@@ -152,4 +152,11 @@ class CreateRoutineViewModel(
 
         Log.d(TAG, "addSet: ${newSet?.setId}")
     }
+
+    fun removeSet(set: Set) {
+        _sets.value = _sets.value!!.apply {
+            remove(set)
+        }
+        repository.delete(set)
+    }
 }

@@ -108,6 +108,10 @@ class CreateRoutineFragment : Fragment() {
             override fun onDeleteClick(position: Int) {
                 deleteExercise(position)
             }
+
+            override fun onDeleteSet(set: Set) {
+                viewModel.removeSet(set)
+            }
         }
 
         adapter = ExerciseAdapter(onItemClickListener)

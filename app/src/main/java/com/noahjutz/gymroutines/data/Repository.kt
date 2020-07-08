@@ -94,6 +94,12 @@ class Repository private constructor(application: Application) {
         }
     }
 
+    fun delete(set: Set) = runBlocking {
+        withContext(IO) {
+            dao.delete(set)
+        }
+    }
+
     fun getSet(id: Int): Set? = runBlocking {
         withContext(IO) {
             dao.getSetById(id)

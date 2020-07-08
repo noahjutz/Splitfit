@@ -27,6 +27,9 @@ private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
 }
 
 class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
+    // TODO: Find another way of doing this.
+    fun getItemPublic(position: Int): Set = getItem(position)
+
     inner class SetHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetAdapter.SetHolder {
