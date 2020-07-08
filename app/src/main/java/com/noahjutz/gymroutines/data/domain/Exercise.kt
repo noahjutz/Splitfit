@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "exercise_table")
 data class Exercise(
-    var name: String,
-    var description: String,
+    var name: String = "",
+    var description: String = "",
     var logReps: Boolean = false,
     var logWeight: Boolean = false,
     var logTime: Boolean = false,

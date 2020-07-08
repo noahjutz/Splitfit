@@ -20,11 +20,11 @@ import androidx.transition.TransitionManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.ExerciseHolder
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
+import com.noahjutz.gymroutines.util.ExerciseImplBuilder
 import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
@@ -146,12 +146,10 @@ class CreateRoutineFragment : Fragment() {
             viewLifecycleOwner,
             Observer { exercises ->
                 for (e in exercises) {
-                    val exerciseHolder =
-                        ExerciseHolder(
-                            e.exerciseId,
-                            viewModel.fullRoutine.value!!.routine.routineId
-                        )
-                    val exerciseImpl = ExerciseImpl(exerciseHolder, e, listOf())
+                    val exerciseImpl = ExerciseImplBuilder(
+                        exercise = e,
+                        routine = viewModel.fullRoutine.value!!.routine
+                    ).build()
                     viewModel.addExercise(exerciseImpl)
                 }
 
