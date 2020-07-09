@@ -54,7 +54,7 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
         }
 
         val setTextOrHide: EditText.(value: Any?, show: Boolean) -> Unit = { value, show ->
-            if (show) setText(value.toString())
+            if (show) setText(value?.toString() ?: "")
             else (parent.parent as View).visibility = GONE
         }
 
