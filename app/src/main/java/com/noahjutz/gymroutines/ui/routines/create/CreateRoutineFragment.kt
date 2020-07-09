@@ -34,6 +34,8 @@ import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 import kotlinx.android.synthetic.main.listitem_routine.view.buttons
 import kotlinx.android.synthetic.main.listitem_routine.view.description
 import kotlinx.android.synthetic.main.listitem_routine.view.divider
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 
 @Suppress("unused")
 private const val TAG = "CreateRoutineFragment"
@@ -133,11 +135,16 @@ class CreateRoutineFragment : Fragment() {
                 viewModel.save()
                 adapter.submitList(fullRoutine.exercises)
 
-                // TODO: Fix bug:
-                //  Adapters arent initialized in time -> Initial call is ignored
                 for (e in fullRoutine.exercises) {
-                    adapter.mAdapters.filter { it.exerciseHolderId == e.exerciseHolder.exerciseHolderId }
-                        .takeIf { it.isNotEmpty() }?.get(0)?.submitList(e.sets)
+                    CoroutineScope(Dispatchers.Default).launch {
+                        // TODO: Don't wait a hardcoded amount of time, instead wait for viewHolders
+                        //  to be bound
+                        delay(20)
+                        withContext(Main) {
+                            adapter.mAdapters.filter { it.exerciseHolderId == e.exerciseHolder.exerciseHolderId }
+                                .takeIf { it.isNotEmpty() }?.get(0)?.submitList(e.sets)
+                        }
+                    }
                 }
             }
         )
