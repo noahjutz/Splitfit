@@ -2,13 +2,17 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.AppDatabase
 import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.android.synthetic.main.listitem_set.view.*
+import kotlinx.coroutines.runBlocking
 
 @Suppress("UNUSED")
 private const val TAG = "SetAdapter"
@@ -20,9 +24,9 @@ private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
 
     override fun areContentsTheSame(oldItem: Set, newItem: Set): Boolean {
         return oldItem.distance == newItem.distance &&
-            oldItem.reps == newItem.reps &&
-            oldItem.time == newItem.time &&
-            oldItem.weight == newItem.weight
+                oldItem.reps == newItem.reps &&
+                oldItem.time == newItem.time &&
+                oldItem.weight == newItem.weight
     }
 }
 
@@ -41,13 +45,24 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
     override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
         val set = getItem(position)
 
-        // TODO: Hide text fields according to: exercise.logReps, exercise.logWeight, etc.
+        // TODO: pass exercise with dependency injection instead of creating dependency here
+        val db = AppDatabase.getInstance(holder.itemView.context)
+        val dao = db.dao
+        val exercise = runBlocking {
+            dao.getExerciseImpl(set.exerciseHolderId)?.exercise
+                ?: throw NullPointerException("Set assigned to exercise that doesn't exist")
+        }
+
+        val setTextOrHide: EditText.(value: Any?, show: Boolean) -> Unit = { value, show ->
+            if (show) setText(value.toString())
+            else (parent.parent as View).visibility = GONE
+        }
 
         holder.itemView.apply {
-            // edit_reps.setText(set.reps.toString())
-            // edit_weight.setText(set.weight.toString())
-            // edit_time.setText(set.time.toString())
-            // edit_distance.setText(set.distance.toString())
+            edit_reps.setTextOrHide(set.reps, exercise.logReps)
+            edit_weight.setTextOrHide(set.weight, exercise.logWeight)
+            edit_time.setTextOrHide(set.time, exercise.logTime)
+            edit_distance.setTextOrHide(set.distance, exercise.logDistance)
         }
     }
 }
