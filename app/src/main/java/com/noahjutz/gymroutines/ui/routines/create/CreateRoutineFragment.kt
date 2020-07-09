@@ -141,6 +141,7 @@ class CreateRoutineFragment : Fragment() {
                         //  to be bound
                         delay(20)
                         withContext(Main) {
+                            TransitionManager.beginDelayedTransition(create_routine_root, AutoTransition())
                             adapter.mAdapters.filter { it.exerciseHolderId == e.exerciseHolder.exerciseHolderId }
                                 .takeIf { it.isNotEmpty() }?.get(0)?.submitList(e.sets)
                         }
