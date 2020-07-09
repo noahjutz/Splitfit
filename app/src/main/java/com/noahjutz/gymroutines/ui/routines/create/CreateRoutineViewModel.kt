@@ -9,7 +9,7 @@ import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
-import java.util.*
+import java.util.Collections
 import kotlin.collections.ArrayList
 
 @Suppress("unused")

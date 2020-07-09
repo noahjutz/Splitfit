@@ -20,9 +20,9 @@ private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
 
     override fun areContentsTheSame(oldItem: Set, newItem: Set): Boolean {
         return oldItem.distance == newItem.distance &&
-                oldItem.reps == newItem.reps &&
-                oldItem.time == newItem.time &&
-                oldItem.weight == newItem.weight
+            oldItem.reps == newItem.reps &&
+            oldItem.time == newItem.time &&
+            oldItem.weight == newItem.weight
     }
 }
 
