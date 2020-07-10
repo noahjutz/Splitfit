@@ -26,11 +26,10 @@ class ExerciseAdapter(
 
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
-        val view = LayoutInflater.from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ExerciseHolder(
+        LayoutInflater.from(parent.context)
             .inflate(R.layout.listitem_exercise_holder, parent, false)
-        return ExerciseHolder(view)
-    }
+    )
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exercise = getItem(position)

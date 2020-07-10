@@ -23,11 +23,10 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
 
     inner class SetHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetAdapter.SetHolder {
-        val itemView = LayoutInflater.from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SetHolder(
+        LayoutInflater.from(parent.context)
             .inflate(R.layout.listitem_set, parent, false)
-        return SetHolder(itemView)
-    }
+    )
 
     override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
         val set = getItem(position)

@@ -25,11 +25,10 @@ class RoutineAdapter(
 
     inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutineHolder {
-        val view = LayoutInflater.from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RoutineHolder(
+        LayoutInflater.from(parent.context)
             .inflate(R.layout.listitem_routine, parent, false)
-        return RoutineHolder(view)
-    }
+    )
 
     override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
         val fullRoutine = getItem(position)
