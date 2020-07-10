@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.*
+import com.noahjutz.gymroutines.util.Equatable
 
 /**
  * Holds an exercise and sets. Used in Routines.
@@ -11,4 +12,4 @@ data class ExerciseHolder(
     val routineId: Int,
     var position: Int = -1,
     @PrimaryKey(autoGenerate = true) val exerciseHolderId: Int = 0
-)
+) : Equatable

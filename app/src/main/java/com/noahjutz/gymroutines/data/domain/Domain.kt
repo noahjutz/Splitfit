@@ -1,6 +1,8 @@
 package com.noahjutz.gymroutines.data.domain
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Relation
+import com.noahjutz.gymroutines.util.Equatable
 
 /**
  * Utility classes for using the class hierarchy in code.
@@ -49,7 +51,7 @@ data class ExerciseImpl(
         parentColumn = "exerciseHolderId",
         entityColumn = "exerciseHolderId"
     ) var sets: List<Set>
-)
+) : Equatable
 
 /**
  * [Routine] with [ExerciseImpl]s
@@ -61,4 +63,4 @@ data class FullRoutine(
         parentColumn = "routineId",
         entityColumn = "routineId"
     ) val exercises: List<ExerciseImpl>
-)
+) : Equatable
