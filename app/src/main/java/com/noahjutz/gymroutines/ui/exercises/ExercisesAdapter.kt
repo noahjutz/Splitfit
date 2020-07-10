@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.util.DiffUtilCallback
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 @Suppress("unused")
@@ -45,7 +45,5 @@ class ExercisesAdapter(
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
-    override fun areItemsTheSame(old: Exercise, new: Exercise) = old.exerciseId == new.exerciseId
-    override fun areContentsTheSame(old: Exercise, new: Exercise) = old == new
-}
+private val diffUtil =
+    DiffUtilCallback<Exercise>({ old, new -> old.exerciseId == new.exerciseId })

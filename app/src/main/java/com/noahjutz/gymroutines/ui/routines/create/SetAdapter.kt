@@ -5,12 +5,12 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.AppDatabase
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.util.DiffUtilCallback
 import kotlinx.android.synthetic.main.listitem_set.view.*
 import kotlinx.coroutines.runBlocking
 
@@ -53,10 +53,4 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
-    override fun areItemsTheSame(old: Set, new: Set) = old == new
-    override fun areContentsTheSame(old: Set, new: Set) = old.distance == new.distance &&
-            old.reps == new.reps &&
-            old.time == new.time &&
-            old.weight == new.weight
-}
+private val diffUtil = DiffUtilCallback<Set>({ old, new -> old.setId == new.setId })

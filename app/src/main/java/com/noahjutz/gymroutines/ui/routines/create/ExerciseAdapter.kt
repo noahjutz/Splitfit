@@ -4,11 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
@@ -81,9 +85,5 @@ class ExerciseAdapter(
     }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<ExerciseImpl>() {
-    override fun areItemsTheSame(old: ExerciseImpl, new: ExerciseImpl) =
-        old.exerciseHolder.exerciseHolderId == new.exerciseHolder.exerciseHolderId
-
-    override fun areContentsTheSame(old: ExerciseImpl, new: ExerciseImpl) = old == new
-}
+private val diffUtil =
+    DiffUtilCallback<ExerciseImpl>({ old, new -> old.exerciseHolder.exerciseHolderId == new.exerciseHolder.exerciseHolderId })

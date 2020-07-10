@@ -3,13 +3,13 @@ package com.noahjutz.gymroutines.ui.routines
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
+import com.noahjutz.gymroutines.util.DiffUtilCallback
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 @Suppress("unused")
@@ -56,9 +56,5 @@ class RoutineAdapter(
         .joinToString("\n") { "${it.sets.size} x ${it.exercise.name}" }
 }
 
-private val diffUtil = object : DiffUtil.ItemCallback<FullRoutine>() {
-    override fun areItemsTheSame(old: FullRoutine, new: FullRoutine) =
-        old.routine.routineId == new.routine.routineId
-
-    override fun areContentsTheSame(old: FullRoutine, new: FullRoutine) = old == new
-}
+private val diffUtil =
+    DiffUtilCallback<FullRoutine>({ old, new -> old.routine.routineId == new.routine.routineId })
