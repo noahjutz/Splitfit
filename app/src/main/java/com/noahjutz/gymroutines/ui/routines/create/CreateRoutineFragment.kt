@@ -172,9 +172,10 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun deleteExercise(position: Int) {
-        val exercise = adapter.getExercise(position)
-        viewModel.removeExercise(exercise)
-        adapter.notifyItemRemoved(position)
+        adapter.apply {
+            viewModel.removeExercise(getExercise(position))
+            notifyItemRemoved(position)
+        }
     }
 
     private fun swapExercises(fromPos: Int, toPos: Int): Boolean {
