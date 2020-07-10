@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
@@ -37,15 +38,7 @@ class RoutineAdapter(
             name.text = fullRoutine.routine.name
             description.text = fullRoutine.routine.description
 
-            val list = fullRoutine.exercises
-                .sortedBy { it.exerciseHolder.position }
-                .map { it.exercise.name }
-            val sb = StringBuilder()
-            for (i in list.indices) {
-                sb.append(list[i])
-                if (i < list.size - 1) sb.append("\n")
-            }
-            exercises.text = sb.toString()
+            exercises.text = getExercises(fullRoutine.exercises)
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
@@ -58,6 +51,10 @@ class RoutineAdapter(
         fun onEditClick(fullRoutine: FullRoutine)
         fun onLaunchClick(fullRoutine: FullRoutine)
     }
+
+    private fun getExercises(exercises: List<ExerciseImpl>): String = exercises
+        .sortedBy { it.exerciseHolder.position }
+        .joinToString("\n") { "${it.sets.size} x ${it.exercise.name}" }
 }
 
 private val diffUtil = object : DiffUtil.ItemCallback<FullRoutine>() {
