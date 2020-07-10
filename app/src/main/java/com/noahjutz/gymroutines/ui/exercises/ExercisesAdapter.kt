@@ -14,16 +14,6 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.*
 @Suppress("unused")
 private const val TAG = "ExercisesAdapter"
 
-private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
-    override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-        return oldItem.exerciseId == newItem.exerciseId
-    }
-
-    override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-        return oldItem == newItem
-    }
-}
-
 class ExercisesAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
@@ -54,4 +44,10 @@ class ExercisesAdapter(
     interface OnExerciseClickListener {
         fun onExerciseClick(exercise: Exercise)
     }
+}
+
+private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
+    override fun areItemsTheSame(old: Exercise, new: Exercise) = old.exerciseId == new.exerciseId
+
+    override fun areContentsTheSame(old: Exercise, new: Exercise) = old == new
 }

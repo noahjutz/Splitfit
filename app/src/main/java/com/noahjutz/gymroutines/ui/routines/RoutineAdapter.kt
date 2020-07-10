@@ -58,13 +58,8 @@ class RoutineAdapter(
 }
 
 private val diffUtil = object : DiffUtil.ItemCallback<FullRoutine>() {
-    override fun areItemsTheSame(
-        oldItem: FullRoutine,
-        newItem: FullRoutine
-    ): Boolean = oldItem.routine.routineId == newItem.routine.routineId
+    override fun areItemsTheSame(old: FullRoutine, new: FullRoutine) =
+        old.routine.routineId == new.routine.routineId
 
-    override fun areContentsTheSame(
-        oldItem: FullRoutine,
-        newItem: FullRoutine
-    ): Boolean = oldItem == newItem
+    override fun areContentsTheSame(old: FullRoutine, new: FullRoutine) = old == new
 }

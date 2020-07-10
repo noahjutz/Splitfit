@@ -17,19 +17,6 @@ import kotlinx.coroutines.runBlocking
 @Suppress("UNUSED")
 private const val TAG = "SetAdapter"
 
-private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
-    override fun areItemsTheSame(oldItem: Set, newItem: Set): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: Set, newItem: Set): Boolean {
-        return oldItem.distance == newItem.distance &&
-                oldItem.reps == newItem.reps &&
-                oldItem.time == newItem.time &&
-                oldItem.weight == newItem.weight
-    }
-}
-
 class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     // TODO: Find another way of doing this.
     fun getItemPublic(position: Int): Set = getItem(position)
@@ -65,4 +52,13 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
             edit_distance.setTextOrHide(set.distance, exercise.logDistance)
         }
     }
+}
+
+private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
+    override fun areItemsTheSame(old: Set, new: Set) = old == new
+
+    override fun areContentsTheSame(old: Set, new: Set) = old.distance == new.distance &&
+            old.reps == new.reps &&
+            old.time == new.time &&
+            old.weight == new.weight
 }
