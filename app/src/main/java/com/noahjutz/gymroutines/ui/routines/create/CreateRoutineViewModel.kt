@@ -9,7 +9,7 @@ import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
-import java.util.Collections
+import java.util.*
 import kotlin.collections.ArrayList
 
 @Suppress("unused")
@@ -122,9 +122,11 @@ class CreateRoutineViewModel(
     }
 
     fun addExercise(exerciseImpl: ExerciseImpl) {
-        val id = repository.insert(exerciseImpl)
-        val exercise = repository.getExerciseImpl(id.toInt())
+        val id = repository.insert(exerciseImpl).toInt()
+        val exercise = repository.getExerciseImpl(id)
         _exercises.value = _exercises.value!!.apply { add(exercise!!) }
+
+        addSet(Set(id))
     }
 
     fun removeExercise(exerciseImpl: ExerciseImpl) {
