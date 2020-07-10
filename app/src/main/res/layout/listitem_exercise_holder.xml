@@ -82,14 +82,6 @@
                 tools:visibility="visible">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_delete"
-                    style="@style/Widget.App.Button.TextButton.IconOnly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    app:icon="@drawable/ic_delete" />
-
-                <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_add_set"
                     style="@style/Widget.App.Button.TextButton.IconOnly"
                     android:layout_width="wrap_content"
