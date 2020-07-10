@@ -175,17 +175,6 @@ class CreateRoutineFragment : Fragment() {
         val exercise = adapter.getExercise(position)
         viewModel.removeExercise(exercise)
         adapter.notifyItemRemoved(position)
-        Snackbar.make(
-            recycler_view,
-            "Deleted ${exercise.exercise.name}",
-            Snackbar.LENGTH_SHORT
-        )
-            .setAnchorView(button_add_exercise)
-            .setAction("Undo") {
-                viewModel.addExercise(exercise)
-                adapter.notifyItemInserted(adapter.itemCount)
-            }
-            .show()
     }
 
     private fun swapExercises(fromPos: Int, toPos: Int): Boolean {
