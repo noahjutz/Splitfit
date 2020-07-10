@@ -62,7 +62,7 @@ class ExerciseAdapter(
                 // TODO: See [ItemTouchHelper]
                 itemTouchHelperId = setAdapter.exerciseHolderId,
                 swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                onSwipedCall = { viewHolder, _, id -> deleteSet(viewHolder.adapterPosition, id) }
+                onSwipedCall = { viewHolder, _, id -> deleteSet(viewHolder.adapterPosition, id, holder.adapterPosition) }
             ).build()
             set_container.apply {
                 adapter = setAdapter
@@ -72,16 +72,16 @@ class ExerciseAdapter(
         }
     }
 
-    private fun deleteSet(position: Int, id: Int) {
+    private fun deleteSet(position: Int, id: Int, exercisePosition: Int) {
         val set = mAdapters.filter { it.exerciseHolderId == id }[0].getItemPublic(position)
-        onExerciseClickListener.onDeleteSet(set)
+        onExerciseClickListener.onDeleteSet(set, exercisePosition)
     }
 
     interface OnExerciseClickListener {
         fun onExerciseClick(card: MaterialCardView)
         fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView)
         fun onDeleteClick(position: Int)
-        fun onDeleteSet(set: Set)
+        fun onDeleteSet(set: Set, position: Int)
     }
 }
 

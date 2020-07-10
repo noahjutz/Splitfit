@@ -110,8 +110,10 @@ class CreateRoutineFragment : Fragment() {
                 deleteExercise(position)
             }
 
-            override fun onDeleteSet(set: Set) {
+            override fun onDeleteSet(set: Set, position: Int) {
                 viewModel.removeSet(set)
+                if (viewModel.fullRoutine.value!!.exercises.filter { it.exerciseHolder.exerciseHolderId == set.exerciseHolderId }[0].sets.isEmpty())
+                    deleteExercise(position)
             }
         }
 
