@@ -114,7 +114,11 @@ class CreateRoutineViewModel(
         }
     }
 
-    fun save() {
+    override fun onCleared() {
+        save()
+    }
+
+    private fun save() {
         for (i in 0 until _exercises.value!!.size)
             _exercises.value!![i].exerciseHolder.position = i
 

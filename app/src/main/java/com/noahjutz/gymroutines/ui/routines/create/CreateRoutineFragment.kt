@@ -134,7 +134,6 @@ class CreateRoutineFragment : Fragment() {
         viewModel.fullRoutine.observe(
             viewLifecycleOwner,
             Observer { fullRoutine ->
-                viewModel.save()
                 adapter.submitList(fullRoutine.exercises)
 
                 for (e in fullRoutine.exercises) {
