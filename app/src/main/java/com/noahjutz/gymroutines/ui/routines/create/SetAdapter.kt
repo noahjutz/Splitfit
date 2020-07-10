@@ -55,7 +55,6 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
 
 private val diffUtil = object : DiffUtil.ItemCallback<Set>() {
     override fun areItemsTheSame(old: Set, new: Set) = old == new
-
     override fun areContentsTheSame(old: Set, new: Set) = old.distance == new.distance &&
             old.reps == new.reps &&
             old.time == new.time &&

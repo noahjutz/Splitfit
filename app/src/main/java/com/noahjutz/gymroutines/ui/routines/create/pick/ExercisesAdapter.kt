@@ -15,26 +15,15 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.*
 @Suppress("unused")
 private const val TAG = "ExercisesAdapter"
 
-private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
-    override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-        return oldItem.exerciseId == newItem.exerciseId
-    }
-
-    override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-        return oldItem == newItem
-    }
-}
-
 class ExercisesAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
-        val itemView = LayoutInflater.from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ExerciseHolder(
+        LayoutInflater.from(parent.context)
             .inflate(R.layout.listitem_exercise, parent, false)
-        return ExerciseHolder(itemView)
-    }
+    )
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exercise = getItem(position)
@@ -58,4 +47,10 @@ class ExercisesAdapter(
     interface OnExerciseClickListener {
         fun onExerciseClick(exercise: Exercise, card: MaterialCardView)
     }
+}
+
+
+private val diffUtil = object : DiffUtil.ItemCallback<Exercise>() {
+    override fun areItemsTheSame(old: Exercise, new: Exercise) = old.exerciseId == new.exerciseId
+    override fun areContentsTheSame(old: Exercise, new: Exercise) = old == new
 }
