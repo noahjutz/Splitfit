@@ -16,8 +16,8 @@ TODO: Fix TextInputLayout Paddings
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_reps"
@@ -31,8 +31,8 @@ TODO: Fix TextInputLayout Paddings
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_weight"
@@ -46,8 +46,8 @@ TODO: Fix TextInputLayout Paddings
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_time"
@@ -61,8 +61,8 @@ TODO: Fix TextInputLayout Paddings
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_distance"
