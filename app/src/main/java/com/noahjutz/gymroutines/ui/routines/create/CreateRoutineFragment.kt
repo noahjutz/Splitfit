@@ -85,7 +85,7 @@ class CreateRoutineFragment : Fragment() {
     private fun initRecyclerView() {
         val itemTouchHelper = ItemTouchHelperBuilder(
             dragDirs = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            onMove = { _, viewHolder, target ->
+            onMoveCall = { _, viewHolder, target ->
                 swapExercises(viewHolder.adapterPosition, target.adapterPosition)
             }
         ).build()

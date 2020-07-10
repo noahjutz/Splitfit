@@ -62,7 +62,7 @@ class ExerciseAdapter(
                 // TODO: See [ItemTouchHelper]
                 itemTouchHelperId = setAdapter.exerciseHolderId,
                 swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                onSwiped = { viewHolder, _, id -> deleteSet(viewHolder.adapterPosition, id) }
+                onSwipedCall = { viewHolder, _, id -> deleteSet(viewHolder.adapterPosition, id) }
             ).build()
             set_container.apply {
                 adapter = setAdapter
