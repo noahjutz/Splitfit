@@ -33,7 +33,7 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
 
         // TODO: pass exercise with dependency injection instead of creating dependency here
         val db = AppDatabase.getInstance(holder.itemView.context)
-        val dao = db.dao
+        val dao = db.exerciseImplDao
         val exercise = runBlocking {
             dao.getExerciseImpl(set.exerciseHolderId)?.exercise
                 ?: throw NullPointerException("Set assigned to exercise that doesn't exist")

@@ -20,7 +20,6 @@ import com.noahjutz.gymroutines.data.domain.Set
     version = 20
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract val dao: MainDao
     abstract val exerciseDao: ExerciseDao
     abstract val exerciseHolderDao: ExerciseHolderDao
     abstract val exerciseImplDao: ExerciseImplDao

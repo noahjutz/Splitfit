@@ -14,7 +14,6 @@ private const val TAG = "Repository"
 
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
-    private val dao = database.dao
     private val exerciseDao = database.exerciseDao
     private val exerciseHolderDao = database.exerciseHolderDao
     private val exerciseImplDao = database.exerciseImplDao
@@ -22,9 +21,9 @@ class Repository private constructor(application: Application) {
     private val routineDao = database.routineDao
     private val setDao = database.setDao
 
-    val routines = dao.getRoutines()
-    val exercises = dao.getExercises()
-    val fullRoutines = dao.getFullRoutines()
+    val routines = routineDao.getRoutines()
+    val exercises = exerciseDao.getExercises()
+    val fullRoutines = fullRoutineDao.getFullRoutines()
 
     companion object {
         @Volatile
@@ -42,9 +41,9 @@ class Repository private constructor(application: Application) {
 
     fun insert(fullRoutine: FullRoutine) = runBlocking {
         withContext(IO) {
-            val routineId = dao.insert(fullRoutine.routine)
+            val routineId = routineDao.insert(fullRoutine.routine)
 
-            val exerciseImpls = dao.getExerciseImplsIn(routineId.toInt())
+            val exerciseImpls = exerciseImplDao.getExerciseImplsIn(routineId.toInt())
             for (e in exerciseImpls)
                 delete(e)
 
@@ -57,9 +56,9 @@ class Repository private constructor(application: Application) {
 
     fun delete(fullRoutine: FullRoutine) = runBlocking {
         withContext(IO) {
-            dao.delete(fullRoutine.routine)
+            routineDao.delete(fullRoutine.routine)
 
-            val exerciseImpls = dao.getExerciseImplsIn(fullRoutine.routine.routineId)
+            val exerciseImpls = exerciseImplDao.getExerciseImplsIn(fullRoutine.routine.routineId)
             for (e in exerciseImpls)
                 delete(e)
         }
@@ -67,7 +66,7 @@ class Repository private constructor(application: Application) {
 
     fun getFullRoutine(routineId: Int) = runBlocking {
         withContext(IO) {
-            dao.getFullRoutine(routineId)
+            fullRoutineDao.getFullRoutine(routineId)
         }
     }
 
@@ -77,7 +76,7 @@ class Repository private constructor(application: Application) {
 
     fun insert(exerciseImpl: ExerciseImpl) = runBlocking {
         withContext(IO) {
-            val exerciseId = dao.insert(exerciseImpl.exerciseHolder)
+            val exerciseId = exerciseHolderDao.insert(exerciseImpl.exerciseHolder)
 
             for (set in exerciseImpl.sets)
                 insert(set)
@@ -88,7 +87,7 @@ class Repository private constructor(application: Application) {
 
     private fun delete(exerciseImpl: ExerciseImpl) = runBlocking {
         withContext(IO) {
-            dao.delete(exerciseImpl.exerciseHolder)
+            exerciseHolderDao.delete(exerciseImpl.exerciseHolder)
 
             for (set in exerciseImpl.sets)
                 delete(set)
@@ -97,7 +96,7 @@ class Repository private constructor(application: Application) {
 
     fun getExerciseImpl(exerciseHolderId: Int) = runBlocking {
         withContext(IO) {
-            dao.getExerciseImpl(exerciseHolderId)
+            exerciseImplDao.getExerciseImpl(exerciseHolderId)
         }
     }
 
@@ -107,13 +106,13 @@ class Repository private constructor(application: Application) {
 
     fun insert(exercise: Exercise) = runBlocking {
         withContext(IO) {
-            dao.insert(exercise)
+            exerciseDao.insert(exercise)
         }
     }
 
     fun getExercise(id: Int): Exercise? = runBlocking {
         withContext(IO) {
-            dao.getExercise(id)
+            exerciseDao.getExercise(id)
         }
     }
 
@@ -123,19 +122,19 @@ class Repository private constructor(application: Application) {
 
     fun insert(set: Set) = runBlocking {
         withContext(IO) {
-            dao.insert(set)
+            setDao.insert(set)
         }
     }
 
     fun delete(set: Set) = runBlocking {
         withContext(IO) {
-            dao.delete(set)
+            setDao.delete(set)
         }
     }
 
     fun getSet(id: Int): Set? = runBlocking {
         withContext(IO) {
-            dao.getSetById(id)
+            setDao.getSetById(id)
         }
     }
 }
