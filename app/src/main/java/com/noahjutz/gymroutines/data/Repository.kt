@@ -36,13 +36,26 @@ class Repository private constructor(application: Application) {
 
     fun insert(fullRoutine: FullRoutine) = runBlocking {
         withContext(IO) {
-            dao.insert(fullRoutine)
+            val routineId = dao.insert(fullRoutine.routine)
+
+            val exerciseImpls = dao.getExerciseImplsIn(routineId.toInt())
+            for (e in exerciseImpls)
+                delete(e)
+
+            for (e in fullRoutine.exercises)
+                insert(e)
+
+            routineId
         }
     }
 
     fun delete(fullRoutine: FullRoutine) = runBlocking {
         withContext(IO) {
-            dao.delete(fullRoutine)
+            dao.delete(fullRoutine.routine)
+
+            val exerciseImpls = dao.getExerciseImplsIn(fullRoutine.routine.routineId)
+            for (e in exerciseImpls)
+                delete(e)
         }
     }
 
@@ -58,7 +71,21 @@ class Repository private constructor(application: Application) {
 
     fun insert(exerciseImpl: ExerciseImpl) = runBlocking {
         withContext(IO) {
-            dao.insert(exerciseImpl)
+            val exerciseId = dao.insert(exerciseImpl.exerciseHolder)
+
+            for (set in exerciseImpl.sets)
+                insert(set)
+
+            exerciseId
+        }
+    }
+
+    private fun delete(exerciseImpl: ExerciseImpl) = runBlocking {
+        withContext(IO) {
+            dao.delete(exerciseImpl.exerciseHolder)
+
+            for (set in exerciseImpl.sets)
+                delete(set)
         }
     }
 

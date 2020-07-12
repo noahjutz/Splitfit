@@ -15,27 +15,6 @@ abstract class MainDao {
      * [FullRoutine]
      */
 
-    suspend fun insert(fullRoutine: FullRoutine): Long {
-        val routineId = insert(fullRoutine.routine)
-
-        val exerciseImpls = getExerciseImplsIn(routineId.toInt())
-        for (e in exerciseImpls)
-            delete(e)
-
-        for (e in fullRoutine.exercises)
-            insert(e)
-
-        return routineId
-    }
-
-    suspend fun delete(fullRoutine: FullRoutine) {
-        delete(fullRoutine.routine)
-
-        val exerciseImpls = getExerciseImplsIn(fullRoutine.routine.routineId)
-        for (e in exerciseImpls)
-            delete(e)
-    }
-
     @Transaction
     @Query("SELECT * FROM routine_table")
     abstract fun getFullRoutines(): LiveData<List<FullRoutine>>
@@ -47,22 +26,6 @@ abstract class MainDao {
     /**
      * [ExerciseImpl]
      */
-
-    suspend fun insert(exerciseImpl: ExerciseImpl): Long {
-        val exerciseId = insert(exerciseImpl.exerciseHolder)
-
-        for (set in exerciseImpl.sets)
-            insert(set)
-
-        return exerciseId
-    }
-
-    private suspend fun delete(exerciseImpl: ExerciseImpl) {
-        delete(exerciseImpl.exerciseHolder)
-
-        for (set in exerciseImpl.sets)
-            delete(set)
-    }
 
     @Query("SELECT * FROM exercise_holder_table WHERE routineId == :routineId")
     abstract suspend fun getExerciseImplsIn(routineId: Int): List<ExerciseImpl>
