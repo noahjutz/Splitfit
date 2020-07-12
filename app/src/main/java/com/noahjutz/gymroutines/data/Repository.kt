@@ -15,6 +15,12 @@ private const val TAG = "Repository"
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
     private val dao = database.dao
+    private val exerciseDao = database.exerciseDao
+    private val exerciseHolderDao = database.exerciseHolderDao
+    private val exerciseImplDao = database.exerciseImplDao
+    private val fullRoutineDao = database.fullRoutineDao
+    private val routineDao = database.routineDao
+    private val setDao = database.setDao
 
     val routines = dao.getRoutines()
     val exercises = dao.getExercises()
