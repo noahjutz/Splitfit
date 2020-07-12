@@ -51,7 +51,7 @@ class RoutineAdapter(
         fun onLaunchClick(fullRoutine: FullRoutine)
     }
 
-    private fun getExercises(exercises: List<ExerciseImpl>): String = exercises
+    private fun getExercises(exercises: List<ExerciseImpl>) = exercises
         .sortedBy { it.exerciseHolder.position }
         .joinToString("\n") { "${it.sets.size} x ${it.exercise.name}" }
 }
