@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.noahjutz.gymroutines.util.Equatable
 
 /**
- * Utility classes for using the class hierarchy in code.
+ * Utility class hierarchy:
  *
  *                   +-------------+
  *               1 +-+ FullRoutine +-+ 1
@@ -33,25 +33,7 @@ import com.noahjutz.gymroutines.util.Equatable
  * +--+-------+         +--+--+
  * | Exercise |         | Set |
  * +----------+         +-----+
- *
  */
-
-/**
- * [ExerciseHolder] with [Exercise] and [Set]s
- */
-data class ExerciseImpl(
-    @Embedded val exerciseHolder: ExerciseHolder,
-    @Relation(
-        entity = Exercise::class,
-        parentColumn = "exerciseId",
-        entityColumn = "exerciseId"
-    ) val exercise: Exercise,
-    @Relation(
-        entity = Set::class,
-        parentColumn = "exerciseHolderId",
-        entityColumn = "exerciseHolderId"
-    ) var sets: List<Set>
-) : Equatable
 
 /**
  * [Routine] with [ExerciseImpl]s
