@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.listitem_routine.view.*
 @Suppress("unused")
 private const val TAG = "RoutinesFragment"
 
-class RoutinesFragment : Fragment() {
+class RoutinesFragment : Fragment(), RoutineAdapter.OnRoutineClickListener {
 
     private val viewModel: RoutinesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
@@ -72,31 +72,7 @@ class RoutinesFragment : Fragment() {
             onSwipedCall = { viewHolder, _, _ -> deleteRoutine(viewHolder.adapterPosition) }
         ).build()
 
-        val onItemClickListener = object : RoutineAdapter.OnRoutineClickListener {
-            override fun onRoutineClick(card: MaterialCardView) {
-                TransitionManager.beginDelayedTransition(recycler_view, AutoTransition())
-                val v = if (card.description.visibility == GONE) VISIBLE else GONE
-                card.apply {
-                    description.visibility = v
-                    exercises.visibility = v
-                    buttons.visibility = v
-                    divider.visibility = v
-                }
-            }
-
-            override fun onEditClick(fullRoutine: FullRoutine) {
-                val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
-                findNavController().navigate(action)
-            }
-
-            override fun onLaunchClick(fullRoutine: FullRoutine) {
-                Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
-                    .setAnchorView(fab_pick_exercises)
-                    .show()
-            }
-        }
-
-        adapter = RoutineAdapter(onItemClickListener)
+        adapter = RoutineAdapter(this)
 
         recycler_view.apply {
             adapter = this@RoutinesFragment.adapter
@@ -142,6 +118,28 @@ class RoutinesFragment : Fragment() {
             Snackbar.LENGTH_SHORT
         )
             .setAction("Undo") { viewModel.insert(routine) }
+            .setAnchorView(fab_pick_exercises)
+            .show()
+    }
+
+    override fun onRoutineClick(card: MaterialCardView) {
+        TransitionManager.beginDelayedTransition(recycler_view, AutoTransition())
+        val v = if (card.description.visibility == GONE) VISIBLE else GONE
+        card.apply {
+            description.visibility = v
+            exercises.visibility = v
+            buttons.visibility = v
+            divider.visibility = v
+        }
+    }
+
+    override fun onEditClick(fullRoutine: FullRoutine) {
+        val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
+        findNavController().navigate(action)
+    }
+
+    override fun onLaunchClick(fullRoutine: FullRoutine) {
+        Snackbar.make(recycler_view, "Not yet implemented", Snackbar.LENGTH_SHORT)
             .setAnchorView(fab_pick_exercises)
             .show()
     }

@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 @Suppress("unused")
 private const val TAG = "ExercisesFragment"
 
-class ExercisesFragment : Fragment() {
+class ExercisesFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
     private val viewModel: ExercisesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
@@ -74,14 +74,7 @@ class ExercisesFragment : Fragment() {
             onSwipedCall = { viewHolder, _, _ -> deleteExercise(viewHolder.adapterPosition) }
         ).build()
 
-        val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
-            override fun onExerciseClick(exercise: Exercise) {
-                val action = ExercisesFragmentDirections.addExercise(exercise.exerciseId)
-                findNavController().navigate(action)
-            }
-        }
-
-        adapter = ExercisesAdapter(onItemClickListener)
+        adapter = ExercisesAdapter(this)
 
         recycler_view.apply {
             adapter = this@ExercisesFragment.adapter
@@ -128,5 +121,10 @@ class ExercisesFragment : Fragment() {
             }
             .setAnchorView(fab_pick_exercises)
             .show()
+    }
+
+    override fun onExerciseClick(exercise: Exercise) {
+        val action = ExercisesFragmentDirections.addExercise(exercise.exerciseId)
+        findNavController().navigate(action)
     }
 }

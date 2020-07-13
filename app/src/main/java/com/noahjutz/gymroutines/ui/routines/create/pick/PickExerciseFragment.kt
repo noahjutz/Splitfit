@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_pick_exercise.*
 @Suppress("unused")
 private const val TAG = "PickExerciseFragment"
 
-class PickExerciseFragment : Fragment() {
+class PickExerciseFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
     private val exercisesViewModel: ExercisesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
@@ -76,15 +76,7 @@ class PickExerciseFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val onItemClickListener = object : ExercisesAdapter.OnExerciseClickListener {
-            override fun onExerciseClick(exercise: Exercise, card: MaterialCardView) {
-                card.isChecked = (!card.isChecked)
-                if (card.isChecked) sharedExerciseViewModel.addExercise(exercise)
-                else sharedExerciseViewModel.removeExercise(exercise)
-            }
-        }
-
-        adapter = ExercisesAdapter(onItemClickListener)
+        adapter = ExercisesAdapter(this)
 
         recycler_view.apply {
             adapter = this@PickExerciseFragment.adapter
@@ -96,6 +88,12 @@ class PickExerciseFragment : Fragment() {
                 )
             )
         }
+    }
+
+    override fun onExerciseClick(exercise: Exercise, card: MaterialCardView) {
+        card.isChecked = (!card.isChecked)
+        if (card.isChecked) sharedExerciseViewModel.addExercise(exercise)
+        else sharedExerciseViewModel.removeExercise(exercise)
     }
 
     private fun showEmptyScreen(visibility: Int) {

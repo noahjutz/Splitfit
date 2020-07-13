@@ -40,7 +40,7 @@ import kotlinx.coroutines.Dispatchers.Main
 @Suppress("unused")
 private const val TAG = "CreateRoutineFragment"
 
-class CreateRoutineFragment : Fragment() {
+class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModel: CreateRoutineViewModel by viewModels {
@@ -90,30 +90,7 @@ class CreateRoutineFragment : Fragment() {
             }
         ).build()
 
-        val onItemClickListener = object : ExerciseAdapter.OnExerciseClickListener {
-            override fun onExerciseClick(card: MaterialCardView) {
-                TransitionManager.beginDelayedTransition(create_routine_root, AutoTransition())
-                val v = if (card.description.visibility == VISIBLE) GONE else VISIBLE
-                card.apply {
-                    description.visibility = v
-                    buttons.visibility = v
-                    divider.visibility = v
-                    set_container.visibility = v
-                }
-            }
-
-            override fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView) {
-                viewModel.addSet(Set(exercise.exerciseHolder.exerciseHolderId))
-            }
-
-            override fun onDeleteSet(set: Set, position: Int) {
-                viewModel.removeSet(set)
-                if (viewModel.fullRoutine.value!!.exercises.filter { it.exerciseHolder.exerciseHolderId == set.exerciseHolderId }[0].sets.isEmpty())
-                    deleteExercise(position)
-            }
-        }
-
-        adapter = ExerciseAdapter(onItemClickListener)
+        adapter = ExerciseAdapter(this)
 
         recycler_view.apply {
             adapter = this@CreateRoutineFragment.adapter
@@ -179,5 +156,26 @@ class CreateRoutineFragment : Fragment() {
         adapter.notifyItemMoved(fromPos, toPos)
         viewModel.swapExercises(fromPos, toPos)
         return true
+    }
+
+    override fun onExerciseClick(card: MaterialCardView) {
+        TransitionManager.beginDelayedTransition(create_routine_root, AutoTransition())
+        val v = if (card.description.visibility == VISIBLE) GONE else VISIBLE
+        card.apply {
+            description.visibility = v
+            buttons.visibility = v
+            divider.visibility = v
+            set_container.visibility = v
+        }
+    }
+
+    override fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView) {
+        viewModel.addSet(Set(exercise.exerciseHolder.exerciseHolderId))
+    }
+
+    override fun onDeleteSet(set: Set, position: Int) {
+        viewModel.removeSet(set)
+        if (viewModel.fullRoutine.value!!.exercises.filter { it.exerciseHolder.exerciseHolderId == set.exerciseHolderId }[0].sets.isEmpty())
+            deleteExercise(position)
     }
 }
