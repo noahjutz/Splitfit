@@ -169,7 +169,7 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListene
         }
     }
 
-    override fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView) {
+    override fun onAddSetClick(exercise: ExerciseImpl) {
         viewModel.addSet(Set(exercise.exerciseHolder.exerciseHolderId))
     }
 

@@ -45,23 +45,22 @@ class ExerciseAdapter(
             if (exercise.exercise.description.trim().isEmpty())
                 description.visibility = GONE
 
-            button_add_set.setOnClickListener {
-                onExerciseClickListener.onAddSetClick(
-                    exercise,
-                    this as MaterialCardView
-                )
-            }
+            button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exercise) }
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(this as MaterialCardView) }
 
             val setAdapter = SetAdapter(exercise.exerciseHolder.exerciseHolderId)
             mAdapters.add(setAdapter)
+
             val itemTouchHelper = ItemTouchHelperBuilder(
                 // TODO: See [ItemTouchHelper]
                 itemTouchHelperId = setAdapter.exerciseHolderId,
                 swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                onSwipedCall = { viewHolder, _, id -> deleteSet(viewHolder.adapterPosition, id, holder.adapterPosition) }
+                onSwipedCall = { viewHolder, _, id ->
+                    deleteSet(viewHolder.adapterPosition, id, holder.adapterPosition)
+                }
             ).build()
+
             set_container.apply {
                 adapter = setAdapter
                 layoutManager = LinearLayoutManager(context)
@@ -77,7 +76,7 @@ class ExerciseAdapter(
 
     interface OnExerciseClickListener {
         fun onExerciseClick(card: MaterialCardView)
-        fun onAddSetClick(exercise: ExerciseImpl, card: MaterialCardView)
+        fun onAddSetClick(exercise: ExerciseImpl)
         fun onDeleteSet(set: Set, position: Int)
     }
 }
