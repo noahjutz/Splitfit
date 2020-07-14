@@ -50,26 +50,21 @@
                     android:maxLines="1"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:visibility="gone"
                     tools:text="Quads and stuff" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/set_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     tools:itemCount="3"
-                    tools:listitem="@layout/listitem_set"
-                    tools:visibility="visible" />
+                    tools:listitem="@layout/listitem_set" />
             </LinearLayout>
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:background="?android:attr/listDivider" />
 
             <LinearLayout
                 android:id="@+id/buttons"
@@ -77,9 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="8dp"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_add_set"

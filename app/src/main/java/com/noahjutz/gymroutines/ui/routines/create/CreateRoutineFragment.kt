@@ -158,17 +158,6 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListene
         return true
     }
 
-    override fun onExerciseClick(card: MaterialCardView) {
-        TransitionManager.beginDelayedTransition(create_routine_root, AutoTransition())
-        val v = if (card.description.visibility == VISIBLE) GONE else VISIBLE
-        card.apply {
-            description.visibility = v
-            buttons.visibility = v
-            divider.visibility = v
-            set_container.visibility = v
-        }
-    }
-
     override fun onAddSetClick(exercise: ExerciseImpl) {
         viewModel.addSet(Set(exercise.exerciseHolder.exerciseHolderId))
     }
