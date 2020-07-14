@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?> <!-- TODO: Fix margins-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_layout"
@@ -7,14 +7,6 @@
     android:layout_marginTop="@dimen/any_padding_default"
     tools:layout_marginEnd="16dp"
     tools:layout_marginStart="16dp">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/set_position"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        tools:text="12" />
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"

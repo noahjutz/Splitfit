@@ -45,8 +45,6 @@ class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHol
         }
 
         holder.itemView.apply {
-            // TODO: Fix bug: Adapter position is not updated according to changes.
-            set_position.text = (holder.adapterPosition + 1).toString()
             edit_reps.setTextOrHide(set.reps, exercise.logReps)
             edit_weight.setTextOrHide(set.weight, exercise.logWeight)
             edit_time.setTextOrHide(set.time, exercise.logTime)
