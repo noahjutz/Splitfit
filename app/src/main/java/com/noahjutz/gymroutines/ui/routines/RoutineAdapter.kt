@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
@@ -37,8 +36,7 @@ class RoutineAdapter(
         holder.itemView.apply {
             name.text = fullRoutine.routine.name
             description.setTextOrHide(fullRoutine.routine.description)
-
-            exercises.text = getExercises(fullRoutine.exercises)
+            exercises.setTextOrHide(getExercises(fullRoutine.exercises))
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
             button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
