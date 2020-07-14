@@ -122,17 +122,6 @@ class RoutinesFragment : Fragment(), RoutineAdapter.OnRoutineClickListener {
             .show()
     }
 
-    override fun onRoutineClick(card: MaterialCardView) {
-        TransitionManager.beginDelayedTransition(recycler_view, AutoTransition())
-        val v = if (card.description.visibility == GONE) VISIBLE else GONE
-        card.apply {
-            description.visibility = v
-            exercises.visibility = v
-            buttons.visibility = v
-            divider.visibility = v
-        }
-    }
-
     override fun onEditClick(fullRoutine: FullRoutine) {
         val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
         findNavController().navigate(action)

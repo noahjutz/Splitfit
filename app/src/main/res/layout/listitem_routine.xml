@@ -41,9 +41,7 @@
                 android:maxLines="1"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"
-                android:visibility="gone"
-                tools:text="Quads and stuff"
-                tools:visibility="visible" />
+                tools:text="Quads and stuff" />
 
             <TextView
                 android:id="@+id/exercises"
@@ -52,9 +50,7 @@
                 android:layout_marginTop="16dp"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"
-                android:visibility="gone"
-                tools:text="Supporting text"
-                tools:visibility="visible" />
+                tools:text="Supporting text" />
 
         </LinearLayout>
 
@@ -62,9 +58,7 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:background="?android:attr/listDivider" />
 
         <LinearLayout
             android:id="@+id/buttons"
@@ -72,9 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="8dp"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            tools:visibility="visible">
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_launch"
