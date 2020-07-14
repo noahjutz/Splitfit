@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
+import com.noahjutz.gymroutines.util.setTextOrHide
 import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
@@ -40,10 +40,7 @@ class ExerciseAdapter(
 
         holder.itemView.apply {
             name.text = exercise.exercise.name
-            description.text = exercise.exercise.description
-
-            if (exercise.exercise.description.trim().isEmpty())
-                description.visibility = GONE
+            description.setTextOrHide(exercise.exercise.description)
 
             button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exercise) }
 
