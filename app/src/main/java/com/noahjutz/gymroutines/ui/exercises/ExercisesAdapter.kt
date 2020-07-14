@@ -2,13 +2,13 @@ package com.noahjutz.gymroutines.ui.exercises
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.util.DiffUtilCallback
+import com.noahjutz.gymroutines.util.setTextOrHide
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 @Suppress("unused")
@@ -31,10 +31,7 @@ class ExercisesAdapter(
 
         holder.itemView.apply {
             name.text = exercise.name
-            description.text = exercise.description
-
-            if (exercise.description.trim().isEmpty())
-                description.visibility = GONE
+            description.setTextOrHide(exercise.description)
 
             setOnClickListener { onExerciseClickListener.onExerciseClick(exercise) }
         }
