@@ -39,13 +39,11 @@ class RoutineAdapter(
             exercises.setTextOrHide(getExercises(fullRoutine.exercises))
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
-            button_launch.setOnClickListener { onRoutineClickListener.onLaunchClick(fullRoutine) }
         }
     }
 
     interface OnRoutineClickListener {
         fun onEditClick(fullRoutine: FullRoutine)
-        fun onLaunchClick(fullRoutine: FullRoutine)
     }
 
     private fun getExercises(exercises: List<ExerciseImpl>) = exercises
