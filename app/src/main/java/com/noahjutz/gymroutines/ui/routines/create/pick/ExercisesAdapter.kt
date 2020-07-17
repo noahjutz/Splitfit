@@ -10,6 +10,7 @@ import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.util.DiffUtilCallback
+import com.noahjutz.gymroutines.util.setTextOrHide
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 @Suppress("unused")
@@ -27,19 +28,14 @@ class ExercisesAdapter(
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exercise = getItem(position)
+        val (exerciseName, exerciseDesc) = exercise
 
         holder.itemView.apply {
-            name.text = exercise.name
-            description.text = exercise.description
-
-            if (exercise.description.trim().isEmpty())
-                description.visibility = GONE
+            name.text = exerciseName
+            description.setTextOrHide(exerciseDesc)
 
             setOnClickListener {
-                onExerciseClickListener.onExerciseClick(
-                    exercise,
-                    this as MaterialCardView
-                )
+                onExerciseClickListener.onExerciseClick(exercise, this as MaterialCardView)
             }
         }
     }

@@ -32,11 +32,13 @@ class RoutineAdapter(
 
     override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
         val fullRoutine = getItem(position)
+        val (rName, rDesc) = fullRoutine.routine
+        val rExercises = fullRoutine.exercises
 
         holder.itemView.apply {
-            name.text = fullRoutine.routine.name
-            description.setTextOrHide(fullRoutine.routine.description)
-            exercises.setTextOrHide(getExercises(fullRoutine.exercises))
+            name.text = rName
+            description.setTextOrHide(rDesc)
+            exercises.setTextOrHide(formatExercises(rExercises))
 
             button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
         }
@@ -46,7 +48,7 @@ class RoutineAdapter(
         fun onEditClick(fullRoutine: FullRoutine)
     }
 
-    private fun getExercises(exercises: List<ExerciseImpl>) = exercises
+    private fun formatExercises(exercises: List<ExerciseImpl>) = exercises
         .sortedBy { it.exerciseHolder.position }
         .joinToString("\n") { "${it.sets.size} x ${it.exercise.name}" }
 }

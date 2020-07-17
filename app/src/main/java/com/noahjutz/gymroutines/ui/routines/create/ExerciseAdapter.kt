@@ -2,7 +2,6 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,15 +35,17 @@ class ExerciseAdapter(
     )
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        val exercise = getItem(position)
+        val exerciseImpl = getItem(position)
+        val (exerciseName, exerciseDesc) = exerciseImpl.exercise
 
         holder.itemView.apply {
-            name.text = exercise.exercise.name
-            description.setTextOrHide(exercise.exercise.description)
+            name.text = exerciseName
+            description.setTextOrHide(exerciseDesc)
 
-            button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exercise) }
+            button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exerciseImpl) }
 
-            val setAdapter = SetAdapter(exercise.exerciseHolder.exerciseHolderId)
+            // TODO: Delegate the responsibility of setting up the recycler views to [CreateRoutineFragment]
+            val setAdapter = SetAdapter(exerciseImpl.exerciseHolder.exerciseHolderId)
             mAdapters.add(setAdapter)
 
             val itemTouchHelper = ItemTouchHelperBuilder(
