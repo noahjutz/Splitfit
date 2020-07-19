@@ -17,7 +17,7 @@ import kotlinx.coroutines.runBlocking
 @Suppress("UNUSED")
 private const val TAG = "SetAdapter"
 
-class SetAdapter(val exerciseHolderId: Int) : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
+class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     // TODO: Find another way of doing this.
     fun getItemPublic(position: Int): Set = getItem(position)
 

@@ -23,7 +23,7 @@ private const val TAG = "ExerciseAdapter"
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
-    val mAdapters: ArrayList<SetAdapter> by lazy { ArrayList<SetAdapter>() }
+    val mAdapters = HashMap<Int, SetAdapter>()
 
     fun getExercise(pos: Int): ExerciseImpl = getItem(pos)
 
@@ -45,12 +45,12 @@ class ExerciseAdapter(
             button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exerciseImpl) }
 
             // TODO: Delegate the responsibility of setting up the recycler views to [CreateRoutineFragment]
-            val setAdapter = SetAdapter(exerciseImpl.exerciseHolder.exerciseHolderId)
-            mAdapters.add(setAdapter)
+            val setAdapter = SetAdapter()
+            mAdapters[exerciseImpl.exerciseHolder.exerciseHolderId] = setAdapter
 
             val itemTouchHelper = ItemTouchHelperBuilder(
                 // TODO: See [ItemTouchHelper]
-                itemTouchHelperId = setAdapter.exerciseHolderId,
+                itemTouchHelperId = exerciseImpl.exerciseHolder.exerciseHolderId,
                 swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 onSwipedCall = { viewHolder, _, id ->
                     deleteSet(viewHolder.adapterPosition, id, holder.adapterPosition)
@@ -66,7 +66,7 @@ class ExerciseAdapter(
     }
 
     private fun deleteSet(position: Int, id: Int, exercisePosition: Int) {
-        val set = mAdapters.filter { it.exerciseHolderId == id }[0].getItemPublic(position)
+        val set = mAdapters[id]!!.getItemPublic(position)
         onExerciseClickListener.onDeleteSet(set, exercisePosition)
     }
 

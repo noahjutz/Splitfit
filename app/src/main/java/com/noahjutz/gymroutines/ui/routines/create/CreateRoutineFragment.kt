@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,8 +16,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
-import com.google.android.material.card.MaterialCardView
-import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.Set
@@ -30,10 +27,6 @@ import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
-import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
-import kotlinx.android.synthetic.main.listitem_routine.view.buttons
-import kotlinx.android.synthetic.main.listitem_routine.view.description
-import kotlinx.android.synthetic.main.listitem_routine.view.divider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 
@@ -116,8 +109,7 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListene
                         delay(20)
                         withContext(Main) {
                             TransitionManager.beginDelayedTransition(create_routine_root, AutoTransition())
-                            adapter.mAdapters.filter { it.exerciseHolderId == e.exerciseHolder.exerciseHolderId }
-                                .takeIf { it.isNotEmpty() }?.get(0)?.submitList(e.sets)
+                            adapter.mAdapters[e.exerciseHolder.exerciseHolderId]?.submitList(e.sets)
                         }
                     }
                 }
