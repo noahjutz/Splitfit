@@ -49,11 +49,13 @@ class ExerciseAdapter(
             mAdapters[exerciseImpl.exerciseHolder.exerciseHolderId] = setAdapter
 
             val itemTouchHelper = ItemTouchHelperBuilder(
-                // TODO: See [ItemTouchHelper]
-                itemTouchHelperId = exerciseImpl.exerciseHolder.exerciseHolderId,
                 swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                onSwipedCall = { viewHolder, _, id ->
-                    deleteSet(viewHolder.adapterPosition, id, holder.adapterPosition)
+                onSwipedCall = { viewHolder, _ ->
+                    deleteSet(
+                        viewHolder.adapterPosition,
+                        exerciseImpl.exerciseHolder.exerciseHolderId,
+                        holder.adapterPosition
+                    )
                 }
             ).build()
 
