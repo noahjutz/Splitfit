@@ -30,9 +30,6 @@ import kotlinx.android.synthetic.main.fragment_create_routine.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 
-@Suppress("unused")
-private const val TAG = "CreateRoutineFragment"
-
 class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()

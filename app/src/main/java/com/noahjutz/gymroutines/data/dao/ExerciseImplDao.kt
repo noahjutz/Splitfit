@@ -4,9 +4,6 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 
-@Suppress("UNUSED")
-private const val TAG = "ExerciseImplDao"
-
 @Dao
 interface ExerciseImplDao {
     @Query("SELECT * FROM exercise_holder_table WHERE routineId == :routineId")

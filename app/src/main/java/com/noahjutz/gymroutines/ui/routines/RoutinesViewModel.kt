@@ -5,9 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 
-@Suppress("unused")
-private const val TAG = "RoutinesViewModel"
-
 class RoutinesViewModel(
     private val repository: Repository
 ) : ViewModel() {

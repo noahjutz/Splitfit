@@ -12,9 +12,6 @@ import com.noahjutz.gymroutines.data.domain.Set
 import java.util.*
 import kotlin.collections.ArrayList
 
-@Suppress("unused")
-private const val TAG = "CreateRoutineViewModel"
-
 class CreateRoutineViewModel(
     private val repository: Repository,
     private var routineId: Int

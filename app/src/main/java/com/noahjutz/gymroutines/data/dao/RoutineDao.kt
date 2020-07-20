@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.domain.Routine
 
-@Suppress("UNUSED")
-private const val TAG = "RoutineDao"
-
 @Dao
 interface RoutineDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

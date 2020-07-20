@@ -17,9 +17,6 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 
-@Suppress("unused")
-private const val TAG = "ExerciseAdapter"
-
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {

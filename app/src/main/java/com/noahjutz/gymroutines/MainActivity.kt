@@ -10,9 +10,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
-@Suppress("unused")
-private const val TAG = "MainActivity"
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController

@@ -3,9 +3,6 @@ package com.noahjutz.gymroutines.data.dao
 import androidx.room.*
 import com.noahjutz.gymroutines.data.domain.Set
 
-@Suppress("UNUSED")
-private const val TAG = "SetDao"
-
 @Dao
 interface SetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

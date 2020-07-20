@@ -27,9 +27,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
-@Suppress("unused")
-private const val TAG = "RoutinesFragment"
-
 class RoutinesFragment : Fragment(), RoutineAdapter.OnRoutineClickListener {
 
     private val viewModel: RoutinesViewModel by viewModels {

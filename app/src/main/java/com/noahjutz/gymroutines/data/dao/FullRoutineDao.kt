@@ -6,9 +6,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 
-@Suppress("UNUSED")
-private const val TAG = "FullRoutineDao"
-
 @Dao
 interface FullRoutineDao {
     @Transaction

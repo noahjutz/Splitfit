@@ -15,9 +15,6 @@ import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
 import com.noahjutz.gymroutines.util.InjectorUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
-@Suppress("unused")
-private const val TAG = "CreateExerciseFragment"
-
 class CreateExerciseFragment : Fragment() {
 
     private val viewModel: CreateExerciseViewModel by viewModels {

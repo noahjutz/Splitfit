@@ -14,9 +14,6 @@ import com.noahjutz.gymroutines.util.DiffUtilCallback
 import kotlinx.android.synthetic.main.listitem_set.view.*
 import kotlinx.coroutines.runBlocking
 
-@Suppress("UNUSED")
-private const val TAG = "SetAdapter"
-
 class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     // TODO: Find another way of doing this.
     fun getItemPublic(position: Int): Set = getItem(position)

@@ -12,9 +12,6 @@ import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrHide
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
-@Suppress("unused")
-private const val TAG = "RoutineAdapter"
-
 /**
  * [ListAdapter] for [FullRoutine]
  */

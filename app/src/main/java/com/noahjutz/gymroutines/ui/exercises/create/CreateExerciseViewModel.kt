@@ -8,9 +8,6 @@ import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
 import kotlinx.coroutines.runBlocking
 
-@Suppress("unused")
-private const val TAG = "CreateExerciseViewModel"
-
 class CreateExerciseViewModel(
     private val repository: Repository,
     private val exerciseId: Int

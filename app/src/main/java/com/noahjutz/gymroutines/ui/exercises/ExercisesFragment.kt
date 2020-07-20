@@ -27,9 +27,6 @@ import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
 import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 
-@Suppress("unused")
-private const val TAG = "ExercisesFragment"
-
 class ExercisesFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
     private val viewModel: ExercisesViewModel by viewModels {

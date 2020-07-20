@@ -9,9 +9,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-@Suppress("unused")
-private const val TAG = "Repository"
-
 class Repository private constructor(application: Application) {
     private val database: AppDatabase = AppDatabase.getInstance(application)
     private val exerciseDao = database.exerciseDao

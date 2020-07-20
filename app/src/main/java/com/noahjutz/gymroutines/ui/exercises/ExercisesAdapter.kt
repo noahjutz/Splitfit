@@ -11,9 +11,6 @@ import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrHide
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
-@Suppress("unused")
-private const val TAG = "ExercisesAdapter"
-
 class ExercisesAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {

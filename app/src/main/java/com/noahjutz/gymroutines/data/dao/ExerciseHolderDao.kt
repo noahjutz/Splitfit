@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.domain.ExerciseHolder
 
-@Suppress("UNUSED")
-private const val TAG = "ExerciseHolderDao"
-
 @Dao
 interface ExerciseHolderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
