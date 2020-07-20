@@ -1,10 +1,11 @@
 package com.noahjutz.gymroutines.data.domain
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.noahjutz.gymroutines.util.Equatable
 
 /**
- * Holds an exercise and sets. Used in Routines.
+ * Holds an [Exercise] and [Set]s. Used in Routines.
  */
 @Entity(tableName = "exercise_holder_table")
 data class ExerciseHolder(
