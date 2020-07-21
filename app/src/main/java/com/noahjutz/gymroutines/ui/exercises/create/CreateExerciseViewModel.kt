@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.exercises.create
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,10 +9,9 @@ import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.di.EXERCISE_ID
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 import javax.inject.Named
 
-class CreateExerciseViewModel @Inject constructor(
+class CreateExerciseViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Named(EXERCISE_ID) private val exerciseId: Int
 ) : ViewModel() {

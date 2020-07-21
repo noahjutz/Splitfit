@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.noahjutz.gymroutines.R
@@ -18,8 +19,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CreateExerciseFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: CreateExerciseViewModel
+    private val viewModel: CreateExerciseViewModel by viewModels()
 
     private val args: CreateExerciseFragmentArgs by navArgs()
 

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -35,8 +36,7 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListene
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
 
-    @Inject
-    lateinit var viewModel: CreateRoutineViewModel
+    private val viewModel: CreateRoutineViewModel by viewModels()
 
     private val args: CreateRoutineFragmentArgs by navArgs()
 

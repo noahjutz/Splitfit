@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +16,7 @@ import javax.inject.Inject
 import javax.inject.Named
 import kotlin.collections.ArrayList
 
-class CreateRoutineViewModel @Inject constructor(
+class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Named(ROUTINE_ID) private var routineId: Int
 ) : ViewModel() {

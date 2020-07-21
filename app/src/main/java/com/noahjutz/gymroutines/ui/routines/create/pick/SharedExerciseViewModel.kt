@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,7 @@ private const val TAG = "PickExerciseViewModel"
  * [PickExerciseFragment] uses [addExercise] and [removeExercise] to edit [exercises]
  * [CreateRoutineFragment] observes [exercises] to update [CreateRoutineViewModel]
  */
-class SharedExerciseViewModel @Inject constructor() : ViewModel() {
+class SharedExerciseViewModel : ViewModel() {
     private val _exercises: MutableLiveData<List<Exercise>> = MutableLiveData()
     val exercises: LiveData<List<Exercise>>
         get() = _exercises
