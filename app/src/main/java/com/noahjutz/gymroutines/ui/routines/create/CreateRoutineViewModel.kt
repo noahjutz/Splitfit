@@ -12,7 +12,6 @@ import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.di.ROUTINE_ID
 import java.util.*
-import javax.inject.Inject
 import javax.inject.Named
 import kotlin.collections.ArrayList
 

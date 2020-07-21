@@ -24,7 +24,6 @@ import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RoutinesFragment : Fragment(), RoutineAdapter.OnRoutineClickListener {

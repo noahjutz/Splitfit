@@ -1,13 +1,11 @@
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineFragment
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
-import javax.inject.Inject
 
 @Suppress("unused")
 private const val TAG = "PickExerciseViewModel"

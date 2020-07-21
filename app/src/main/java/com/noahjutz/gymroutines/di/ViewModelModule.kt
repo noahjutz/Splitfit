@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.di
 
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

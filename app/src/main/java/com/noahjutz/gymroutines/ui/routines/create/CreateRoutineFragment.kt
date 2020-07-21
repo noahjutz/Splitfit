@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {

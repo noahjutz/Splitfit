@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
 import kotlinx.android.synthetic.main.fragment_routines.recycler_view
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ExercisesFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
