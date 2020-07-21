@@ -2,7 +2,6 @@ package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +43,5 @@ class ExercisesAdapter(
         fun onExerciseClick(exercise: Exercise, card: MaterialCardView)
     }
 }
-
 
 private val diffUtil = DiffUtilCallback<Exercise>({ old, new -> old.exerciseId == new.exerciseId })

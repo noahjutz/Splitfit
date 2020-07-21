@@ -20,4 +20,3 @@ data class ExerciseImpl(
         entityColumn = "exerciseHolderId"
     ) var sets: List<Set>
 ) : Equatable
-
