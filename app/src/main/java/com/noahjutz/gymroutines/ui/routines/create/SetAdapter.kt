@@ -15,8 +15,7 @@ import kotlinx.android.synthetic.main.listitem_set.view.*
 import kotlinx.coroutines.runBlocking
 
 class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
-    // TODO: Find another way of doing this.
-    fun getItemPublic(position: Int): Set = getItem(position)
+    fun getSet(position: Int): Set = getItem(position)
 
     inner class SetHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

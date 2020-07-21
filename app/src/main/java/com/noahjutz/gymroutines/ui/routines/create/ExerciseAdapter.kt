@@ -66,7 +66,7 @@ class ExerciseAdapter(
     }
 
     private fun deleteSet(position: Int, id: Int, exercisePosition: Int) {
-        val set = mAdapters[id]!!.getItemPublic(position)
+        val set = mAdapters[id]!!.getSet(position)
         onExerciseClickListener.onDeleteSet(set, exercisePosition)
     }
 
