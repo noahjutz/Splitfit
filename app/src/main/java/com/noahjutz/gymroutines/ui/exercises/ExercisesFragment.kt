@@ -20,12 +20,14 @@ import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
 import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ExercisesFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
     @Inject
