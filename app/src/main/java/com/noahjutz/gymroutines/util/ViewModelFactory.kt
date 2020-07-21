@@ -6,6 +6,7 @@ import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
 
+@Deprecated("Use hilt DI instead.")
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
     private val repository: Repository

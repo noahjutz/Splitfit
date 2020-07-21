@@ -5,6 +5,7 @@ import com.noahjutz.gymroutines.data.AppDatabase
 import com.noahjutz.gymroutines.data.Repository
 
 // TODO: Replace with hilt
+@Deprecated("Use hilt DI instead.")
 object InjectorUtils {
     fun provideViewModelFactory(application: Application): ViewModelFactory {
         val repository = Repository.getInstance(AppDatabase.getInstance(application))

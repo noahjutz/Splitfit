@@ -9,6 +9,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+// TODO: Instead of passing database as dependency, pass each dao as dependency.
 class Repository @Inject constructor(database: AppDatabase) {
     private val exerciseDao = database.exerciseDao
     private val exerciseHolderDao = database.exerciseHolderDao
@@ -21,6 +22,7 @@ class Repository @Inject constructor(database: AppDatabase) {
     val exercises = exerciseDao.getExercises()
     val fullRoutines = fullRoutineDao.getFullRoutines()
 
+    @Deprecated("InjectorUtils dependency")
     companion object {
         @Volatile
         private var INSTANCE: Repository? = null
