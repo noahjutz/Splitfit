@@ -31,8 +31,7 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
         val db = AppDatabase.getInstance(holder.itemView.context)
         val dao = db.exerciseImplDao
         val exercise = runBlocking {
-            dao.getExerciseImpl(set.exerciseHolderId)?.exercise
-                ?: throw NullPointerException("Set assigned to exercise that doesn't exist")
+            dao.getExerciseImpl(set.exerciseHolderId)?.exercise!!
         }
 
         val setTextOrHide: EditText.(value: Any?, show: Boolean) -> Unit = { value, show ->
