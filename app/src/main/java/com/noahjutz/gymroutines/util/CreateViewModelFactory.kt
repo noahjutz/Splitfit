@@ -6,6 +6,7 @@ import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 
+@Deprecated("InjectorUtils dependency")
 @Suppress("UNCHECKED_CAST")
 class CreateViewModelFactory(
     private val repository: Repository,
