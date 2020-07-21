@@ -47,10 +47,7 @@ class Repository @Inject constructor(
             }
     }
 
-    /**
-     * [FullRoutine]
-     */
-
+    /** [FullRoutine] */
     fun insert(fullRoutine: FullRoutine) = runBlocking {
         withContext(IO) {
             val routineId = routineDao.insert(fullRoutine.routine)
@@ -82,10 +79,7 @@ class Repository @Inject constructor(
         }
     }
 
-    /**
-     * [ExerciseImpl]
-     */
-
+    /** [ExerciseImpl] */
     fun insert(exerciseImpl: ExerciseImpl) = runBlocking {
         withContext(IO) {
             val exerciseId = exerciseHolderDao.insert(exerciseImpl.exerciseHolder)
@@ -112,10 +106,7 @@ class Repository @Inject constructor(
         }
     }
 
-    /**
-     * [Exercise]
-     */
-
+    /** [Exercise] */
     fun insert(exercise: Exercise) = runBlocking {
         withContext(IO) {
             exerciseDao.insert(exercise)
@@ -128,10 +119,7 @@ class Repository @Inject constructor(
         }
     }
 
-    /**
-     * [com.noahjutz.gymroutines.data.domain.Set]
-     */
-
+    /** [Set] */
     fun insert(set: Set) = runBlocking {
         withContext(IO) {
             setDao.insert(set)
