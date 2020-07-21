@@ -8,7 +8,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -19,18 +18,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
-import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RoutinesFragment : Fragment(), RoutineAdapter.OnRoutineClickListener {
 
-    // TODO: Field injection
-    private val viewModel: RoutinesViewModel by viewModels {
-        InjectorUtils.provideViewModelFactory(requireActivity().application)
-    }
+    @Inject
+    lateinit var viewModel: RoutinesViewModel
 
     // TODO: Field injection
     private lateinit var adapter: RoutineAdapter

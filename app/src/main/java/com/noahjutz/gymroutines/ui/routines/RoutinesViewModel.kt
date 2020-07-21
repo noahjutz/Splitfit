@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.FullRoutine
+import javax.inject.Inject
 
-// TODO: Constructor injection
-class RoutinesViewModel(
+class RoutinesViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     val fullRoutines: LiveData<List<FullRoutine>>
