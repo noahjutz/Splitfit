@@ -53,7 +53,7 @@ class CreateExerciseViewModel @Inject constructor(
     private fun initExercise() {
         _exercise.run {
             value = getExerciseById(exerciseId)
-                ?: Exercise("", "")
+                ?: repository.getExercise(repository.insert(Exercise()).toInt())
 
             addSource(name) { source ->
                 _exercise.value = _exercise.value!!.apply { name = source.trim() }
