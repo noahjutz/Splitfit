@@ -10,6 +10,7 @@ import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrHide
+import com.noahjutz.gymroutines.util.setTextOrUnnamed
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 /**
@@ -34,7 +35,7 @@ class RoutineAdapter(
         val rExercises = fullRoutine.exercises
 
         holder.itemView.apply {
-            name.text = rName
+            name.setTextOrUnnamed(rName)
             description.setTextOrHide(rDesc)
             exercises.setTextOrHide(formatExercises(rExercises))
 
