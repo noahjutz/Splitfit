@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,22 +21,22 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.ExerciseImplBuilder
-import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
 
-    // TODO: Field injection
-    private val viewModel: CreateRoutineViewModel by viewModels {
-        InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.routineId)
-    }
+    @Inject
+    lateinit var viewModel: CreateRoutineViewModel
 
     private val args: CreateRoutineFragmentArgs by navArgs()
 

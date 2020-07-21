@@ -9,13 +9,15 @@ import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.di.ROUTINE_ID
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Named
 import kotlin.collections.ArrayList
 
-// TODO: Constructor injection
-class CreateRoutineViewModel(
+class CreateRoutineViewModel @Inject constructor(
     private val repository: Repository,
-    private var routineId: Int
+    @Named(ROUTINE_ID) private var routineId: Int
 ) : ViewModel() {
     private val _fullRoutine = MediatorLiveData<FullRoutine>()
     val fullRoutine: LiveData<FullRoutine>
