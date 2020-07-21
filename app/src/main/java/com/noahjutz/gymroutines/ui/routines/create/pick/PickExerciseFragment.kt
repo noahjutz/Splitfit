@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.AutoTransition
@@ -19,19 +18,20 @@ import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentPickExerciseBinding
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
-import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.MarginItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_pick_exercise.*
+import javax.inject.Inject
 
 @Suppress("unused")
 private const val TAG = "PickExerciseFragment"
 
+@AndroidEntryPoint
 class PickExerciseFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
-    // TODO: Field injection
-    private val exercisesViewModel: ExercisesViewModel by viewModels {
-        InjectorUtils.provideViewModelFactory(requireActivity().application)
-    }
+    @Inject
+    lateinit var exercisesViewModel: ExercisesViewModel
+
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
 
     // TODO: Field injection
