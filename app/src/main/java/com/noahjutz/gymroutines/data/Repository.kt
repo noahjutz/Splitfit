@@ -1,5 +1,6 @@
 package com.noahjutz.gymroutines.data
 
+import com.noahjutz.gymroutines.data.dao.*
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
@@ -9,15 +10,14 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-// TODO: Instead of passing database as dependency, pass each dao as dependency.
-class Repository @Inject constructor(database: AppDatabase) {
-    private val exerciseDao = database.exerciseDao
-    private val exerciseHolderDao = database.exerciseHolderDao
-    private val exerciseImplDao = database.exerciseImplDao
-    private val fullRoutineDao = database.fullRoutineDao
-    private val routineDao = database.routineDao
-    private val setDao = database.setDao
-
+class Repository @Inject constructor(
+    private val exerciseDao: ExerciseDao,
+    private val exerciseHolderDao: ExerciseHolderDao,
+    private val exerciseImplDao: ExerciseImplDao,
+    private val fullRoutineDao: FullRoutineDao,
+    private val routineDao: RoutineDao,
+    private val setDao: SetDao
+) {
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
     val fullRoutines = fullRoutineDao.getFullRoutines()
@@ -27,9 +27,23 @@ class Repository @Inject constructor(database: AppDatabase) {
         @Volatile
         private var INSTANCE: Repository? = null
 
-        fun getInstance(database: AppDatabase) =
+        fun getInstance(
+            exerciseDao: ExerciseDao,
+            exerciseHolderDao: ExerciseHolderDao,
+            exerciseImplDao: ExerciseImplDao,
+            fullRoutineDao: FullRoutineDao,
+            routineDao: RoutineDao,
+            setDao: SetDao
+        ) =
             INSTANCE ?: synchronized(this) {
-                Repository(database).also { INSTANCE = it }
+                Repository(
+                    exerciseDao,
+                    exerciseHolderDao,
+                    exerciseImplDao,
+                    fullRoutineDao,
+                    routineDao,
+                    setDao
+                ).also { INSTANCE = it }
             }
     }
 
