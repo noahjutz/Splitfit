@@ -31,7 +31,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 
 @AndroidEntryPoint
-class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
+class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
 

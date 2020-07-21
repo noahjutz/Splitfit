@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 
 // TODO: Constructor injection
 class ExerciseAdapter(
-    private val onExerciseClickListener: OnExerciseClickListener
+    private val exerciseHolderListener: ExerciseHolderListener
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
     val mAdapters = HashMap<Int, SetAdapter>()
 
@@ -40,7 +40,7 @@ class ExerciseAdapter(
             name.text = exerciseName
             description.setTextOrHide(exerciseDesc)
 
-            button_add_set.setOnClickListener { onExerciseClickListener.onAddSetClick(exerciseImpl) }
+            button_add_set.setOnClickListener { exerciseHolderListener.onAddSetClick(exerciseImpl) }
 
             // TODO: Delegate the responsibility of setting up the recycler views to [CreateRoutineFragment]
             val setAdapter = SetAdapter()
@@ -67,10 +67,10 @@ class ExerciseAdapter(
 
     private fun deleteSet(position: Int, id: Int, exercisePosition: Int) {
         val set = mAdapters[id]!!.getSet(position)
-        onExerciseClickListener.onDeleteSet(set, exercisePosition)
+        exerciseHolderListener.onDeleteSet(set, exercisePosition)
     }
 
-    interface OnExerciseClickListener {
+    interface ExerciseHolderListener {
         fun onAddSetClick(exercise: ExerciseImpl)
         fun onDeleteSet(set: Set, position: Int)
     }

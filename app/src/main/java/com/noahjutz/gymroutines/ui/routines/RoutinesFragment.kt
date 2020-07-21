@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
 
 @AndroidEntryPoint
-class RoutinesFragment : Fragment(), RoutineAdapter.OnRoutineClickListener {
+class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
 
     private val viewModel: RoutinesViewModel by viewModels()
 

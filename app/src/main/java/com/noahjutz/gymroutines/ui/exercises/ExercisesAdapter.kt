@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 // TODO: Constructor injection
 class ExercisesAdapter(
-    private val onExerciseClickListener: OnExerciseClickListener
+    private val exerciseListener: ExerciseListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
     fun getExerciseAt(pos: Int): Exercise = getItem(pos)
 
@@ -32,11 +32,11 @@ class ExercisesAdapter(
             name.text = exerciseName
             description.setTextOrHide(exerciseDesc)
 
-            setOnClickListener { onExerciseClickListener.onExerciseClick(exercise) }
+            setOnClickListener { exerciseListener.onExerciseClick(exercise) }
         }
     }
 
-    interface OnExerciseClickListener {
+    interface ExerciseListener {
         fun onExerciseClick(exercise: Exercise)
     }
 }

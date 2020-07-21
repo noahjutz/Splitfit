@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
 import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 
 @AndroidEntryPoint
-class ExercisesFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
+class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private val viewModel: ExercisesViewModel by viewModels()
 

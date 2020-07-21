@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_pick_exercise.*
 private const val TAG = "PickExerciseFragment"
 
 @AndroidEntryPoint
-class PickExerciseFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
+class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private val exercisesViewModel: ExercisesViewModel by viewModels()
 

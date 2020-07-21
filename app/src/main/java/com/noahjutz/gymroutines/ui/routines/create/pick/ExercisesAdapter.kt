@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.*
 private const val TAG = "ExercisesAdapter"
 
 class ExercisesAdapter(
-    private val onExerciseClickListener: OnExerciseClickListener
+    private val exerciseListener: ExerciseListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
     inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -34,12 +34,12 @@ class ExercisesAdapter(
             description.setTextOrHide(exerciseDesc)
 
             setOnClickListener {
-                onExerciseClickListener.onExerciseClick(exercise, this as MaterialCardView)
+                exerciseListener.onExerciseClick(exercise, this as MaterialCardView)
             }
         }
     }
 
-    interface OnExerciseClickListener {
+    interface ExerciseListener {
         fun onExerciseClick(exercise: Exercise, card: MaterialCardView)
     }
 }

@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.listitem_routine.view.*
  */
 // TODO: Constructor injection
 class RoutineAdapter(
-    private val onRoutineClickListener: OnRoutineClickListener
+    private val routineListener: RoutineListener
 ) : ListAdapter<FullRoutine, RoutineAdapter.RoutineHolder>(diffUtil) {
     fun getRoutine(pos: Int): FullRoutine = getItem(pos)
 
@@ -38,11 +38,11 @@ class RoutineAdapter(
             description.setTextOrHide(rDesc)
             exercises.setTextOrHide(formatExercises(rExercises))
 
-            button_edit.setOnClickListener { onRoutineClickListener.onEditClick(fullRoutine) }
+            button_edit.setOnClickListener { routineListener.onEditClick(fullRoutine) }
         }
     }
 
-    interface OnRoutineClickListener {
+    interface RoutineListener {
         fun onEditClick(fullRoutine: FullRoutine)
     }
 
