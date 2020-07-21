@@ -1,6 +1,5 @@
 package com.noahjutz.gymroutines.data
 
-import android.app.Application
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
@@ -8,9 +7,9 @@ import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class Repository private constructor(application: Application) {
-    private val database: AppDatabase = AppDatabase.getInstance(application)
+class Repository @Inject constructor(database: AppDatabase) {
     private val exerciseDao = database.exerciseDao
     private val exerciseHolderDao = database.exerciseHolderDao
     private val exerciseImplDao = database.exerciseImplDao
@@ -26,9 +25,9 @@ class Repository private constructor(application: Application) {
         @Volatile
         private var INSTANCE: Repository? = null
 
-        fun getInstance(application: Application) =
+        fun getInstance(database: AppDatabase) =
             INSTANCE ?: synchronized(this) {
-                Repository(application).also { INSTANCE = it }
+                Repository(database).also { INSTANCE = it }
             }
     }
 
