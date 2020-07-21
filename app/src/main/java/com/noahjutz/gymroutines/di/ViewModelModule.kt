@@ -12,5 +12,9 @@ import javax.inject.Named
 object ViewModelModule {
     @Provides
     @Named(ROUTINE_ID)
-    fun provideRoutineId() = -1 // TODO: Provide routineId at runtime
+    fun provideRoutineId() = -1 // TODO
+
+    @Provides
+    @Named(EXERCISE_ID)
+    fun provideExerciseId() = -1 // TODO
 }

@@ -6,11 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.di.EXERCISE_ID
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
+import javax.inject.Named
 
-class CreateExerciseViewModel(
+class CreateExerciseViewModel @Inject constructor(
     private val repository: Repository,
-    private val exerciseId: Int
+    @Named(EXERCISE_ID) private val exerciseId: Int
 ) : ViewModel() {
     /**
      * The [Exercise] object that is being created/edited

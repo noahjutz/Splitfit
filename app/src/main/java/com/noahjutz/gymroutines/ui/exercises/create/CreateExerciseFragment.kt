@@ -7,20 +7,20 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
-import com.noahjutz.gymroutines.util.InjectorUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CreateExerciseFragment : Fragment() {
 
-    // TODO: Field injection
-    private val viewModel: CreateExerciseViewModel by viewModels {
-        InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.exerciseId)
-    }
+    @Inject
+    lateinit var viewModel: CreateExerciseViewModel
+
     private val args: CreateExerciseFragmentArgs by navArgs()
 
     override fun onCreateView(
