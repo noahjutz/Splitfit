@@ -8,7 +8,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -19,20 +18,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
-import com.noahjutz.gymroutines.util.InjectorUtils
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_exercises.*
 import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
 import kotlinx.android.synthetic.main.fragment_routines.recycler_view
+import javax.inject.Inject
 
 class ExercisesFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
-    // TODO: Field injection
-    private val viewModel: ExercisesViewModel by viewModels {
-        InjectorUtils.provideViewModelFactory(requireActivity().application)
-    }
+    @Inject
+    lateinit var viewModel: ExercisesViewModel
 
     // TODO: Field injection
     private lateinit var adapter: ExercisesAdapter

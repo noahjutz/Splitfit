@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-// TODO: Constructor injection
-class ExercisesViewModel(
+class ExercisesViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     val exercises: LiveData<List<Exercise>>
