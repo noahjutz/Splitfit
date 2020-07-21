@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class CreateExerciseFragment : Fragment() {
 
+    // TODO: Field injection
     private val viewModel: CreateExerciseViewModel by viewModels {
         InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.exerciseId)
     }

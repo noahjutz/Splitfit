@@ -28,7 +28,7 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
     override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
         val set = getItem(position)
 
-        // TODO: pass exercise with dependency injection instead of creating dependency here
+        // TODO: Field / constructor injection
         val db = AppDatabase.getInstance(holder.itemView.context)
         val dao = db.exerciseImplDao
         val exercise = runBlocking {

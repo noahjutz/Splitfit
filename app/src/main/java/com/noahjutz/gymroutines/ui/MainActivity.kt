@@ -15,7 +15,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    // TODO: Field injection
     private lateinit var navController: NavController
+
+    // TODO: Field injection
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +48,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) ||
-            super.onSupportNavigateUp()
+                super.onSupportNavigateUp()
     }
 }

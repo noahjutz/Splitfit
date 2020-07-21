@@ -29,10 +29,12 @@ import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 
 class ExercisesFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
+    // TODO: Field injection
     private val viewModel: ExercisesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
 
+    // TODO: Field injection
     private lateinit var adapter: ExercisesAdapter
 
     override fun onCreateView(

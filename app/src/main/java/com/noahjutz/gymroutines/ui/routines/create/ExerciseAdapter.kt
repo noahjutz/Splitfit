@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 
+// TODO: Constructor injection
 class ExerciseAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {

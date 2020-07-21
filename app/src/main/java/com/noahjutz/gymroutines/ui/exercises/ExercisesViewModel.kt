@@ -7,6 +7,7 @@ import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
 import kotlinx.coroutines.launch
 
+// TODO: Constructor injection
 class ExercisesViewModel(
     private val repository: Repository
 ) : ViewModel() {

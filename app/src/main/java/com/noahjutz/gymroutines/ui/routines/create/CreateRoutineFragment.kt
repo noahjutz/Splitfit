@@ -33,11 +33,15 @@ import kotlinx.coroutines.Dispatchers.Main
 class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListener {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
+
+    // TODO: Field injection
     private val viewModel: CreateRoutineViewModel by viewModels {
         InjectorUtils.provideCreateViewModelFactory(requireActivity().application, args.routineId)
     }
+
     private val args: CreateRoutineFragmentArgs by navArgs()
 
+    // TODO: Field injection
     private lateinit var adapter: ExerciseAdapter
 
     override fun onCreateView(
@@ -105,7 +109,10 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.OnExerciseClickListene
                         //  to be bound
                         delay(20)
                         withContext(Main) {
-                            TransitionManager.beginDelayedTransition(create_routine_root, AutoTransition())
+                            TransitionManager.beginDelayedTransition(
+                                create_routine_root,
+                                AutoTransition()
+                            )
                             adapter.mAdapters[e.exerciseHolder.exerciseHolderId]?.submitList(e.sets)
                         }
                     }

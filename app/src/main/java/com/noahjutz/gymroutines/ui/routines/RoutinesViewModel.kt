@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 
+// TODO: Constructor injection
 class RoutinesViewModel(
     private val repository: Repository
 ) : ViewModel() {

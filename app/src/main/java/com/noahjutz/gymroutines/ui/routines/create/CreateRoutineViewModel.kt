@@ -12,6 +12,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import java.util.*
 import kotlin.collections.ArrayList
 
+// TODO: Constructor injection
 class CreateRoutineViewModel(
     private val repository: Repository,
     private var routineId: Int

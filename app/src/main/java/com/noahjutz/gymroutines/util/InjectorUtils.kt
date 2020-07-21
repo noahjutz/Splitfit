@@ -3,6 +3,7 @@ package com.noahjutz.gymroutines.util
 import android.app.Application
 import com.noahjutz.gymroutines.data.Repository
 
+// TODO: Replace with hilt
 object InjectorUtils {
     fun provideViewModelFactory(application: Application): ViewModelFactory {
         val repository = Repository.getInstance(application)

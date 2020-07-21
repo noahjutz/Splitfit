@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.FullRoutine
@@ -25,13 +24,15 @@ import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_routines.*
-import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 class RoutinesFragment : Fragment(), RoutineAdapter.OnRoutineClickListener {
 
+    // TODO: Field injection
     private val viewModel: RoutinesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
+
+    // TODO: Field injection
     private lateinit var adapter: RoutineAdapter
 
     override fun onCreateView(

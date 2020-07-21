@@ -11,6 +11,7 @@ import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrHide
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
+// TODO: Constructor injection
 class ExercisesAdapter(
     private val onExerciseClickListener: OnExerciseClickListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {

@@ -28,10 +28,13 @@ private const val TAG = "PickExerciseFragment"
 
 class PickExerciseFragment : Fragment(), ExercisesAdapter.OnExerciseClickListener {
 
+    // TODO: Field injection
     private val exercisesViewModel: ExercisesViewModel by viewModels {
         InjectorUtils.provideViewModelFactory(requireActivity().application)
     }
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
+
+    // TODO: Field injection
     private lateinit var adapter: ExercisesAdapter
 
     override fun onCreateView(
