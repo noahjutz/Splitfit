@@ -49,8 +49,6 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{() -> fragment.addRoutine()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add" />
     </RelativeLayout>
 </layout>
