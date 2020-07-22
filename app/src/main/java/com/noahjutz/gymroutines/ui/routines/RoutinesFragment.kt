@@ -31,7 +31,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     private val viewModel: RoutinesViewModel by viewModels()
 
     // TODO: Field injection
-    private lateinit var adapter: RoutineAdapter
+    private val adapter = RoutineAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,8 +67,6 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
             swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
             onSwipedCall = { viewHolder, _ -> deleteRoutine(viewHolder.adapterPosition) }
         ).build()
-
-        adapter = RoutineAdapter(this)
 
         recycler_view.apply {
             adapter = this@RoutinesFragment.adapter

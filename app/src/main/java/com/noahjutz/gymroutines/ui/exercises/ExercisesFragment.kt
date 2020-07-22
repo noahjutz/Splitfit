@@ -33,7 +33,7 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     private val viewModel: ExercisesViewModel by viewModels()
 
     // TODO: Field injection
-    private lateinit var adapter: ExercisesAdapter
+    private val adapter = ExercisesAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,8 +70,6 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
             swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
             onSwipedCall = { viewHolder, _ -> deleteExercise(viewHolder.adapterPosition) }
         ).build()
-
-        adapter = ExercisesAdapter(this)
 
         recycler_view.apply {
             adapter = this@ExercisesFragment.adapter

@@ -33,7 +33,7 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
 
     // TODO: Field injection
-    private lateinit var adapter: ExercisesAdapter
+    private val adapter = ExercisesAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,8 +77,6 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     }
 
     private fun initRecyclerView() {
-        adapter = ExercisesAdapter(this)
-
         recycler_view.apply {
             adapter = this@PickExerciseFragment.adapter
             layoutManager = LinearLayoutManager(this@PickExerciseFragment.requireContext())

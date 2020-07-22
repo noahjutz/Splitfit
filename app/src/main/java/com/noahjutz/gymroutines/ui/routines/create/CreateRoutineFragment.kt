@@ -38,7 +38,7 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener
     private val args: CreateRoutineFragmentArgs by navArgs()
 
     // TODO: Field injection
-    private lateinit var adapter: ExerciseAdapter
+    private val adapter = ExerciseAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,8 +79,6 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener
                 swapExercises(viewHolder.adapterPosition, target.adapterPosition)
             }
         ).build()
-
-        adapter = ExerciseAdapter(this)
 
         recycler_view.apply {
             adapter = this@CreateRoutineFragment.adapter
