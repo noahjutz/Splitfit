@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(app_bar)
         appBarConfiguration = AppBarConfiguration.Builder(
             R.id.routinesFragment,
-            R.id.exercisesFragment,
-            R.id.profileFragment
+            R.id.exercisesFragment
         ).build()
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
