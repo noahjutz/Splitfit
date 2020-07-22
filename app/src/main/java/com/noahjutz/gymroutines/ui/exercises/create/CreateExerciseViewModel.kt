@@ -1,10 +1,8 @@
 package com.noahjutz.gymroutines.ui.exercises.create
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.di.EXERCISE_ID
@@ -13,7 +11,7 @@ import javax.inject.Named
 
 class CreateExerciseViewModel @ViewModelInject constructor(
     private val repository: Repository,
-    @Named(EXERCISE_ID) private val exerciseId: Int
+    @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
     /**
      * The [Exercise] object that is being created/edited
@@ -52,7 +50,8 @@ class CreateExerciseViewModel @ViewModelInject constructor(
 
     private fun initExercise() {
         _exercise.run {
-            value = getExerciseById(exerciseId)
+            // TODO: Declare a constant
+            value = getExerciseById(args.get("exerciseId") ?: -1)
                 ?: repository.getExercise(repository.insert(Exercise()).toInt())
 
             addSource(name) { source ->

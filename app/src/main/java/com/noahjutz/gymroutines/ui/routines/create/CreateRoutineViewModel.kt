@@ -1,10 +1,8 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
@@ -17,7 +15,7 @@ import kotlin.collections.ArrayList
 
 class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
-    @Named(ROUTINE_ID) private var routineId: Int
+    @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
     private val _fullRoutine = MediatorLiveData<FullRoutine>()
     val fullRoutine: LiveData<FullRoutine>
@@ -54,7 +52,8 @@ class CreateRoutineViewModel @ViewModelInject constructor(
             /**
              * Either edit the routine with [routineId] or create a new one.
              */
-            value = repository.getFullRoutine(routineId)
+            // TODO: declare a constant for "routineId"
+            value = repository.getFullRoutine(args.get("routineId") ?: -1)
                 ?: repository.getFullRoutine(
                     repository.insert(
                         FullRoutine(
