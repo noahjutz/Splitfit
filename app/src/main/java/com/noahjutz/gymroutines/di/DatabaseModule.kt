@@ -1,6 +1,7 @@
 package com.noahjutz.gymroutines.di
 
 import android.content.Context
+import androidx.room.Room
 import com.noahjutz.gymroutines.data.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -14,8 +15,12 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase =
-        AppDatabase.getInstance(appContext)
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
+        Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "workout_routines_database"
+        ).fallbackToDestructiveMigration().build()
 
     @Provides
     fun provideExerciseDao(database: AppDatabase) = database.exerciseDao
