@@ -118,7 +118,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
             .show()
     }
 
-    override fun onEditClick(fullRoutine: FullRoutine) {
+    override fun onRoutineClick(fullRoutine: FullRoutine) {
         val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
         findNavController().navigate(action)
     }

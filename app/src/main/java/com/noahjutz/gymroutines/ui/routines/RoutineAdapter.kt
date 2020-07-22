@@ -39,12 +39,12 @@ class RoutineAdapter(
             description.setTextOrHide(rDesc)
             exercises.setTextOrHide(formatExercises(rExercises))
 
-            button_edit.setOnClickListener { routineListener.onEditClick(fullRoutine) }
+            setOnClickListener { routineListener.onRoutineClick(fullRoutine) }
         }
     }
 
     interface RoutineListener {
-        fun onEditClick(fullRoutine: FullRoutine)
+        fun onRoutineClick(fullRoutine: FullRoutine)
     }
 
     private fun formatExercises(exercises: List<ExerciseImpl>) = exercises
