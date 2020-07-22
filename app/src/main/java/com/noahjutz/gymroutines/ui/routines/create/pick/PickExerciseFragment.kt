@@ -30,7 +30,6 @@ private const val TAG = "PickExerciseFragment"
 class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private val exercisesViewModel: ExercisesViewModel by viewModels()
-
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
 
     // TODO: Field injection

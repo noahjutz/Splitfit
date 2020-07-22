@@ -34,9 +34,7 @@ import kotlinx.coroutines.Dispatchers.Main
 class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
-
     private val viewModel: CreateRoutineViewModel by viewModels()
-
     private val args: CreateRoutineFragmentArgs by navArgs()
 
     // TODO: Field injection

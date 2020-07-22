@@ -8,9 +8,7 @@ import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
-import com.noahjutz.gymroutines.di.ROUTINE_ID
 import java.util.*
-import javax.inject.Named
 import kotlin.collections.ArrayList
 
 class CreateRoutineViewModel @ViewModelInject constructor(
@@ -21,17 +19,12 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     val fullRoutine: LiveData<FullRoutine>
         get() = _fullRoutine
 
-    /**
-     * Data binding fields
-     * [MediatorLiveData] Sources for [fullRoutine]
-     * @see initBinding
-     */
+    private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
+    private val _sets = MutableLiveData<ArrayList<Set>>()
+
+    /** Data binding fields */
     val name = MutableLiveData<String>()
     val description = MutableLiveData<String>()
-
-    private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
-
-    private val _sets = MutableLiveData<ArrayList<Set>>()
 
     init {
         initFullRoutine()
@@ -43,15 +36,9 @@ class CreateRoutineViewModel @ViewModelInject constructor(
         description.value = fullRoutine.value!!.routine.description
     }
 
-    /**
-     * Initializes [_fullRoutine]
-     * Adds [name] and [description] and [_exercises] as source
-     */
     private fun initFullRoutine() {
         _fullRoutine.run {
-            /**
-             * Either edit the routine with [routineId] or create a new one.
-             */
+            // TODO: Get routine as dependency, don't instantiate it (?)
             // TODO: declare a constant for "routineId"
             value = repository.getFullRoutine(args.get("routineId") ?: -1)
                 ?: repository.getFullRoutine(

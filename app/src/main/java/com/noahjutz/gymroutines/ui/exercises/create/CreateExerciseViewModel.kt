@@ -5,9 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.di.EXERCISE_ID
 import kotlinx.coroutines.runBlocking
-import javax.inject.Named
 
 class CreateExerciseViewModel @ViewModelInject constructor(
     private val repository: Repository,
@@ -80,25 +78,14 @@ class CreateExerciseViewModel @ViewModelInject constructor(
         }
     }
 
-    /**
-     * Auto-save
-     */
     override fun onCleared() {
-        super.onCleared()
         save()
     }
 
     private fun save() {
-        insert(exercise.value!!)
+        repository.insert(exercise.value!!)
     }
 
-    /**
-     * [repository] access functions
-     */
-
-    private fun insert(exercise: Exercise) {
-        repository.insert(exercise)
-    }
-
+    /** [repository] access functions */
     private fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExercise(id) }
 }

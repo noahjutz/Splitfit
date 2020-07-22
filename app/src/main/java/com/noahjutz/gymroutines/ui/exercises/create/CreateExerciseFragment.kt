@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class CreateExerciseFragment : Fragment() {
 
     private val viewModel: CreateExerciseViewModel by viewModels()
-
     private val args: CreateExerciseFragmentArgs by navArgs()
 
     override fun onCreateView(
