@@ -31,8 +31,6 @@ import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private val viewModel: ExercisesViewModel by viewModels()
-
-    // TODO: Field injection
     private val adapter = ExercisesAdapter(this)
 
     override fun onCreateView(

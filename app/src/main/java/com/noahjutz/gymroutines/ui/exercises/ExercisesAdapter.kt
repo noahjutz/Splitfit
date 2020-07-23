@@ -12,7 +12,6 @@ import com.noahjutz.gymroutines.util.setTextOrHide
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
-// TODO: Constructor injection
 class ExercisesAdapter(
     private val exerciseListener: ExerciseListener
 ) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {

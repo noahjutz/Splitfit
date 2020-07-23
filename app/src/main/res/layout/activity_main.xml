@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_nav">
 
-        <!-- TODO make collapsing -->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -22,7 +21,6 @@
                 style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?android:attr/windowBackground"
                 tools:title="Title" />
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -37,7 +35,6 @@
             tools:ignore="FragmentTagUsage" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!-- TODO cleaner background solution -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
@@ -45,6 +42,5 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/actionBarItemBackground"
         app:menu="@menu/bottom_nav" />
 </RelativeLayout>

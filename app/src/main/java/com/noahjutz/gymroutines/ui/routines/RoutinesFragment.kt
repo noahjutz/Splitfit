@@ -29,8 +29,6 @@ import kotlinx.android.synthetic.main.fragment_routines.*
 class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
 
     private val viewModel: RoutinesViewModel by viewModels()
-
-    // TODO: Field injection
     private val adapter = RoutineAdapter(this)
 
     override fun onCreateView(

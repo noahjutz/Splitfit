@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.listitem_routine.view.*
 /**
  * [ListAdapter] for [FullRoutine]
  */
-// TODO: Constructor injection
 class RoutineAdapter(
     private val routineListener: RoutineListener
 ) : ListAdapter<FullRoutine, RoutineAdapter.RoutineHolder>(diffUtil) {
