@@ -5,6 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.util.ARGS_EXERCISE_ID
 import kotlinx.coroutines.runBlocking
 
 class CreateExerciseViewModel @ViewModelInject constructor(
@@ -48,8 +49,7 @@ class CreateExerciseViewModel @ViewModelInject constructor(
 
     private fun initExercise() {
         _exercise.run {
-            // TODO: Declare a constant
-            value = getExerciseById(args.get("exerciseId") ?: -1)
+            value = getExerciseById(args[ARGS_EXERCISE_ID] ?: -1)
                 ?: repository.getExercise(repository.insert(Exercise()).toInt())
 
             addSource(name) { source ->

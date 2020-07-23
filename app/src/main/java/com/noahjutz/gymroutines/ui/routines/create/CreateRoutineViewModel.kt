@@ -8,6 +8,7 @@ import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,8 +40,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     private fun initFullRoutine() {
         _fullRoutine.run {
             // TODO: Get routine as dependency, don't instantiate it (?)
-            // TODO: declare a constant for "routineId"
-            value = repository.getFullRoutine(args.get("routineId") ?: -1)
+            value = repository.getFullRoutine(args[ARGS_ROUTINE_ID] ?: -1)
                 ?: repository.getFullRoutine(
                     repository.insert(
                         FullRoutine(
