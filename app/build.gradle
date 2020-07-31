@@ -91,4 +91,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // TODO: Add ktlint
 }
