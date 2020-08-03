@@ -7,6 +7,7 @@ buildscript {
         google()
         jcenter()
         // TODO: Compose-Router
+        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.0-alpha07'
@@ -20,7 +21,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 }
 
