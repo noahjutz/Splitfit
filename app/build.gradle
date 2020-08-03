@@ -51,7 +51,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 
 dependencies {
     def room_version = "2.2.5"
-    def compose_version = "0.1.0-dev13"
+    def compose_version = "0.1.0-dev15"
 
     // Core / general
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
@@ -81,9 +81,9 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6'
 
     // Compose
-    implementation "androidx.ui:ui-material:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.ui:ui-tooling:$compose_version"
-    implementation "androidx.ui:ui-foundation:$compose_version"
+    implementation "androidx.compose.foundation:foundation:$compose_version"
 
     // Compose-Router
     // TODO
