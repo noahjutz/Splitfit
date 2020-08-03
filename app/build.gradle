@@ -83,14 +83,16 @@ dependencies {
     implementation "androidx.ui:ui-foundation:$compose_version"
     implementation "androidx.ui:ui-animation:$compose_version"
 
-    // TODO: Replace with compose
-    // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
+    // Compose-Router
+    // TODO
+
     // Material Design
     implementation 'com.google.android.material:material:1.1.0'
-    // RecyclerView
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // TODO: Replace with compose
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0' // Navigation
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0' // Navigation
+    implementation 'androidx.recyclerview:recyclerview:1.1.0' // RecyclerView
 
     // TODO: Add ktlint
 }
