@@ -46,8 +46,8 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initActivity()
         initRecyclerView()
         initViewModel()
@@ -56,7 +56,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     private fun initActivity() {
         requireActivity().apply {
             title = "Routines"
-            bottom_nav.visibility = VISIBLE
+            bottom_nav?.visibility = VISIBLE
         }
     }
 
