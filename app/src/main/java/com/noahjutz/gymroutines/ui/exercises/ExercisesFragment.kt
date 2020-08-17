@@ -37,16 +37,13 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = DataBindingUtil.inflate<FragmentExercisesBinding>(
-            inflater, R.layout.fragment_exercises, container, false
-        ).apply {
-            viewmodel = viewModel
-            lifecycleOwner = viewLifecycleOwner
-            fragment = this@ExercisesFragment
-        }
-        return binding.root
-    }
+    ) = DataBindingUtil.inflate<FragmentExercisesBinding>(
+        inflater, R.layout.fragment_exercises, container, false
+    ).apply {
+        viewmodel = viewModel
+        lifecycleOwner = viewLifecycleOwner
+        fragment = this@ExercisesFragment
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

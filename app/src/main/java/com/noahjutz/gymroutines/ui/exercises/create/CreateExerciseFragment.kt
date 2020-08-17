@@ -25,19 +25,13 @@ class CreateExerciseFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = DataBindingUtil.inflate<FragmentCreateExerciseBinding>(
-            inflater,
-            R.layout.fragment_create_exercise,
-            container,
-            false
-        ).apply {
-            fragment = this@CreateExerciseFragment
-            lifecycleOwner = viewLifecycleOwner
-            viewmodel = viewModel
-        }
-        return binding.root
-    }
+    ) = DataBindingUtil.inflate<FragmentCreateExerciseBinding>(
+        inflater, R.layout.fragment_create_exercise, container, false
+    ).apply {
+        fragment = this@CreateExerciseFragment
+        lifecycleOwner = viewLifecycleOwner
+        viewmodel = viewModel
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

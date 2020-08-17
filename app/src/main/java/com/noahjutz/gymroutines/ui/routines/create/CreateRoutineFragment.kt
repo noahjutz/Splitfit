@@ -42,19 +42,13 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = DataBindingUtil.inflate<FragmentCreateRoutineBinding>(
-            inflater,
-            R.layout.fragment_create_routine,
-            container,
-            false
-        ).apply {
-            fragment = this@CreateRoutineFragment
-            lifecycleOwner = viewLifecycleOwner
-            viewmodel = viewModel
-        }
-        return binding.root
-    }
+    ) = DataBindingUtil.inflate<FragmentCreateRoutineBinding>(
+        inflater, R.layout.fragment_create_routine, container, false
+    ).apply {
+        fragment = this@CreateRoutineFragment
+        lifecycleOwner = viewLifecycleOwner
+        viewmodel = viewModel
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

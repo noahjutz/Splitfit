@@ -39,16 +39,9 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding =
-            DataBindingUtil.inflate<FragmentPickExerciseBinding>(
-                inflater,
-                R.layout.fragment_pick_exercise,
-                container,
-                false
-            ).apply { fragment = this@PickExerciseFragment }
-        return binding.root
-    }
+    ) = DataBindingUtil.inflate<FragmentPickExerciseBinding>(
+        inflater, R.layout.fragment_pick_exercise, container, false
+    ).apply { fragment = this@PickExerciseFragment }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

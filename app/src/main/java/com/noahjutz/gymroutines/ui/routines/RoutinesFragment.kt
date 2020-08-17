@@ -35,16 +35,13 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = DataBindingUtil.inflate<FragmentRoutinesBinding>(
-            inflater, R.layout.fragment_routines, container, false
-        ).apply {
-            viewmodel = viewModel
-            lifecycleOwner = viewLifecycleOwner
-            fragment = this@RoutinesFragment
-        }
-        return binding.root
-    }
+    ) = DataBindingUtil.inflate<FragmentRoutinesBinding>(
+        inflater, R.layout.fragment_routines, container, false
+    ).apply {
+        viewmodel = viewModel
+        lifecycleOwner = viewLifecycleOwner
+        fragment = this@RoutinesFragment
+    }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
