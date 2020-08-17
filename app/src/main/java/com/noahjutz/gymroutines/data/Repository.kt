@@ -22,31 +22,6 @@ class Repository @Inject constructor(
     val exercises = exerciseDao.getExercises()
     val fullRoutines = fullRoutineDao.getFullRoutines()
 
-    @Deprecated("InjectorUtils dependency")
-    companion object {
-        @Volatile
-        private var INSTANCE: Repository? = null
-
-        fun getInstance(
-            exerciseDao: ExerciseDao,
-            exerciseHolderDao: ExerciseHolderDao,
-            exerciseImplDao: ExerciseImplDao,
-            fullRoutineDao: FullRoutineDao,
-            routineDao: RoutineDao,
-            setDao: SetDao
-        ) =
-            INSTANCE ?: synchronized(this) {
-                Repository(
-                    exerciseDao,
-                    exerciseHolderDao,
-                    exerciseImplDao,
-                    fullRoutineDao,
-                    routineDao,
-                    setDao
-                ).also { INSTANCE = it }
-            }
-    }
-
     /** [FullRoutine] */
     fun insert(fullRoutine: FullRoutine) = runBlocking {
         withContext(IO) {
