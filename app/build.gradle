@@ -1,14 +1,27 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: 'dagger.hilt.android.plugin'
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
+}
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion(Apps.compileSdk)
     buildToolsVersion "29.0.3"
 
+    defaultConfig {
+        applicationId "com.noahjutz.gymroutines"
+        minSdkVersion(Apps.minSdk)
+        targetSdkVersion 30
+        versionCode = Apps.versionCode
+        versionName = Apps.versionName
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -19,21 +32,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    defaultConfig {
-        applicationId "com.noahjutz.gymroutines"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 4
-        versionName "0.1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        android.defaultConfig.vectorDrawables.useSupportLibrary = true
-    }
-
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -43,12 +45,12 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.4.0-rc"
-        kotlinCompilerExtensionVersion "0.1.0-dev16"
+        kotlinCompilerVersion "1.4.0"
+        kotlinCompilerExtensionVersion "0.1.0-dev17"
     }
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
@@ -63,45 +65,40 @@ configurations.all {
 }
 
 dependencies {
-    def room_version = "2.2.5"
-    def compose_version = "0.1.0-dev16"
+    implementation(Libs.core)
 
-    // Core / general
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation(Libs.coroutines)
 
-    // Hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+    implementation(Libs.material)
 
-    // Room
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    implementation "androidx.room:room-runtime:$room_version"
+    implementation(Libs.hilt)
+    kapt(Libs.hiltCompiler)
+    implementation(Libs.hiltExt)
+    kapt(Libs.hiltExtCompiler)
 
-    // Testing
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation(Libs.room)
+    kapt(Libs.roomCompiler)
+    implementation(Libs.roomRuntime)
 
-    // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6'
+    testImplementation(TestLibs.junit)
+    androidTestImplementation(TestLibs.junitAndroid)
+    androidTestImplementation(TestLibs.espresso)
 
-    // Compose
-    implementation "androidx.ui:ui-tooling:$compose_version"
+    implementation(Libs.compose)
+    implementation(Libs.composeFoundation)
+    implementation(Libs.composeIcons)
+    implementation(Libs.composeLivedata)
+    implementation(Libs.composeMaterial)
+    implementation(Libs.composeTooling)
+    implementation(Libs.composeRuntime)
+    implementation(Libs.composeRouter)
 
-    // Compose-Router
+    implementation(Libs.lifecycle)
+    implementation(Libs.livedata)
+
+    implementation(Libs.navigation)
+    implementation(Libs.navigationUi)
+
+    // Ktlint
     // TODO
-
-    // Material Design
-    implementation 'com.google.android.material:material:1.1.0'
-
-    // TODO: Replace with compose
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0' // Navigation
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0' // Navigation
-    implementation 'androidx.recyclerview:recyclerview:1.1.0' // RecyclerView
-
-    // TODO: Add ktlint
 }
