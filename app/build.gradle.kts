@@ -10,15 +10,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Apps.compileSdk)
-    buildToolsVersion "29.0.3"
+    compileSdkVersion(App.compileSdk)
+    buildToolsVersion = "29.0.3"
 
     defaultConfig {
-        applicationId "com.noahjutz.gymroutines"
-        minSdkVersion(Apps.minSdk)
-        targetSdkVersion 30
-        versionCode = Apps.versionCode
-        versionName = Apps.versionName
+        applicationId = "com.noahjutz.gymroutines"
+        minSdkVersion(App.minSdk)
+        targetSdkVersion(App.targetSdk)
+        versionCode = App.versionCode
+        versionName = App.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,8 +33,8 @@ android {
     }
 
     buildTypes {
-        release {
-            minifyEnabled = false
+        getByName("release") {
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -45,15 +45,8 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion "1.4.0"
-        kotlinCompilerExtensionVersion "0.1.0-dev17"
-    }
-}
-
-tasks.withType(KotlinCompile).configureEach {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+        kotlinCompilerVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = "0.1.0-dev17"
     }
 }
 
