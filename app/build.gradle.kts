@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -11,7 +9,7 @@ plugins {
 
 android {
     compileSdkVersion(App.compileSdk)
-    buildToolsVersion = "29.0.3"
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
         applicationId = "com.noahjutz.gymroutines"
@@ -47,13 +45,6 @@ android {
     composeOptions {
         kotlinCompilerVersion = Versions.kotlin
         kotlinCompilerExtensionVersion = Versions.compose
-    }
-}
-
-configurations.all {
-    resolutionStrategy {
-        force("org.antlr:antlr4-runtime:4.7.1")
-        force("org.antlr:antlr4-tool:4.7.1")
     }
 }
 
