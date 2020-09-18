@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:minWidth="100dp"
         android:minHeight="100dp"
-        android:tint="?android:textColorPrimary"
+        app:tint="?android:textColorPrimary"
         app:srcCompat="@drawable/ic_routine" />
 
     <com.google.android.material.textview.MaterialTextView
