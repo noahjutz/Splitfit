@@ -82,6 +82,9 @@ dependencies {
     implementation(Libs.navigation)
     implementation(Libs.navigationUi)
 
+    testImplementation(TestLibs.junit)
+    testImplementation(TestLibs.assertJ)
+
     // Ktlint
     // TODO
 }

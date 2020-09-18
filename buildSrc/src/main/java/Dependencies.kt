@@ -34,6 +34,9 @@ object Versions {
     const val material = "1.2.0"
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.0"
+
+    const val junit = "4.12"
+    const val assertJ = "3.11.1"
 }
 
 object Libs {
@@ -61,7 +64,8 @@ object Libs {
 }
 
 object TestLibs {
-
+    const val junit = "junit:junit:${Versions.junit}"
+    const val assertJ = "org.assertj:assertj-core:${Versions.assertJ}"
 }
 
 object Classpaths {
