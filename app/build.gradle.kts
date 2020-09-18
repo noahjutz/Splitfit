@@ -46,7 +46,6 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        // useIR = true
     }
 
     buildTypes {
@@ -57,13 +56,7 @@ android {
     }
 
     buildFeatures {
-        // compose = true
         dataBinding = true
-    }
-
-    composeOptions {
-        kotlinCompilerVersion = Versions.kotlin
-        kotlinCompilerExtensionVersion = Versions.compose
     }
 }
 
@@ -82,15 +75,6 @@ dependencies {
     implementation(Libs.room)
     kapt(Libs.roomCompiler)
     implementation(Libs.roomRuntime)
-
-    implementation(Libs.compose)
-    implementation(Libs.composeFoundation)
-    implementation(Libs.composeIcons)
-    implementation(Libs.composeLivedata)
-    implementation(Libs.composeMaterial)
-    implementation(Libs.composeTooling)
-    implementation(Libs.composeRuntime)
-    implementation(Libs.composeRouter)
 
     implementation(Libs.lifecycle)
     implementation(Libs.livedata)

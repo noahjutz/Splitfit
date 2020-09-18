@@ -25,14 +25,12 @@ object App {
 }
 
 object Versions {
-    const val gradle = "4.2.0-alpha11"
+    const val gradle = "4.0.1"
     const val kotlin = "1.4.0"
     const val hilt = "2.28-alpha"
     const val hiltExt = "1.0.0-alpha02"
     const val room = "2.2.5"
     const val coroutines = "1.3.6"
-    const val compose = "1.0.0-alpha03"
-    const val composeRouter = "0.18.0"
     const val material = "1.2.0"
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.0"
@@ -53,15 +51,6 @@ object Libs {
     const val room = "androidx.room:room-ktx:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
-
-    const val compose = "androidx.compose.ui:ui:${Versions.compose}"
-    const val composeTooling = "androidx.ui:ui-tooling:${Versions.compose}"
-    const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.compose}"
-    const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
-    const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
-    const val composeRuntime = "androidx.compose.runtime:runtime:${Versions.compose}"
-    const val composeIcons = "androidx.compose.material:material-icons-extended:${Versions.compose}"
-    const val composeRouter = "com.github.zsoltk:compose-router:${Versions.composeRouter}"
 
     const val lifecycle = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
     const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
