@@ -28,6 +28,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+        useIR = true
     }
 
     buildTypes {
@@ -63,10 +64,6 @@ dependencies {
     implementation(Libs.room)
     kapt(Libs.roomCompiler)
     implementation(Libs.roomRuntime)
-
-    testImplementation(TestLibs.junit)
-    androidTestImplementation(TestLibs.junitAndroid)
-    androidTestImplementation(TestLibs.espresso)
 
     implementation(Libs.compose)
     implementation(Libs.composeFoundation)

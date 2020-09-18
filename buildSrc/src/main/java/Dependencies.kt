@@ -18,10 +18,6 @@ object Versions {
     const val material = "1.2.0"
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.0"
-
-    const val junit = "4.13"
-    const val junitAndroid = "1.1.1"
-    const val espresso = "3.2.0"
 }
 
 object Libs {
@@ -52,16 +48,13 @@ object Libs {
     const val lifecycle = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
     const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
 
-
     const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 
 }
 
 object TestLibs {
-    const val junit = "junit:junit:${Versions.junit}"
-    const val junitAndroid = "androidx.test.ext:${Versions.junitAndroid}"
-    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+
 }
 
 object Classpaths {
