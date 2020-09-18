@@ -28,7 +28,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        useIR = true
+        // useIR = true
     }
 
     buildTypes {
@@ -39,7 +39,7 @@ android {
     }
 
     buildFeatures {
-        compose = false
+        // compose = true
         dataBinding = true
     }
 
