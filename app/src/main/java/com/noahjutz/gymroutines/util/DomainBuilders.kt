@@ -34,8 +34,8 @@ data class FullRoutineBuilder(
 data class ExerciseImplBuilder(
     val routine: Routine = Routine(),
     val exercise: Exercise = Exercise(),
-    val exerciseHolder: ExerciseHolder = ExerciseHolder(exercise.exerciseId, routine.routineId),
+    val setGroup: SetGroup = SetGroup(exercise.exerciseId, routine.routineId),
     val sets: List<Set> = listOf()
 ) {
-    fun build() = ExerciseImpl(exerciseHolder, exercise, sets)
+    fun build() = ExerciseImpl(setGroup, exercise, sets)
 }

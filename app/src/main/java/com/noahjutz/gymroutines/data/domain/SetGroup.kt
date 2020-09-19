@@ -26,7 +26,7 @@ import com.noahjutz.gymroutines.util.Equatable
  * Holds an [Exercise] and [Set]s. Used in Routines.
  */
 @Entity(tableName = "exercise_holder_table")
-data class ExerciseHolder(
+data class SetGroup(
     val exerciseId: Int,
     val routineId: Int,
     var position: Int = -1,

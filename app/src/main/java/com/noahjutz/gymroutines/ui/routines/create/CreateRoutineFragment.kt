@@ -117,7 +117,7 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener
                                 create_routine_root,
                                 AutoTransition()
                             )
-                            adapter.mAdapters[e.exerciseHolder.exerciseHolderId]?.submitList(e.sets)
+                            adapter.mAdapters[e.setGroup.exerciseHolderId]?.submitList(e.sets)
                         }
                     }
                 }
@@ -159,12 +159,12 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener
     }
 
     override fun onAddSetClick(exercise: ExerciseImpl) {
-        viewModel.addSet(Set(exercise.exerciseHolder.exerciseHolderId))
+        viewModel.addSet(Set(exercise.setGroup.exerciseHolderId))
     }
 
     override fun onDeleteSet(set: Set, position: Int) {
         viewModel.removeSet(set)
-        if (viewModel.fullRoutine.value!!.exercises.filter { it.exerciseHolder.exerciseHolderId == set.exerciseHolderId }[0].sets.isEmpty())
+        if (viewModel.fullRoutine.value!!.exercises.filter { it.setGroup.exerciseHolderId == set.exerciseHolderId }[0].sets.isEmpty())
             deleteExercise(position)
     }
 }

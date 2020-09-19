@@ -75,7 +75,7 @@ class Repository @Inject constructor(
     /** [ExerciseImpl] */
     fun insert(exerciseImpl: ExerciseImpl) = runBlocking {
         withContext(IO) {
-            val exerciseId = exerciseHolderDao.insert(exerciseImpl.exerciseHolder)
+            val exerciseId = exerciseHolderDao.insert(exerciseImpl.setGroup)
 
             for (set in exerciseImpl.sets)
                 insert(set)
@@ -86,7 +86,7 @@ class Repository @Inject constructor(
 
     private fun delete(exerciseImpl: ExerciseImpl) = runBlocking {
         withContext(IO) {
-            exerciseHolderDao.delete(exerciseImpl.exerciseHolder)
+            exerciseHolderDao.delete(exerciseImpl.setGroup)
 
             for (set in exerciseImpl.sets)
                 delete(set)

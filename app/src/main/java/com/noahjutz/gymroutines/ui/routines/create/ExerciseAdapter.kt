@@ -59,14 +59,14 @@ class ExerciseAdapter(
 
             // TODO: Delegate the responsibility of setting up the recycler views to [CreateRoutineFragment]
             val setAdapter = SetAdapter()
-            mAdapters[exerciseImpl.exerciseHolder.exerciseHolderId] = setAdapter
+            mAdapters[exerciseImpl.setGroup.exerciseHolderId] = setAdapter
 
             val itemTouchHelper = ItemTouchHelperBuilder(
                 swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 onSwipedCall = { viewHolder, _ ->
                     deleteSet(
                         viewHolder.adapterPosition,
-                        exerciseImpl.exerciseHolder.exerciseHolderId,
+                        exerciseImpl.setGroup.exerciseHolderId,
                         holder.adapterPosition
                     )
                 }
@@ -92,4 +92,4 @@ class ExerciseAdapter(
 }
 
 private val diffUtil =
-    DiffUtilCallback<ExerciseImpl>({ old, new -> old.exerciseHolder.exerciseHolderId == new.exerciseHolder.exerciseHolderId })
+    DiffUtilCallback<ExerciseImpl>({ old, new -> old.setGroup.exerciseHolderId == new.setGroup.exerciseHolderId })

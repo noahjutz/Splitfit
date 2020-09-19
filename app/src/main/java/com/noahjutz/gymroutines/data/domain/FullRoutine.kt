@@ -59,7 +59,7 @@ import com.noahjutz.gymroutines.util.Equatable
 data class FullRoutine(
     @Embedded val routine: Routine,
     @Relation(
-        entity = ExerciseHolder::class,
+        entity = SetGroup::class,
         parentColumn = "routineId",
         entityColumn = "routineId"
     ) val exercises: List<ExerciseImpl>

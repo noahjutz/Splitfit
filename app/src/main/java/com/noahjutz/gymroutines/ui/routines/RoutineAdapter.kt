@@ -64,7 +64,7 @@ class RoutineAdapter(
     }
 
     private fun formatExercises(exercises: List<ExerciseImpl>) = exercises
-        .sortedBy { it.exerciseHolder.position }
+        .sortedBy { it.setGroup.position }
         .joinToString("\n") { "${it.sets.size} x ${it.exercise.name}" }
 }
 

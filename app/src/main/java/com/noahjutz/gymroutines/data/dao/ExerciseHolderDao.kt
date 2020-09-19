@@ -20,16 +20,16 @@ package com.noahjutz.gymroutines.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.noahjutz.gymroutines.data.domain.ExerciseHolder
+import com.noahjutz.gymroutines.data.domain.SetGroup
 
 @Dao
 interface ExerciseHolderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(exerciseHolder: ExerciseHolder): Long
+    suspend fun insert(setGroup: SetGroup): Long
 
     @Delete
-    suspend fun delete(exerciseHolder: ExerciseHolder)
+    suspend fun delete(setGroup: SetGroup)
 
     @Query("SELECT * FROM exercise_holder_table")
-    fun getExerciseHolders(): LiveData<List<ExerciseHolder>>
+    fun getExerciseHolders(): LiveData<List<SetGroup>>
 }

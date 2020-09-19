@@ -67,7 +67,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
                 )!!
 
             _exercises.value = (value?.exercises as ArrayList<ExerciseImpl>).apply {
-                sortBy { it.exerciseHolder.position }
+                sortBy { it.setGroup.position }
             }
 
             _sets.value = ArrayList()
@@ -102,7 +102,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
                     value!!.exercises.apply {
                         for (e in this) {
                             e.sets =
-                                sets.filter { it.exerciseHolderId == e.exerciseHolder.exerciseHolderId }
+                                sets.filter { it.exerciseHolderId == e.setGroup.exerciseHolderId }
                         }
                     }
                 )
@@ -116,7 +116,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     private fun save() {
         for (i in 0 until _exercises.value!!.size)
-            _exercises.value!![i].exerciseHolder.position = i
+            _exercises.value!![i].setGroup.position = i
 
         repository.insert(fullRoutine.value!!)
     }

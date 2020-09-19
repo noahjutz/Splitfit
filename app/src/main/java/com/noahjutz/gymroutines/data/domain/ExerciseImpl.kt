@@ -23,10 +23,10 @@ import androidx.room.Relation
 import com.noahjutz.gymroutines.util.Equatable
 
 /**
- * [ExerciseHolder] with [Exercise] and [Set]s
+ * [SetGroup] with [Exercise] and [Set]s
  */
 data class ExerciseImpl(
-    @Embedded val exerciseHolder: ExerciseHolder,
+    @Embedded val setGroup: SetGroup,
     @Relation(
         entity = Exercise::class,
         parentColumn = "exerciseId",

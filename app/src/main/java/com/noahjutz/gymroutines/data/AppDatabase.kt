@@ -22,7 +22,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.noahjutz.gymroutines.data.dao.*
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.data.domain.ExerciseHolder
+import com.noahjutz.gymroutines.data.domain.SetGroup
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
 
@@ -30,7 +30,7 @@ import com.noahjutz.gymroutines.data.domain.Set
     entities = [
         Exercise::class,
         Routine::class,
-        ExerciseHolder::class,
+        SetGroup::class,
         Set::class
     ],
     version = 22
