@@ -2,8 +2,9 @@ language: android
 jdk: oraclejdk8
 sudo: false
 
-script: ./gradlew test
+android:
+    components:
+        - build-tools-30.0.2
+        - android-30
 
-licenses:
-    - 'android-sdk-preview-license-52d11cd2'
-    - 'android-sdk-license-.+'
+script: ./gradlew test
