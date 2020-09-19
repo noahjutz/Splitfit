@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ GymRoutines
   ~ Copyright (C) 2020  Noah Jutz
   ~
@@ -28,31 +27,14 @@
     tools:layout_marginStart="16dp"
     tools:layout_marginTop="16dp">
 
-    <LinearLayout
-        android:id="@+id/parent_layout"
+    <TextView
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/any_padding_default">
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        tools:text="Leg Day" />
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            tools:text="Leg Day" />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="?android:attr/textColorSecondary"
-            tools:text="Quads and stuff" />
-
-    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

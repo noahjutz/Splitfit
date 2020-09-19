@@ -30,9 +30,7 @@ import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
-import com.noahjutz.gymroutines.util.setTextOrHide
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
-import kotlinx.android.synthetic.main.listitem_exercise.view.description
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 
