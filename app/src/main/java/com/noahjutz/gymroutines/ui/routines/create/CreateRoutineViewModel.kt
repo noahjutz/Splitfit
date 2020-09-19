@@ -102,7 +102,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
                     value!!.exercises.apply {
                         for (e in this) {
                             e.sets =
-                                sets.filter { it.exerciseHolderId == e.setGroup.exerciseHolderId }
+                                sets.filter { it.setGroupId == e.setGroup.setGroupId }
                         }
                     }
                 )

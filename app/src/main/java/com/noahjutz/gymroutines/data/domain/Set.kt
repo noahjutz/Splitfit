@@ -24,7 +24,7 @@ import com.noahjutz.gymroutines.util.Equatable
 
 @Entity(tableName = "set_table")
 data class Set(
-    val exerciseHolderId: Int,
+    val setGroupId: Int,
     val reps: Int? = null,
     val weight: Double? = null,
     val time: Int? = null,

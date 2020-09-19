@@ -27,6 +27,6 @@ interface ExerciseImplDao {
     @Query("SELECT * FROM exercise_holder_table WHERE routineId == :routineId")
     suspend fun getExerciseImplsIn(routineId: Int): List<ExerciseImpl>
 
-    @Query("SELECT * FROM exercise_holder_table WHERE exerciseHolderId == :exerciseHolderId")
+    @Query("SELECT * FROM exercise_holder_table WHERE setGroupId == :exerciseHolderId")
     suspend fun getExerciseImpl(exerciseHolderId: Int): ExerciseImpl?
 }

@@ -30,5 +30,7 @@ data class SetGroup(
     val exerciseId: Int,
     val routineId: Int,
     var position: Int = -1,
-    @PrimaryKey(autoGenerate = true) val exerciseHolderId: Int = 0
-) : Equatable
+) : Equatable {
+    @PrimaryKey(autoGenerate = true)
+    var setGroupId: Int = -1
+}

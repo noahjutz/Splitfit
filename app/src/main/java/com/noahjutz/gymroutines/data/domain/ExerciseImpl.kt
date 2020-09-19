@@ -34,7 +34,7 @@ data class ExerciseImpl(
     ) val exercise: Exercise,
     @Relation(
         entity = Set::class,
-        parentColumn = "exerciseHolderId",
-        entityColumn = "exerciseHolderId"
+        parentColumn = "setGroupId",
+        entityColumn = "setGroupId"
     ) var sets: List<Set>
 ) : Equatable
