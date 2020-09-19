@@ -25,7 +25,7 @@ import com.noahjutz.gymroutines.util.Equatable
 @Entity(tableName = "routine_table")
 data class Routine(
     var name: String = "",
-
+) : Equatable {
     @PrimaryKey(autoGenerate = true)
-    val routineId: Int = 0
-) : Equatable
+    var routineId: Int = -1
+}
