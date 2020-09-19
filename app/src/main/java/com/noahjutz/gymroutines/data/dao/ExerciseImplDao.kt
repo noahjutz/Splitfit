@@ -22,6 +22,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 
+@Deprecated("See ExerciseImpl")
 @Dao
 interface ExerciseImplDao {
     @Query("SELECT * FROM exercise_holder_table WHERE routineId == :routineId")

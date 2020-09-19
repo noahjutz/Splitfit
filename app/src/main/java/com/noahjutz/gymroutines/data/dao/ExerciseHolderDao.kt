@@ -22,8 +22,9 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.gymroutines.data.domain.SetGroup
 
+@Deprecated("See SetGroup")
 @Dao
-interface ExerciseHolderDao {
+interface ExerciseHolderDao { // TODO rename to SetGroupDao
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(setGroup: SetGroup): Long
 

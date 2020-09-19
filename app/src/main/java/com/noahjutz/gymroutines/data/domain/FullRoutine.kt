@@ -56,6 +56,7 @@ import com.noahjutz.gymroutines.util.Equatable
 /**
  * [Routine] with [ExerciseImpl]s
  */
+@Deprecated("Use Routine")
 data class FullRoutine(
     @Embedded val routine: Routine,
     @Relation(

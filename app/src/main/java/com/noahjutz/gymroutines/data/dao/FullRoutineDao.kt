@@ -24,6 +24,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.noahjutz.gymroutines.data.domain.FullRoutine
 
+@Deprecated("See FullRoutine")
 @Dao
 interface FullRoutineDao {
     @Transaction

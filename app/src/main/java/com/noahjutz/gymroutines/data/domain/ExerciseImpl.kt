@@ -25,6 +25,7 @@ import com.noahjutz.gymroutines.util.Equatable
 /**
  * [SetGroup] with [Exercise] and [Set]s
  */
+@Deprecated("Routine should store sets directly.")
 data class ExerciseImpl(
     @Embedded val setGroup: SetGroup,
     @Relation(
