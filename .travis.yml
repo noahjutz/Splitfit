@@ -1,0 +1,5 @@
+language: android
+jdk: oraclejdk8
+sudo: false
+
+script: ./gradlew test
