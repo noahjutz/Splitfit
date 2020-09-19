@@ -3,3 +3,7 @@ jdk: oraclejdk8
 sudo: false
 
 script: ./gradlew test
+
+licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
