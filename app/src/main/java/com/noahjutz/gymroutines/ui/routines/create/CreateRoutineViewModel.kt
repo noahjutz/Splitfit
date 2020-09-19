@@ -43,7 +43,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     /** Data binding fields */
     val name = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
 
     init {
         initFullRoutine()
@@ -52,7 +51,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     private fun initBinding() {
         name.value = fullRoutine.value!!.routine.name
-        description.value = fullRoutine.value!!.routine.description
     }
 
     private fun initFullRoutine() {
@@ -88,12 +86,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
             addSource(name) { name ->
                 value = value!!.apply {
                     routine.name = name.trim()
-                }
-            }
-
-            addSource(description) { description ->
-                value = value!!.apply {
-                    routine.description = description.trim()
                 }
             }
 

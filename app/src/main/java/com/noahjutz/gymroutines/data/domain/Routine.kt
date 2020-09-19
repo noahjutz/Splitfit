@@ -25,7 +25,6 @@ import com.noahjutz.gymroutines.util.Equatable
 @Entity(tableName = "routine_table")
 data class Routine(
     var name: String = "",
-    var description: String = "",
 
     @PrimaryKey(autoGenerate = true)
     val routineId: Int = 0

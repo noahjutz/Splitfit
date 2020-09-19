@@ -48,12 +48,11 @@ class RoutineAdapter(
 
     override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
         val fullRoutine = getItem(position)
-        val (rName, rDesc) = fullRoutine.routine
+        val (rName) = fullRoutine.routine
         val rExercises = fullRoutine.exercises
 
         holder.itemView.apply {
             name.setTextOrUnnamed(rName)
-            description.setTextOrHide(rDesc)
             exercises.setTextOrHide(formatExercises(rExercises))
 
             setOnClickListener { routineListener.onRoutineClick(fullRoutine) }
