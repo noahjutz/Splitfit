@@ -37,6 +37,7 @@ object Versions {
 
     const val junit = "4.12"
     const val assertJ = "3.11.1"
+    const val mockK = "1.10.0"
 }
 
 object Libs {
@@ -66,6 +67,7 @@ object Libs {
 object TestLibs {
     const val junit = "junit:junit:${Versions.junit}"
     const val assertJ = "org.assertj:assertj-core:${Versions.assertJ}"
+    const val mockK = "io.mockk:mockk:${Versions.mockK}"
 }
 
 object Classpaths {

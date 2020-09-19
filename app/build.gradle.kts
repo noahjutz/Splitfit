@@ -84,6 +84,7 @@ dependencies {
 
     testImplementation(TestLibs.junit)
     testImplementation(TestLibs.assertJ)
+    testImplementation(TestLibs.mockK)
 
     // Ktlint
     // TODO
