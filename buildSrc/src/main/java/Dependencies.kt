@@ -25,6 +25,8 @@ object App {
 }
 
 object Versions {
+    const val ktlintPlugin = "9.4.0"
+    const val ktlint = "0.39.0"
     const val gradle = "4.0.1"
     const val kotlin = "1.4.0"
     const val hilt = "2.28-alpha"
