@@ -30,7 +30,7 @@ data class Exercise(
     var logTime: Boolean = false,
     var logDistance: Boolean = false,
     var hidden: Boolean = false,
-
+) : Equatable {
     @PrimaryKey(autoGenerate = true)
-    val exerciseId: Int = 0
-) : Equatable
+    var exerciseId: Int = -1
+}
