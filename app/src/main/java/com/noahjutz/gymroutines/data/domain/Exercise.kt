@@ -25,7 +25,6 @@ import com.noahjutz.gymroutines.util.Equatable
 @Entity(tableName = "exercise_table")
 data class Exercise(
     var name: String = "",
-    var description: String = "",
     var logReps: Boolean = false,
     var logWeight: Boolean = false,
     var logTime: Boolean = false,

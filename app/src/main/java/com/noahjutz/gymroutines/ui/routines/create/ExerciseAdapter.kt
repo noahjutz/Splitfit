@@ -52,11 +52,10 @@ class ExerciseAdapter(
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exerciseImpl = getItem(position)
-        val (exerciseName, exerciseDesc) = exerciseImpl.exercise
+        val (exerciseName) = exerciseImpl.exercise
 
         holder.itemView.apply {
             name.setTextOrUnnamed(exerciseName)
-            description.setTextOrHide(exerciseDesc)
 
             button_add_set.setOnClickListener { exerciseHolderListener.onAddSetClick(exerciseImpl) }
 

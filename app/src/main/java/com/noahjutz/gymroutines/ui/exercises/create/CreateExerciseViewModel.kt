@@ -45,7 +45,6 @@ class CreateExerciseViewModel @ViewModelInject constructor(
      * @see initBinding
      */
     val name = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
     val logWeight = MutableLiveData<Boolean>()
     val logReps = MutableLiveData<Boolean>()
     val logTime = MutableLiveData<Boolean>()
@@ -58,7 +57,6 @@ class CreateExerciseViewModel @ViewModelInject constructor(
 
     private fun initBinding() {
         name.value = exercise.value!!.name
-        description.value = exercise.value!!.description
         logWeight.value = exercise.value!!.logWeight
         logReps.value = exercise.value!!.logReps
         logTime.value = exercise.value!!.logTime
@@ -72,10 +70,6 @@ class CreateExerciseViewModel @ViewModelInject constructor(
 
             addSource(name) { source ->
                 _exercise.value = _exercise.value!!.apply { name = source.trim() }
-            }
-
-            addSource(description) { source ->
-                _exercise.value = _exercise.value!!.apply { description = source.trim() }
             }
 
             addSource(logWeight) { source ->

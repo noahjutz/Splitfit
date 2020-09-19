@@ -46,11 +46,10 @@ class ExercisesAdapter(
 
     override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
         val exercise = getItem(position)
-        val (exerciseName, exerciseDesc) = exercise
+        val (exerciseName) = exercise
 
         holder.itemView.apply {
             name.setTextOrUnnamed(exerciseName)
-            description.setTextOrHide(exerciseDesc)
 
             setOnClickListener {
                 exerciseListener.onExerciseClick(exercise, this as MaterialCardView)

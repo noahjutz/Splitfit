@@ -33,7 +33,7 @@ import com.noahjutz.gymroutines.data.domain.Set
         ExerciseHolder::class,
         Set::class
     ],
-    version = 20
+    version = 21
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
