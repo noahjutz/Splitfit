@@ -16,17 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.gymroutines.data.domain
+package com.noahjutz.gymroutines
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.noahjutz.gymroutines.util.Equatable
+import com.noahjutz.gymroutines.data.Converters
+import com.noahjutz.gymroutines.data.domain.Set
+import org.junit.Assert
+import org.junit.Test
 
-@Entity(tableName = "routine_table")
-data class Routine(
-    var name: String = "",
-    val sets: MutableList<Set> = mutableListOf() // TODO: Replace FullRoutine with this.
-) : Equatable {
-    @PrimaryKey(autoGenerate = true)
-    var routineId: Int = -1
+class ConvertersTest {
+    val converters: Converters = Converters()
+
+    @Test
+    fun `List of Sets can be turned into JSON and back`() {
+        val list = mutableListOf(
+            Set(12),
+            Set(33),
+            Set(0)
+        )
+        val json = converters.fromList(list)
+        val backToList = converters.toSetList(json)
+        Assert.assertEquals(list, backToList)
+    }
 }

@@ -16,17 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.gymroutines.data.domain
+@file:Suppress("IllegalIdentifier")
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.noahjutz.gymroutines.util.Equatable
+package com.noahjutz.gymroutines.data
 
-@Entity(tableName = "routine_table")
-data class Routine(
-    var name: String = "",
-    val sets: MutableList<Set> = mutableListOf() // TODO: Replace FullRoutine with this.
-) : Equatable {
-    @PrimaryKey(autoGenerate = true)
-    var routineId: Int = -1
+import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.noahjutz.gymroutines.data.domain.Set
+
+class Converters {
+    private val gson = Gson()
+    private val setType = object : TypeToken<MutableList<Set>>() {}.type
+
+    @TypeConverter
+    fun fromList(list: MutableList<Set>): String = gson.toJson(list)
+
+    @TypeConverter
+    fun toSetList(json: String): MutableList<Set> = gson.fromJson(json, setType)
 }

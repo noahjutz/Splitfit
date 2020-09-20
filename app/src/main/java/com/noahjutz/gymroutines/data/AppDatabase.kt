@@ -20,6 +20,7 @@ package com.noahjutz.gymroutines.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.noahjutz.gymroutines.data.dao.*
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.SetGroup
@@ -33,8 +34,9 @@ import com.noahjutz.gymroutines.data.domain.Set
         SetGroup::class,
         Set::class
     ],
-    version = 23
+    version = 24
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val exerciseHolderDao: ExerciseHolderDao
