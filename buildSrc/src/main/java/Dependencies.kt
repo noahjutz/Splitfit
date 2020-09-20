@@ -25,6 +25,7 @@ object App {
 }
 
 object Versions {
+    const val gson = "2.8.6"
     const val ktlintPlugin = "9.4.0"
     const val ktlint = "0.39.0"
     const val gradle = "4.0.1"
@@ -48,6 +49,8 @@ object Libs {
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     const val material = "com.google.android.material:material:${Versions.material}"
+
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"

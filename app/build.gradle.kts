@@ -71,6 +71,8 @@ dependencies {
 
     implementation(Libs.material)
 
+    implementation(Libs.gson)
+
     implementation(Libs.hilt)
     kapt(Libs.hiltCompiler)
     implementation(Libs.hiltExt)
