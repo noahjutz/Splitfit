@@ -24,7 +24,7 @@ import com.noahjutz.gymroutines.data.domain.SetGroup
 
 @Deprecated("See SetGroup")
 @Dao
-interface ExerciseHolderDao { // TODO rename to SetGroupDao
+interface ExerciseHolderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(setGroup: SetGroup): Long
 
