@@ -1,13 +1,15 @@
 language: android
 jdk: oraclejdk8
-sudo: false
-
-before_install:
-- yes | sdkmanager "platforms;android-30"
 
 android:
     components:
         - build-tools-30.0.2
-        - android-30
 
-script: ./gradlew test
+before_install:
+    - yes | sdkmanager "platforms;android-30"
+
+script: ./gradlew test --stacktrace
+
+licenses:
+    - '.+'
+
