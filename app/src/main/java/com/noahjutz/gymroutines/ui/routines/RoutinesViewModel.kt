@@ -23,12 +23,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.FullRoutine
+import com.noahjutz.gymroutines.data.domain.Routine
 
 class RoutinesViewModel @ViewModelInject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    val fullRoutines: LiveData<List<FullRoutine>>
-        get() = repository.fullRoutines
+    val routines: LiveData<List<Routine>>
+        get() = repository.routines
 
     fun insert(fullRoutine: FullRoutine) {
         repository.insert(fullRoutine)

@@ -95,12 +95,12 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     }
 
     private fun initViewModel() {
-        viewModel.fullRoutines.observe(
+        viewModel.routines.observe(
             viewLifecycleOwner,
-            Observer { fullRoutines ->
-                adapter.submitList(fullRoutines.map { it.routine })
+            Observer { routines ->
+                adapter.submitList(routines)
 
-                val v = if (fullRoutines.isEmpty()) VISIBLE else GONE
+                val v = if (routines.isEmpty()) VISIBLE else GONE
                 showEmptyScreen(v)
             }
         )
