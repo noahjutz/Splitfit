@@ -24,13 +24,6 @@ import com.noahjutz.gymroutines.data.domain.Set
 /**
  * Builders for classes in [com.noahjutz.gymroutines.data.domain]
  */
-data class FullRoutineBuilder(
-    val routine: Routine = Routine(),
-    val exercises: List<ExerciseImpl> = listOf()
-) {
-    fun build() = FullRoutine(routine, exercises)
-}
-
 data class ExerciseImplBuilder(
     val routine: Routine = Routine(),
     val exercise: Exercise = Exercise(),
