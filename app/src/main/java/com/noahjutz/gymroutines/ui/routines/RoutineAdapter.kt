@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.FullRoutine
+import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrHide
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
@@ -55,12 +56,12 @@ class RoutineAdapter(
             name.setTextOrUnnamed(rName)
             exercises.setTextOrHide(formatExercises(rExercises))
 
-            setOnClickListener { routineListener.onRoutineClick(fullRoutine) }
+            setOnClickListener { routineListener.onRoutineClick(fullRoutine.routine) }
         }
     }
 
     interface RoutineListener {
-        fun onRoutineClick(fullRoutine: FullRoutine)
+        fun onRoutineClick(routine: Routine)
     }
 
     private fun formatExercises(exercises: List<ExerciseImpl>) = exercises

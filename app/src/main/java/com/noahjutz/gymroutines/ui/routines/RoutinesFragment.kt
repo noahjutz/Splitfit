@@ -36,6 +36,7 @@ import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.FullRoutine
+import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
@@ -129,8 +130,8 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
             .show()
     }
 
-    override fun onRoutineClick(fullRoutine: FullRoutine) {
-        val action = RoutinesFragmentDirections.addRoutine(fullRoutine.routine.routineId)
+    override fun onRoutineClick(routine: Routine) {
+        val action = RoutinesFragmentDirections.addRoutine(routine.routineId)
         findNavController().navigate(action)
     }
 }
