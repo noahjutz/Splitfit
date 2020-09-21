@@ -49,6 +49,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+    lintOptions {
+        textReport = true
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
