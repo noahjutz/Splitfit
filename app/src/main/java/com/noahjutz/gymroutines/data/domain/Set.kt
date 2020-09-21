@@ -28,8 +28,8 @@ data class Set(
     val reps: Int? = null,
     val weight: Double? = null,
     val time: Int? = null,
-    val distance: Double? = null,
-
+    val distance: Double? = null
+) : Equatable {
     @PrimaryKey(autoGenerate = true)
-    val setId: Int = 0
-) : Equatable
+    var setId: Int = -1
+}
