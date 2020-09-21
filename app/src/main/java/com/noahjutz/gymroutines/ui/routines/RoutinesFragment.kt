@@ -35,7 +35,6 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
@@ -99,7 +98,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
         viewModel.fullRoutines.observe(
             viewLifecycleOwner,
             Observer { fullRoutines ->
-                adapter.submitList(fullRoutines)
+                adapter.submitList(fullRoutines.map { it.routine })
 
                 val v = if (fullRoutines.isEmpty()) VISIBLE else GONE
                 showEmptyScreen(v)
@@ -119,15 +118,12 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
 
     private fun deleteRoutine(position: Int) {
         val routine = adapter.getRoutine(position)
-        viewModel.delete(routine)
+        viewModel.deleteRoutine(routine.routineId)
         Snackbar.make(
             recycler_view,
-            "Deleted ${routine.routine.name}",
+            "Deleted ${routine.name}",
             Snackbar.LENGTH_SHORT
         )
-            .setAction("Undo") { viewModel.insert(routine) }
-            .setAnchorView(fab_pick_exercises)
-            .show()
     }
 
     override fun onRoutineClick(routine: Routine) {

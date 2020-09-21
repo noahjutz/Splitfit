@@ -37,8 +37,8 @@ import kotlinx.android.synthetic.main.listitem_routine.view.*
  */
 class RoutineAdapter(
     private val routineListener: RoutineListener
-) : ListAdapter<FullRoutine, RoutineAdapter.RoutineHolder>(diffUtil) {
-    fun getRoutine(pos: Int): FullRoutine = getItem(pos)
+) : ListAdapter<Routine, RoutineAdapter.RoutineHolder>(diffUtil) {
+    fun getRoutine(pos: Int): Routine = getItem(pos)
 
     inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -48,26 +48,19 @@ class RoutineAdapter(
     )
 
     override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
-        val fullRoutine = getItem(position)
-        val (rName) = fullRoutine.routine
-        val rExercises = fullRoutine.exercises
+        val routine = getItem(position)
 
         holder.itemView.apply {
-            name.setTextOrUnnamed(rName)
-            exercises.setTextOrHide(formatExercises(rExercises))
+            name.setTextOrUnnamed(routine.name)
 
-            setOnClickListener { routineListener.onRoutineClick(fullRoutine.routine) }
+            setOnClickListener { routineListener.onRoutineClick(routine) }
         }
     }
 
     interface RoutineListener {
         fun onRoutineClick(routine: Routine)
     }
-
-    private fun formatExercises(exercises: List<ExerciseImpl>) = exercises
-        .sortedBy { it.setGroup.position }
-        .joinToString("\n") { "${it.sets.size} x ${it.exercise.name}" }
 }
 
 private val diffUtil =
-    DiffUtilCallback<FullRoutine>({ old, new -> old.routine.routineId == new.routine.routineId })
+    DiffUtilCallback<Routine>({ old, new -> old.routineId == new.routineId })
