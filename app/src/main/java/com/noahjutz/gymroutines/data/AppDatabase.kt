@@ -25,16 +25,14 @@ import com.noahjutz.gymroutines.data.dao.*
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
-import com.noahjutz.gymroutines.data.domain.SetGroup
 
 @Database(
     entities = [
         Exercise::class,
         Routine::class,
-        SetGroup::class,
         Set::class
     ],
-    version = 24
+    version = 25
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
