@@ -86,7 +86,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel.routine.observe(viewLifecycleOwner) { routine ->
-            adapter.submitList(routine.sets)
+            adapter.items = routine.sets
         }
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->

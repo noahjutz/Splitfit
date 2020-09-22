@@ -19,29 +19,23 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.util.DiffUtilCallback
 import kotlinx.android.synthetic.main.listitem_set.view.*
 
-class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
-    fun getSet(position: Int): Set = getItem(position)
+class SetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var items = emptyList<Set>()
 
-    inner class SetHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        object : RecyclerView.ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.listitem_set, parent, false)
+        ) {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SetHolder(
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.listitem_set, parent, false)
-    )
-
-    override fun onBindViewHolder(holder: SetAdapter.SetHolder, position: Int) {
-        val set = getItem(position)
-
-        // TODO: Hide fields according to exercise.logReps, logWeight, etc.
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val set = items[position]
 
         holder.itemView.apply {
             edit_reps.setText(set.reps?.toString() ?: "")
@@ -50,6 +44,7 @@ class SetAdapter : ListAdapter<Set, SetAdapter.SetHolder>(diffUtil) {
             edit_distance.setText(set.distance?.toString() ?: "")
         }
     }
+
+    override fun getItemCount(): Int = items.size
 }
 
-private val diffUtil = DiffUtilCallback<Set>({ old, new -> old.setId == new.setId })
