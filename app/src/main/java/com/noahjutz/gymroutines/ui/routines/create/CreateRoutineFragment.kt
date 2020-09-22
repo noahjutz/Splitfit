@@ -119,7 +119,7 @@ class CreateRoutineFragment : Fragment() {
                     exercise = e,
                     routine = viewModel.fullRoutine.value!!.routine
                 ).build()
-                viewModel.addExercise(exerciseImpl)
+                // viewModel.addExercise(exerciseImpl)
             }
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()

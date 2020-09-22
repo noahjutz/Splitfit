@@ -121,14 +121,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
         repository.insert(fullRoutine.value!!)
     }
 
-    fun addExercise(exerciseImpl: ExerciseImpl) {
-        val id = repository.insert(exerciseImpl).toInt()
-        val exercise = repository.getExerciseImpl(id)
-        _exercises.value = _exercises.value!!.apply { add(exercise!!) }
-
-        addSet(Set(id))
-    }
-
     fun addSet(set: Set) {
         val setId = repository.insert(set)
         val newSet = repository.getSet(setId.toInt())
