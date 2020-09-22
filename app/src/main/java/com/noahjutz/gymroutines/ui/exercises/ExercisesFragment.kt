@@ -27,7 +27,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -97,16 +96,13 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     }
 
     private fun initViewModel() {
-        viewModel.exercises.observe(
-            viewLifecycleOwner,
-            Observer { exercises ->
-                val e = exercises.filter { !it.hidden }
-                adapter.submitList(e)
+        viewModel.exercises.observe(viewLifecycleOwner) { exercises ->
+            val e = exercises.filter { !it.hidden }
+            adapter.items = e
 
-                val v = if (e.isEmpty()) VISIBLE else GONE
-                showEmptyScreen(v)
-            }
-        )
+            val v = if (e.isEmpty()) VISIBLE else GONE
+            showEmptyScreen(v)
+        }
     }
 
     private fun showEmptyScreen(visibility: Int) {
@@ -120,7 +116,7 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     }
 
     private fun deleteExercise(position: Int) {
-        val exercise = adapter.getExerciseAt(position)
+        val exercise = adapter.items[position]
         viewModel.hide(exercise, true)
         Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
             .setAction("Undo") {
