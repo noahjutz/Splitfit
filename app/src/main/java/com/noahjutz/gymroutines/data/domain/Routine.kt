@@ -25,7 +25,7 @@ import com.noahjutz.gymroutines.util.Equatable
 @Entity(tableName = "routine_table")
 data class Routine(
     var name: String = "",
-    val sets: MutableList<Set> = mutableListOf() // TODO: Replace FullRoutine with this.
+    val sets: MutableList<Set> = mutableListOf()
 ) : Equatable {
     @PrimaryKey(autoGenerate = true)
     var routineId: Int = -1
