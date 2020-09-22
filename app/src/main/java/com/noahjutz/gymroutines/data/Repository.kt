@@ -29,7 +29,6 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val exerciseDao: ExerciseDao,
-    private val exerciseHolderDao: ExerciseHolderDao,
     private val routineDao: RoutineDao,
     private val setDao: SetDao
 ) {
