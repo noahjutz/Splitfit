@@ -19,7 +19,9 @@
 package com.noahjutz.gymroutines.data
 
 import com.noahjutz.gymroutines.data.dao.*
-import com.noahjutz.gymroutines.data.domain.*
+import com.noahjutz.gymroutines.data.domain.Exercise
+import com.noahjutz.gymroutines.data.domain.ExerciseImpl
+import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
@@ -30,45 +32,11 @@ class Repository @Inject constructor(
     private val exerciseDao: ExerciseDao,
     private val exerciseHolderDao: ExerciseHolderDao,
     private val exerciseImplDao: ExerciseImplDao,
-    private val fullRoutineDao: FullRoutineDao,
     private val routineDao: RoutineDao,
     private val setDao: SetDao
 ) {
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
-    val fullRoutines = fullRoutineDao.getFullRoutines()
-
-    /** [FullRoutine] */
-    fun insert(fullRoutine: FullRoutine) = runBlocking {
-        withContext(IO) {
-            val routineId = routineDao.insert(fullRoutine.routine)
-
-            val exerciseImpls = exerciseImplDao.getExerciseImplsIn(routineId.toInt())
-            for (e in exerciseImpls)
-                delete(e)
-
-            for (e in fullRoutine.exercises)
-                insert(e)
-
-            routineId
-        }
-    }
-
-    fun delete(fullRoutine: FullRoutine) = runBlocking {
-        withContext(IO) {
-            routineDao.delete(fullRoutine.routine)
-
-            val exerciseImpls = exerciseImplDao.getExerciseImplsIn(fullRoutine.routine.routineId)
-            for (e in exerciseImpls)
-                delete(e)
-        }
-    }
-
-    fun getFullRoutine(routineId: Int) = runBlocking {
-        withContext(IO) {
-            fullRoutineDao.getFullRoutine(routineId)
-        }
-    }
 
     /** [ExerciseImpl] */
     fun insert(exerciseImpl: ExerciseImpl) = runBlocking {
