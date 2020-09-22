@@ -22,7 +22,9 @@ import com.noahjutz.gymroutines.data.dao.*
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -79,6 +81,8 @@ class Repository @Inject constructor(
     }
 
     fun delete(routine: Routine) {
-        TODO("Not yet implemented")
+        CoroutineScope(IO).launch {
+            routineDao.delete(routine)
+        }
     }
 }
