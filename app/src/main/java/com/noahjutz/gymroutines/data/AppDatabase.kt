@@ -41,7 +41,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val exerciseHolderDao: ExerciseHolderDao
     abstract val exerciseImplDao: ExerciseImplDao
-    abstract val fullRoutineDao: FullRoutineDao
     abstract val routineDao: RoutineDao
     abstract val setDao: SetDao
 }

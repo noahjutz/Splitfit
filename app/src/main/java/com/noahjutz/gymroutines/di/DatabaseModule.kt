@@ -50,9 +50,6 @@ object DatabaseModule {
     fun provideExerciseImplDao(database: AppDatabase) = database.exerciseImplDao
 
     @Provides
-    fun provideFullRoutineDao(database: AppDatabase) = database.fullRoutineDao
-
-    @Provides
     fun provideRoutineDao(database: AppDatabase) = database.routineDao
 
     @Provides
