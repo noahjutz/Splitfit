@@ -65,8 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/create_routine_hint_title"
-                        android:inputType="textPersonName"
-                        android:text="@={viewmodel.name}" />
+                        android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View

@@ -38,16 +38,8 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     val fullRoutine: LiveData<FullRoutine>
         get() = _fullRoutine
 
-    /** Data binding fields */
-    val name = MutableLiveData<String>()
-
     init {
         initFullRoutine()
-        initBinding()
-    }
-
-    private fun initBinding() {
-        name.value = fullRoutine.value!!.routine.name
     }
 
     private fun initFullRoutine() {
