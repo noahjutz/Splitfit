@@ -19,42 +19,36 @@
 package com.noahjutz.gymroutines.ui.routines
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 class RoutineAdapter(
     private val routineListener: RoutineListener
-) : ListAdapter<Routine, RoutineAdapter.RoutineHolder>(diffUtil) {
-    fun getRoutine(pos: Int): Routine = getItem(pos)
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var items = emptyList<Routine>()
 
-    inner class RoutineHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        object : RecyclerView.ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.listitem_routine, parent, false)
+        ) {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RoutineHolder(
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.listitem_routine, parent, false)
-    )
-
-    override fun onBindViewHolder(holder: RoutineHolder, position: Int) {
-        val routine = getItem(position)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val routine = items[position]
 
         holder.itemView.apply {
             name.setTextOrUnnamed(routine.name)
-
             setOnClickListener { routineListener.onRoutineClick(routine) }
         }
     }
+
+    override fun getItemCount(): Int = items.size
 
     interface RoutineListener {
         fun onRoutineClick(routine: Routine)
     }
 }
 
-private val diffUtil =
-    DiffUtilCallback<Routine>({ old, new -> old.routineId == new.routineId })

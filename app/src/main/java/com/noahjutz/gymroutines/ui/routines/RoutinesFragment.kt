@@ -98,7 +98,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
         viewModel.routines.observe(
             viewLifecycleOwner,
             Observer { routines ->
-                adapter.submitList(routines)
+                adapter.items = routines
 
                 val v = if (routines.isEmpty()) VISIBLE else GONE
                 showEmptyScreen(v)
@@ -117,7 +117,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     }
 
     private fun deleteRoutine(position: Int) {
-        val routine = adapter.getRoutine(position)
+        val routine = adapter.items[position]
         viewModel.deleteRoutine(routine.routineId)
         Snackbar.make(
             recycler_view,
