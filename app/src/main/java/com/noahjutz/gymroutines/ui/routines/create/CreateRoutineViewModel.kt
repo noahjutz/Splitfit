@@ -20,40 +20,28 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
-import com.noahjutz.gymroutines.data.domain.ExerciseImpl
-import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
-import java.util.*
-import kotlin.collections.ArrayList
 
 class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
-    private val _fullRoutine = MediatorLiveData<FullRoutine>()
-    val fullRoutine: LiveData<FullRoutine>
-        get() = _fullRoutine
+    private val _routine = MediatorLiveData<Routine>()
+    val routine: LiveData<Routine>
+        get() = _routine
 
     init {
-        initFullRoutine()
-    }
-
-    private fun initFullRoutine() {
-        _fullRoutine.run {
-            // TODO: Get routine as dependency, don't instantiate it (?)
-            value = repository.getFullRoutine(args[ARGS_ROUTINE_ID] ?: -1)
-                ?: repository.getFullRoutine(
-                    repository.insert(
-                        FullRoutine(
-                            Routine(""),
-                            listOf()
-                        )
-                    ).toInt()
-                )!!
-        }
+        _routine.value = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)
+            ?: repository.getRoutine(
+                repository.insert(
+                    Routine("")
+                ).toInt()
+            )!!
     }
 }

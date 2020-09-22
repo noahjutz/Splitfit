@@ -29,23 +29,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.ExerciseImpl
-import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.ExerciseImplBuilder
-import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_create_routine.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.Main
 
 @AndroidEntryPoint
 class CreateRoutineFragment : Fragment() {
@@ -94,18 +86,14 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel.fullRoutine.observe(viewLifecycleOwner) { fullRoutine ->
-            adapter.submitList(fullRoutine.exercises.flatMap { it.sets })
+        viewModel.routine.observe(viewLifecycleOwner) { routine ->
+            adapter.submitList(routine.sets)
         }
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            for (e in exercises) {
-                val exerciseImpl = ExerciseImplBuilder(
-                    exercise = e,
-                    routine = viewModel.fullRoutine.value!!.routine
-                ).build()
-                // viewModel.addExercise(exerciseImpl)
-            }
+            // for (e in exercises) {
+            //     viewModel.addExercise(Set(/* e.id? */))
+            // }
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         }

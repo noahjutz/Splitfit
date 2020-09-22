@@ -19,9 +19,7 @@
 package com.noahjutz.gymroutines.data
 
 import com.noahjutz.gymroutines.data.dao.*
-import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.data.domain.ExerciseImpl
-import com.noahjutz.gymroutines.data.domain.FullRoutine
+import com.noahjutz.gymroutines.data.domain.*
 import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
@@ -129,5 +127,14 @@ class Repository @Inject constructor(
         withContext(IO) {
             setDao.getSetById(id)
         }
+    }
+
+    fun getRoutine(routineId: Int): Routine? {
+        // TODO
+        return Routine("TODO")
+    }
+
+    fun insert(routine: Routine): Long = runBlocking {
+        routineDao.insert(routine)
     }
 }
