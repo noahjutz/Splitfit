@@ -24,15 +24,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.FullRoutine
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
 import kotlinx.android.synthetic.main.listitem_routine.view.*
 
-/**
- * [ListAdapter] for [FullRoutine]
- */
 class RoutineAdapter(
     private val routineListener: RoutineListener
 ) : ListAdapter<Routine, RoutineAdapter.RoutineHolder>(diffUtil) {
