@@ -97,17 +97,8 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private fun initViewModel() {
         viewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            val e = exercises.filter { !it.hidden }
-            adapter.items = e
-
-            val v = if (e.isEmpty()) VISIBLE else GONE
-            showEmptyScreen(v)
+            adapter.items = exercises.filter { !it.hidden }
         }
-    }
-
-    private fun showEmptyScreen(visibility: Int) {
-        TransitionManager.beginDelayedTransition(exercises_root, AutoTransition())
-        exercises_empty.visibility = visibility
     }
 
     fun addExercise() {

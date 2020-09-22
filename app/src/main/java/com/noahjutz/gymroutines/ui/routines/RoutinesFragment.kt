@@ -96,15 +96,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     private fun initViewModel() {
         viewModel.routines.observe(viewLifecycleOwner) { routines ->
             adapter.items = routines
-
-            val v = if (routines.isEmpty()) VISIBLE else GONE
-            showEmptyScreen(v)
         }
-    }
-
-    private fun showEmptyScreen(visibility: Int) {
-        TransitionManager.beginDelayedTransition(routines_root, AutoTransition())
-        routines_empty.visibility = visibility
     }
 
     fun addRoutine() {

@@ -21,16 +21,12 @@ package com.noahjutz.gymroutines.ui.routines.create.pick
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
@@ -69,11 +65,7 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private fun initViewModel() {
         exercisesViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            val e = exercises.filter { !it.hidden }
-            adapter.items = e
-
-            val v = if (e.isEmpty()) VISIBLE else GONE
-            showEmptyScreen(v)
+            adapter.items = exercises.filter { !it.hidden }
         }
     }
 
@@ -100,10 +92,5 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
         card.isChecked = (!card.isChecked)
         if (card.isChecked) sharedExerciseViewModel.addExercise(exercise)
         else sharedExerciseViewModel.removeExercise(exercise)
-    }
-
-    private fun showEmptyScreen(visibility: Int) {
-        TransitionManager.beginDelayedTransition(pick_exercise_root, AutoTransition())
-        pick_exercise_empty.visibility = visibility
     }
 }
