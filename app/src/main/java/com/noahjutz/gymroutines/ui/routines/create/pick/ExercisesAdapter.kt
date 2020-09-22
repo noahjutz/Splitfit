@@ -27,7 +27,6 @@ import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.util.DiffUtilCallback
-import com.noahjutz.gymroutines.util.setTextOrHide
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 

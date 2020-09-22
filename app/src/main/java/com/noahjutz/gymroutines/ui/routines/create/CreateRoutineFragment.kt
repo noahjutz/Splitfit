@@ -27,7 +27,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -102,42 +101,36 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener
     }
 
     private fun initViewModel() {
-        viewModel.fullRoutine.observe(
-            viewLifecycleOwner,
-            Observer { fullRoutine ->
-                adapter.submitList(fullRoutine.exercises)
+        viewModel.fullRoutine.observe(viewLifecycleOwner) { fullRoutine ->
+            adapter.submitList(fullRoutine.exercises)
 
-                for (e in fullRoutine.exercises) {
-                    CoroutineScope(Dispatchers.Default).launch {
-                        // TODO: Don't wait a hardcoded amount of time, instead wait for viewHolders
-                        //  to be bound
-                        delay(20)
-                        withContext(Main) {
-                            TransitionManager.beginDelayedTransition(
-                                create_routine_root,
-                                AutoTransition()
-                            )
-                            adapter.mAdapters[e.setGroup.setGroupId]?.submitList(e.sets)
-                        }
+            for (e in fullRoutine.exercises) {
+                CoroutineScope(Dispatchers.Default).launch {
+                    // TODO: Don't wait a hardcoded amount of time, instead wait for viewHolders
+                    //  to be bound
+                    delay(20)
+                    withContext(Main) {
+                        TransitionManager.beginDelayedTransition(
+                            create_routine_root,
+                            AutoTransition()
+                        )
+                        adapter.mAdapters[e.setGroup.setGroupId]?.submitList(e.sets)
                     }
                 }
             }
-        )
+        }
 
-        sharedExerciseViewModel.exercises.observe(
-            viewLifecycleOwner,
-            Observer { exercises ->
-                for (e in exercises) {
-                    val exerciseImpl = ExerciseImplBuilder(
-                        exercise = e,
-                        routine = viewModel.fullRoutine.value!!.routine
-                    ).build()
-                    viewModel.addExercise(exerciseImpl)
-                }
-
-                if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
+        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
+            for (e in exercises) {
+                val exerciseImpl = ExerciseImplBuilder(
+                    exercise = e,
+                    routine = viewModel.fullRoutine.value!!.routine
+                ).build()
+                viewModel.addExercise(exerciseImpl)
             }
-        )
+
+            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
+        }
     }
 
     fun addExercise() {

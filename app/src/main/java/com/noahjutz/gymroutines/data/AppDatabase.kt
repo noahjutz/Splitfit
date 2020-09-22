@@ -23,9 +23,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.noahjutz.gymroutines.data.dao.*
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.data.domain.SetGroup
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.data.domain.SetGroup
 
 @Database(
     entities = [
