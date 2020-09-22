@@ -27,7 +27,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,15 +94,12 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     }
 
     private fun initViewModel() {
-        viewModel.routines.observe(
-            viewLifecycleOwner,
-            Observer { routines ->
-                adapter.items = routines
+        viewModel.routines.observe(viewLifecycleOwner) { routines ->
+            adapter.items = routines
 
-                val v = if (routines.isEmpty()) VISIBLE else GONE
-                showEmptyScreen(v)
-            }
-        )
+            val v = if (routines.isEmpty()) VISIBLE else GONE
+            showEmptyScreen(v)
+        }
     }
 
     private fun showEmptyScreen(visibility: Int) {
