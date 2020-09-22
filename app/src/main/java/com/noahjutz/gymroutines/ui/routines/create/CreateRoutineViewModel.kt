@@ -38,9 +38,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     val fullRoutine: LiveData<FullRoutine>
         get() = _fullRoutine
 
-    private val _exercises = MutableLiveData<ArrayList<ExerciseImpl>>()
-    private val _sets = MutableLiveData<ArrayList<Set>>()
-
     /** Data binding fields */
     val name = MutableLiveData<String>()
 
@@ -65,48 +62,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
                         )
                     ).toInt()
                 )!!
-
-            _exercises.value = (value?.exercises as ArrayList<ExerciseImpl>).apply {
-                sortBy { it.setGroup.position }
-            }
-
-            _sets.value = ArrayList()
-            value?.let {
-                for (exercise in it.exercises) {
-                    for (set in exercise.sets) {
-                        addSet(set)
-                    }
-                }
-            }
-
-            for (e in value!!.exercises)
-                for (s in e.sets)
-                    addSet(s)
-
-            addSource(name) { name ->
-                value = value!!.apply {
-                    routine.name = name.trim()
-                }
-            }
-
-            addSource(_exercises) { exercises ->
-                value = FullRoutine(
-                    value!!.routine,
-                    exercises
-                )
-            }
-
-            addSource(_sets) { sets ->
-                value = FullRoutine(
-                    value!!.routine,
-                    value!!.exercises.apply {
-                        for (e in this) {
-                            e.sets =
-                                sets.filter { it.setGroupId == e.setGroup.setGroupId }
-                        }
-                    }
-                )
-            }
         }
     }
 
@@ -115,18 +70,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     }
 
     private fun save() {
-        for (i in 0 until _exercises.value!!.size)
-            _exercises.value!![i].setGroup.position = i
-
         repository.insert(fullRoutine.value!!)
-    }
-
-    fun addSet(set: Set) {
-        val setId = repository.insert(set)
-        val newSet = repository.getSet(setId.toInt())
-        _sets.value = _sets.value!!.apply {
-            if (!contains(newSet))
-                add(newSet!!)
-        }
     }
 }
