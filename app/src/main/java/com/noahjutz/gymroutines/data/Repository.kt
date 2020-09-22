@@ -20,7 +20,6 @@ package com.noahjutz.gymroutines.data
 
 import com.noahjutz.gymroutines.data.dao.*
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.data.domain.ExerciseImpl
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.Dispatchers.IO
