@@ -68,9 +68,10 @@ class Repository @Inject constructor(
     }
 
 
-    fun getRoutine(routineId: Int): Routine? {
-        // TODO
-        return Routine("TODO")
+    fun getRoutine(routineId: Int): Routine? = runBlocking {
+        withContext(IO) {
+            routineDao.getRoutine(routineId)
+        }
     }
 
     fun insert(routine: Routine): Long = runBlocking {

@@ -32,4 +32,7 @@ interface RoutineDao {
 
     @Query("SELECT * FROM routine_table")
     fun getRoutines(): LiveData<List<Routine>>
+
+    @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
+    fun getRoutine(routineId: Int): Routine?
 }
