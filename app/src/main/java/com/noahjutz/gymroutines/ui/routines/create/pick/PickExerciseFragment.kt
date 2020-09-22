@@ -28,7 +28,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -69,16 +68,13 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     }
 
     private fun initViewModel() {
-        exercisesViewModel.exercises.observe(
-            viewLifecycleOwner,
-            Observer { exercises ->
-                val e = exercises.filter { !it.hidden }
-                adapter.submitList(e)
+        exercisesViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
+            val e = exercises.filter { !it.hidden }
+            adapter.items = e
 
-                val v = if (e.isEmpty()) VISIBLE else GONE
-                showEmptyScreen(v)
-            }
-        )
+            val v = if (e.isEmpty()) VISIBLE else GONE
+            showEmptyScreen(v)
+        }
     }
 
     private fun initActivity() {

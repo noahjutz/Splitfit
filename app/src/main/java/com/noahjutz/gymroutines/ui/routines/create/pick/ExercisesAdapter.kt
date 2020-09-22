@@ -19,14 +19,11 @@
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
 import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
@@ -35,30 +32,29 @@ private const val TAG = "ExercisesAdapter"
 
 class ExercisesAdapter(
     private val exerciseListener: ExerciseListener
-) : ListAdapter<Exercise, ExercisesAdapter.ExerciseHolder>(diffUtil) {
-    inner class ExerciseHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var items = emptyList<Exercise>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ExerciseHolder(
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.listitem_exercise, parent, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        object : RecyclerView.ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.listitem_exercise, parent, false)
+        ) {}
 
-    override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
-        val exercise = getItem(position)
-        val (exerciseName) = exercise
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val exercise = items[position]
 
         holder.itemView.apply {
-            name.setTextOrUnnamed(exerciseName)
-
+            name.setTextOrUnnamed(exercise.name)
             setOnClickListener {
                 exerciseListener.onExerciseClick(exercise, this as MaterialCardView)
             }
         }
     }
 
+    override fun getItemCount(): Int = items.size
+
     interface ExerciseListener {
         fun onExerciseClick(exercise: Exercise, card: MaterialCardView)
     }
 }
 
-private val diffUtil = DiffUtilCallback<Exercise>({ old, new -> old.exerciseId == new.exerciseId })
