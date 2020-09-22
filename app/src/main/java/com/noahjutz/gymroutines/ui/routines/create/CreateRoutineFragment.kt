@@ -138,13 +138,6 @@ class CreateRoutineFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun deleteExercise(position: Int) {
-        adapter.apply {
-            viewModel.removeExercise(getExercise(position))
-            notifyItemRemoved(position)
-        }
-    }
-
     private fun swapExercises(fromPos: Int, toPos: Int): Boolean {
         adapter.notifyItemMoved(fromPos, toPos)
         viewModel.swapExercises(fromPos, toPos)
