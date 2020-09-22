@@ -129,6 +129,7 @@ class Repository @Inject constructor(
         }
     }
 
+
     fun getRoutine(routineId: Int): Routine? {
         // TODO
         return Routine("TODO")
@@ -136,5 +137,9 @@ class Repository @Inject constructor(
 
     fun insert(routine: Routine): Long = runBlocking {
         routineDao.insert(routine)
+    }
+
+    fun delete(routine: Routine) {
+        TODO("Not yet implemented")
     }
 }
