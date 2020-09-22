@@ -129,16 +129,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
         addSet(Set(id))
     }
 
-    fun removeExercise(exerciseImpl: ExerciseImpl) {
-        _exercises.value = _exercises.value!!.apply { remove(exerciseImpl) }
-    }
-
-    fun swapExercises(i: Int, j: Int) {
-        _exercises.value = _exercises.value!!.apply {
-            Collections.swap(this, i, j)
-        }
-    }
-
     fun addSet(set: Set) {
         val setId = repository.insert(set)
         val newSet = repository.getSet(setId.toInt())
@@ -146,10 +136,5 @@ class CreateRoutineViewModel @ViewModelInject constructor(
             if (!contains(newSet))
                 add(newSet!!)
         }
-    }
-
-    fun removeSet(set: Set) {
-        _sets.value = _sets.value!!.apply { remove(set) }
-        repository.delete(set)
     }
 }
