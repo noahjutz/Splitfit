@@ -56,12 +56,4 @@ class CreateRoutineViewModel @ViewModelInject constructor(
                 )!!
         }
     }
-
-    override fun onCleared() {
-        save()
-    }
-
-    private fun save() {
-        repository.insert(fullRoutine.value!!)
-    }
 }
