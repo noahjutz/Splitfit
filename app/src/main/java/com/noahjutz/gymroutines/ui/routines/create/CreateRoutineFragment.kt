@@ -33,7 +33,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
-import com.noahjutz.gymroutines.util.ExerciseImplBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
