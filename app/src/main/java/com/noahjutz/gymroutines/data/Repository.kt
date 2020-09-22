@@ -18,7 +18,9 @@
 
 package com.noahjutz.gymroutines.data
 
-import com.noahjutz.gymroutines.data.dao.*
+import com.noahjutz.gymroutines.data.dao.ExerciseDao
+import com.noahjutz.gymroutines.data.dao.RoutineDao
+import com.noahjutz.gymroutines.data.dao.SetDao
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
@@ -69,7 +71,7 @@ class Repository @Inject constructor(
         }
     }
 
-
+    /** [Routine] */
     fun getRoutine(routineId: Int): Routine? = runBlocking {
         withContext(IO) {
             routineDao.getRoutine(routineId)
