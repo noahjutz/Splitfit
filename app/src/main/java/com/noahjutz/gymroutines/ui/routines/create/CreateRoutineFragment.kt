@@ -82,12 +82,6 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val itemTouchHelper = ItemTouchHelperBuilder(
-            dragDirs = ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            onMoveCall = { _, viewHolder, target ->
-                swapExercises(viewHolder.adapterPosition, target.adapterPosition)
-            }
-        ).build()
 
         recycler_view.apply {
             adapter = this@CreateRoutineFragment.adapter
@@ -96,7 +90,6 @@ class CreateRoutineFragment : Fragment() {
                 MarginItemDecoration(resources.getDimension(R.dimen.any_margin_default).toInt())
             )
             isNestedScrollingEnabled = false
-            itemTouchHelper.attachToRecyclerView(this)
         }
     }
 
@@ -136,11 +129,5 @@ class CreateRoutineFragment : Fragment() {
     fun addExercise() {
         val action = CreateRoutineFragmentDirections.addExercise()
         findNavController().navigate(action)
-    }
-
-    private fun swapExercises(fromPos: Int, toPos: Int): Boolean {
-        adapter.notifyItemMoved(fromPos, toPos)
-        viewModel.swapExercises(fromPos, toPos)
-        return true
     }
 }
