@@ -53,7 +53,7 @@ class CreateRoutineFragment : Fragment() {
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModel: CreateRoutineViewModel by viewModels()
     private val args: CreateRoutineFragmentArgs by navArgs()
-    private val adapter = ExerciseAdapter()
+    private val adapter = SetAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,22 +95,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel.fullRoutine.observe(viewLifecycleOwner) { fullRoutine ->
-            adapter.submitList(fullRoutine.exercises)
-
-            for (e in fullRoutine.exercises) {
-                CoroutineScope(Dispatchers.Default).launch {
-                    // TODO: Don't wait a hardcoded amount of time, instead wait for viewHolders
-                    //  to be bound
-                    delay(20)
-                    withContext(Main) {
-                        TransitionManager.beginDelayedTransition(
-                            create_routine_root,
-                            AutoTransition()
-                        )
-                        adapter.mAdapters[e.setGroup.setGroupId]?.submitList(e.sets)
-                    }
-                }
-            }
+            adapter.submitList(fullRoutine.exercises.flatMap { it.sets })
         }
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
