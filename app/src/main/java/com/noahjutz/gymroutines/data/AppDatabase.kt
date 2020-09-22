@@ -40,7 +40,6 @@ import com.noahjutz.gymroutines.data.domain.SetGroup
 abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val exerciseHolderDao: ExerciseHolderDao
-    abstract val exerciseImplDao: ExerciseImplDao
     abstract val routineDao: RoutineDao
     abstract val setDao: SetDao
 }

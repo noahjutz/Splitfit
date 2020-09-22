@@ -31,39 +31,11 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val exerciseDao: ExerciseDao,
     private val exerciseHolderDao: ExerciseHolderDao,
-    private val exerciseImplDao: ExerciseImplDao,
     private val routineDao: RoutineDao,
     private val setDao: SetDao
 ) {
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
-
-    /** [ExerciseImpl] */
-    fun insert(exerciseImpl: ExerciseImpl) = runBlocking {
-        withContext(IO) {
-            val exerciseId = exerciseHolderDao.insert(exerciseImpl.setGroup)
-
-            for (set in exerciseImpl.sets)
-                insert(set)
-
-            exerciseId
-        }
-    }
-
-    private fun delete(exerciseImpl: ExerciseImpl) = runBlocking {
-        withContext(IO) {
-            exerciseHolderDao.delete(exerciseImpl.setGroup)
-
-            for (set in exerciseImpl.sets)
-                delete(set)
-        }
-    }
-
-    fun getExerciseImpl(exerciseHolderId: Int) = runBlocking {
-        withContext(IO) {
-            exerciseImplDao.getExerciseImpl(exerciseHolderId)
-        }
-    }
 
     /** [Exercise] */
     fun insert(exercise: Exercise) = runBlocking {

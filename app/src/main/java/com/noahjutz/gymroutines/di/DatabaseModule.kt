@@ -47,9 +47,6 @@ object DatabaseModule {
     fun provideExerciseHolderDao(database: AppDatabase) = database.exerciseHolderDao
 
     @Provides
-    fun provideExerciseImplDao(database: AppDatabase) = database.exerciseImplDao
-
-    @Provides
     fun provideRoutineDao(database: AppDatabase) = database.routineDao
 
     @Provides
