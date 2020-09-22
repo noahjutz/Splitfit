@@ -48,12 +48,12 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 
 @AndroidEntryPoint
-class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener {
+class CreateRoutineFragment : Fragment() {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModel: CreateRoutineViewModel by viewModels()
     private val args: CreateRoutineFragmentArgs by navArgs()
-    private val adapter = ExerciseAdapter(this)
+    private val adapter = ExerciseAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -149,15 +149,5 @@ class CreateRoutineFragment : Fragment(), ExerciseAdapter.ExerciseHolderListener
         adapter.notifyItemMoved(fromPos, toPos)
         viewModel.swapExercises(fromPos, toPos)
         return true
-    }
-
-    override fun onAddSetClick(exercise: ExerciseImpl) {
-        viewModel.addSet(Set(exercise.setGroup.setGroupId))
-    }
-
-    override fun onDeleteSet(set: Set, position: Int) {
-        viewModel.removeSet(set)
-        if (viewModel.fullRoutine.value!!.exercises.filter { it.setGroup.setGroupId == set.setGroupId }[0].sets.isEmpty())
-            deleteExercise(position)
     }
 }

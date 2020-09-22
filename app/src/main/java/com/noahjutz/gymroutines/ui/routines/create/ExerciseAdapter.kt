@@ -27,16 +27,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.ExerciseImpl
-import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.util.DiffUtilCallback
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
 import kotlinx.android.synthetic.main.listitem_exercise.view.name
 import kotlinx.android.synthetic.main.listitem_exercise_holder.view.*
 
-class ExerciseAdapter(
-    private val exerciseHolderListener: ExerciseHolderListener
-) : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
+class ExerciseAdapter() : ListAdapter<ExerciseImpl, ExerciseAdapter.ExerciseHolder>(diffUtil) {
     val mAdapters = HashMap<Int, SetAdapter>()
 
     fun getExercise(pos: Int): ExerciseImpl = getItem(pos)
@@ -54,8 +51,6 @@ class ExerciseAdapter(
 
         holder.itemView.apply {
             name.setTextOrUnnamed(exerciseName)
-
-            button_add_set.setOnClickListener { exerciseHolderListener.onAddSetClick(exerciseImpl) }
 
             // TODO: Delegate the responsibility of setting up the recycler views to [CreateRoutineFragment]
             val setAdapter = SetAdapter()
@@ -81,13 +76,6 @@ class ExerciseAdapter(
     }
 
     private fun deleteSet(position: Int, id: Int, exercisePosition: Int) {
-        val set = mAdapters[id]!!.getSet(position)
-        exerciseHolderListener.onDeleteSet(set, exercisePosition)
-    }
-
-    interface ExerciseHolderListener {
-        fun onAddSetClick(exercise: ExerciseImpl)
-        fun onDeleteSet(set: Set, position: Int)
     }
 }
 
