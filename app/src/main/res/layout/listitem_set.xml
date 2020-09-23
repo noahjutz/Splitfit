@@ -31,7 +31,6 @@
         android:layout_weight="1"
         android:paddingStart="@dimen/any_margin_default">
 
-        <!-- ISSUE #28-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_reps"
             android:layout_width="match_parent"
@@ -61,7 +60,6 @@
         android:layout_weight="1"
         android:paddingStart="@dimen/any_margin_default">
 
-        <!-- ISSUE #28-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_time"
             android:layout_width="match_parent"
@@ -76,7 +74,6 @@
         android:layout_weight="1"
         android:paddingStart="@dimen/any_margin_default">
 
-        <!-- ISSUE #28-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_distance"
             android:layout_width="match_parent"

@@ -46,7 +46,6 @@
             android:visibility="gone"
             android:layout_centerInParent="true" />
 
-        <!-- ISSUE #28-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -57,7 +56,6 @@
             android:layout_alignParentBottom="true"
             tools:listitem="@layout/listitem_routine" />
 
-        <!-- ISSUE #28-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_pick_exercises"
             android:layout_width="wrap_content"

@@ -34,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- ISSUE #28-->
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/app_bar"
                 style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
@@ -54,7 +53,6 @@
             tools:ignore="FragmentTagUsage" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <!-- ISSUE #28-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
