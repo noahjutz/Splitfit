@@ -27,6 +27,10 @@ import com.noahjutz.gymroutines.data.domain.Set
 
 class SetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var items = emptyList<Set>()
+        set(i) {
+            field = i
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         object : RecyclerView.ViewHolder(
