@@ -31,5 +31,5 @@ data class Set(
     val distance: Double? = null
 ) : Equatable {
     @PrimaryKey(autoGenerate = true)
-    var setId: Int = -1
+    var setId: Int = 0
 }

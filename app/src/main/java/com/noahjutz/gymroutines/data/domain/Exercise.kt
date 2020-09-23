@@ -32,5 +32,5 @@ data class Exercise(
     var hidden: Boolean = false,
 ) : Equatable {
     @PrimaryKey(autoGenerate = true)
-    var exerciseId: Int = -1
+    var exerciseId: Int = 0
 }
