@@ -21,7 +21,6 @@ package com.noahjutz.gymroutines.ui.routines
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -30,8 +29,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Routine
@@ -39,14 +38,14 @@ import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_routines.*
 
 @AndroidEntryPoint
 class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
 
     private val viewModel: RoutinesViewModel by viewModels()
     private val adapter = RoutineAdapter(this)
+
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +69,9 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     private fun initActivity() {
         requireActivity().apply {
             title = "Routines"
-            bottom_nav?.visibility = VISIBLE
+            findViewById<BottomNavigationView>(R.id.bottom_nav)?.visibility = VISIBLE
+
+            recyclerView = findViewById(R.id.recycler_view)
         }
     }
 
@@ -80,7 +81,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
             onSwipedCall = { viewHolder, _ -> deleteRoutine(viewHolder.adapterPosition) }
         ).build()
 
-        recycler_view.apply {
+        recyclerView.apply {
             adapter = this@RoutinesFragment.adapter
             layoutManager = LinearLayoutManager(this@RoutinesFragment.requireContext())
             setHasFixedSize(true)
@@ -108,7 +109,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
         val routine = adapter.items[position]
         viewModel.deleteRoutine(routine.routineId)
         Snackbar.make(
-            recycler_view,
+            recyclerView,
             "Deleted ${routine.name}",
             Snackbar.LENGTH_SHORT
         )

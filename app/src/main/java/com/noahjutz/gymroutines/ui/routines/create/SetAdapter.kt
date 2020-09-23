@@ -20,11 +20,10 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
-import com.noahjutz.gymroutines.util.DiffUtilCallback
-import kotlinx.android.synthetic.main.listitem_set.view.*
 
 class SetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var items = emptyList<Set>()
@@ -38,10 +37,10 @@ class SetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val set = items[position]
 
         holder.itemView.apply {
-            edit_reps.setText(set.reps?.toString() ?: "")
-            edit_weight.setText(set.weight?.toString() ?: "")
-            edit_time.setText(set.time?.toString() ?: "")
-            edit_distance.setText(set.distance?.toString() ?: "")
+            findViewById<TextView>(R.id.edit_reps).text = set.reps?.toString() ?: ""
+            findViewById<TextView>(R.id.edit_weight).text = set.weight?.toString() ?: ""
+            findViewById<TextView>(R.id.edit_time).text = set.time?.toString() ?: ""
+            findViewById<TextView>(R.id.edit_distance).text = set.distance?.toString() ?: ""
         }
     }
 
