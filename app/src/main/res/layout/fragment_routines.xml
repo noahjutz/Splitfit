@@ -38,14 +38,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.routines.RoutinesFragment">
 
-        <include
-            android:id="@+id/routines_empty"
-            layout="@layout/screen_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_centerInParent="true" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
