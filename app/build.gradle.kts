@@ -52,6 +52,7 @@ android {
 
     lintOptions {
         textReport = true
+        isAbortOnError = false
     }
 
     buildTypes {
