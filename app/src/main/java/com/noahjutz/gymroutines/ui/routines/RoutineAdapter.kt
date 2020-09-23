@@ -20,11 +20,11 @@ package com.noahjutz.gymroutines.ui.routines
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
-import kotlinx.android.synthetic.main.listitem_routine.view.*
 
 class RoutineAdapter(
     private val routineListener: RoutineListener
@@ -40,7 +40,7 @@ class RoutineAdapter(
         val routine = items[position]
 
         holder.itemView.apply {
-            name.setTextOrUnnamed(routine.name)
+            findViewById<TextView>(R.id.name).setTextOrUnnamed(routine.name)
             setOnClickListener { routineListener.onRoutineClick(routine) }
         }
     }

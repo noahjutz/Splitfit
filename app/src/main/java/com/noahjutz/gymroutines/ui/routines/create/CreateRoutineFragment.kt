@@ -30,13 +30,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_create_routine.*
 
 @AndroidEntryPoint
 class CreateRoutineFragment : Fragment() {
@@ -45,6 +45,8 @@ class CreateRoutineFragment : Fragment() {
     private val viewModel: CreateRoutineViewModel by viewModels()
     private val args: CreateRoutineFragmentArgs by navArgs()
     private val adapter = SetAdapter()
+
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,13 +70,15 @@ class CreateRoutineFragment : Fragment() {
     private fun initActivity() {
         requireActivity().apply {
             title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
-            bottom_nav.visibility = GONE
+            findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
+
+            recyclerView = findViewById(R.id.recycler_view)
         }
     }
 
     private fun initRecyclerView() {
 
-        recycler_view.apply {
+        recyclerView.apply {
             adapter = this@CreateRoutineFragment.adapter
             layoutManager = LinearLayoutManager(this@CreateRoutineFragment.requireContext())
             addItemDecoration(

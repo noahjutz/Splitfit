@@ -20,11 +20,11 @@ package com.noahjutz.gymroutines.ui.exercises
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.util.setTextOrUnnamed
-import kotlinx.android.synthetic.main.listitem_exercise.view.*
 
 class ExercisesAdapter(private val exerciseListener: ExerciseListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -38,7 +38,7 @@ class ExercisesAdapter(private val exerciseListener: ExerciseListener) :
         val exercise = items[position]
 
         holder.itemView.apply {
-            name.setTextOrUnnamed(exercise.name)
+            findViewById<TextView>(R.id.name).setTextOrUnnamed(exercise.name)
             setOnClickListener { exerciseListener.onExerciseClick(exercise) }
         }
     }

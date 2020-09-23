@@ -28,10 +28,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateExerciseBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
 class CreateExerciseFragment : Fragment() {
@@ -60,7 +60,7 @@ class CreateExerciseFragment : Fragment() {
     private fun initActivity() {
         requireActivity().apply {
             title = if (args.exerciseId == -1) "Create Exercise" else "Edit Exercise"
-            bottom_nav.visibility = GONE
+            findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
         }
     }
 

@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
@@ -34,7 +35,6 @@ import com.noahjutz.gymroutines.databinding.FragmentPickExerciseBinding
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_pick_exercise.*
 
 @Suppress("unused")
 private const val TAG = "PickExerciseFragment"
@@ -44,6 +44,8 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private val exercisesViewModel: ExercisesViewModel by viewModels()
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
+
+    private lateinit var recyclerView: RecyclerView
 
     // TODO: Field injection
     private val adapter = ExercisesAdapter(this)
@@ -58,8 +60,8 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
         initActivity()
+        initRecyclerView()
         initViewModel()
     }
 
@@ -72,11 +74,13 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     private fun initActivity() {
         requireActivity().apply {
             title = "Pick Exercise"
+
+            recyclerView = findViewById(R.id.recycler_view)
         }
     }
 
     private fun initRecyclerView() {
-        recycler_view.apply {
+        recyclerView.apply {
             adapter = this@PickExerciseFragment.adapter
             layoutManager = LinearLayoutManager(this@PickExerciseFragment.requireContext())
             setHasFixedSize(true)

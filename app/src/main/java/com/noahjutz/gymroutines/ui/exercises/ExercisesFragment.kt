@@ -21,7 +21,6 @@ package com.noahjutz.gymroutines.ui.exercises
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -30,8 +29,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
@@ -39,16 +39,15 @@ import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_exercises.*
-import kotlinx.android.synthetic.main.fragment_routines.fab_pick_exercises
-import kotlinx.android.synthetic.main.fragment_routines.recycler_view
 
 @AndroidEntryPoint
 class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private val viewModel: ExercisesViewModel by viewModels()
     private val adapter = ExercisesAdapter(this)
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fabPickExercises: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +71,10 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     private fun initActivity() {
         requireActivity().apply {
             title = "Exercises"
-            bottom_nav.visibility = VISIBLE
+            findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = VISIBLE
+
+            recyclerView = findViewById(R.id.recycler_view)
+            fabPickExercises = findViewById(R.id.fab_pick_exercises)
         }
     }
 
@@ -82,7 +84,7 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
             onSwipedCall = { viewHolder, _ -> deleteExercise(viewHolder.adapterPosition) }
         ).build()
 
-        recycler_view.apply {
+        recyclerView.apply {
             adapter = this@ExercisesFragment.adapter
             layoutManager = LinearLayoutManager(this@ExercisesFragment.requireContext())
             setHasFixedSize(true)
@@ -109,11 +111,11 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
     private fun deleteExercise(position: Int) {
         val exercise = adapter.items[position]
         viewModel.hide(exercise, true)
-        Snackbar.make(recycler_view, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
+        Snackbar.make(recyclerView, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
             .setAction("Undo") {
                 viewModel.hide(exercise, false)
             }
-            .setAnchorView(fab_pick_exercises)
+            .setAnchorView(fabPickExercises)
             .show()
     }
 
