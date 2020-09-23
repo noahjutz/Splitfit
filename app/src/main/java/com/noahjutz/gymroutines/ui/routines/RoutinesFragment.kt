@@ -71,7 +71,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
             title = "Routines"
             findViewById<BottomNavigationView>(R.id.bottom_nav)?.visibility = VISIBLE
 
-            recyclerView = findViewById(R.id.recycler_view)
+            recyclerView = findViewById(R.id.routines_list)
         }
     }
 

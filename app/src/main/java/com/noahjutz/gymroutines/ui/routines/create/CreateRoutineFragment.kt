@@ -72,7 +72,7 @@ class CreateRoutineFragment : Fragment() {
             title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
 
-            recyclerView = findViewById(R.id.recycler_view)
+            recyclerView = findViewById(R.id.sets_list)
         }
     }
 
