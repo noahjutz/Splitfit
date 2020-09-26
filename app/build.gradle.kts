@@ -62,10 +62,17 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            isTestCoverageEnabled = true
+        }
     }
 
     buildFeatures {
         dataBinding = true
+    }
+
+    jacoco {
+        version = Versions.jacoco
     }
 }
 
