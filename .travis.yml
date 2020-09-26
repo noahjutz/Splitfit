@@ -8,7 +8,7 @@ android:
 before_install:
     - yes | sdkmanager "platforms;android-30"
 
-script: ./gradlew test lintDebug createDebugCoverageReport --stacktrace
+script: ./gradlew test createDebugCoverageReport lintDebug --stacktrace
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
