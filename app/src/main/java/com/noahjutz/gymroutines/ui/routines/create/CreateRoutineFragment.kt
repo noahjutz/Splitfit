@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -32,6 +33,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
@@ -47,6 +50,7 @@ class CreateRoutineFragment : Fragment() {
     private val adapter = SetAdapter()
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var nameField: TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +69,7 @@ class CreateRoutineFragment : Fragment() {
         initActivity()
         initRecyclerView()
         initViewModel()
+        initNameField()
     }
 
     private fun initActivity() {
@@ -73,6 +78,7 @@ class CreateRoutineFragment : Fragment() {
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
 
             recyclerView = findViewById(R.id.sets_list)
+            nameField = findViewById(R.id.edit_name)
         }
     }
 
@@ -105,5 +111,13 @@ class CreateRoutineFragment : Fragment() {
     fun addExercise() {
         val action = CreateRoutineFragmentDirections.addExercise()
         findNavController().navigate(action)
+    }
+
+    private fun initNameField() {
+        nameField.addTextChangedListener {
+            viewModel.updateRoutine {
+                name = nameField.text.toString()
+            }
+        }
     }
 }
