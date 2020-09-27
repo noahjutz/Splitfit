@@ -34,8 +34,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.MarginItemDecoration
@@ -100,9 +100,11 @@ class CreateRoutineFragment : Fragment() {
         }
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            // for (e in exercises) {
-            //     viewModel.addExercise(Set(/* e.id? */))
-            // }
+            for (e in exercises) {
+                viewModel.updateRoutine {
+                    sets.add(Set(e.exerciseId))
+                }
+            }
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         }
