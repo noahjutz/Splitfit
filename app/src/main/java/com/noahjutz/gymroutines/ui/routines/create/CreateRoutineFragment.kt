@@ -114,6 +114,7 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initNameField() {
+        nameField.setText(viewModel.routine.value!!.name)
         nameField.addTextChangedListener {
             viewModel.updateRoutine {
                 name = nameField.text.toString()
