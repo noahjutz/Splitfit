@@ -10,7 +10,7 @@ before_install:
 
 script: 
     - ./gradlew test lintDebug --stacktrace
-    - ./codecov.sh
+    - ./.codecov.sh
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
