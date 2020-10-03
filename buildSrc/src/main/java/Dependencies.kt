@@ -42,7 +42,7 @@ object Versions {
 
     const val junit = "4.12"
     const val assertJ = "3.11.1"
-    const val mockK = "1.10.0"
+    const val mockK = "1.10.2"
 }
 
 object Libs {
