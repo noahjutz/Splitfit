@@ -31,11 +31,8 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.semantics.semantics
@@ -60,52 +57,7 @@ class RoutinesFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                Scaffold(
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = { addEditRoutine() },
-                            icon = { Icon(Icons.Default.Add) }
-                        )
-                    }
-                ) {
-                    var showDialog by remember { mutableStateOf(false) }
-                    var toDelete by remember { mutableStateOf<Routine?>(null) }
-                    val routines by viewModel.routines.observeAsState()
-                    LazyColumnFor(items = routines ?: emptyList()) { routine ->
-                        ListItem(
-                            text = {
-                                Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
-                            },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    addEditRoutine(routine)
-                                }, onLongClick = {
-                                    toDelete = routine
-                                    showDialog = true
-                                }
-                            ).semantics { testTag = TestTags.RoutineListItem.name }
-                        )
-                    }
-                    if (showDialog) {
-                        AlertDialog(
-                            title = { Text("Delete ${toDelete?.name?.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
-                            confirmButton = {
-                                Button(
-                                    onClick = {
-                                        toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
-                                        showDialog = false
-                                    },
-                                    content = { Text("Yes") })
-                            },
-                            dismissButton = {
-                                TextButton(
-                                    onClick = { showDialog = false },
-                                    content = { Text("Cancel") })
-                            },
-                            onDismissRequest = { showDialog = false }
-                        )
-                    }
-                }
+                RoutinesScreen(::addEditRoutine, viewModel)
             }
         }
     }
@@ -125,5 +77,58 @@ class RoutinesFragment : Fragment() {
 
     enum class TestTags {
         RoutineListItem
+    }
+}
+
+@Composable
+fun RoutinesScreen(
+    addEditRoutine: (Routine?) -> Unit,
+    viewModel: RoutinesViewModel
+) {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { addEditRoutine(null) },
+                icon = { Icon(Icons.Default.Add) }
+            )
+        }
+    ) {
+        var showDialog by remember { mutableStateOf(false) }
+        var toDelete by remember { mutableStateOf<Routine?>(null) }
+        val routines by viewModel.routines.observeAsState()
+        LazyColumnFor(items = routines ?: emptyList()) { routine ->
+            ListItem(
+                text = {
+                    Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                },
+                modifier = Modifier.clickable(
+                    onClick = {
+                        addEditRoutine(routine)
+                    }, onLongClick = {
+                        toDelete = routine
+                        showDialog = true
+                    }
+                ).semantics { testTag = RoutinesFragment.TestTags.RoutineListItem.name }
+            )
+        }
+        if (showDialog) {
+            AlertDialog(
+                title = { Text("Delete ${toDelete?.name?.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
+                            showDialog = false
+                        },
+                        content = { Text("Yes") })
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = { showDialog = false },
+                        content = { Text("Cancel") })
+                },
+                onDismissRequest = { showDialog = false }
+            )
+        }
     }
 }
