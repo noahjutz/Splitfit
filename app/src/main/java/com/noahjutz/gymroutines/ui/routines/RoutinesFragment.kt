@@ -38,6 +38,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -81,7 +83,7 @@ class RoutinesFragment : Fragment() {
                                     toDelete = routine
                                     showDialog = true
                                 }
-                            )
+                            ).semantics { testTag = TestTags.RoutineListItem.name }
                         )
                     }
                     if (showDialog) {
@@ -119,5 +121,9 @@ class RoutinesFragment : Fragment() {
     private fun addEditRoutine(routine: Routine? = null) {
         val action = RoutinesFragmentDirections.addRoutine(routine?.routineId ?: -1)
         findNavController().navigate(action)
+    }
+
+    enum class TestTags {
+        RoutineListItem
     }
 }
