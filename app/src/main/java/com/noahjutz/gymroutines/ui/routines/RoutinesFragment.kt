@@ -35,8 +35,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -74,10 +72,6 @@ class RoutinesFragment : Fragment() {
         val action = RoutinesFragmentDirections.addRoutine(routine?.routineId ?: -1)
         findNavController().navigate(action)
     }
-
-    enum class TestTags {
-        RoutineListItem
-    }
 }
 
 @Composable
@@ -108,7 +102,7 @@ fun RoutinesScreen(
                         toDelete = routine
                         showDialog = true
                     }
-                ).semantics { testTag = RoutinesFragment.TestTags.RoutineListItem.name }
+                )
             )
         }
         if (showDialog) {
