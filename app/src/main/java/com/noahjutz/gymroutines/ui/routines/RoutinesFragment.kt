@@ -41,24 +41,15 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
-import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
+class RoutinesFragment : Fragment() {
 
     private val viewModel: RoutinesViewModel by viewModels()
-    private val adapter = RoutineAdapter(this)
-
-    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +61,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(
-                            onClick = { addRoutine() },
+                            onClick = { addEditRoutine() },
                             icon = { Icon(Icons.Default.Add) }
                         )
                     }
@@ -85,7 +76,7 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
                             },
                             modifier = Modifier.clickable(
                                 onClick = {
-                                    onRoutineClick(routine)
+                                    addEditRoutine(routine)
                                 }, onLongClick = {
                                     toDelete = routine
                                     showDialog = true
@@ -119,59 +110,14 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initActivity()
-        initViewModel()
-    }
-
-    private fun initActivity() {
         requireActivity().apply {
             title = "Routines"
             findViewById<BottomNavigationView>(R.id.bottom_nav)?.visibility = VISIBLE
         }
     }
 
-    private fun initRecyclerView() {
-        val itemTouchHelper = ItemTouchHelperBuilder(
-            swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-            onSwipedCall = { viewHolder, _ -> deleteRoutine(viewHolder.adapterPosition) }
-        ).build()
-
-        recyclerView.apply {
-            adapter = this@RoutinesFragment.adapter
-            layoutManager = LinearLayoutManager(this@RoutinesFragment.requireContext())
-            setHasFixedSize(true)
-            addItemDecoration(
-                MarginItemDecoration(
-                    resources.getDimension(R.dimen.any_margin_default).toInt()
-                )
-            )
-            itemTouchHelper.attachToRecyclerView(this)
-        }
-    }
-
-    private fun initViewModel() {
-        viewModel.routines.observe(viewLifecycleOwner) { routines ->
-            adapter.items = routines
-        }
-    }
-
-    fun addRoutine() {
-        val action = RoutinesFragmentDirections.addRoutine()
-        findNavController().navigate(action)
-    }
-
-    private fun deleteRoutine(position: Int) {
-        val routine = adapter.items[position]
-        viewModel.deleteRoutine(routine.routineId)
-        Snackbar.make(
-            recyclerView,
-            "Deleted ${routine.name}",
-            Snackbar.LENGTH_SHORT
-        )
-    }
-
-    override fun onRoutineClick(routine: Routine) {
-        val action = RoutinesFragmentDirections.addRoutine(routine.routineId)
+    private fun addEditRoutine(routine: Routine? = null) {
+        val action = RoutinesFragmentDirections.addRoutine(routine?.routineId ?: -1)
         findNavController().navigate(action)
     }
 }
