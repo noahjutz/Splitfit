@@ -19,7 +19,6 @@
 package com.noahjutz.gymroutines.ui.routines
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -34,6 +33,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -73,16 +75,41 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
                         )
                     }
                 ) {
+                    var showDialog by remember { mutableStateOf(false) }
+                    var toDelete by remember { mutableStateOf<Routine?>(null) }
                     val routines by viewModel.routines.observeAsState()
-                    Log.d("RoutinesFragment", routines.toString())
                     LazyColumnFor(items = routines ?: emptyList()) { routine ->
                         ListItem(
                             text = {
                                 Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
                             },
-                            modifier = Modifier.clickable(onClick = {
-                                onRoutineClick(routine)
-                            })
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    onRoutineClick(routine)
+                                }, onLongClick = {
+                                    toDelete = routine
+                                    showDialog = true
+                                }
+                            )
+                        )
+                    }
+                    if (showDialog) {
+                        AlertDialog(
+                            title = { Text("Delete ${toDelete?.name?.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
+                            confirmButton = {
+                                Button(
+                                    onClick = {
+                                        toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
+                                        showDialog = false
+                                    },
+                                    content = { Text("Yes") })
+                            },
+                            dismissButton = {
+                                TextButton(
+                                    onClick = { showDialog = false },
+                                    content = { Text("Cancel") })
+                            },
+                            onDismissRequest = { showDialog = false }
                         )
                     }
                 }
