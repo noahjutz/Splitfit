@@ -82,6 +82,7 @@ object TestLibs {
     const val junit = "junit:junit:${Versions.junit}"
     const val assertJ = "org.assertj:assertj-core:${Versions.assertJ}"
     const val mockK = "io.mockk:mockk:${Versions.mockK}"
+    const val composeTest = "androidx.ui:ui-test:${Versions.compose}"
 }
 
 object Classpaths {

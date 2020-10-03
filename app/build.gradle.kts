@@ -120,6 +120,7 @@ dependencies {
     testImplementation(TestLibs.junit)
     testImplementation(TestLibs.assertJ)
     testImplementation(TestLibs.mockK)
+    testImplementation(TestLibs.composeTest)
 
     implementation(Libs.compose)
     implementation(Libs.composeFoundation)
