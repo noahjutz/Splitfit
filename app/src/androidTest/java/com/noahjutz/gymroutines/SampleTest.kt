@@ -36,10 +36,4 @@ class SampleTest {
             onNodeWithText("number is $i").assertIsDisplayed()
         }
     }
-
-    @Test
-    fun unsuccessfulTest() {
-        composeTestRule.setContent {}
-        onNodeWithText("Non existent node").assertIsDisplayed()
-    }
 }
