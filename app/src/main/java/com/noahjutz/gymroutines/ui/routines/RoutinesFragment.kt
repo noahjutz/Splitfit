@@ -23,7 +23,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -34,7 +41,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.databinding.FragmentRoutinesBinding
 import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,19 +57,19 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = DataBindingUtil.inflate<FragmentRoutinesBinding>(
-        inflater, R.layout.fragment_routines, container, false
-    ).apply {
-        viewmodel = viewModel
-        lifecycleOwner = viewLifecycleOwner
-        fragment = this@RoutinesFragment
-    }.root
+    ) = ComposeView(requireContext()).apply {
+        setContent {
+            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+                Surface {
+                    Text("Hello World!", fontSize = 60.sp)
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initActivity()
-        recyclerView = view.findViewById(R.id.routines_list)
-        initRecyclerView()
         initViewModel()
     }
 
