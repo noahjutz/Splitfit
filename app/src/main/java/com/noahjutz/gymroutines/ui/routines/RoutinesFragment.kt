@@ -23,14 +23,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -60,8 +59,15 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                Surface {
-                    Text("Hello World!", fontSize = 60.sp)
+                Scaffold(
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { addRoutine() },
+                            icon = { Icon(Icons.Default.Add) }
+                        )
+                    }
+                ) {
+                    Text("Hello World!")
                 }
             }
         }
