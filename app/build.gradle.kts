@@ -47,6 +47,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+        useIR = true
     }
 
     lintOptions {
@@ -69,10 +70,26 @@ android {
 
     buildFeatures {
         dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = Versions.compose
     }
 
     jacoco {
         version = Versions.jacoco
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = (freeCompilerArgs as? MutableList ?: mutableListOf()).apply {
+            add("-Xallow-jvm-ir-dependencies")
+            add("-Xskip-prerelease-check")
+        }.toList()
     }
 }
 
@@ -103,6 +120,8 @@ dependencies {
     testImplementation(TestLibs.junit)
     testImplementation(TestLibs.assertJ)
     testImplementation(TestLibs.mockK)
+
+    implementation(Libs.compose)
 }
 
 ktlint {

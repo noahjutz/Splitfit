@@ -28,8 +28,8 @@ object Versions {
     const val gson = "2.8.6"
     const val ktlintPlugin = "9.4.0"
     const val ktlint = "0.39.0"
-    const val gradle = "4.0.1"
-    const val kotlin = "1.4.0"
+    const val gradle = "4.2.0-alpha13"
+    const val kotlin = "1.4.10"
     const val hilt = "2.28-alpha"
     const val hiltExt = "1.0.0-alpha02"
     const val room = "2.2.5"
@@ -37,6 +37,7 @@ object Versions {
     const val material = "1.2.0"
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.0"
+    const val compose = "1.0.0-alpha04"
     const val jacoco = "0.8.4"
 
     const val junit = "4.12"
@@ -67,6 +68,14 @@ object Libs {
 
     const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+
+    const val compose = "androidx.compose.ui:ui:${Versions.compose}"
+    const val composeTooling = "androidx.ui:ui-tooling:${Versions.compose}"
+    const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.compose}"
+    const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
+    const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.compose}"
+    const val composeIconsExt = "androidx.compose.material:material-icons-extended:${Versions.compose}"
+    const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
 }
 
 object TestLibs {

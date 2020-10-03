@@ -45,6 +45,7 @@
         android:layout_weight="1"
         android:paddingStart="@dimen/any_margin_default">
 
+        <!-- ISSUE #28-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_weight"
             android:layout_width="match_parent"
