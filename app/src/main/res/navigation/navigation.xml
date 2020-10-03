@@ -26,8 +26,7 @@
 
     <fragment
         android:id="@+id/routinesFragment"
-        android:name="com.noahjutz.gymroutines.ui.routines.RoutinesFragment"
-        tools:layout="@layout/fragment_routines">
+        android:name="com.noahjutz.gymroutines.ui.routines.RoutinesFragment">
         <action
             android:id="@+id/add_routine"
             app:destination="@id/createRoutineFragment"
@@ -75,5 +74,5 @@
     <fragment
         android:id="@+id/add_exercise"
         android:name="com.noahjutz.gymroutines.ui.routines.create.pick.PickExerciseFragment"
-        tools:layout="@layout/fragment_pick_exercise"/>
+        tools:layout="@layout/fragment_pick_exercise" />
 </navigation>
