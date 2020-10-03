@@ -122,6 +122,12 @@ dependencies {
     testImplementation(TestLibs.mockK)
 
     implementation(Libs.compose)
+    implementation(Libs.composeFoundation)
+    implementation(Libs.composeIconsCore)
+    implementation(Libs.composeIconsExt)
+    implementation(Libs.composeLivedata)
+    implementation(Libs.composeMaterial)
+    implementation(Libs.composeTooling)
 }
 
 ktlint {
