@@ -8,17 +8,8 @@ android:
 before_install:
     - yes | sdkmanager "platforms;android-30"
 
-before_script:
-  - echo no | android create avd --force -n test -t android-30 --abi armeabi-v7a -c 100M
-  - emulator -avd test -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-
 script: 
-    - ./gradlew assembleDebug lintDebug testDebugUnitTest createDebugCoverageReport --stacktrace
-
-after_success:
-    - bash <(curl -s https://codecov.io/bash)
+    - ./gradlew assembleDebug lintDebug testDebugUnitTest --stacktrace
 
 licenses:
     - '.+'
