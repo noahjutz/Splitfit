@@ -19,16 +19,22 @@
 package com.noahjutz.gymroutines.ui.routines
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -67,7 +73,18 @@ class RoutinesFragment : Fragment(), RoutineAdapter.RoutineListener {
                         )
                     }
                 ) {
-                    Text("Hello World!")
+                    val routines by viewModel.routines.observeAsState()
+                    Log.d("RoutinesFragment", routines.toString())
+                    LazyColumnFor(items = routines ?: emptyList()) { routine ->
+                        ListItem(
+                            text = {
+                                Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                            },
+                            modifier = Modifier.clickable(onClick = {
+                                onRoutineClick(routine)
+                            })
+                        )
+                    }
                 }
             }
         }
