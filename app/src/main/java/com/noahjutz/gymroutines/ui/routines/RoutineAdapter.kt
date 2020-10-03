@@ -30,6 +30,10 @@ class RoutineAdapter(
     private val routineListener: RoutineListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var items = emptyList<Routine>()
+        set(i) {
+            field = i
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         object : RecyclerView.ViewHolder(

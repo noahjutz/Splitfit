@@ -63,6 +63,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            isTestCoverageEnabled = true
+        }
     }
 
     buildFeatures {
@@ -73,6 +76,10 @@ android {
     composeOptions {
         kotlinCompilerVersion = "1.4.0"
         kotlinCompilerExtensionVersion = Versions.compose
+    }
+
+    jacoco {
+        version = Versions.jacoco
     }
 }
 

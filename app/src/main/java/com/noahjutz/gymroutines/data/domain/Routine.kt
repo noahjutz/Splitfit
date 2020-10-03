@@ -28,5 +28,5 @@ data class Routine(
     val sets: MutableList<Set> = mutableListOf()
 ) : Equatable {
     @PrimaryKey(autoGenerate = true)
-    var routineId: Int = -1
+    var routineId: Int = 0
 }

@@ -34,6 +34,10 @@ class ExercisesAdapter(
     private val exerciseListener: ExerciseListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var items = emptyList<Exercise>()
+        set(i) {
+            field = i
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         object : RecyclerView.ViewHolder(

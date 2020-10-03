@@ -44,4 +44,13 @@ class CreateRoutineViewModel @ViewModelInject constructor(
                 ).toInt()
             )!!
     }
+
+    fun updateRoutine(action: Routine.() -> Unit) {
+        routine.value!!.apply(action)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        routine.value?.let { repository.insert(it) }
+    }
 }

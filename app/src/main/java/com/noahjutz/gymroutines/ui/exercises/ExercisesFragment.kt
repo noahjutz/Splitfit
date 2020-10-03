@@ -73,7 +73,7 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
             title = "Exercises"
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = VISIBLE
 
-            recyclerView = findViewById(R.id.recycler_view)
+            recyclerView = findViewById(R.id.exercises_list)
             fabPickExercises = findViewById(R.id.fab_pick_exercises)
         }
     }

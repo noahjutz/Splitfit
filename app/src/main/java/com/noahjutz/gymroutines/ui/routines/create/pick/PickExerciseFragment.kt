@@ -75,7 +75,7 @@ class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
         requireActivity().apply {
             title = "Pick Exercise"
 
-            recyclerView = findViewById(R.id.recycler_view)
+            recyclerView = findViewById(R.id.pick_exercises_list)
         }
     }
 

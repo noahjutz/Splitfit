@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -32,7 +33,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.textfield.TextInputEditText
 import com.noahjutz.gymroutines.R
+import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.MarginItemDecoration
@@ -47,6 +50,7 @@ class CreateRoutineFragment : Fragment() {
     private val adapter = SetAdapter()
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var nameField: TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +69,7 @@ class CreateRoutineFragment : Fragment() {
         initActivity()
         initRecyclerView()
         initViewModel()
+        initNameField()
     }
 
     private fun initActivity() {
@@ -72,7 +77,8 @@ class CreateRoutineFragment : Fragment() {
             title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
 
-            recyclerView = findViewById(R.id.recycler_view)
+            recyclerView = findViewById(R.id.sets_list)
+            nameField = findViewById(R.id.edit_name)
         }
     }
 
@@ -94,9 +100,11 @@ class CreateRoutineFragment : Fragment() {
         }
 
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            // for (e in exercises) {
-            //     viewModel.addExercise(Set(/* e.id? */))
-            // }
+            for (e in exercises) {
+                viewModel.updateRoutine {
+                    sets.add(Set(e.exerciseId))
+                }
+            }
 
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         }
@@ -105,5 +113,14 @@ class CreateRoutineFragment : Fragment() {
     fun addExercise() {
         val action = CreateRoutineFragmentDirections.addExercise()
         findNavController().navigate(action)
+    }
+
+    private fun initNameField() {
+        nameField.setText(viewModel.routine.value!!.name)
+        nameField.addTextChangedListener {
+            viewModel.updateRoutine {
+                name = nameField.text.toString()
+            }
+        }
     }
 }
