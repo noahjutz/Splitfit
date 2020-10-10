@@ -112,7 +112,8 @@ dependencies {
 
     testImplementation(TestLibs.junit)
     testImplementation(TestLibs.assertJ)
-    testImplementation(TestLibs.mockK)
+    testImplementation(TestLibs.mockkUnit)
+    androidTestImplementation(TestLibs.mockkInstrumented)
     androidTestImplementation(TestLibs.composeTest)
 
     implementation(Libs.compose)
