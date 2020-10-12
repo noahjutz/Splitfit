@@ -19,7 +19,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -28,26 +27,26 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.widget.addTextChangedListener
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
-import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -112,7 +111,7 @@ fun CreateRoutine(
     val routine by viewModel.routine.observeAsState()
 
     var routineName by remember { mutableStateOf(routine!!.name) }
-    Column {
+    Column(modifier = Modifier.padding(16.dp)) {
         TextField(
             label = {},
             value = routineName,
@@ -124,17 +123,13 @@ fun CreateRoutine(
         )
         LazyColumnFor(items = routine!!.sets) {
             ListItem(
-                text = {
-                    Text(it.exerciseId.toString())
-                }
+                text = { Text(it.run {"$exerciseId, $setId: $reps, $weight"}) }
             )
         }
         Button(
-            onClick = {
-                addExercise()
-                Log.d("CreateRoutineFragment", "addExercise: ${routine!!.sets}")
-            },
-            content = {Text("Add Exercise")}
+            onClick = addExercise,
+            content = { Text("Add Exercise") },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }
 }
