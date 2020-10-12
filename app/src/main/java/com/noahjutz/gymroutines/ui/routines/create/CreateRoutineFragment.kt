@@ -19,16 +19,17 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.compose.foundation.Text
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.TextField
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -67,38 +68,25 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutine(viewModel)
+                CreateRoutine(viewModel, ::addExercise)
             }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViewModel()
+        initActivity()
     }
 
     private fun initActivity() {
         requireActivity().apply {
             title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
-
-            recyclerView = findViewById(R.id.sets_list)
-            nameField = findViewById(R.id.edit_name)
-        }
-    }
-
-    private fun initRecyclerView() {
-
-        recyclerView.apply {
-            adapter = this@CreateRoutineFragment.adapter
-            layoutManager = LinearLayoutManager(this@CreateRoutineFragment.requireContext())
-            addItemDecoration(
-                MarginItemDecoration(resources.getDimension(R.dimen.any_margin_default).toInt())
-            )
-            isNestedScrollingEnabled = false
         }
     }
 
     private fun initViewModel() {
-        viewModel.routine.observe(viewLifecycleOwner) { routine ->
-            adapter.items = routine.sets
-        }
-
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
             for (e in exercises) {
                 viewModel.updateRoutine {
@@ -114,19 +102,13 @@ class CreateRoutineFragment : Fragment() {
         val action = CreateRoutineFragmentDirections.addExercise()
         findNavController().navigate(action)
     }
-
-    private fun initNameField() {
-        nameField.setText(viewModel.routine.value!!.name)
-        nameField.addTextChangedListener {
-            viewModel.updateRoutine {
-                name = nameField.text.toString()
-            }
-        }
-    }
 }
 
 @Composable
-fun CreateRoutine(viewModel: CreateRoutineViewModel) {
+fun CreateRoutine(
+    viewModel: CreateRoutineViewModel,
+    addExercise: () -> Unit
+) {
     val routine by viewModel.routine.observeAsState()
 
     var routineName by remember { mutableStateOf(routine!!.name) }
@@ -139,6 +121,20 @@ fun CreateRoutine(viewModel: CreateRoutineViewModel) {
                 viewModel.updateRoutine { name = it }
             },
             modifier = Modifier.fillMaxWidth()
+        )
+        LazyColumnFor(items = routine!!.sets) {
+            ListItem(
+                text = {
+                    Text(it.exerciseId.toString())
+                }
+            )
+        }
+        Button(
+            onClick = {
+                addExercise()
+                Log.d("CreateRoutineFragment", "addExercise: ${routine!!.sets}")
+            },
+            content = {Text("Add Exercise")}
         )
     }
 }
