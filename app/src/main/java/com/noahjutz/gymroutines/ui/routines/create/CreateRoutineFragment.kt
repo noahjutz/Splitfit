@@ -20,11 +20,20 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.TextField
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.widget.addTextChangedListener
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -36,7 +45,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
-import com.noahjutz.gymroutines.databinding.FragmentCreateRoutineBinding
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,20 +64,12 @@ class CreateRoutineFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = DataBindingUtil.inflate<FragmentCreateRoutineBinding>(
-        inflater, R.layout.fragment_create_routine, container, false
-    ).apply {
-        fragment = this@CreateRoutineFragment
-        lifecycleOwner = viewLifecycleOwner
-        viewmodel = viewModel
-    }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initActivity()
-        initRecyclerView()
-        initViewModel()
-        initNameField()
+    ) = ComposeView(requireContext()).apply {
+        setContent {
+            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+                CreateRoutine(viewModel)
+            }
+        }
     }
 
     private fun initActivity() {
@@ -122,5 +122,23 @@ class CreateRoutineFragment : Fragment() {
                 name = nameField.text.toString()
             }
         }
+    }
+}
+
+@Composable
+fun CreateRoutine(viewModel: CreateRoutineViewModel) {
+    val routine by viewModel.routine.observeAsState()
+
+    var routineName by remember { mutableStateOf(routine!!.name) }
+    Column {
+        TextField(
+            label = {},
+            value = routineName,
+            onValueChange = {
+                routineName = it
+                viewModel.updateRoutine { name = it }
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }

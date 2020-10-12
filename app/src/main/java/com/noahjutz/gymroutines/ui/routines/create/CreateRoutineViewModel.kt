@@ -21,7 +21,7 @@ package com.noahjutz.gymroutines.ui.routines.create
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
@@ -32,7 +32,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
-    private val _routine = MediatorLiveData<Routine>()
+    private val _routine = MutableLiveData<Routine>()
     val routine: LiveData<Routine>
         get() = _routine
 
@@ -46,11 +46,11 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     }
 
     fun updateRoutine(action: Routine.() -> Unit) {
-        routine.value!!.apply(action)
+        _routine.value = routine.value!!.apply(action)
     }
 
     override fun onCleared() {
         super.onCleared()
-        routine.value?.let { repository.insert(it) }
+        repository.insert(routine.value!!)
     }
 }
