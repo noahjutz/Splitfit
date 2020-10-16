@@ -121,17 +121,22 @@ fun CreateRoutine(
             },
             modifier = Modifier.fillMaxWidth()
         )
-        Surface {
-            LazyColumnFor(items = routine!!.sets) {
-                ListItem(
-                    text = { Text(it.run {"$exerciseId, $setId: $reps, $weight"}) }
-                )
-            }
-        }
+        SetList(sets = routine!!.sets)
         Button(
             onClick = addExercise,
             content = { Text("Add Exercise") },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
+    }
+}
+
+@Composable
+fun SetList(sets: List<Set>) {
+    Surface {
+        LazyColumnFor(items = sets) {
+            ListItem(
+                text = { Text(it.run {"$exerciseId, $setId: $reps, $weight"}) }
+            )
+        }
     }
 }
