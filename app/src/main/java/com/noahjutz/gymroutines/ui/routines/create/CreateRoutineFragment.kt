@@ -121,10 +121,12 @@ fun CreateRoutine(
             },
             modifier = Modifier.fillMaxWidth()
         )
-        LazyColumnFor(items = routine!!.sets) {
-            ListItem(
-                text = { Text(it.run {"$exerciseId, $setId: $reps, $weight"}) }
-            )
+        Surface {
+            LazyColumnFor(items = routine!!.sets) {
+                ListItem(
+                    text = { Text(it.run {"$exerciseId, $setId: $reps, $weight"}) }
+                )
+            }
         }
         Button(
             onClick = addExercise,
