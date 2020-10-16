@@ -32,18 +32,16 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
-    private val _routine = MutableLiveData<Routine>()
-    val routine: LiveData<Routine>
-        get() = _routine
-
-    init {
-        _routine.value = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)
+    private val _routine = MutableLiveData(
+        repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)
             ?: repository.getRoutine(
                 repository.insert(
                     Routine("")
                 ).toInt()
             )!!
-    }
+    )
+    val routine: LiveData<Routine>
+        get() = _routine
 
     fun updateRoutine(action: Routine.() -> Unit) {
         _routine.value = routine.value!!.apply(action)
