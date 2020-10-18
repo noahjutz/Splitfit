@@ -23,15 +23,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Shuffle
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -41,10 +42,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.textfield.TextInputEditText
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
@@ -55,11 +53,6 @@ class CreateRoutineFragment : Fragment() {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModel: CreateRoutineEditor by viewModels()
-    private val args: CreateRoutineFragmentArgs by navArgs()
-    private val adapter = SetAdapter()
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var nameField: TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,7 +61,6 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                //CreateRoutine(viewModel, ::addExercise)
                 CreateRoutineScreen()
             }
         }
@@ -82,19 +74,14 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initActivity() {
         requireActivity().apply {
-            title = if (args.routineId == -1) "Create Routine" else "Edit Routine"
+            title = "Edit Routine"
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
         }
     }
 
     private fun initViewModel() {
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            for (e in exercises) {
-                viewModel.updateRoutine {
-                    sets.add(Set(e.exerciseId))
-                }
-            }
-
+            for (e in exercises) viewModel.updateRoutine { sets.add(Set(e.exerciseId)) }
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         }
     }
@@ -109,19 +96,10 @@ class CreateRoutineFragment : Fragment() {
 fun CreateRoutineScreen() {
     val presenter = viewModel<CreateRoutinePresenter>()
     val editor = viewModel<CreateRoutineEditor>()
+
     val name by presenter.name.observeAsState()
     val sets by presenter.sets.observeAsState()
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {editor.updateRoutine {
-                    this.name = listOf("Push", "Pull", "Legs").random()
-                    this.sets.apply {clear();add(Set((0..100).random()))}
-                }},
-                icon = {Icon(Icons.Default.Shuffle)}
-            )
-        }
-    ) {
+    Scaffold {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(name.toString())
             Text(sets.toString())
