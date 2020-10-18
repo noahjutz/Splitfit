@@ -18,6 +18,7 @@
 
 package com.noahjutz.gymroutines.data
 
+import androidx.lifecycle.LiveData
 import com.noahjutz.gymroutines.data.dao.ExerciseDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
 import com.noahjutz.gymroutines.data.dao.SetDao
@@ -75,6 +76,12 @@ class Repository @Inject constructor(
     fun getRoutine(routineId: Int): Routine? = runBlocking {
         withContext(IO) {
             routineDao.getRoutine(routineId)
+        }
+    }
+
+    fun getRoutineLive(routineId: Int): LiveData<Routine>? = runBlocking {
+        withContext(IO) {
+            routineDao.getRoutineLive(routineId)
         }
     }
 

@@ -16,26 +16,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.gymroutines.data.dao
+package com.noahjutz.gymroutines.ui.routines.create
 
-import androidx.lifecycle.LiveData
-import androidx.room.*
-import com.noahjutz.gymroutines.data.domain.Routine
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import com.noahjutz.gymroutines.data.Repository
+import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 
-@Dao
-interface RoutineDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(routine: Routine): Long
-
-    @Delete
-    suspend fun delete(routine: Routine)
-
-    @Query("SELECT * FROM routine_table")
-    fun getRoutines(): LiveData<List<Routine>>
-
-    @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
-    fun getRoutine(routineId: Int): Routine?
-
-    @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
-    fun getRoutineLive(routineId: Int): LiveData<Routine>?
+class CreateRoutinePresenter @ViewModelInject constructor(
+    repository: Repository,
+    @Assisted args: SavedStateHandle
+) : ViewModel() {
+    private val routine = repository.getRoutineLive(args[ARGS_ROUTINE_ID]!!)!!
+    val sets = Transformations.map(routine) { it.sets }
+    val name = Transformations.map(routine) { it.name }
 }

@@ -20,30 +20,20 @@ package com.noahjutz.gymroutines.ui.routines.create
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 
-class CreateRoutineViewModel @ViewModelInject constructor(
+class CreateRoutineEditor @ViewModelInject constructor(
     private val repository: Repository,
     @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
-    private val _routine = MutableLiveData(
-        repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1) ?: Routine()
-    )
-    val routine: LiveData<Routine>
-        get() = _routine
-
     fun updateRoutine(action: Routine.() -> Unit) {
-        _routine.value = routine.value!!.apply(action)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        repository.insert(routine.value!!)
+        repository.insert(
+            (repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)
+                ?: Routine()).apply(action)
+        )
     }
 }

@@ -23,19 +23,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -53,7 +54,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateRoutineFragment : Fragment() {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
-    private val viewModel: CreateRoutineViewModel by viewModels()
+    private val viewModel: CreateRoutineEditor by viewModels()
     private val args: CreateRoutineFragmentArgs by navArgs()
     private val adapter = SetAdapter()
 
@@ -67,7 +68,8 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutine(viewModel, ::addExercise)
+                //CreateRoutine(viewModel, ::addExercise)
+                CreateRoutineScreen()
             }
         }
     }
@@ -104,39 +106,25 @@ class CreateRoutineFragment : Fragment() {
 }
 
 @Composable
-fun CreateRoutine(
-    viewModel: CreateRoutineViewModel,
-    addExercise: () -> Unit
-) {
-    val routine by viewModel.routine.observeAsState()
-
-    var routineName by remember { mutableStateOf(routine!!.name) }
-    Column(modifier = Modifier.padding(16.dp)) {
-        TextField(
-            label = {},
-            value = routineName,
-            onValueChange = {
-                routineName = it
-                viewModel.updateRoutine { name = it }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-        SetList(sets = routine!!.sets)
-        Button(
-            onClick = addExercise,
-            content = { Text("Add Exercise") },
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-    }
-}
-
-@Composable
-fun SetList(sets: List<Set>) {
-    Surface {
-        LazyColumnFor(items = sets) {
-            ListItem(
-                text = { Text(it.run {"$exerciseId, $setId: $reps, $weight"}) }
+fun CreateRoutineScreen() {
+    val presenter = viewModel<CreateRoutinePresenter>()
+    val editor = viewModel<CreateRoutineEditor>()
+    val name by presenter.name.observeAsState()
+    val sets by presenter.sets.observeAsState()
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {editor.updateRoutine {
+                    this.name = listOf("Push", "Pull", "Legs").random()
+                    this.sets.apply {clear();add(Set((0..100).random()))}
+                }},
+                icon = {Icon(Icons.Default.Shuffle)}
             )
+        }
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(name.toString())
+            Text(sets.toString())
         }
     }
 }
