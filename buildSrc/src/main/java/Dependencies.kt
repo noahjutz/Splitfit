@@ -28,7 +28,7 @@ object Versions {
     const val gson = "2.8.6"
     const val ktlintPlugin = "9.4.0"
     const val ktlint = "0.39.0"
-    const val gradle = "4.2.0-alpha13"
+    const val gradle = "4.2.0-alpha14"
     const val kotlin = "1.4.10"
     const val hilt = "2.28-alpha"
     const val hiltExt = "1.0.0-alpha02"
