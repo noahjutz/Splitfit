@@ -23,14 +23,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -61,7 +61,7 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen()
+                CreateRoutineScreen(::addExercise)
             }
         }
     }
@@ -93,13 +93,19 @@ class CreateRoutineFragment : Fragment() {
 }
 
 @Composable
-fun CreateRoutineScreen() {
+fun CreateRoutineScreen(
+    onAddExercise: () -> Unit
+) {
     val presenter = viewModel<CreateRoutinePresenter>()
     val editor = viewModel<CreateRoutineEditor>()
 
     val name by presenter.name.observeAsState()
     val sets by presenter.sets.observeAsState()
-    Scaffold {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = onAddExercise, icon = { Icon(Icons.Default.Add) })
+        }
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(name.toString())
             Text(sets.toString())
