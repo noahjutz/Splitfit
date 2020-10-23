@@ -31,6 +31,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -42,6 +44,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
@@ -61,9 +64,13 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen(::addExercise)
+                CreateRoutineScreen(::addExercise, ::popUp)
             }
         }
+    }
+
+    private fun popUp() {
+        findNavController().popBackStack()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,7 +81,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initActivity() {
         requireActivity().apply {
-            title = "Edit Routine"
+            findViewById<MaterialToolbar>(R.id.app_bar).visibility = GONE
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
         }
     }
@@ -94,7 +101,8 @@ class CreateRoutineFragment : Fragment() {
 
 @Composable
 fun CreateRoutineScreen(
-    onAddExercise: () -> Unit
+    onAddExercise: () -> Unit,
+    popUp: () -> Unit
 ) {
     val presenter = viewModel<CreateRoutinePresenter>()
     val editor = viewModel<CreateRoutineEditor>()
@@ -104,6 +112,19 @@ fun CreateRoutineScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = onAddExercise, icon = { Icon(Icons.Default.Add) })
+        },
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(
+                        onClick = popUp,
+                        icon = { Icon(Icons.Default.ArrowBack) })
+                },
+                title = { Text("Edit $name") },
+                actions = {
+                    IconButton(onClick = { TODO("Allow for editing routine name") }, icon = { Icon(Icons.Default.Edit) })
+                }
+            )
         }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
