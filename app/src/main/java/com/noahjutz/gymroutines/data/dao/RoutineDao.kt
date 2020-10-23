@@ -37,5 +37,5 @@ interface RoutineDao {
     fun getRoutine(routineId: Int): Routine?
 
     @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
-    fun getRoutineLive(routineId: Int): LiveData<Routine>?
+    fun getRoutineLive(routineId: Int): LiveData<Routine?>?
 }

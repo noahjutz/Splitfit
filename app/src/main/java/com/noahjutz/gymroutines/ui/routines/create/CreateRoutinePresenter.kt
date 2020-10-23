@@ -24,13 +24,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
+import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 
 class CreateRoutinePresenter @ViewModelInject constructor(
     repository: Repository,
     @Assisted args: SavedStateHandle
 ) : ViewModel() {
-    private val routine = repository.getRoutineLive(args[ARGS_ROUTINE_ID]!!)!!
-    val sets = Transformations.map(routine) { it.sets }
-    val name = Transformations.map(routine) { it.name }
+    private val routine = repository.getRoutineLive(args[ARGS_ROUTINE_ID] ?: -1)
+        ?: repository.getRoutineLive(repository.insert(Routine("Hello world!")).toInt())!!
+    val sets = Transformations.map(routine) { it?.sets ?: emptyList() }
+    val name = Transformations.map(routine) { it?.name ?: "rid: $ARGS_ROUTINE_ID, real rid: ${it?.routineId}" }
 }

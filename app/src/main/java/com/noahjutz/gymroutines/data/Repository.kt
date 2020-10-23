@@ -79,7 +79,7 @@ class Repository @Inject constructor(
         }
     }
 
-    fun getRoutineLive(routineId: Int): LiveData<Routine>? = runBlocking {
+    fun getRoutineLive(routineId: Int): LiveData<Routine?>? = runBlocking {
         withContext(IO) {
             routineDao.getRoutineLive(routineId)
         }
