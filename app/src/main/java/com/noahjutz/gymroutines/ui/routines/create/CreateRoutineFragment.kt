@@ -23,21 +23,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.Icon
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
@@ -50,6 +47,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalFoundationApi
 @AndroidEntryPoint
 class CreateRoutineFragment : Fragment() {
 
@@ -97,6 +95,7 @@ class CreateRoutineFragment : Fragment() {
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
@@ -105,7 +104,6 @@ fun CreateRoutineScreen(
     val presenter = viewModel<CreateRoutinePresenter>()
     val editor = viewModel<CreateRoutineEditor>()
 
-    val name by presenter.name.observeAsState()
     val sets by presenter.sets.observeAsState()
     Scaffold(
         floatingActionButton = {
@@ -118,15 +116,20 @@ fun CreateRoutineScreen(
                         onClick = popUp,
                         icon = { Icon(Icons.Default.ArrowBack) })
                 },
-                title = { Text("Edit $name") },
-                actions = {
-                    IconButton(onClick = { TODO("Allow for editing routine name") }, icon = { Icon(Icons.Default.Edit) })
+                title = {
+                    var nameFieldValue by remember { mutableStateOf(TextFieldValue(presenter.initialName)) }
+                    BaseTextField(
+                        value = nameFieldValue,
+                        onValueChange = {
+                            nameFieldValue = it
+                            editor.updateRoutine { this.name = it.text }
+                        },
+                    )
                 }
             )
         }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(name.toString())
             Text(sets.toString())
         }
     }
