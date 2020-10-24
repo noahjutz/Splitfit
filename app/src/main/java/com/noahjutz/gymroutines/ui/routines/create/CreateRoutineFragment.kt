@@ -244,7 +244,7 @@ fun ExerciseCard(setGroup: List<Set>) {
                 text = "Exercise name",
                 fontSize = 20.sp
             )
-            DataTableColumns {
+            Column {
                 DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
                     Text(modifier = Modifier.weight(1f), text = "set")
                     Text(modifier = Modifier.weight(1f), text = "reps")
@@ -263,18 +263,6 @@ fun ExerciseCard(setGroup: List<Set>) {
                 }
             }
         }
-    }
-}
-
-/**
- * @param children: [DataTableRow]s
- */
-@Composable
-fun DataTableColumns(
-    children: @Composable ColumnScope.() -> Unit
-) {
-    Column {
-        children()
     }
 }
 
