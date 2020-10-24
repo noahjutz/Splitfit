@@ -245,7 +245,7 @@ fun ExerciseCard(setGroup: List<Set>) {
                 fontSize = 20.sp
             )
             DataTableColumns {
-                DataTableHeaderRow(modifier = Modifier.padding(bottom = 16.dp)) {
+                DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
                     Text(modifier = Modifier.weight(1f), text = "set")
                     Text(modifier = Modifier.weight(1f), text = "reps")
                     Text(modifier = Modifier.weight(1f), text = "weight")
@@ -284,16 +284,6 @@ fun DataTableRow(
     children: @Composable RowScope.() -> Unit
 ) {
     Row(modifier = modifier.fillMaxWidth()) {
-        children()
-    }
-}
-
-@Composable
-fun DataTableHeaderRow(
-    modifier: Modifier = Modifier,
-    children: @Composable RowScope.() -> Unit
-) {
-    DataTableRow(modifier = modifier) {
         children()
     }
 }
