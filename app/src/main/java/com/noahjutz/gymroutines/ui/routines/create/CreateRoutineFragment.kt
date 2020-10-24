@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
@@ -142,39 +143,45 @@ fun CreateRoutineScreen(
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 fun SetList(
     sets: List<Set>,
     deleteSet: (Set) -> Unit
 ) {
     LazyColumnFor(items = sets, modifier = Modifier.padding(16.dp)) { set ->
-        SetCard(Modifier.padding(bottom = 16.dp),set)
+        SetCard(Modifier.padding(bottom = 16.dp), set)
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 fun SetCard(
     modifier: Modifier,
     set: Set
 ) {
     val presenter = viewModel<CreateRoutinePresenter>()
-    Card(modifier.fillMaxWidth().clickable(onClick = {})) {
+    Card(modifier.fillMaxWidth()) {
         Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
-                modifier = Modifier.fillMaxWidth(fraction = 0.25f),
                 text = presenter.getExerciseName(set.exerciseId),
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth(0.3f)
             )
             Row(
-                modifier = Modifier.fillMaxWidth(fraction = 0.75f),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.End
             ) {
-                Text(set.reps.toString())
-                Text(set.weight.toString())
-                Text(set.distance.toString())
-                Text(set.time.toString())
+                for (i in (0..3)) {
+                    var value by remember { mutableStateOf(TextFieldValue("1.2")) } // TODO real value
+                    BaseTextField(
+                        value = value,
+                        onValueChange = {value = it},
+                        modifier = Modifier.width(64.dp)
+                            .clickable(onClick = {}),
+                    )
+                }
             }
         }
     }
