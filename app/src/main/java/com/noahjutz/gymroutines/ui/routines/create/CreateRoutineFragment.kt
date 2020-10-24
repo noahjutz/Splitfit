@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -237,17 +238,21 @@ fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit)
 @Composable
 fun ExerciseCard(setGroup: List<Set>) {
     FancyCard {
-        Column {
-            Text("Exercise name")
+        Column(Modifier.padding(horizontal = 16.dp)) {
+            Text(
+                modifier = Modifier.padding(vertical = 16.dp),
+                text = "Exercise name",
+                fontSize = 20.sp
+            )
             DataTableColumns {
-                DataTableHeaderRow {
+                DataTableHeaderRow(modifier = Modifier.padding(bottom = 16.dp)) {
                     Text("reps")
                     Text("weight")
                     Text("time")
                     Text("distance")
                 }
                 for (set in setGroup) {
-                    DataTableRow {
+                    DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(set.reps.toString())
                         Text(set.weight.toString())
                         Text(set.time.toString())
@@ -273,18 +278,20 @@ fun DataTableColumns(
 
 @Composable
 fun DataTableRow(
+    modifier: Modifier = Modifier,
     children: @Composable RowScope.() -> Unit
 ) {
-    Row {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         children()
     }
 }
 
 @Composable
 fun DataTableHeaderRow(
+    modifier: Modifier = Modifier,
     children: @Composable RowScope.() -> Unit
 ) {
-    DataTableRow {
+    DataTableRow(modifier = modifier) {
         children()
     }
 }
