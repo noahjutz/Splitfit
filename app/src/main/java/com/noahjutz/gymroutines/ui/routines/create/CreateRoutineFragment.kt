@@ -32,8 +32,10 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -223,8 +225,18 @@ fun SetList(
 //}
 
 @Composable
+fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit) {
+    Card(
+        modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .fillMaxWidth()
+    ) {
+        children()
+    }
+}
+
+@Composable
 fun ExerciseCard(setGroup: List<Set>) {
-    Card {
+    FancyCard {
         Column {
             Text("Exercise name")
             DataTableColumns {
