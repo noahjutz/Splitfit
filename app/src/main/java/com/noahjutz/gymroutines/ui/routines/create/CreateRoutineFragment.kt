@@ -32,13 +32,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -158,71 +153,131 @@ fun SetList(
             listOf(Set(4), Set(5), Set(6))
         )
     ) { setGroup ->
-        SetGroupCard(setGroup)
+        //SetGroupCard(setGroup)
+        ExerciseCard(setGroup)
     }
 }
 
-@ExperimentalFoundationApi
-@Composable
-fun SetCard(
-    set: Set,
-    modifier: Modifier = Modifier,
-) {
-    val presenter = viewModel<CreateRoutinePresenter>()
-    Row(
-        modifier.padding(top = 16.dp).fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = (0..10).random().toString(), // TODO real value
-            modifier = Modifier.width(64.dp),
-            textAlign = TextAlign.Center
-        )
-        for (i in (0..3)) {
-            var value by remember {
-                mutableStateOf(
-                    TextFieldValue(
-                        (0..100).random().div(10.0).toString()
-                    )
-                )
-            } // TODO real value
-            BaseTextField(
-                value = value,
-                onValueChange = { value = it },
-                modifier = Modifier.width(64.dp),
-                textStyle = currentTextStyle().merge(TextStyle(textAlign = TextAlign.Center))
-            )
-        }
-    }
-}
+//@ExperimentalFoundationApi
+//@Composable
+//fun SetCard(
+//    set: Set,
+//    modifier: Modifier = Modifier,
+//) {
+//    val presenter = viewModel<CreateRoutinePresenter>()
+//    Row(
+//        modifier.padding(top = 16.dp).fillMaxWidth(),
+//        horizontalArrangement = Arrangement.SpaceBetween
+//    ) {
+//        Text(
+//            text = (0..10).random().toString(), // TODO real value
+//            modifier = Modifier.width(64.dp),
+//            textAlign = TextAlign.Center
+//        )
+//        for (i in (0..3)) {
+//            var value by remember {
+//                mutableStateOf(
+//                    TextFieldValue(
+//                        (0..100).random().div(10.0).toString()
+//                    )
+//                )
+//            } // TODO real value
+//            BaseTextField(
+//                value = value,
+//                onValueChange = { value = it },
+//                modifier = Modifier.width(64.dp),
+//                textStyle = currentTextStyle().merge(TextStyle(textAlign = TextAlign.Center))
+//            )
+//        }
+//    }
+//}
+//
+//@ExperimentalFoundationApi
+//@Composable
+//fun SetGroupCard(
+//    setGroup: List<Set>
+//) {
+//    Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+//        Column(Modifier.padding(16.dp)) {
+//            Text("Exercise name goes here")
+//            Column {
+//                Row(
+//                    Modifier.padding(top = 16.dp).fillMaxWidth(),
+//                    horizontalArrangement = Arrangement.SpaceBetween
+//                ) {
+//                    for (i in (0..4)) {
+//                        Text(
+//                            text = "$i",
+//                            textAlign = TextAlign.Center,
+//                            fontWeight = FontWeight.Bold,
+//                            modifier = Modifier.width(64.dp)
+//                        )
+//                    }
+//                }
+//                for (set in setGroup) {
+//                    SetCard(set)
+//                }
+//            }
+//        }
+//    }
+//}
 
-@ExperimentalFoundationApi
 @Composable
-fun SetGroupCard(
-    setGroup: List<Set>
-) {
-    Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
-        Column(Modifier.padding(16.dp)) {
-            Text("Exercise name goes here")
-            Column {
-                Row(
-                    Modifier.padding(top = 16.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    for (i in (0..4)) {
-                        Text(
-                            text = "$i",
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.width(64.dp)
-                        )
-                    }
+fun ExerciseCard(setGroup: List<Set>) {
+    Card {
+        Column {
+            Text("Exercise name")
+            DataTableColumns {
+                DataTableHeaderRow {
+                    Text("reps")
+                    Text("weight")
+                    Text("time")
+                    Text("distance")
                 }
                 for (set in setGroup) {
-                    SetCard(set)
+                    DataTableRow {
+                        Text(set.reps.toString())
+                        Text(set.weight.toString())
+                        Text(set.time.toString())
+                        Text(set.distance.toString())
+                    }
                 }
             }
         }
     }
 }
 
+/**
+ * @param children: [DataTableRow]s
+ */
+@Composable
+fun DataTableColumns(
+    children: @Composable ColumnScope.() -> Unit
+) {
+    Column {
+        children()
+    }
+}
+
+@Composable
+fun DataTableRow(
+    children: @Composable RowScope.() -> Unit
+) {
+    Row {
+        children()
+    }
+}
+
+@Composable
+fun DataTableHeaderRow(
+    children: @Composable RowScope.() -> Unit
+) {
+    DataTableRow {
+        children()
+    }
+}
+
+@Composable
+fun DataTableCell() {
+
+}
