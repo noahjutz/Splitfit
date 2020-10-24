@@ -34,6 +34,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -235,6 +237,7 @@ fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit)
     }
 }
 
+@ExperimentalFoundationApi
 @Composable
 fun ExerciseCard(setGroup: List<Set>) {
     FancyCard {
@@ -255,10 +258,10 @@ fun ExerciseCard(setGroup: List<Set>) {
                 for (set in setGroup) {
                     DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(modifier = Modifier.weight(1f), text = (0..5).random().toString())
-                        Text(modifier = Modifier.weight(1f), text = set.reps.toString())
-                        Text(modifier = Modifier.weight(1f), text = set.weight.toString())
-                        Text(modifier = Modifier.weight(1f), text = set.time.toString())
-                        Text(modifier = Modifier.weight(1f), text = set.distance.toString())
+                        DataTableTextFieldCell(text = set.reps?.toString() ?: "")
+                        DataTableTextFieldCell(text = set.weight?.toString() ?: "")
+                        DataTableTextFieldCell(text = set.time?.toString() ?: "")
+                        DataTableTextFieldCell(text = set.distance?.toString() ?: "")
                     }
                 }
             }
@@ -274,4 +277,26 @@ fun DataTableRow(
     Row(modifier = modifier.fillMaxWidth()) {
         children()
     }
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun RowScope.DataTableTextFieldCell(text: String) {
+    var textFieldValue by remember { mutableStateOf(TextFieldValue(text)) }
+    BaseTextField(
+        modifier = Modifier.width(64.dp)
+            .weight(1f),
+        value = textFieldValue,
+        onValueChange = { newValue ->
+            val newText =
+                newValue.text.filterIndexed { i, c ->
+                    i < 7 && c.isDigit() || (i > 0 && c == '.' && newValue.text.indexOf('.') == i)
+                }
+            textFieldValue = TextFieldValue(
+                newText,
+                TextRange(newText.length)
+            )
+        },
+        keyboardType = KeyboardType.Number
+    )
 }
