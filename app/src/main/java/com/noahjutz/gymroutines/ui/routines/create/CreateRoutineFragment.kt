@@ -246,17 +246,19 @@ fun ExerciseCard(setGroup: List<Set>) {
             )
             DataTableColumns {
                 DataTableHeaderRow(modifier = Modifier.padding(bottom = 16.dp)) {
-                    Text("reps")
-                    Text("weight")
-                    Text("time")
-                    Text("distance")
+                    Text(modifier = Modifier.weight(1f), text = "set")
+                    Text(modifier = Modifier.weight(1f), text = "reps")
+                    Text(modifier = Modifier.weight(1f), text = "weight")
+                    Text(modifier = Modifier.weight(1f), text = "time")
+                    Text(modifier = Modifier.weight(1f), text = "distance")
                 }
                 for (set in setGroup) {
                     DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
-                        Text(set.reps.toString())
-                        Text(set.weight.toString())
-                        Text(set.time.toString())
-                        Text(set.distance.toString())
+                        Text(modifier = Modifier.weight(1f), text = (0..5).random().toString())
+                        Text(modifier = Modifier.weight(1f), text = set.reps.toString())
+                        Text(modifier = Modifier.weight(1f), text = set.weight.toString())
+                        Text(modifier = Modifier.weight(1f), text = set.time.toString())
+                        Text(modifier = Modifier.weight(1f), text = set.distance.toString())
                     }
                 }
             }
@@ -294,9 +296,4 @@ fun DataTableHeaderRow(
     DataTableRow(modifier = modifier) {
         children()
     }
-}
-
-@Composable
-fun DataTableCell() {
-
 }
