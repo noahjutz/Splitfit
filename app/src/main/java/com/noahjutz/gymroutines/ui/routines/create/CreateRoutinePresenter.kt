@@ -36,4 +36,6 @@ class CreateRoutinePresenter @ViewModelInject constructor(
     val name = Transformations.map(routine) { it?.name.toString() }
     val initialName: String
             get() = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
+
+    fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
 }

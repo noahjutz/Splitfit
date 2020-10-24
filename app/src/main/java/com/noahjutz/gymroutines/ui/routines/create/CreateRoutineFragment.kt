@@ -24,7 +24,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -34,7 +34,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -144,10 +147,35 @@ fun SetList(
     sets: List<Set>,
     deleteSet: (Set) -> Unit
 ) {
-    LazyColumnFor(items = sets) { set ->
-        ListItem(
-            text = { Text("This is a set! ${set.exerciseId}") },
-            modifier = Modifier.clickable(onClick = { deleteSet(set) })
-        )
+    LazyColumnFor(items = sets, modifier = Modifier.padding(16.dp)) { set ->
+        SetCard(Modifier.padding(bottom = 16.dp),set)
+    }
+}
+
+@Composable
+fun SetCard(
+    modifier: Modifier,
+    set: Set
+) {
+    val presenter = viewModel<CreateRoutinePresenter>()
+    Card(modifier.fillMaxWidth().clickable(onClick = {})) {
+        Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                modifier = Modifier.fillMaxWidth(fraction = 0.25f),
+                text = presenter.getExerciseName(set.exerciseId),
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(fraction = 0.75f),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(set.reps.toString())
+                Text(set.weight.toString())
+                Text(set.distance.toString())
+                Text(set.time.toString())
+            }
+        }
     }
 }
