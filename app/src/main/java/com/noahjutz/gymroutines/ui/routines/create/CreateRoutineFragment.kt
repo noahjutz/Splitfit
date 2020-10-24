@@ -25,7 +25,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -35,7 +35,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -61,9 +60,13 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen(::addExercise, ::popUp)
+                CreateRoutineScreen(::addExercise, ::popUp, ::deleteSet)
             }
         }
+    }
+
+    private fun deleteSet(set: Set) {
+        viewModel.updateRoutine { sets.remove(set) }
     }
 
     private fun popUp() {
@@ -99,7 +102,8 @@ class CreateRoutineFragment : Fragment() {
 @Composable
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
-    popUp: () -> Unit
+    popUp: () -> Unit,
+    deleteSet: (Set) -> Unit
 ) {
     val presenter = viewModel<CreateRoutinePresenter>()
     val editor = viewModel<CreateRoutineEditor>()
@@ -129,8 +133,21 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(sets.toString())
+        Column {
+            SetList(sets ?: emptyList(), deleteSet)
         }
+    }
+}
+
+@Composable
+fun SetList(
+    sets: List<Set>,
+    deleteSet: (Set) -> Unit
+) {
+    LazyColumnFor(items = sets) { set ->
+        ListItem(
+            text = { Text("This is a set! ${set.exerciseId}") },
+            modifier = Modifier.clickable(onClick = { deleteSet(set) })
+        )
     }
 }
