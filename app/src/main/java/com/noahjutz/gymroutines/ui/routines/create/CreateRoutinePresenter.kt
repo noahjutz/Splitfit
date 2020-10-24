@@ -28,11 +28,12 @@ import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 
 class CreateRoutinePresenter @ViewModelInject constructor(
-    repository: Repository,
-    @Assisted args: SavedStateHandle
+    private val repository: Repository,
+    @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
     private val routine = repository.getRoutineLive(args[ARGS_ROUTINE_ID]!!)!!
     val sets = Transformations.map(routine) { it?.sets ?: emptyList() }
     val name = Transformations.map(routine) { it?.name.toString() }
-    val initialName = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
+    val initialName: String
+            get() = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
 }
