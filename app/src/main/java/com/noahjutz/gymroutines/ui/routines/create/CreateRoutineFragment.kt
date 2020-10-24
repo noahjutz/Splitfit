@@ -283,7 +283,7 @@ fun DataTableRow(
     modifier: Modifier = Modifier,
     children: @Composable RowScope.() -> Unit
 ) {
-    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier = modifier.fillMaxWidth()) {
         children()
     }
 }
