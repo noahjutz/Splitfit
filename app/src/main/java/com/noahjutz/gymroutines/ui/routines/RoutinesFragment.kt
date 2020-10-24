@@ -38,7 +38,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Routine
@@ -66,7 +65,6 @@ class RoutinesFragment : Fragment() {
         requireActivity().apply {
             title = "Routines"
             findViewById<BottomNavigationView>(R.id.bottom_nav)?.visibility = VISIBLE
-            findViewById<MaterialToolbar>(R.id.app_bar)?.visibility = VISIBLE
         }
     }
 

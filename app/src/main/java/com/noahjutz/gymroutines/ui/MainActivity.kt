@@ -24,9 +24,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,16 +40,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initBottomNavigation()
-        initAppBar()
-    }
-
-    private fun initAppBar() {
-        setSupportActionBar(findViewById<MaterialToolbar>(R.id.app_bar))
-        appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.routinesFragment,
-            R.id.exercisesFragment
-        ).build()
-        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     private fun initBottomNavigation() {

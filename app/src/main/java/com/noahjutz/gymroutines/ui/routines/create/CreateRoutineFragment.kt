@@ -44,7 +44,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
@@ -81,7 +80,6 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initActivity() {
         requireActivity().apply {
-            findViewById<MaterialToolbar>(R.id.app_bar).visibility = GONE
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
         }
     }
