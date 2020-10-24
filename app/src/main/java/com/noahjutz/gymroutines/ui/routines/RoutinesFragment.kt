@@ -69,7 +69,11 @@ class RoutinesFragment : Fragment() {
     }
 
     private fun addEditRoutine(routineId: Int) {
-        findNavController().navigate(RoutinesFragmentDirections.addRoutine(routineId))
+        val routineIdToEdit =
+            if (routineId < 0) viewModel.addRoutine().toInt()
+            else routineId
+
+        findNavController().navigate(RoutinesFragmentDirections.addRoutine(routineIdToEdit))
     }
 }
 

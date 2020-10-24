@@ -33,4 +33,6 @@ class RoutinesViewModel @ViewModelInject constructor(
     fun deleteRoutine(routineId: Int) {
         repository.getRoutine(routineId)?.let { repository.delete(it) }
     }
+
+    fun addRoutine(): Long = repository.insert(Routine())
 }

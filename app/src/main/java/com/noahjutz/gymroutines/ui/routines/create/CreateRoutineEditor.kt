@@ -31,9 +31,6 @@ class CreateRoutineEditor @ViewModelInject constructor(
     @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
     fun updateRoutine(action: Routine.() -> Unit) {
-        repository.insert(
-            (repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)
-                ?: Routine()).apply(action)
-        )
+        repository.insert(repository.getRoutine(args[ARGS_ROUTINE_ID]!!)!!.apply(action))
     }
 }

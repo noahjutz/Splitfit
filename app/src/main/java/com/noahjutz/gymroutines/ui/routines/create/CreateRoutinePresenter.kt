@@ -31,8 +31,7 @@ class CreateRoutinePresenter @ViewModelInject constructor(
     repository: Repository,
     @Assisted args: SavedStateHandle
 ) : ViewModel() {
-    private val routine = repository.getRoutineLive(args[ARGS_ROUTINE_ID] ?: -1)
-        ?: repository.getRoutineLive(repository.insert(Routine("Hello world!")).toInt())!!
+    private val routine = repository.getRoutineLive(args[ARGS_ROUTINE_ID]!!)!!
     val sets = Transformations.map(routine) { it?.sets ?: emptyList() }
     val name = Transformations.map(routine) { it?.name.toString() }
     val initialName = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
