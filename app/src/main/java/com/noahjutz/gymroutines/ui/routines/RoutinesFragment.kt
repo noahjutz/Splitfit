@@ -68,21 +68,20 @@ class RoutinesFragment : Fragment() {
         }
     }
 
-    private fun addEditRoutine(routine: Routine? = null) {
-        val action = RoutinesFragmentDirections.addRoutine(routine?.routineId ?: -1)
-        findNavController().navigate(action)
+    private fun addEditRoutine(routineId: Int) {
+        findNavController().navigate(RoutinesFragmentDirections.addRoutine(routineId))
     }
 }
 
 @Composable
 fun RoutinesScreen(
-    addEditRoutine: (Routine?) -> Unit,
+    addEditRoutine: (Int) -> Unit,
     viewModel: RoutinesViewModel
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { addEditRoutine(null) },
+                onClick = { addEditRoutine(-1) },
                 icon = { Icon(Icons.Default.Add) }
             )
         }
@@ -97,7 +96,7 @@ fun RoutinesScreen(
                 },
                 modifier = Modifier.clickable(
                     onClick = {
-                        addEditRoutine(routine)
+                        addEditRoutine(routine.routineId)
                     }, onLongClick = {
                         toDelete = routine
                         showDialog = true
