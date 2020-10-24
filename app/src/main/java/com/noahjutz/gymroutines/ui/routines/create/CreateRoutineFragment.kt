@@ -34,10 +34,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
@@ -149,40 +149,80 @@ fun SetList(
     sets: List<Set>,
     deleteSet: (Set) -> Unit
 ) {
-    LazyColumnFor(items = sets, modifier = Modifier.padding(16.dp)) { set ->
-        SetCard(Modifier.padding(bottom = 16.dp), set)
+    //LazyColumnFor(items = sets, modifier = Modifier.padding(16.dp)) { set ->
+    //    SetCard(Modifier.padding(bottom = 16.dp), set)
+    //}
+    LazyColumnFor(
+        items = listOf(
+            listOf(Set(0), Set(1), Set(3)),
+            listOf(Set(4), Set(5), Set(6))
+        )
+    ) { setGroup ->
+        SetGroupCard(setGroup)
     }
 }
 
 @ExperimentalFoundationApi
 @Composable
 fun SetCard(
-    modifier: Modifier,
-    set: Set
+    set: Set,
+    modifier: Modifier = Modifier,
 ) {
     val presenter = viewModel<CreateRoutinePresenter>()
-    Card(modifier.fillMaxWidth()) {
-        Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                text = presenter.getExerciseName(set.exerciseId),
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth(0.3f)
-            )
-            Row(
-                horizontalArrangement = Arrangement.End
-            ) {
-                for (i in (0..3)) {
-                    var value by remember { mutableStateOf(TextFieldValue("1.2")) } // TODO real value
-                    BaseTextField(
-                        value = value,
-                        onValueChange = {value = it},
-                        modifier = Modifier.width(64.dp)
-                            .clickable(onClick = {}),
+    Row(
+        modifier.padding(top = 16.dp).fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = (0..10).random().toString(), // TODO real value
+            modifier = Modifier.width(64.dp),
+            textAlign = TextAlign.Center
+        )
+        for (i in (0..3)) {
+            var value by remember {
+                mutableStateOf(
+                    TextFieldValue(
+                        (0..100).random().div(10.0).toString()
                     )
+                )
+            } // TODO real value
+            BaseTextField(
+                value = value,
+                onValueChange = { value = it },
+                modifier = Modifier.width(64.dp),
+                textStyle = currentTextStyle().merge(TextStyle(textAlign = TextAlign.Center))
+            )
+        }
+    }
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun SetGroupCard(
+    setGroup: List<Set>
+) {
+    Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+        Column(Modifier.padding(16.dp)) {
+            Text("Exercise name goes here")
+            Column {
+                Row(
+                    Modifier.padding(top = 16.dp).fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    for (i in (0..4)) {
+                        Text(
+                            text = "$i",
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.width(64.dp)
+                        )
+                    }
+                }
+                for (set in setGroup) {
+                    SetCard(set)
                 }
             }
         }
     }
 }
+
