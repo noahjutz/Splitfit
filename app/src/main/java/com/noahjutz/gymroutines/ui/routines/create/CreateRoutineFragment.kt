@@ -176,6 +176,7 @@ fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit)
 @ExperimentalFoundationApi
 @Composable
 fun ExerciseCard(setGroup: List<Set>) {
+    val editor = viewModel<CreateRoutineEditor>()
     FancyCard {
         Column(Modifier.padding(horizontal = 16.dp)) {
             Text(
@@ -191,24 +192,34 @@ fun ExerciseCard(setGroup: List<Set>) {
                     Text(modifier = Modifier.weight(1f), text = "time")
                     Text(modifier = Modifier.weight(1f), text = "distance")
                 }
-                for (set in setGroup) {
+                setGroup.forEachIndexed { i, set ->
                     DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(modifier = Modifier.weight(1f), text = (0..5).random().toString())
                         SetTextField(
                             modifier = Modifier.weight(1f),
-                            text = set.reps?.toString() ?: ""
+                            text = set.reps?.toString() ?: "",
+                            onValueChange = {
+                                val reps = if (it.isEmpty()) null
+                                else it.split('.').first().toInt()
+                                editor.updateRoutine {
+                                    sets[i].reps = reps
+                                }
+                            }
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
-                            text = set.weight?.toString() ?: ""
+                            text = set.weight?.toString() ?: "",
+                            onValueChange = { }
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
-                            text = set.time?.toString() ?: ""
+                            text = set.time?.toString() ?: "",
+                            onValueChange = { }
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
-                            text = set.distance?.toString() ?: ""
+                            text = set.distance?.toString() ?: "",
+                            onValueChange = { }
                         )
                     }
                 }
@@ -232,6 +243,7 @@ fun DataTableRow(
 fun SetTextField(
     modifier: Modifier = Modifier,
     text: String,
+    onValueChange: (String) -> Unit
 ) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue(text)) }
     BaseTextField(
@@ -243,6 +255,7 @@ fun SetTextField(
                 newText,
                 TextRange(newText.length)
             )
+            onValueChange(newText)
         },
         keyboardType = KeyboardType.Number
     )

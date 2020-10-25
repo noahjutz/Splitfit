@@ -32,7 +32,7 @@ import com.noahjutz.gymroutines.data.domain.Set
         Routine::class,
         Set::class
     ],
-    version = 26
+    version = 27
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
