@@ -18,12 +18,15 @@
 
 package com.noahjutz.gymroutines.util
 
-const val REGEX_INTEGER = "^\\d+\$"
+object RegexPatterns {
+    const val integer = "^\\d+\$" // TODO no leading 0s
+    const val float = "" // TODO
+    const val time = "" // TODO
+}
 
+@Deprecated("Use String.matches(RegexPatterns.float)")
 fun String.simpleFormat() = filterIndexed { i, c ->
     i < 6 && c.isDigit() || (i > 0 && c == '.' && indexOf('.') == i)
 }
 
-fun isValidInteger(input: String): Boolean {
-    return REGEX_INTEGER.toRegex().containsMatchIn(input)
-}
+fun String.matches(pattern: String) = pattern.toRegex().matches(this)
