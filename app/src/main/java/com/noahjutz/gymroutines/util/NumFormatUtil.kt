@@ -18,6 +18,12 @@
 
 package com.noahjutz.gymroutines.util
 
+const val REGEX_INTEGER = "^\\d+\$"
+
 fun String.simpleFormat() = filterIndexed { i, c ->
     i < 6 && c.isDigit() || (i > 0 && c == '.' && indexOf('.') == i)
+}
+
+fun isValidInteger(input: String): Boolean {
+    return REGEX_INTEGER.toRegex().containsMatchIn(input)
 }
