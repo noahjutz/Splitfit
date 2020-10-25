@@ -149,83 +149,18 @@ fun SetList(
     sets: List<Set>,
     deleteSet: (Set) -> Unit
 ) {
-    //LazyColumnFor(items = sets, modifier = Modifier.padding(16.dp)) { set ->
-    //    SetCard(Modifier.padding(bottom = 16.dp), set)
-    //}
     LazyColumnFor(
-        items = listOf(
-            listOf(Set(0), Set(1), Set(3)),
-            listOf(Set(4), Set(5), Set(6))
-        )
+        items = mutableListOf<MutableList<Set>>().also { setGroupList ->
+            sets.forEachIndexed { i, set ->
+                if (i == 0 || (i > 0 && sets[i - 1].exerciseId != set.exerciseId))
+                    setGroupList.add(mutableListOf(set))
+                else setGroupList.last().add(set)
+            }
+        }
     ) { setGroup ->
-        //SetGroupCard(setGroup)
         ExerciseCard(setGroup)
     }
 }
-
-//@ExperimentalFoundationApi
-//@Composable
-//fun SetCard(
-//    set: Set,
-//    modifier: Modifier = Modifier,
-//) {
-//    val presenter = viewModel<CreateRoutinePresenter>()
-//    Row(
-//        modifier.padding(top = 16.dp).fillMaxWidth(),
-//        horizontalArrangement = Arrangement.SpaceBetween
-//    ) {
-//        Text(
-//            text = (0..10).random().toString(), // TODO real value
-//            modifier = Modifier.width(64.dp),
-//            textAlign = TextAlign.Center
-//        )
-//        for (i in (0..3)) {
-//            var value by remember {
-//                mutableStateOf(
-//                    TextFieldValue(
-//                        (0..100).random().div(10.0).toString()
-//                    )
-//                )
-//            } // TODO real value
-//            BaseTextField(
-//                value = value,
-//                onValueChange = { value = it },
-//                modifier = Modifier.width(64.dp),
-//                textStyle = currentTextStyle().merge(TextStyle(textAlign = TextAlign.Center))
-//            )
-//        }
-//    }
-//}
-//
-//@ExperimentalFoundationApi
-//@Composable
-//fun SetGroupCard(
-//    setGroup: List<Set>
-//) {
-//    Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
-//        Column(Modifier.padding(16.dp)) {
-//            Text("Exercise name goes here")
-//            Column {
-//                Row(
-//                    Modifier.padding(top = 16.dp).fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.SpaceBetween
-//                ) {
-//                    for (i in (0..4)) {
-//                        Text(
-//                            text = "$i",
-//                            textAlign = TextAlign.Center,
-//                            fontWeight = FontWeight.Bold,
-//                            modifier = Modifier.width(64.dp)
-//                        )
-//                    }
-//                }
-//                for (set in setGroup) {
-//                    SetCard(set)
-//                }
-//            }
-//        }
-//    }
-//}
 
 @Composable
 fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit) {
