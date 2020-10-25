@@ -201,25 +201,35 @@ fun ExerciseCard(setGroup: List<Set>) {
                             onValueChange = {
                                 val reps = if (it.isEmpty()) null
                                 else it.split('.').first().toInt()
-                                editor.updateRoutine {
-                                    sets[i].reps = reps
-                                }
+                                editor.updateRoutine { sets[i].reps = reps }
                             }
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
                             text = set.weight?.toString() ?: "",
-                            onValueChange = { }
+                            onValueChange = {
+                                val weight = if (it.isEmpty()) null
+                                else it.toDouble()
+                                editor.updateRoutine { sets[i].weight = weight }
+                            }
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
                             text = set.time?.toString() ?: "",
-                            onValueChange = { }
+                            onValueChange = {
+                                val time = if (it.isEmpty()) null
+                                else it.split('.').first().toInt()
+                                editor.updateRoutine { sets[i].time = time }
+                            }
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
                             text = set.distance?.toString() ?: "",
-                            onValueChange = { }
+                            onValueChange = {
+                                val distance = if (it.isEmpty()) null
+                                else it.toDouble()
+                                editor.updateRoutine { sets[i].distance = distance }
+                            }
                         )
                     }
                 }
