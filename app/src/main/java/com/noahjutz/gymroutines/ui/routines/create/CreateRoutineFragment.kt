@@ -177,11 +177,12 @@ fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit)
 @Composable
 fun ExerciseCard(setGroup: List<Set>) {
     val editor = viewModel<CreateRoutineEditor>()
+    val presenter = viewModel<CreateRoutinePresenter>()
     FancyCard {
         Column(Modifier.padding(horizontal = 16.dp)) {
             Text(
                 modifier = Modifier.padding(vertical = 16.dp),
-                text = "Exercise name",
+                text = presenter.getExerciseName(setGroup.first().exerciseId),
                 fontSize = 20.sp
             )
             Column {
