@@ -19,5 +19,5 @@
 package com.noahjutz.gymroutines.util
 
 fun String.simpleFormat() = filterIndexed { i, c ->
-    i < 7 && c.isDigit() || (i > 0 && c == '.' && indexOf('.') == i)
+    i < 6 && c.isDigit() || (i > 0 && c == '.' && indexOf('.') == i)
 }
