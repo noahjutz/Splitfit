@@ -193,10 +193,22 @@ fun ExerciseCard(setGroup: List<Set>) {
                 for (set in setGroup) {
                     DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(modifier = Modifier.weight(1f), text = (0..5).random().toString())
-                        DataTableTextFieldCell(text = set.reps?.toString() ?: "")
-                        DataTableTextFieldCell(text = set.weight?.toString() ?: "")
-                        DataTableTextFieldCell(text = set.time?.toString() ?: "")
-                        DataTableTextFieldCell(text = set.distance?.toString() ?: "")
+                        SetTextField(
+                            modifier = Modifier.weight(1f),
+                            text = set.reps?.toString() ?: ""
+                        )
+                        SetTextField(
+                            modifier = Modifier.weight(1f),
+                            text = set.weight?.toString() ?: ""
+                        )
+                        SetTextField(
+                            modifier = Modifier.weight(1f),
+                            text = set.time?.toString() ?: ""
+                        )
+                        SetTextField(
+                            modifier = Modifier.weight(1f),
+                            text = set.distance?.toString() ?: ""
+                        )
                     }
                 }
             }
@@ -216,11 +228,13 @@ fun DataTableRow(
 
 @ExperimentalFoundationApi
 @Composable
-fun RowScope.DataTableTextFieldCell(text: String) {
+fun SetTextField(
+    modifier: Modifier = Modifier,
+    text: String,
+) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue(text)) }
     BaseTextField(
-        modifier = Modifier.width(64.dp)
-            .weight(1f),
+        modifier = modifier.width(64.dp),
         value = textFieldValue,
         onValueChange = { newValue ->
             val newText =
