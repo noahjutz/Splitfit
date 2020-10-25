@@ -48,6 +48,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
+import com.noahjutz.gymroutines.util.simpleFormat
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalFoundationApi
@@ -237,10 +238,7 @@ fun SetTextField(
         modifier = modifier.width(64.dp),
         value = textFieldValue,
         onValueChange = { newValue ->
-            val newText =
-                newValue.text.filterIndexed { i, c ->
-                    i < 7 && c.isDigit() || (i > 0 && c == '.' && newValue.text.indexOf('.') == i)
-                }
+            val newText = newValue.text.simpleFormat()
             textFieldValue = TextFieldValue(
                 newText,
                 TextRange(newText.length)
