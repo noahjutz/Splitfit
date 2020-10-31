@@ -264,7 +264,7 @@ fun SetTextField(
         onValueChange = { newValue ->
             val matches = when (inputValidation) {
                 InputValidationType.Integer -> newValue.text.matches(RegexPatterns.integer)
-                InputValidationType.Float -> newValue.text.matches(RegexPatterns.float.toRegex())
+                InputValidationType.Float -> newValue.text.matches(RegexPatterns.float)
                 InputValidationType.Time -> newValue.text.matches(RegexPatterns.time.toRegex())
             }
             if (matches) {
