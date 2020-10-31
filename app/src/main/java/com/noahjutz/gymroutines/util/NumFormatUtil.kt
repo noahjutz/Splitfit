@@ -19,7 +19,9 @@
 package com.noahjutz.gymroutines.util
 
 object RegexPatterns {
-    const val integer = "^\\d+\$" // TODO no leading 0s
+    val integer = """
+        ^$|^0$|^[1-9]\d{0,3}$
+    """.trimIndent().toRegex()
     const val float = "" // TODO
     const val time = "" // TODO
 }
