@@ -23,10 +23,3 @@ object RegexPatterns {
     const val float = "" // TODO
     const val time = "" // TODO
 }
-
-@Deprecated("Use String.matches(RegexPatterns.float)")
-fun String.simpleFormat() = filterIndexed { i, c ->
-    i < 6 && c.isDigit() || (i > 0 && c == '.' && indexOf('.') == i)
-}
-
-fun String.matches(pattern: String) = pattern.toRegex().matches(this)

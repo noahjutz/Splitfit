@@ -34,7 +34,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -48,7 +47,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
-import com.noahjutz.gymroutines.util.simpleFormat
+import com.noahjutz.gymroutines.util.RegexPatterns
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalFoundationApi
@@ -203,7 +202,8 @@ fun ExerciseCard(setGroup: List<Set>) {
                                 val reps = if (it.isEmpty()) null
                                 else it.split('.').first().toInt()
                                 editor.updateRoutine { sets[i].reps = reps }
-                            }
+                            },
+                            inputValidation = InputValidationType.Integer
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
@@ -254,20 +254,28 @@ fun DataTableRow(
 fun SetTextField(
     modifier: Modifier = Modifier,
     text: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    inputValidation: InputValidationType = InputValidationType.Float,
 ) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue(text)) }
     BaseTextField(
         modifier = modifier.width(64.dp),
         value = textFieldValue,
         onValueChange = { newValue ->
-            val newText = newValue.text.simpleFormat()
-            textFieldValue = TextFieldValue(
-                newText,
-                TextRange(newText.length)
-            )
-            onValueChange(newText)
+            val matches = when (inputValidation) {
+                InputValidationType.Integer -> newValue.text.matches(RegexPatterns.integer.toRegex())
+                InputValidationType.Float -> newValue.text.matches(RegexPatterns.float.toRegex())
+                InputValidationType.Time -> newValue.text.matches(RegexPatterns.time.toRegex())
+            }
+            if (matches) {
+                textFieldValue = newValue
+                onValueChange(newValue.text)
+            }
         },
         keyboardType = KeyboardType.Number
     )
+}
+
+enum class InputValidationType {
+    Integer, Float, Time
 }
