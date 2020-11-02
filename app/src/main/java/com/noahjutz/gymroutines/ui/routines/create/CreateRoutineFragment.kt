@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focusObserver
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -162,6 +163,7 @@ fun CreateRoutineScreen(
     }
 }
 
+@ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
 fun SetList(
@@ -191,6 +193,7 @@ fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit)
     }
 }
 
+@ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
 fun ExerciseCard(setGroup: List<Set>) {
@@ -214,15 +217,20 @@ fun ExerciseCard(setGroup: List<Set>) {
                 setGroup.forEachIndexed { i, set ->
                     DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(modifier = Modifier.weight(1f), text = (0..5).random().toString())
-                        SetTextField(
-                            modifier = Modifier.weight(1f),
-                            text = set.reps?.toString() ?: "",
-                            onValueChange = {
-                                val reps = if (it.isEmpty()) null
-                                else it.split('.').first().toInt()
-                                editor.updateRoutine { sets[i].reps = reps }
+                        var reps by remember {
+                            mutableStateOf(TextFieldValue(set.reps?.toString() ?: ""))
+                        }
+                        BaseTextField(
+                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
+                                if (!focus.isFocused) editor.updateRoutine {
+                                    sets[i].reps = reps.text.takeIf { it.isNotEmpty() }?.toInt()
+                                }
                             },
-                            inputValidation = InputValidationType.Integer
+                            value = reps,
+                            onValueChange = {
+                                if (it.text.matches(RegexPatterns.integer)) reps = it
+                            },
+                            keyboardType = KeyboardType.Number
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
@@ -269,6 +277,7 @@ fun DataTableRow(
     }
 }
 
+@Deprecated("Use custom BaseTextField instead")
 @ExperimentalFoundationApi
 @Composable
 fun SetTextField(
