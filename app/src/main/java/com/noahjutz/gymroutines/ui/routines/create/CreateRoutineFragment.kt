@@ -57,7 +57,6 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.absoluteValue
 
 @ExperimentalFocus
 @ExperimentalFoundationApi
@@ -303,13 +302,17 @@ enum class InputValidationType {
     Integer, Float, Time
 }
 
+/** Turns integer of 0-4 digits to MM:SS format */
 val timeVisualTransformation = object : VisualTransformation {
-    override fun filter(text: AnnotatedString): TransformedText {
-        val zeroesToAdd = 4 - text.text.length
-        val withZeroes = "0".repeat(zeroesToAdd.absoluteValue) + text.text
-        val withColons = "${withZeroes[0]}${withZeroes[1]}:${withZeroes[2]}${withZeroes[3]}"
+    // TODO: Fix IllegalArgumentException when using the following OffsetMap
+    //val offsetMap = object : OffsetMap {
+    //    override fun originalToTransformed(offset: Int) = 5
+    //    override fun transformedToOriginal(offset: Int) = 5 - offset
+    //}
 
+    override fun filter(text: AnnotatedString): TransformedText {
+        val withZeroes = "0".repeat(4 - text.text.length) + text.text
+        val withColons = "${withZeroes[0]}${withZeroes[1]}:${withZeroes[2]}${withZeroes[3]}"
         return TransformedText(AnnotatedString(withColons), OffsetMap.identityOffsetMap)
     }
-
 }
