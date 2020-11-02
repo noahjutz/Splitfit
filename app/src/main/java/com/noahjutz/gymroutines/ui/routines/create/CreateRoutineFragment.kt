@@ -232,14 +232,23 @@ fun ExerciseCard(setGroup: List<Set>) {
                             },
                             keyboardType = KeyboardType.Number
                         )
-                        SetTextField(
-                            modifier = Modifier.weight(1f),
-                            text = set.weight?.toString() ?: "",
+
+                        var weight by remember {
+                            mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
+                        }
+                        BaseTextField(
+                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
+                                if (!focus.isFocused) editor.updateRoutine {
+                                    sets[i].weight =
+                                        weight.text.takeIf { it.isNotEmpty() }?.toDouble()
+                                    weight = TextFieldValue(sets[i].weight?.toString() ?: "")
+                                }
+                            },
+                            value = weight,
                             onValueChange = {
-                                val weight = if (it.isEmpty()) null
-                                else it.toDouble()
-                                editor.updateRoutine { sets[i].weight = weight }
-                            }
+                                if (it.text.matches(RegexPatterns.float)) weight = it
+                            },
+                            keyboardType = KeyboardType.Number
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
