@@ -279,7 +279,7 @@ fun SetTextField(
 ) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue(text)) }
     BaseTextField(
-        modifier = modifier.width(64.dp),
+        modifier = modifier.fillMaxWidth(),
         value = textFieldValue,
         onValueChange = { newValue ->
             val matches = when (inputValidation) {
