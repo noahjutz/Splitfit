@@ -19,7 +19,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -41,7 +40,6 @@ import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focusObserver
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
@@ -307,10 +305,9 @@ enum class InputValidationType {
 
 val timeVisualTransformation = object : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val zeroesToAdd = 6 - text.text.length
+        val zeroesToAdd = 4 - text.text.length
         val withZeroes = "0".repeat(zeroesToAdd.absoluteValue) + text.text
-        val withColons = "" +
-                withZeroes[0] + withZeroes[1] + ":" + withZeroes[2] + withZeroes[3] + ":" + withZeroes[4] + withZeroes[5]
+        val withColons = "${withZeroes[0]}${withZeroes[1]}:${withZeroes[2]}${withZeroes[3]}"
 
         return TransformedText(AnnotatedString(withColons), OffsetMap.identityOffsetMap)
     }

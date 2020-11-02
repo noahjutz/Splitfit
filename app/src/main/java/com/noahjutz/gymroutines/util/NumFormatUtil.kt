@@ -26,6 +26,6 @@ object RegexPatterns {
         ^(0|[1-9]\d{0,2})?((?<=\d)\.)?((?<=\.)\d{1,3}$)?
     """.trimIndent().toRegex()
     val time = """
-        ^$|[1-9]\d{0,5}
+        ^$|[1-9]\d{0,3}
     """.trimIndent().toRegex()
 }
