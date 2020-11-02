@@ -36,6 +36,10 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.focus.ExperimentalFocus
+import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focusObserver
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -53,6 +57,7 @@ import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalFocus
 @ExperimentalFoundationApi
 @AndroidEntryPoint
 class CreateRoutineFragment : Fragment() {
@@ -105,6 +110,7 @@ class CreateRoutineFragment : Fragment() {
     }
 }
 
+@ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
 fun CreateRoutineScreen(
@@ -128,14 +134,23 @@ fun CreateRoutineScreen(
                         icon = { Icon(Icons.Default.ArrowBack) })
                 },
                 title = {
-                    var nameFieldValue by remember { mutableStateOf(TextFieldValue(presenter.initialName)) }
-                    BaseTextField(
-                        value = nameFieldValue,
-                        onValueChange = {
-                            nameFieldValue = it
-                            editor.updateRoutine { this.name = it.text }
-                        },
-                    )
+                    Box {
+                        var nameFieldValue by remember { mutableStateOf(TextFieldValue(presenter.initialName)) }
+                        var focusState by remember { mutableStateOf(false) }
+                        BaseTextField(
+                            value = nameFieldValue,
+                            onValueChange = {
+                                nameFieldValue = it
+                                editor.updateRoutine { this.name = it.text }
+                            },
+                            modifier = Modifier.focusObserver {
+                                focusState = it == FocusState.Active
+                            }
+                        )
+                        if (nameFieldValue.text.isEmpty() && !focusState) {
+                            Text("Unnamed", modifier = Modifier.drawOpacity(0.5f))
+                        }
+                    }
                 }
             )
         }
