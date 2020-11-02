@@ -269,14 +269,23 @@ fun ExerciseCard(setGroup: List<Set>) {
                             visualTransformation = timeVisualTransformation,
                             cursorColor = Color.Transparent
                         )
-                        SetTextField(
-                            modifier = Modifier.weight(1f),
-                            text = set.distance?.toString() ?: "",
+
+                        var distance by remember {
+                            mutableStateOf(TextFieldValue(set.distance?.toString() ?: ""))
+                        }
+                        BaseTextField(
+                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
+                                if (!focus.isFocused) editor.updateRoutine {
+                                    sets[i].distance =
+                                        distance.text.takeIf { it.isNotEmpty() }?.toDouble()
+                                    distance = TextFieldValue(sets[i].distance?.toString() ?: "")
+                                }
+                            },
+                            value = distance,
                             onValueChange = {
-                                val distance = if (it.isEmpty()) null
-                                else it.toDouble()
-                                editor.updateRoutine { sets[i].distance = distance }
-                            }
+                                if (it.text.matches(RegexPatterns.float)) distance = it
+                            },
+                            keyboardType = KeyboardType.Number
                         )
                     }
                 }
@@ -293,41 +302,6 @@ fun DataTableRow(
     Row(modifier = modifier.fillMaxWidth()) {
         children()
     }
-}
-
-@Deprecated("Use custom BaseTextField instead")
-@ExperimentalFoundationApi
-@Composable
-fun SetTextField(
-    modifier: Modifier = Modifier,
-    text: String,
-    onValueChange: (String) -> Unit,
-    inputValidation: InputValidationType = InputValidationType.Float,
-) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue(text)) }
-    BaseTextField(
-        modifier = modifier.fillMaxWidth(),
-        value = textFieldValue,
-        onValueChange = { newValue ->
-            val matches = when (inputValidation) {
-                InputValidationType.Integer -> newValue.text.matches(RegexPatterns.integer)
-                InputValidationType.Float -> newValue.text.matches(RegexPatterns.float)
-                InputValidationType.Time -> newValue.text.matches(RegexPatterns.time)
-            }
-            if (matches) {
-                textFieldValue = if (inputValidation != InputValidationType.Time) newValue
-                else TextFieldValue(newValue.text, TextRange(newValue.text.length))
-                onValueChange(newValue.text)
-            }
-        },
-        keyboardType = KeyboardType.Number,
-        visualTransformation = if (inputValidation == InputValidationType.Time) timeVisualTransformation else VisualTransformation.None,
-        cursorColor = if (inputValidation == InputValidationType.Time) Color.Transparent else AmbientContentColor.current
-    )
-}
-
-enum class InputValidationType {
-    Integer, Float, Time
 }
 
 /** Turns integer of 0-4 digits to MM:SS format */
