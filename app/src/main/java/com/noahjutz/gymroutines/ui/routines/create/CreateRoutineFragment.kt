@@ -23,13 +23,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.BaseTextField
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -40,6 +39,7 @@ import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focusObserver
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
@@ -294,7 +294,8 @@ fun SetTextField(
             }
         },
         keyboardType = KeyboardType.Number,
-        visualTransformation = if (inputValidation == InputValidationType.Time) timeVisualTransformation else VisualTransformation.None
+        visualTransformation = if (inputValidation == InputValidationType.Time) timeVisualTransformation else VisualTransformation.None,
+        cursorColor = if (inputValidation == InputValidationType.Time) Color.Transparent else AmbientContentColor.current
     )
 }
 
