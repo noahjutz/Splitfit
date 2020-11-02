@@ -25,5 +25,4 @@ object RegexPatterns {
     val float = """
         ^(0|[1-9]\d{0,2})?((?<=\d)\.)?((?<=\.)\d{1,3}$)?
     """.trimIndent().toRegex()
-    const val time = "" // TODO
 }
