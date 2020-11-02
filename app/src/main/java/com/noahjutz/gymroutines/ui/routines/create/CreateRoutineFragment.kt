@@ -239,7 +239,8 @@ fun ExerciseCard(setGroup: List<Set>) {
                                 val time = if (it.isEmpty()) null
                                 else it.split('.').first().toInt()
                                 editor.updateRoutine { sets[i].time = time }
-                            }
+                            },
+                            inputValidation = InputValidationType.Time
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
@@ -283,7 +284,7 @@ fun SetTextField(
             val matches = when (inputValidation) {
                 InputValidationType.Integer -> newValue.text.matches(RegexPatterns.integer)
                 InputValidationType.Float -> newValue.text.matches(RegexPatterns.float)
-                InputValidationType.Time -> newValue.text.matches(RegexPatterns.time.toRegex())
+                InputValidationType.Time -> newValue.text.matches(RegexPatterns.integer)
             }
             if (matches) {
                 textFieldValue = newValue
