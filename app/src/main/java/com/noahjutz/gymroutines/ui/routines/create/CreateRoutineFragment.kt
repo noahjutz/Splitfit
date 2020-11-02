@@ -250,15 +250,24 @@ fun ExerciseCard(setGroup: List<Set>) {
                             },
                             keyboardType = KeyboardType.Number
                         )
-                        SetTextField(
-                            modifier = Modifier.weight(1f),
-                            text = set.time?.toString() ?: "",
-                            onValueChange = {
-                                val time = if (it.isEmpty()) null
-                                else it.split('.').first().toInt()
-                                editor.updateRoutine { sets[i].time = time }
+
+                        var time by remember {
+                            mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
+                        }
+                        BaseTextField(
+                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
+                                if (!focus.isFocused) editor.updateRoutine {
+                                    sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
+                                }
                             },
-                            inputValidation = InputValidationType.Time
+                            value = time,
+                            onValueChange = {
+                                if (it.text.matches(RegexPatterns.time)) time =
+                                    TextFieldValue(it.text, TextRange(it.text.length))
+                            },
+                            keyboardType = KeyboardType.Number,
+                            visualTransformation = timeVisualTransformation,
+                            cursorColor = Color.Transparent
                         )
                         SetTextField(
                             modifier = Modifier.weight(1f),
@@ -330,7 +339,7 @@ val timeVisualTransformation = object : VisualTransformation {
     //}
 
     override fun filter(text: AnnotatedString): TransformedText {
-        val withZeroes = "0".repeat(4 - text.text.length) + text.text
+        val withZeroes = "0".repeat((4 - text.text.length).takeIf { it > 0 } ?: 0) + text.text
         val withColons = "${withZeroes[0]}${withZeroes[1]}:${withZeroes[2]}${withZeroes[3]}"
         return TransformedText(AnnotatedString(withColons), OffsetMap.identityOffsetMap)
     }
