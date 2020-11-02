@@ -207,7 +207,7 @@ fun ExerciseCard(setGroup: List<Set>) {
                 fontSize = 20.sp
             )
             Column {
-                DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
+                Row(modifier = Modifier.padding(bottom = 16.dp)) {
                     Text(modifier = Modifier.weight(1f), text = "set")
                     Text(modifier = Modifier.weight(1f), text = "reps")
                     Text(modifier = Modifier.weight(1f), text = "weight")
@@ -215,7 +215,7 @@ fun ExerciseCard(setGroup: List<Set>) {
                     Text(modifier = Modifier.weight(1f), text = "distance")
                 }
                 setGroup.forEachIndexed { i, set ->
-                    DataTableRow(modifier = Modifier.padding(bottom = 16.dp)) {
+                    Row(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(modifier = Modifier.weight(1f), text = (0..5).random().toString())
                         var reps by remember {
                             mutableStateOf(TextFieldValue(set.reps?.toString() ?: ""))
@@ -291,16 +291,6 @@ fun ExerciseCard(setGroup: List<Set>) {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun DataTableRow(
-    modifier: Modifier = Modifier,
-    children: @Composable RowScope.() -> Unit
-) {
-    Row(modifier = modifier.fillMaxWidth()) {
-        children()
     }
 }
 
