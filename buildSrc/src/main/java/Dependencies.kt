@@ -85,9 +85,9 @@ object TestLibs {
     const val composeTest = "androidx.ui:ui-test:${Versions.compose}"
 }
 
-object Classpaths {
-    const val gradle = "com.android.tools.build:gradle:${Versions.gradle}"
-    const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val hiltGradle = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+object GradlePlugins {
+    const val android = "com.android.tools.build:gradle:${Versions.gradle}"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
     const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 }

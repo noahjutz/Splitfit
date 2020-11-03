@@ -24,10 +24,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath(Classpaths.gradle)
-        classpath(Classpaths.kotlinGradle)
-        classpath(Classpaths.hiltGradle)
-        classpath(Classpaths.safeArgs)
+        classpath(GradlePlugins.android)
+        classpath(GradlePlugins.kotlin)
+        classpath(GradlePlugins.hilt)
+        classpath(GradlePlugins.safeArgs)
     }
 }
 
