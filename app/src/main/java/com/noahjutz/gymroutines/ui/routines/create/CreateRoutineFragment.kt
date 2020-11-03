@@ -175,23 +175,13 @@ fun SetList(
     }
 }
 
-@Composable
-fun FancyCard(modifier: Modifier = Modifier, children: @Composable() () -> Unit) {
-    Card(
-        modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)
-            .fillMaxWidth()
-    ) {
-        children()
-    }
-}
-
 @ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
 fun ExerciseCard(setGroup: List<Set>) {
     val editor = viewModel<CreateRoutineEditor>()
     val presenter = viewModel<CreateRoutinePresenter>()
-    FancyCard {
+    Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp).fillMaxWidth()) {
         Column(Modifier.padding(horizontal = 16.dp)) {
             Text(
                 modifier = Modifier.padding(vertical = 16.dp),
