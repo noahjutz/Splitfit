@@ -46,7 +46,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.*
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
@@ -165,7 +164,7 @@ fun CreateRoutineScreen(
                 }
             }
         ) { setGroup ->
-            ExerciseCard(setGroup)
+            SetGroupCard(setGroup)
         }
     }
 }
@@ -173,7 +172,7 @@ fun CreateRoutineScreen(
 @ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
-fun ExerciseCard(setGroup: List<Set>) {
+fun SetGroupCard(setGroup: List<Set>) {
     val editor = viewModel<CreateRoutineEditor>()
     val presenter = viewModel<CreateRoutinePresenter>()
     Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp).fillMaxWidth()) {
