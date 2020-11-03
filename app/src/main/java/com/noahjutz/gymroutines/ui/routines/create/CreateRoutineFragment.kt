@@ -19,17 +19,17 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BaseTextField
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -38,7 +38,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focusObserver
 import androidx.compose.ui.graphics.Color
@@ -220,14 +219,15 @@ fun ExerciseCard(setGroup: List<Set>) {
                             mutableStateOf(TextFieldValue(set.reps?.toString() ?: ""))
                         }
                         BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
-                                if (!focus.isFocused) editor.updateRoutine {
-                                    sets[i].reps = reps.text.takeIf { it.isNotEmpty() }?.toInt()
-                                }
-                            },
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
                             value = reps,
                             onValueChange = {
-                                if (it.text.matches(RegexPatterns.integer)) reps = it
+                                if (it.text.matches(RegexPatterns.integer)) {
+                                    reps = it
+                                    editor.updateRoutine {
+                                        sets[i].reps = reps.text.takeIf { it.isNotEmpty() }?.toInt()
+                                    }
+                                }
                             },
                             keyboardType = KeyboardType.Number
                         )
@@ -236,16 +236,16 @@ fun ExerciseCard(setGroup: List<Set>) {
                             mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
                         }
                         BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
-                                if (!focus.isFocused) editor.updateRoutine {
-                                    sets[i].weight =
-                                        weight.text.takeIf { it.isNotEmpty() }?.toDouble()
-                                    weight = TextFieldValue(sets[i].weight?.toString() ?: "")
-                                }
-                            },
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
                             value = weight,
                             onValueChange = {
-                                if (it.text.matches(RegexPatterns.float)) weight = it
+                                if (it.text.matches(RegexPatterns.float)) {
+                                    weight = it
+                                    editor.updateRoutine {
+                                        sets[i].weight =
+                                            weight.text.takeIf { it.isNotEmpty() }?.toDouble()
+                                    }
+                                }
                             },
                             keyboardType = KeyboardType.Number
                         )
@@ -254,15 +254,15 @@ fun ExerciseCard(setGroup: List<Set>) {
                             mutableStateOf(TextFieldValue(set.time?.toString() ?: ""))
                         }
                         BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
-                                if (!focus.isFocused) editor.updateRoutine {
-                                    sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
-                                }
-                            },
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
                             value = time,
                             onValueChange = {
-                                if (it.text.matches(RegexPatterns.time)) time =
-                                    TextFieldValue(it.text, TextRange(it.text.length))
+                                if (it.text.matches(RegexPatterns.time)){
+                                    time = TextFieldValue(it.text, TextRange(it.text.length))
+                                    editor.updateRoutine {
+                                        sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
+                                    }
+                                }
                             },
                             keyboardType = KeyboardType.Number,
                             visualTransformation = timeVisualTransformation,
@@ -273,16 +273,16 @@ fun ExerciseCard(setGroup: List<Set>) {
                             mutableStateOf(TextFieldValue(set.distance?.toString() ?: ""))
                         }
                         BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
-                                if (!focus.isFocused) editor.updateRoutine {
-                                    sets[i].distance =
-                                        distance.text.takeIf { it.isNotEmpty() }?.toDouble()
-                                    distance = TextFieldValue(sets[i].distance?.toString() ?: "")
-                                }
-                            },
+                            modifier = Modifier.weight(1f).fillMaxWidth(),
                             value = distance,
                             onValueChange = {
-                                if (it.text.matches(RegexPatterns.float)) distance = it
+                                if (it.text.matches(RegexPatterns.float)) {
+                                    distance = it
+                                    editor.updateRoutine {
+                                        sets[i].distance =
+                                            distance.text.takeIf { it.isNotEmpty() }?.toDouble()
+                                    }
+                                }
                             },
                             keyboardType = KeyboardType.Number
                         )
