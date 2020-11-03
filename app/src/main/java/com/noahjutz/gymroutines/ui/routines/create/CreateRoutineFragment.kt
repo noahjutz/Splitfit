@@ -152,26 +152,18 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        SetList(sets ?: emptyList())
-    }
-}
-
-@ExperimentalFocus
-@ExperimentalFoundationApi
-@Composable
-fun SetList(
-    sets: List<Set>,
-) {
-    LazyColumnFor(
-        items = mutableListOf<MutableList<Set>>().also { setGroupList ->
-            sets.forEachIndexed { i, set ->
-                if (i == 0 || (i > 0 && sets[i - 1].exerciseId != set.exerciseId))
-                    setGroupList.add(mutableListOf(set))
-                else setGroupList.last().add(set)
+        val setsNotNull = sets ?: emptyList()
+        LazyColumnFor(
+            items = mutableListOf<MutableList<Set>>().also { setGroupList ->
+                setsNotNull.forEachIndexed { i, set ->
+                    if (i == 0 || (i > 0 && setsNotNull[i - 1].exerciseId != set.exerciseId))
+                        setGroupList.add(mutableListOf(set))
+                    else setGroupList.last().add(set)
+                }
             }
+        ) { setGroup ->
+            ExerciseCard(setGroup)
         }
-    ) { setGroup ->
-        ExerciseCard(setGroup)
     }
 }
 
