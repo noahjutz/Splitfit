@@ -74,13 +74,9 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen(::addExercise, ::popUp, ::deleteSet)
+                CreateRoutineScreen(::addExercise, ::popUp)
             }
         }
-    }
-
-    private fun deleteSet(set: Set) {
-        viewModel.updateRoutine { sets.remove(set) }
     }
 
     private fun popUp() {
@@ -118,7 +114,6 @@ class CreateRoutineFragment : Fragment() {
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popUp: () -> Unit,
-    deleteSet: (Set) -> Unit
 ) {
     val presenter = viewModel<CreateRoutinePresenter>()
     val editor = viewModel<CreateRoutineEditor>()
@@ -158,7 +153,7 @@ fun CreateRoutineScreen(
         }
     ) {
         Column {
-            SetList(sets ?: emptyList(), deleteSet)
+            SetList(sets ?: emptyList())
         }
     }
 }
@@ -168,7 +163,6 @@ fun CreateRoutineScreen(
 @Composable
 fun SetList(
     sets: List<Set>,
-    deleteSet: (Set) -> Unit
 ) {
     LazyColumnFor(
         items = mutableListOf<MutableList<Set>>().also { setGroupList ->
