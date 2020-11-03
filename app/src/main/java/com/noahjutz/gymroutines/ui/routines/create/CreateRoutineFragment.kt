@@ -181,93 +181,91 @@ fun ExerciseCard(setGroup: List<Set>) {
                 text = presenter.getExerciseName(setGroup.first().exerciseId),
                 fontSize = 20.sp
             )
-            Column {
+            Row(modifier = Modifier.padding(bottom = 16.dp)) {
+                Text(modifier = Modifier.weight(1f), text = "reps")
+                Text(modifier = Modifier.weight(1f), text = "weight")
+                Text(modifier = Modifier.weight(1f), text = "time")
+                Text(modifier = Modifier.weight(1f), text = "distance")
+            }
+            setGroup.forEachIndexed { i, set ->
                 Row(modifier = Modifier.padding(bottom = 16.dp)) {
-                    Text(modifier = Modifier.weight(1f), text = "reps")
-                    Text(modifier = Modifier.weight(1f), text = "weight")
-                    Text(modifier = Modifier.weight(1f), text = "time")
-                    Text(modifier = Modifier.weight(1f), text = "distance")
-                }
-                setGroup.forEachIndexed { i, set ->
-                    Row(modifier = Modifier.padding(bottom = 16.dp)) {
-                        var reps by remember {
-                            mutableStateOf(TextFieldValue(set.reps?.toString() ?: ""))
-                        }
-                        BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth(),
-                            value = reps,
-                            onValueChange = {
-                                if (it.text.matches(RegexPatterns.integer)) {
-                                    reps = it
-                                    editor.updateRoutine {
-                                        sets[i].reps = reps.text.takeIf { it.isNotEmpty() }?.toInt()
-                                    }
-                                }
-                            },
-                            keyboardType = KeyboardType.Number
-                        )
-
-                        var weight by remember {
-                            mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
-                        }
-                        BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
-                                if (!it.isFocused) weight =
-                                    TextFieldValue(set.weight?.toString() ?: "")
-                            },
-                            value = weight,
-                            onValueChange = {
-                                if (it.text.matches(RegexPatterns.float)) {
-                                    weight = it
-                                    editor.updateRoutine {
-                                        sets[i].weight =
-                                            weight.text.takeIf { it.isNotEmpty() }?.toDouble()
-                                    }
-                                }
-                            },
-                            keyboardType = KeyboardType.Number
-                        )
-
-                        var time by remember {
-                            mutableStateOf(TextFieldValue(set.time?.toString() ?: ""))
-                        }
-                        BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth(),
-                            value = time,
-                            onValueChange = {
-                                if (it.text.matches(RegexPatterns.time)) {
-                                    time = TextFieldValue(it.text, TextRange(it.text.length))
-                                    editor.updateRoutine {
-                                        sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
-                                    }
-                                }
-                            },
-                            keyboardType = KeyboardType.Number,
-                            visualTransformation = timeVisualTransformation,
-                            cursorColor = Color.Transparent
-                        )
-
-                        var distance by remember {
-                            mutableStateOf(TextFieldValue(set.distance?.toString() ?: ""))
-                        }
-                        BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
-                                if (!it.isFocused) distance =
-                                    TextFieldValue(set.distance?.toString() ?: "")
-                            },
-                            value = distance,
-                            onValueChange = {
-                                if (it.text.matches(RegexPatterns.float)) {
-                                    distance = it
-                                    editor.updateRoutine {
-                                        sets[i].distance =
-                                            distance.text.takeIf { it.isNotEmpty() }?.toDouble()
-                                    }
-                                }
-                            },
-                            keyboardType = KeyboardType.Number
-                        )
+                    var reps by remember {
+                        mutableStateOf(TextFieldValue(set.reps?.toString() ?: ""))
                     }
+                    BaseTextField(
+                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        value = reps,
+                        onValueChange = {
+                            if (it.text.matches(RegexPatterns.integer)) {
+                                reps = it
+                                editor.updateRoutine {
+                                    sets[i].reps = reps.text.takeIf { it.isNotEmpty() }?.toInt()
+                                }
+                            }
+                        },
+                        keyboardType = KeyboardType.Number
+                    )
+
+                    var weight by remember {
+                        mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
+                    }
+                    BaseTextField(
+                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
+                            if (!it.isFocused) weight =
+                                TextFieldValue(set.weight?.toString() ?: "")
+                        },
+                        value = weight,
+                        onValueChange = {
+                            if (it.text.matches(RegexPatterns.float)) {
+                                weight = it
+                                editor.updateRoutine {
+                                    sets[i].weight =
+                                        weight.text.takeIf { it.isNotEmpty() }?.toDouble()
+                                }
+                            }
+                        },
+                        keyboardType = KeyboardType.Number
+                    )
+
+                    var time by remember {
+                        mutableStateOf(TextFieldValue(set.time?.toString() ?: ""))
+                    }
+                    BaseTextField(
+                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        value = time,
+                        onValueChange = {
+                            if (it.text.matches(RegexPatterns.time)) {
+                                time = TextFieldValue(it.text, TextRange(it.text.length))
+                                editor.updateRoutine {
+                                    sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
+                                }
+                            }
+                        },
+                        keyboardType = KeyboardType.Number,
+                        visualTransformation = timeVisualTransformation,
+                        cursorColor = Color.Transparent
+                    )
+
+                    var distance by remember {
+                        mutableStateOf(TextFieldValue(set.distance?.toString() ?: ""))
+                    }
+                    BaseTextField(
+                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
+                            if (!it.isFocused) distance =
+                                TextFieldValue(set.distance?.toString() ?: "")
+                        },
+                        value = distance,
+                        onValueChange = {
+                            if (it.text.matches(RegexPatterns.float)) {
+                                distance = it
+                                editor.updateRoutine {
+                                    sets[i].distance =
+                                        distance.text.takeIf { it.isNotEmpty() }?.toDouble()
+                                }
+                            }
+                        },
+                        keyboardType = KeyboardType.Number
+                    )
                 }
             }
         }
