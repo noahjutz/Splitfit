@@ -32,8 +32,10 @@ class SampleTest {
         }
 
         for (i in 1..20) {
-            onNodeWithText("Click me!").performClick()
-            onNodeWithText("number is $i").assertIsDisplayed()
+            composeTestRule.apply {
+                onNodeWithText("Click me!").performClick()
+                onNodeWithText("number is $i").assertIsDisplayed()
+            }
         }
     }
 }
