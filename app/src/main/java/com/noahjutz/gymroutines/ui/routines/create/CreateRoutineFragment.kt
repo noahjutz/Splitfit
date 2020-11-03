@@ -74,13 +74,18 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen(::addExercise, ::popUp)
+                CreateRoutineScreen(::addExercise, ::popBackStack)
             }
         }
     }
 
-    private fun popUp() {
+    private fun popBackStack() {
         findNavController().popBackStack()
+    }
+
+    private fun addExercise() {
+        val action = CreateRoutineFragmentDirections.addExercise()
+        findNavController().navigate(action)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,11 +106,6 @@ class CreateRoutineFragment : Fragment() {
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         }
     }
-
-    fun addExercise() {
-        val action = CreateRoutineFragmentDirections.addExercise()
-        findNavController().navigate(action)
-    }
 }
 
 @ExperimentalFocus
@@ -113,7 +113,7 @@ class CreateRoutineFragment : Fragment() {
 @Composable
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
-    popUp: () -> Unit,
+    popBackStack: () -> Unit,
 ) {
     val presenter = viewModel<CreateRoutinePresenter>()
     val editor = viewModel<CreateRoutineEditor>()
@@ -127,7 +127,7 @@ fun CreateRoutineScreen(
             TopAppBar(
                 navigationIcon = {
                     IconButton(
-                        onClick = popUp,
+                        onClick = popBackStack,
                         icon = { Icon(Icons.Default.ArrowBack) })
                 },
                 title = {
