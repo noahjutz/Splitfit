@@ -236,7 +236,10 @@ fun ExerciseCard(setGroup: List<Set>) {
                             mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
                         }
                         BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
+                                if (!it.isFocused) weight =
+                                    TextFieldValue(set.weight?.toString() ?: "")
+                            },
                             value = weight,
                             onValueChange = {
                                 if (it.text.matches(RegexPatterns.float)) {
@@ -257,7 +260,7 @@ fun ExerciseCard(setGroup: List<Set>) {
                             modifier = Modifier.weight(1f).fillMaxWidth(),
                             value = time,
                             onValueChange = {
-                                if (it.text.matches(RegexPatterns.time)){
+                                if (it.text.matches(RegexPatterns.time)) {
                                     time = TextFieldValue(it.text, TextRange(it.text.length))
                                     editor.updateRoutine {
                                         sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
@@ -273,7 +276,10 @@ fun ExerciseCard(setGroup: List<Set>) {
                             mutableStateOf(TextFieldValue(set.distance?.toString() ?: ""))
                         }
                         BaseTextField(
-                            modifier = Modifier.weight(1f).fillMaxWidth(),
+                            modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
+                                if (!it.isFocused) distance =
+                                    TextFieldValue(set.distance?.toString() ?: "")
+                            },
                             value = distance,
                             onValueChange = {
                                 if (it.text.matches(RegexPatterns.float)) {
