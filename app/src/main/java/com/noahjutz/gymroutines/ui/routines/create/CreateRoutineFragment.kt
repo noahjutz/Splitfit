@@ -152,9 +152,7 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        Column {
-            SetList(sets ?: emptyList())
-        }
+        SetList(sets ?: emptyList())
     }
 }
 
