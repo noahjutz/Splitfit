@@ -75,7 +75,12 @@ class CreateRoutineFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen(::addExercise, ::popBackStack)
+                CreateRoutineScreen(
+                    onAddExercise = ::addExercise,
+                    popBackStack = ::popBackStack,
+                    presenter = viewModel<CreateRoutinePresenter>(),
+                    editor = viewModel<CreateRoutineEditor>()
+                )
             }
         }
     }
@@ -115,10 +120,9 @@ class CreateRoutineFragment : Fragment() {
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
+    presenter: CreateRoutinePresenter,
+    editor: CreateRoutineEditor
 ) {
-    val presenter = viewModel<CreateRoutinePresenter>()
-    val editor = viewModel<CreateRoutineEditor>()
-
     val sets by presenter.sets.observeAsState()
     Scaffold(
         floatingActionButton = {
@@ -164,7 +168,7 @@ fun CreateRoutineScreen(
                 }
             }
         ) { setGroup ->
-            SetGroupCard(setGroup)
+            SetGroupCard(setGroup, editor, presenter)
         }
     }
 }
@@ -172,9 +176,11 @@ fun CreateRoutineScreen(
 @ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
-fun SetGroupCard(setGroup: List<Set>) {
-    val editor = viewModel<CreateRoutineEditor>()
-    val presenter = viewModel<CreateRoutinePresenter>()
+fun SetGroupCard(
+    setGroup: List<Set>,
+    editor: CreateRoutineEditor,
+    presenter: CreateRoutinePresenter
+) {
     Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp).fillMaxWidth()) {
         Column(Modifier.padding(horizontal = 16.dp)) {
             Row(
