@@ -238,7 +238,6 @@ fun ExerciseCard(setGroup: List<Set>) {
                         BaseTextField(
                             modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
                                 if (!focus.isFocused) editor.updateRoutine {
-                                    Log.d("CreateRoutineFragment", weight.text)
                                     sets[i].weight =
                                         weight.text.takeIf { it.isNotEmpty() }?.toDouble()
                                     weight = TextFieldValue(sets[i].weight?.toString() ?: "")
@@ -276,7 +275,6 @@ fun ExerciseCard(setGroup: List<Set>) {
                         BaseTextField(
                             modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
                                 if (!focus.isFocused) editor.updateRoutine {
-                                    Log.d("CreateRoutineFragment", distance.text)
                                     sets[i].distance =
                                         distance.text.takeIf { it.isNotEmpty() }?.toDouble()
                                     distance = TextFieldValue(sets[i].distance?.toString() ?: "")
