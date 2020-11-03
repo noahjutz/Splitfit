@@ -147,7 +147,7 @@ fun CreateRoutineScreen(
                                 editor.updateRoutine { this.name = it.text }
                             },
                             modifier = Modifier.focusObserver {
-                                focusState = it == FocusState.Active
+                                focusState = it.isFocused
                             }
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
