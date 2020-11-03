@@ -251,7 +251,7 @@ fun ExerciseCard(setGroup: List<Set>) {
                         )
 
                         var time by remember {
-                            mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
+                            mutableStateOf(TextFieldValue(set.time?.toString() ?: ""))
                         }
                         BaseTextField(
                             modifier = Modifier.weight(1f).fillMaxWidth().focusObserver { focus ->
