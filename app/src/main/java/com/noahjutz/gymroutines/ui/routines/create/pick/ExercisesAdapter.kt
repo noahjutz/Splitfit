@@ -61,4 +61,3 @@ class ExercisesAdapter(
         fun onExerciseClick(exercise: Exercise, card: MaterialCardView)
     }
 }
-

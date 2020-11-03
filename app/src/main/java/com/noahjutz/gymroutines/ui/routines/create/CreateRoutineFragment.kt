@@ -128,7 +128,8 @@ fun CreateRoutineScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        icon = { Icon(Icons.Default.ArrowBack) })
+                        icon = { Icon(Icons.Default.ArrowBack) }
+                    )
                 },
                 title = {
                     Box {
@@ -276,10 +277,10 @@ fun ExerciseCard(setGroup: List<Set>) {
 /** Turns integer of 0-4 digits to MM:SS format */
 val timeVisualTransformation = object : VisualTransformation {
     // TODO: Fix IllegalArgumentException when using the following OffsetMap
-    //val offsetMap = object : OffsetMap {
+    // val offsetMap = object : OffsetMap {
     //    override fun originalToTransformed(offset: Int) = 5
     //    override fun transformedToOriginal(offset: Int) = 5 - offset
-    //}
+    // }
 
     override fun filter(text: AnnotatedString): TransformedText {
         val withZeroes = "0".repeat((4 - text.text.length).takeIf { it > 0 } ?: 0) + text.text

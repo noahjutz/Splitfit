@@ -54,4 +54,3 @@ class ExercisesAdapter(private val exerciseListener: ExerciseListener) :
 
     override fun getItemCount(): Int = items.size
 }
-

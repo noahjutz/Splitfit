@@ -24,7 +24,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
-import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 
 class CreateRoutinePresenter @ViewModelInject constructor(
@@ -35,7 +34,7 @@ class CreateRoutinePresenter @ViewModelInject constructor(
     val sets = Transformations.map(routine) { it?.sets ?: emptyList() }
     val name = Transformations.map(routine) { it?.name.toString() }
     val initialName: String
-            get() = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
+        get() = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
 
     fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
 }

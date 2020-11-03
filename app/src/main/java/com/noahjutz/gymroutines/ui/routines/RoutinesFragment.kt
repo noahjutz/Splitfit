@@ -23,12 +23,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.compose.material.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
@@ -101,7 +101,8 @@ fun RoutinesScreen(
                 modifier = Modifier.clickable(
                     onClick = {
                         addEditRoutine(routine.routineId)
-                    }, onLongClick = {
+                    },
+                    onLongClick = {
                         toDelete = routine
                         showDialog = true
                     }
@@ -117,12 +118,14 @@ fun RoutinesScreen(
                             toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
                             showDialog = false
                         },
-                        content = { Text("Yes") })
+                        content = { Text("Yes") }
+                    )
                 },
                 dismissButton = {
                     TextButton(
                         onClick = { showDialog = false },
-                        content = { Text("Cancel") })
+                        content = { Text("Cancel") }
+                    )
                 },
                 onDismissRequest = { showDialog = false }
             )

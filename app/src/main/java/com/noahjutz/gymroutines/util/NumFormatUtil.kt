@@ -19,13 +19,16 @@
 package com.noahjutz.gymroutines.util
 
 object RegexPatterns {
-    val integer = """
+    val integer =
+        """
         ^$|^0$|^[1-9]\d{0,2}$
-    """.trimIndent().toRegex()
-    val float = """
+        """.trimIndent().toRegex()
+    val float =
+        """
         ^(0|[1-9]\d{0,2})?((?<=\d)\.)?((?<=\.)\d{1,3}$)?
-    """.trimIndent().toRegex()
-    val time = """
+        """.trimIndent().toRegex()
+    val time =
+        """
         ^$|[1-9]\d{0,3}
-    """.trimIndent().toRegex()
+        """.trimIndent().toRegex()
 }
