@@ -83,7 +83,7 @@ class CreateRoutineFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    private fun addExercise() {
+    fun addExercise() {
         val action = CreateRoutineFragmentDirections.addExercise()
         findNavController().navigate(action)
     }
