@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
@@ -45,6 +46,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
@@ -176,11 +178,21 @@ fun ExerciseCard(setGroup: List<Set>) {
     val presenter = viewModel<CreateRoutinePresenter>()
     Card(Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp).fillMaxWidth()) {
         Column(Modifier.padding(horizontal = 16.dp)) {
-            Text(
-                modifier = Modifier.padding(vertical = 16.dp),
-                text = presenter.getExerciseName(setGroup.first().exerciseId),
-                fontSize = 20.sp
-            )
+            Row(
+                modifier = Modifier.padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = presenter.getExerciseName(setGroup.first().exerciseId),
+                    fontSize = 20.sp,
+                )
+                IconButton(
+                    onClick = { /* TODO */ },
+                    icon = { Icon(Icons.Default.Add) },
+                )
+            }
             Row(modifier = Modifier.padding(bottom = 16.dp)) {
                 Text(modifier = Modifier.weight(1f), text = "reps")
                 Text(modifier = Modifier.weight(1f), text = "weight")
