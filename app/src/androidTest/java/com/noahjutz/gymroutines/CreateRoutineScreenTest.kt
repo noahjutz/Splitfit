@@ -33,8 +33,6 @@ import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
