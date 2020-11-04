@@ -22,9 +22,12 @@ package com.noahjutz.gymroutines
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.focus.ExperimentalFocus
-import androidx.compose.ui.input.key.*
+import androidx.compose.ui.input.key.ExperimentalKeyInput
 import androidx.lifecycle.MutableLiveData
-import androidx.ui.test.*
+import androidx.ui.test.createAndroidComposeRule
+import androidx.ui.test.onNodeWithSubstring
+import androidx.ui.test.onNodeWithText
+import androidx.ui.test.performTextInput
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.MainActivity
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineEditor
@@ -35,23 +38,26 @@ import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalFoundationApi
+@ExperimentalFocus
 class CreateRoutineScreenTest {
+    private val presenter = mockk<CreateRoutinePresenter>(relaxed = true).apply {
+        every { initialName } returns "Test Routine Name"
+        every { sets } returns MutableLiveData(listOf(Set(-1), Set(-1), Set(-1)))
+        every { getExerciseName(-1) } returns "Test Exercise Name"
+    }
+
+    private val editor = mockk<CreateRoutineEditor>(relaxed = true)
+
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
+
 
     @ExperimentalKeyInput
     @ExperimentalFoundationApi
     @ExperimentalFocus
     @Test
     fun routineNameTextFieldWorks() {
-        val presenter = mockk<CreateRoutinePresenter>(relaxed = true).apply {
-            every { initialName } returns "Test Routine Name"
-            every { sets } returns MutableLiveData(listOf(Set(-1), Set(-1), Set(-1)))
-            every { getExerciseName(-1) } returns "Test Exercise Name"
-        }
-
-        val editor = mockk<CreateRoutineEditor>(relaxed = true)
-
         composeTestRule.apply {
             setContent {
                 MaterialTheme {
