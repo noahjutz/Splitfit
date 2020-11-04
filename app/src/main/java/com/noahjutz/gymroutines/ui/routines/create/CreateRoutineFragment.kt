@@ -164,15 +164,8 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        val setsNotNull = sets ?: emptyList()
         LazyColumnFor(
-            items = mutableListOf<MutableList<Set>>().also { setGroupList ->
-                setsNotNull.forEachIndexed { i, set ->
-                    if (i == 0 || (i > 0 && setsNotNull[i - 1].exerciseId != set.exerciseId))
-                        setGroupList.add(mutableListOf(set))
-                    else setGroupList.last().add(set)
-                }
-            }
+            items = sets?.let { it.groupBy { it.exerciseId }.values.toList() } ?: emptyList()
         ) { setGroup ->
             SetGroupCard(setGroup, editor, presenter)
         }
