@@ -24,10 +24,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.input.key.ExperimentalKeyInput
 import androidx.lifecycle.MutableLiveData
-import androidx.ui.test.createAndroidComposeRule
-import androidx.ui.test.onNodeWithSubstring
-import androidx.ui.test.onNodeWithText
-import androidx.ui.test.performTextInput
+import androidx.ui.test.*
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.MainActivity
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineEditor
@@ -35,23 +32,41 @@ import com.noahjutz.gymroutines.ui.routines.create.CreateRoutinePresenter
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalFoundationApi
 @ExperimentalFocus
 class CreateRoutineScreenTest {
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
+
     private val presenter = mockk<CreateRoutinePresenter>(relaxed = true).apply {
         every { initialName } returns "Test Routine Name"
         every { sets } returns MutableLiveData(listOf(Set(-1), Set(-1), Set(-1)))
         every { getExerciseName(-1) } returns "Test Exercise Name"
     }
-
     private val editor = mockk<CreateRoutineEditor>(relaxed = true)
+    private val onAddExercise: () -> Unit = mockk(relaxed = true)
+    private val popBackStack: () -> Unit = mockk(relaxed = true)
 
-    @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
-
+    @Before
+    fun initializeComopseTestRule() {
+        composeTestRule.apply {
+            setContent {
+                MaterialTheme {
+                    CreateRoutineScreen(
+                        onAddExercise = onAddExercise,
+                        popBackStack = popBackStack,
+                        presenter = presenter,
+                        editor = editor
+                    )
+                }
+            }
+        }
+    }
 
     @ExperimentalKeyInput
     @ExperimentalFoundationApi
@@ -59,20 +74,18 @@ class CreateRoutineScreenTest {
     @Test
     fun routineNameTextFieldWorks() {
         composeTestRule.apply {
-            setContent {
-                MaterialTheme {
-                    CreateRoutineScreen(
-                        onAddExercise = {},
-                        popBackStack = {},
-                        presenter = presenter,
-                        editor = editor
-                    )
-                }
-            }
             onNodeWithText("Test Routine Name").apply {
                 performTextInput("Legs")
             }
             onNodeWithSubstring("Legs").assertExists()
+        }
+    }
+
+    @Test
+    fun addExerciseButtonCallsAddExercise() {
+        composeTestRule.apply {
+            onNodeWithTag("addExerciseFab").performClick()
+            verify { onAddExercise() }
         }
     }
 }

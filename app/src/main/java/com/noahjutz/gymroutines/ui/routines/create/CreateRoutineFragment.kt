@@ -43,6 +43,7 @@ import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focusObserver
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.*
@@ -126,7 +127,7 @@ fun CreateRoutineScreen(
     val sets by presenter.sets.observeAsState()
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = onAddExercise, icon = { Icon(Icons.Default.Add) })
+            FloatingActionButton(onClick = onAddExercise, icon = { Icon(Icons.Default.Add) }, modifier = Modifier.testTag("addExerciseFab"))
         },
         topBar = {
             TopAppBar(
