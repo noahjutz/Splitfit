@@ -127,14 +127,19 @@ fun CreateRoutineScreen(
     val sets by presenter.sets.observeAsState()
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = onAddExercise, icon = { Icon(Icons.Default.Add) }, modifier = Modifier.testTag("addExerciseFab"))
+            FloatingActionButton(
+                onClick = onAddExercise,
+                icon = { Icon(Icons.Default.Add) },
+                modifier = Modifier.testTag("addExerciseFab")
+            )
         },
         topBar = {
             TopAppBar(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        icon = { Icon(Icons.Default.ArrowBack) }
+                        icon = { Icon(Icons.Default.ArrowBack) },
+                        modifier = Modifier.testTag("backButton")
                     )
                 },
                 title = {
