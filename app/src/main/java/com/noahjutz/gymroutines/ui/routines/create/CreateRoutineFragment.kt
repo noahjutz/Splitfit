@@ -79,8 +79,8 @@ class CreateRoutineFragment : Fragment() {
                 CreateRoutineScreen(
                     onAddExercise = ::addExercise,
                     popBackStack = ::popBackStack,
-                    presenter = viewModel<CreateRoutinePresenter>(),
-                    editor = viewModel<CreateRoutineEditor>()
+                    presenter = viewModel(),
+                    editor = viewModel()
                 )
             }
         }
