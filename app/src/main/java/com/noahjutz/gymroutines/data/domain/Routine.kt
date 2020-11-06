@@ -26,7 +26,7 @@ import com.noahjutz.gymroutines.util.Equatable
 data class Routine(
     var name: String = "",
     val sets: MutableList<Set> = mutableListOf()
-) : Equatable {
+) {
     @PrimaryKey(autoGenerate = true)
     var routineId: Int = 0
 }
