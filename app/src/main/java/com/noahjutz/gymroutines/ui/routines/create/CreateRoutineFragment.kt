@@ -231,7 +231,7 @@ fun SetGroupCard(
                         },
                         value = weight,
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.float)) {
+                            if (it.text.matches(RegexPatterns.float) && it.text != weight.text) {
                                 weight = it
                                 editor.updateRoutine {
                                     sets[i].weight =
@@ -239,7 +239,10 @@ fun SetGroupCard(
                                 }
                             }
                         },
-                        keyboardType = KeyboardType.Number
+                        keyboardType = KeyboardType.Number,
+                        onTextInputStarted = {
+                            weight = TextFieldValue(weight.text, TextRange(0, weight.text.length))
+                        }
                     )
 
                     var time by remember {
