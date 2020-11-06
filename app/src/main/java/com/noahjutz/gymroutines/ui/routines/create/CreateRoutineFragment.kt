@@ -226,28 +226,14 @@ fun SetGroupCard(
                         }
                     )
 
-                    var weight by remember {
-                        mutableStateOf(TextFieldValue(set.weight?.toString() ?: ""))
-                    }
-                    BaseTextField(
-                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
-                            if (!it.isFocused) weight =
-                                TextFieldValue(set.weight?.toString() ?: "")
-                        },
-                        value = weight,
+                    SetTextField(
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.float) && it.text != weight.text) {
-                                weight = it
-                                editor.updateRoutine {
-                                    sets[i].weight =
-                                        weight.text.takeIf { it.isNotEmpty() }?.toDouble()
-                                }
+                            editor.updateRoutine {
+                                sets[i].weight = it.takeIf { it.isNotEmpty() }?.toDouble()
                             }
                         },
-                        keyboardType = KeyboardType.Number,
-                        onTextInputStarted = {
-                            weight = TextFieldValue(weight.text, TextRange(0, weight.text.length))
-                        }
+                        regexPattern = RegexPatterns.float,
+                        valueGetter = { set.weight?.toString() }
                     )
 
                     SetTextField(
