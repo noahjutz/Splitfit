@@ -204,26 +204,14 @@ fun SetGroupCard(
             }
             setGroup.forEachIndexed { i, set ->
                 Row(modifier = Modifier.padding(bottom = 16.dp)) {
-                    var reps by remember {
-                        mutableStateOf(TextFieldValue(set.reps?.toString() ?: ""))
-                    }
-                    BaseTextField(
-                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
-                            if (!it.isFocused) reps = TextFieldValue(reps.text)
-                        },
-                        value = reps,
+                    SetTextField(
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.integer) && it.text != reps.text) {
-                                reps = it
-                                editor.updateRoutine {
-                                    sets[i].reps = reps.text.takeIf { it.isNotEmpty() }?.toInt()
-                                }
+                            editor.updateRoutine {
+                                sets[i].reps = it.takeIf { it.isNotEmpty() }?.toInt()
                             }
                         },
-                        keyboardType = KeyboardType.Number,
-                        onTextInputStarted = {
-                            reps = TextFieldValue(reps.text, TextRange(0, reps.text.length))
-                        }
+                        regexPattern = RegexPatterns.integer,
+                        valueGetter = { set.reps?.toString() }
                     )
 
                     SetTextField(
