@@ -46,8 +46,14 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.fontFamily
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
@@ -61,6 +67,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @ExperimentalFocus
 @ExperimentalFoundationApi
@@ -199,10 +206,10 @@ fun SetGroupCard(
                 )
             }
             Row(modifier = Modifier.padding(bottom = 16.dp)) {
-                Text(modifier = Modifier.weight(1f), text = "reps")
-                Text(modifier = Modifier.weight(1f), text = "weight")
-                Text(modifier = Modifier.weight(1f), text = "time")
-                Text(modifier = Modifier.weight(1f), text = "distance")
+                SetHeader("reps")
+                SetHeader("weight")
+                SetHeader("time")
+                SetHeader("distance")
             }
             setGroup.forEachIndexed { i, set ->
                 Row(modifier = Modifier.padding(bottom = 16.dp)) {
@@ -250,6 +257,19 @@ fun SetGroupCard(
             }
         }
     }
+}
+
+@Composable
+fun RowScope.SetHeader(
+    text: String
+) {
+    Text(
+        text = text.capitalize(Locale.getDefault()),
+        textAlign = TextAlign.Center,
+        modifier = Modifier.weight(1f),
+        maxLines = 1,
+        fontWeight = FontWeight.Bold
+    )
 }
 
 @ExperimentalFocus
