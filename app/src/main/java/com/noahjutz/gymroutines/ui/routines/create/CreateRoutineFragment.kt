@@ -246,10 +246,12 @@ fun SetGroupCard(
                         mutableStateOf(TextFieldValue(set.time?.toString() ?: ""))
                     }
                     BaseTextField(
-                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
+                            if (!it.isFocused) time = TextFieldValue(time.text)
+                        },
                         value = time,
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.time)) {
+                            if (it.text.matches(RegexPatterns.time) && it.text != time.text) {
                                 time = TextFieldValue(it.text, TextRange(it.text.length))
                                 editor.updateRoutine {
                                     sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
@@ -258,6 +260,9 @@ fun SetGroupCard(
                         },
                         keyboardType = KeyboardType.Number,
                         visualTransformation = timeVisualTransformation,
+                        onTextInputStarted = {
+                            time = TextFieldValue(time.text, TextRange(0, time.text.length))
+                        }
                     )
 
                     var distance by remember {
