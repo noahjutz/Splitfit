@@ -273,34 +273,49 @@ fun SetGroupCard(
                         }
                     )
 
-                    var distance by remember {
-                        mutableStateOf(TextFieldValue(set.distance?.toString() ?: ""))
-                    }
-                    BaseTextField(
-                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
-                            if (!it.isFocused) distance =
-                                TextFieldValue(set.distance?.toString() ?: "")
-                        },
-                        value = distance,
+                    SetTextField(
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.float) && it.text != distance.text) {
-                                distance = it
-                                editor.updateRoutine {
-                                    sets[i].distance =
-                                        distance.text.takeIf { it.isNotEmpty() }?.toDouble()
-                                }
+                            editor.updateRoutine {
+                                sets[i].distance = it.takeIf { it.isNotEmpty() }?.toDouble()
                             }
                         },
-                        keyboardType = KeyboardType.Number,
-                        onTextInputStarted = {
-                            distance =
-                                TextFieldValue(distance.text, TextRange(0, distance.text.length))
-                        }
+                        regexPattern = RegexPatterns.float,
+                        valueGetter = { set.distance?.toString() }
                     )
                 }
             }
         }
     }
+}
+
+@ExperimentalFocus
+@ExperimentalFoundationApi
+@Composable
+fun RowScope.SetTextField(
+    onValueChange: (String) -> Unit = {},
+    modifier: Modifier = Modifier,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    regexPattern: Regex = Regex(""),
+    valueGetter: () -> String? = { null },
+) {
+    var value by remember { mutableStateOf(TextFieldValue(valueGetter() ?: "")) }
+    BaseTextField(
+        value = value,
+        onValueChange = {
+            if (it.text.matches(regexPattern) && it.text != value.text) {
+                value = it
+                onValueChange(it.text)
+            }
+        },
+        modifier = modifier.weight(1f).fillMaxWidth().focusObserver {
+            if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
+        },
+        visualTransformation = visualTransformation,
+        keyboardType = KeyboardType.Number,
+        onTextInputStarted = {
+            value = TextFieldValue(value.text, TextRange(0, value.text.length))
+        }
+    )
 }
 
 /** Turns integer of 0-4 digits to MM:SS format */
