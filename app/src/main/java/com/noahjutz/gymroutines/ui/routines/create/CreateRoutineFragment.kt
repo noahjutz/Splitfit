@@ -23,12 +23,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BaseTextField
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -40,14 +41,11 @@ import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focusObserver
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.*
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
@@ -272,7 +270,7 @@ fun SetGroupCard(
                         },
                         value = distance,
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.float)) {
+                            if (it.text.matches(RegexPatterns.float) && it.text != distance.text) {
                                 distance = it
                                 editor.updateRoutine {
                                     sets[i].distance =
@@ -280,7 +278,11 @@ fun SetGroupCard(
                                 }
                             }
                         },
-                        keyboardType = KeyboardType.Number
+                        keyboardType = KeyboardType.Number,
+                        onTextInputStarted = {
+                            distance =
+                                TextFieldValue(distance.text, TextRange(0, distance.text.length))
+                        }
                     )
                 }
             }
@@ -291,13 +293,16 @@ fun SetGroupCard(
 /** Turns integer of 0-4 digits to MM:SS format */
 val timeVisualTransformation = object : VisualTransformation {
     val offsetMap = object : OffsetMap {
-       override fun originalToTransformed(offset: Int) = if (offset == 0) 0 else 5
-       override fun transformedToOriginal(offset: Int) = 5 - offset
+        override fun originalToTransformed(offset: Int) = if (offset == 0) 0 else 5
+        override fun transformedToOriginal(offset: Int) = 5 - offset
     }
 
     override fun filter(text: AnnotatedString): TransformedText {
         val withZeroes = "0".repeat((4 - text.text.length).takeIf { it > 0 } ?: 0) + text.text
         val withColons = "${withZeroes[0]}${withZeroes[1]}:${withZeroes[2]}${withZeroes[3]}"
-        return TransformedText(AnnotatedString(if (text.text.isEmpty()) "" else withColons), offsetMap)
+        return TransformedText(
+            AnnotatedString(if (text.text.isEmpty()) "" else withColons),
+            offsetMap
+        )
     }
 }
