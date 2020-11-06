@@ -23,13 +23,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.BaseTextField
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -46,7 +45,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
@@ -259,7 +260,6 @@ fun SetGroupCard(
                         },
                         keyboardType = KeyboardType.Number,
                         visualTransformation = timeVisualTransformation,
-                        cursorColor = Color.Transparent
                     )
 
                     var distance by remember {
@@ -290,15 +290,14 @@ fun SetGroupCard(
 
 /** Turns integer of 0-4 digits to MM:SS format */
 val timeVisualTransformation = object : VisualTransformation {
-    // TODO: Fix IllegalArgumentException when using the following OffsetMap
-    // val offsetMap = object : OffsetMap {
-    //    override fun originalToTransformed(offset: Int) = 5
-    //    override fun transformedToOriginal(offset: Int) = 5 - offset
-    // }
+    val offsetMap = object : OffsetMap {
+       override fun originalToTransformed(offset: Int) = if (offset == 0) 0 else 5
+       override fun transformedToOriginal(offset: Int) = 5 - offset
+    }
 
     override fun filter(text: AnnotatedString): TransformedText {
         val withZeroes = "0".repeat((4 - text.text.length).takeIf { it > 0 } ?: 0) + text.text
         val withColons = "${withZeroes[0]}${withZeroes[1]}:${withZeroes[2]}${withZeroes[3]}"
-        return TransformedText(AnnotatedString(withColons), OffsetMap.identityOffsetMap)
+        return TransformedText(AnnotatedString(if (text.text.isEmpty()) "" else withColons), offsetMap)
     }
 }
