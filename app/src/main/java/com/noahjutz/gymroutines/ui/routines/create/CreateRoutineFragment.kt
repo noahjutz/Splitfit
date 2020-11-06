@@ -208,17 +208,22 @@ fun SetGroupCard(
                         mutableStateOf(TextFieldValue(set.reps?.toString() ?: ""))
                     }
                     BaseTextField(
-                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
+                            if (!it.isFocused) reps = TextFieldValue(reps.text)
+                        },
                         value = reps,
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.integer)) {
+                            if (it.text.matches(RegexPatterns.integer) && it.text != reps.text) {
                                 reps = it
                                 editor.updateRoutine {
                                     sets[i].reps = reps.text.takeIf { it.isNotEmpty() }?.toInt()
                                 }
                             }
                         },
-                        keyboardType = KeyboardType.Number
+                        keyboardType = KeyboardType.Number,
+                        onTextInputStarted = {
+                            reps = TextFieldValue(reps.text, TextRange(0, reps.text.length))
+                        }
                     )
 
                     var weight by remember {
