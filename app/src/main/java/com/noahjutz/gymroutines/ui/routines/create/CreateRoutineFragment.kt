@@ -250,27 +250,15 @@ fun SetGroupCard(
                         }
                     )
 
-                    var time by remember {
-                        mutableStateOf(TextFieldValue(set.time?.toString() ?: ""))
-                    }
-                    BaseTextField(
-                        modifier = Modifier.weight(1f).fillMaxWidth().focusObserver {
-                            if (!it.isFocused) time = TextFieldValue(time.text)
-                        },
-                        value = time,
+                    SetTextField(
                         onValueChange = {
-                            if (it.text.matches(RegexPatterns.time) && it.text != time.text) {
-                                time = TextFieldValue(it.text, TextRange(it.text.length))
-                                editor.updateRoutine {
-                                    sets[i].time = time.text.takeIf { it.isNotEmpty() }?.toInt()
-                                }
+                            editor.updateRoutine {
+                                sets[i].time = it.takeIf { it.isNotEmpty() }?.toInt()
                             }
                         },
-                        keyboardType = KeyboardType.Number,
-                        visualTransformation = timeVisualTransformation,
-                        onTextInputStarted = {
-                            time = TextFieldValue(time.text, TextRange(0, time.text.length))
-                        }
+                        regexPattern = RegexPatterns.time,
+                        valueGetter = { set.time?.toString() },
+                        visualTransformation = timeVisualTransformation
                     )
 
                     SetTextField(
