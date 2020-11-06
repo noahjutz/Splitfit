@@ -23,13 +23,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.BaseTextField
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -37,6 +37,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.isFocused
@@ -46,6 +47,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.viewModel
@@ -269,14 +271,18 @@ fun RowScope.SetTextField(
                 onValueChange(it.text)
             }
         },
-        modifier = modifier.weight(1f).fillMaxWidth().focusObserver {
-            if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
-        },
+        modifier = modifier.weight(1f).fillMaxWidth().padding(horizontal = 4.dp)
+            .clip(shape = RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f)).padding(4.dp)
+            .focusObserver {
+                if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
+            },
         visualTransformation = visualTransformation,
         keyboardType = KeyboardType.Number,
         onTextInputStarted = {
             value = TextFieldValue(value.text, TextRange(0, value.text.length))
-        }
+        },
+        textStyle = AmbientTextStyle.current.copy(textAlign = TextAlign.Center)
     )
 }
 
