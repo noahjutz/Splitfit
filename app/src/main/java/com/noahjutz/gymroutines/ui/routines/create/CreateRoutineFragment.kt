@@ -36,7 +36,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawOpacity
@@ -207,27 +206,19 @@ fun SetGroupCard(
                 canDrag = { canDrag }
             )
             .clickable(
-                onLongClick = { canDrag = true }, // TODO: Fix bug where long-clicking and releasing allows for instant dragging
+                onLongClick = {
+                    canDrag = true
+                }, // TODO: Fix bug where long-clicking and releasing allows for instant dragging
                 onClick = {}
             )
             .offsetPx(y = offsetPosition)
     ) {
         Column(Modifier.padding(horizontal = 16.dp)) {
-            Row(
-                modifier = Modifier.padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = presenter.getExerciseName(setGroup.first().exerciseId),
-                    fontSize = 20.sp,
-                )
-                IconButton(
-                    onClick = { /* TODO */ },
-                    icon = { Icon(Icons.Default.Add) },
-                )
-            }
+            Text(
+                modifier = Modifier.padding(vertical = 16.dp),
+                text = presenter.getExerciseName(setGroup.first().exerciseId),
+                fontSize = 20.sp,
+            )
             if (expanded.value) {
                 Row(modifier = Modifier.padding(bottom = 16.dp)) {
                     SetHeader("reps")
