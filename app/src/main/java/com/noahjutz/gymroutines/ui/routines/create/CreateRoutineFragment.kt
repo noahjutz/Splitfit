@@ -34,6 +34,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -271,14 +272,22 @@ fun SetGroupCard(
                         )
                     }
                 }
-                TextButton(
-                    onClick = { editor.addSet(setGroup[0].exerciseId) },
-                    content = {
-                        Icon(Icons.Default.Add)
-                        Text("Add Set")
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp)
-                )
+                Row(modifier = Modifier.align(Alignment.End).padding(bottom = 16.dp)) {
+                    TextButton(
+                        onClick = { editor.addSet(setGroup[0].exerciseId) },
+                        content = {
+                            Icon(Icons.Default.Add)
+                            Text("Add Set")
+                        },
+                    )
+                    TextButton(
+                        onClick = { editor.removeSet(setGroup[setGroup.size-1]) },
+                        content = {
+                            Icon(Icons.Default.Remove)
+                            Text("Remove Set")
+                        },
+                    )
+                }
             }
         }
     }

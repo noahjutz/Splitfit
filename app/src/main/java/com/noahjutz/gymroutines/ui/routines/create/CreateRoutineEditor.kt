@@ -43,4 +43,8 @@ class CreateRoutineEditor @ViewModelInject constructor(
             }
         }
     }
+
+    fun removeSet(set: Set) {
+        updateRoutine { sets.remove(set) }
+    }
 }
