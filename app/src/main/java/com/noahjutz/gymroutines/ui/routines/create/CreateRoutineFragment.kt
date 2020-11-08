@@ -114,7 +114,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initViewModel() {
         sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            for (e in exercises) viewModel.updateRoutine { sets.add(Set(e.exerciseId)) }
+            for (e in exercises) viewModel.addSet(e.exerciseId)
             if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
         }
     }
@@ -272,7 +272,7 @@ fun SetGroupCard(
                     }
                 }
                 TextButton(
-                    onClick = {},
+                    onClick = { editor.addSet(setGroup[0].exerciseId) },
                     content = {
                         Icon(Icons.Default.Add)
                         Text("Add Set")
