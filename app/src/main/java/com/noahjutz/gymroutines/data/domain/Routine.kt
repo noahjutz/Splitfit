@@ -20,7 +20,6 @@ package com.noahjutz.gymroutines.data.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.noahjutz.gymroutines.util.Equatable
 
 @Entity(tableName = "routine_table")
 data class Routine(
