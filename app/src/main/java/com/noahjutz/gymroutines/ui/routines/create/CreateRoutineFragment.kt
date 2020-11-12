@@ -30,7 +30,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.AmbientTextStyle
 import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -281,7 +283,7 @@ fun SetGroupCard(
                         },
                     )
                     TextButton(
-                        onClick = { editor.removeSet(setGroup[setGroup.size-1]) },
+                        onClick = { editor.removeSet(setGroup[setGroup.size - 1]) },
                         content = {
                             Icon(Icons.Default.Remove)
                             Text("Remove Set")
