@@ -23,16 +23,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.AmbientTextStyle
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -154,7 +155,7 @@ fun CreateRoutineScreen(
                     Box {
                         var nameFieldValue by remember { mutableStateOf(TextFieldValue(presenter.initialName)) }
                         var focusState by remember { mutableStateOf(false) }
-                        BaseTextField(
+                        BasicTextField(
                             value = nameFieldValue,
                             onValueChange = {
                                 nameFieldValue = it
@@ -319,7 +320,7 @@ fun RowScope.SetTextField(
     valueGetter: () -> String? = { null },
 ) {
     var value by remember { mutableStateOf(TextFieldValue(valueGetter() ?: "")) }
-    BaseTextField(
+    BasicTextField(
         value = value,
         onValueChange = {
             if (it.text.matches(regexPattern) && it.text != value.text) {
@@ -334,7 +335,7 @@ fun RowScope.SetTextField(
                 if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
             },
         visualTransformation = visualTransformation,
-        keyboardType = KeyboardType.Number,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onTextInputStarted = {
             value = TextFieldValue(value.text, TextRange(0, value.text.length))
         },
