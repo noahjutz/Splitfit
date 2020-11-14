@@ -329,8 +329,9 @@ fun RowScope.SetTextField(
     BasicTextField(
         value = value,
         onValueChange = {
-            if (it.text.matches(regexPattern) && it.text != value.text) {
-                value = it
+            // TODO: Keep single-char values selected
+            if (it.text.matches(regexPattern) && (it.text != value.text || it.text.length <= 1)) {
+                value = TextFieldValue(it.text, TextRange(it.text.length))
                 onValueChange(it.text)
             }
         },
