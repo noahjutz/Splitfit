@@ -163,7 +163,11 @@ fun CreateRoutineScreen(
                             },
                             modifier = Modifier.focusObserver {
                                 focusState = it.isFocused
-                            }
+                            },
+                            textStyle = AmbientTextStyle.current.copy(
+                                color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
+                            ),
+                            cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
                             Text("Unnamed", modifier = Modifier.drawOpacity(0.5f))
@@ -339,7 +343,11 @@ fun RowScope.SetTextField(
         onTextInputStarted = {
             value = TextFieldValue(value.text, TextRange(0, value.text.length))
         },
-        textStyle = AmbientTextStyle.current.copy(textAlign = TextAlign.Center)
+        textStyle = AmbientTextStyle.current.copy(
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.onSurface
+        ),
+        cursorColor = MaterialTheme.colors.onSurface
     )
 }
 
