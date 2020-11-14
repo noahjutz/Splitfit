@@ -51,6 +51,7 @@ import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
@@ -324,6 +325,7 @@ fun RowScope.SetTextField(
     valueGetter: () -> String? = { null },
 ) {
     var value by remember { mutableStateOf(TextFieldValue(valueGetter() ?: "")) }
+    var kb: SoftwareKeyboardController? by remember {mutableStateOf(null)}
     BasicTextField(
         value = value,
         onValueChange = {
@@ -339,15 +341,22 @@ fun RowScope.SetTextField(
                 if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
             },
         visualTransformation = visualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
         onTextInputStarted = {
+            kb = it
             value = TextFieldValue(value.text, TextRange(0, value.text.length))
         },
         textStyle = AmbientTextStyle.current.copy(
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
         ),
-        cursorColor = MaterialTheme.colors.onSurface
+        cursorColor = MaterialTheme.colors.onSurface,
+        onImeActionPerformed = {
+            val text = valueGetter() ?: value.text
+            value = TextFieldValue(text, TextRange(0, text.length))
+            kb?.hideSoftwareKeyboard()
+        },
+        maxLines = 1
     )
 }
 
