@@ -204,7 +204,8 @@ fun SetGroupCard(
 ) {
     val offsetPosition = remember { mutableStateOf(0f) }
     Card(
-        Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp).fillMaxWidth()
+        elevation = 0.dp,
+        modifier = Modifier.fillMaxWidth()
             .draggable(
                 orientation = Orientation.Vertical,
                 onDragStarted = { expanded.value = false },
