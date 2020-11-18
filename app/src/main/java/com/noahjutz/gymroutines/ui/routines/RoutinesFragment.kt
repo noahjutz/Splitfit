@@ -40,7 +40,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.Routine
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -92,16 +91,9 @@ fun RoutinesScreen(
             )
         }
     ) {
-        var toDelete by remember { mutableStateOf<Routine?>(null) }
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
             val dismissState = rememberDismissState()
-
-            onCommit(dismissState.value) {
-                if (dismissState.value != DismissValue.Default) {
-                    toDelete = routine
-                }
-            }
 
             SwipeToDismiss(
                 state = dismissState,
@@ -122,14 +114,13 @@ fun RoutinesScreen(
                 }
             )
 
-            if (toDelete != null) {
+            if (dismissState.targetValue != DismissValue.Default) {
                 AlertDialog(
-                    title = { Text("Delete ${toDelete?.name?.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
+                    title = { Text("Delete ${routine.name}?") },
                     confirmButton = {
                         Button(
                             onClick = {
-                                toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
-                                toDelete = null
+                                viewModel.deleteRoutine(routine.routineId)
                             },
                             content = { Text("Yes") }
                         )
@@ -138,14 +129,12 @@ fun RoutinesScreen(
                         TextButton(
                             onClick = {
                                 dismissState.reset()
-                                toDelete = null
                             },
                             content = { Text("Cancel") }
                         )
                     },
                     onDismissRequest = {
                         dismissState.reset()
-                        toDelete = null
                     }
                 )
             }
