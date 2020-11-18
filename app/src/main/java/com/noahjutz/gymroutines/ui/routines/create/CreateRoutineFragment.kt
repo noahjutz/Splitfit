@@ -325,7 +325,7 @@ fun RowScope.SetTextField(
     valueGetter: () -> String? = { null },
 ) {
     var value by remember { mutableStateOf(TextFieldValue(valueGetter() ?: "")) }
-    var kb: SoftwareKeyboardController? by remember {mutableStateOf(null)}
+    var kb: SoftwareKeyboardController? by remember { mutableStateOf(null) }
     BasicTextField(
         value = value,
         onValueChange = {
