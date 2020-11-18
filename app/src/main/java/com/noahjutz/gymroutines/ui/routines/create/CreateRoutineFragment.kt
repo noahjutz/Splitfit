@@ -23,9 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animate
+import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,6 +37,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -52,6 +51,7 @@ import androidx.compose.ui.focusObserver
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.LongPressDragObserver
 import androidx.compose.ui.gesture.longPressDragGestureFilter
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
@@ -254,64 +254,86 @@ fun SetGroupCard(
                             }
                         }
 
-                        SwipeToDismiss(
-                            state = dismissState,
-                            background = {},
-                            dismissContent = {
-                                Row(
-                                    modifier = Modifier.padding(
-                                        bottom = 16.dp,
-                                        start = 16.dp,
-                                        end = 16.dp
-                                    )
-                                ) {
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].reps =
-                                                    it.takeIf { it.isNotEmpty() }?.toInt()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.integer,
-                                        valueGetter = { set.reps?.toString() }
-                                    )
+                        AnimatedVisibility(
+                            visible = dismissState.value == DismissValue.Default,
+                            enter = expandVertically(),
+                            exit = shrinkVertically()
+                        ) {
+                            SwipeToDismiss(
+                                state = dismissState,
+                                background = {
+                                    val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+                                    val alignment = when (direction) {
+                                        DismissDirection.StartToEnd -> Alignment.CenterStart
+                                        DismissDirection.EndToStart -> Alignment.CenterEnd
+                                    }
+                                    Box(
+                                        alignment = alignment,
+                                        modifier = Modifier.fillMaxSize().background(Color.Red).padding(horizontal = 16.dp)
+                                    ) {
+                                        Icon(Icons.Default.Delete)
+                                    }
+                                },
+                                dismissContent = {
+                                    Card(elevation = animate(if (dismissState.value == DismissValue.Default) 0.dp else 4.dp)) {
+                                        Row(
+                                            modifier = Modifier.padding(
+                                                bottom = 16.dp,
+                                                start = 16.dp,
+                                                end = 16.dp
+                                            )
+                                        ) {
+                                            SetTextField(
+                                                onValueChange = {
+                                                    editor.updateRoutine {
+                                                        sets[i].reps =
+                                                            it.takeIf { it.isNotEmpty() }?.toInt()
+                                                    }
+                                                },
+                                                regexPattern = RegexPatterns.integer,
+                                                valueGetter = { set.reps?.toString() }
+                                            )
 
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].weight =
-                                                    it.takeIf { it.isNotEmpty() }?.toDouble()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.float,
-                                        valueGetter = { set.weight?.toString() }
-                                    )
+                                            SetTextField(
+                                                onValueChange = {
+                                                    editor.updateRoutine {
+                                                        sets[i].weight =
+                                                            it.takeIf { it.isNotEmpty() }
+                                                                ?.toDouble()
+                                                    }
+                                                },
+                                                regexPattern = RegexPatterns.float,
+                                                valueGetter = { set.weight?.toString() }
+                                            )
 
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].time =
-                                                    it.takeIf { it.isNotEmpty() }?.toInt()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.time,
-                                        valueGetter = { set.time?.toString() },
-                                        visualTransformation = timeVisualTransformation
-                                    )
+                                            SetTextField(
+                                                onValueChange = {
+                                                    editor.updateRoutine {
+                                                        sets[i].time =
+                                                            it.takeIf { it.isNotEmpty() }?.toInt()
+                                                    }
+                                                },
+                                                regexPattern = RegexPatterns.time,
+                                                valueGetter = { set.time?.toString() },
+                                                visualTransformation = timeVisualTransformation
+                                            )
 
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].distance =
-                                                    it.takeIf { it.isNotEmpty() }?.toDouble()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.float,
-                                        valueGetter = { set.distance?.toString() }
-                                    )
+                                            SetTextField(
+                                                onValueChange = {
+                                                    editor.updateRoutine {
+                                                        sets[i].distance =
+                                                            it.takeIf { it.isNotEmpty() }
+                                                                ?.toDouble()
+                                                    }
+                                                },
+                                                regexPattern = RegexPatterns.float,
+                                                valueGetter = { set.distance?.toString() }
+                                            )
+                                        }
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
                     Row(modifier = Modifier.align(Alignment.End).padding(bottom = 16.dp)) {
                         TextButton(
