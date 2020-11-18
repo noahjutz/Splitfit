@@ -218,12 +218,20 @@ fun SetGroupCard(
                 .longPressDragGestureFilter(
                     longPressDragObserver = object : LongPressDragObserver {
                         override fun onDrag(dragDistance: Offset): Offset {
+                            super.onDrag(dragDistance)
                             offsetPosition.value += dragDistance.y
                             return dragDistance
                         }
 
                         override fun onStop(velocity: Offset) {
+                            super.onStop(velocity)
                             offsetPosition.value = 0f
+                            expanded.value = true
+                        }
+
+                        override fun onDragStart() {
+                            super.onDragStart()
+                            expanded.value = false
                         }
                     })
             ) {
@@ -248,7 +256,7 @@ fun SetGroupCard(
 
                         onCommit(dismissState.value) {
                             if (dismissState.value != DismissValue.Default) {
-                                editor.updateRoutine { sets.remove(set) }
+                                editor.updateRoutine { sets.removeAt(i) }
                                 dismissState.snapTo(DismissValue.Default)
                             }
                         }
