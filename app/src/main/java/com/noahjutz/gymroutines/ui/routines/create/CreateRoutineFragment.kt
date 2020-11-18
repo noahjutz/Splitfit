@@ -186,12 +186,11 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        val expanded = remember { mutableStateOf(true) }
         LazyColumnFor(
             items = sets?.let { it.groupBy { it.exerciseId }.values.toList() } ?: emptyList(),
             modifier = Modifier.fillMaxHeight()
         ) { setGroup ->
-            SetGroupCard(setGroup, editor, presenter, expanded)
+            SetGroupCard(setGroup, editor, presenter)
         }
     }
 }
@@ -205,7 +204,6 @@ fun SetGroupCard(
     setGroup: List<Set>,
     editor: CreateRoutineEditor,
     presenter: CreateRoutinePresenter,
-    expanded: MutableState<Boolean>,
 ) {
     val offsetPosition = remember { mutableStateOf(0f) }
     Card(
@@ -227,12 +225,10 @@ fun SetGroupCard(
                         override fun onStop(velocity: Offset) {
                             super.onStop(velocity)
                             offsetPosition.value = 0f
-                            expanded.value = true
                         }
 
                         override fun onDragStart() {
                             super.onDragStart()
-                            expanded.value = false
                         }
                     })
             ) {
@@ -242,107 +238,105 @@ fun SetGroupCard(
                     fontSize = 20.sp,
                 )
             }
-            Column {
-                Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
-                    SetHeader("reps")
-                    SetHeader("weight")
-                    SetHeader("time")
-                    SetHeader("distance")
-                }
-                setGroup.forEachIndexed { i, set ->
-                    val dismissState = rememberDismissState()
+            Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
+                SetHeader("reps")
+                SetHeader("weight")
+                SetHeader("time")
+                SetHeader("distance")
+            }
+            setGroup.forEachIndexed { i, set ->
+                val dismissState = rememberDismissState()
 
-                    onCommit(dismissState.value) {
-                        if (dismissState.value != DismissValue.Default) {
-                            editor.updateRoutine { sets.removeAt(i) }
-                            dismissState.snapTo(DismissValue.Default)
+                onCommit(dismissState.value) {
+                    if (dismissState.value != DismissValue.Default) {
+                        editor.updateRoutine { sets.removeAt(i) }
+                        dismissState.snapTo(DismissValue.Default)
+                    }
+                }
+
+                SwipeToDismiss(
+                    state = dismissState,
+                    background = {
+                        val direction =
+                            dismissState.dismissDirection ?: return@SwipeToDismiss
+                        val alignment = when (direction) {
+                            DismissDirection.StartToEnd -> Alignment.CenterStart
+                            DismissDirection.EndToStart -> Alignment.CenterEnd
+                        }
+                        Box(
+                            alignment = alignment,
+                            modifier = Modifier.fillMaxSize().background(Color.Red)
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Icon(Icons.Default.Delete)
+                        }
+                    },
+                    dismissContent = {
+                        Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
+                            Row(
+                                modifier = Modifier.padding(
+                                    vertical = 8.dp, horizontal = 16.dp
+                                )
+                            ) {
+                                SetTextField(
+                                    onValueChange = {
+                                        editor.updateRoutine {
+                                            sets[i].reps =
+                                                it.takeIf { it.isNotEmpty() }?.toInt()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.integer,
+                                    valueGetter = { set.reps?.toString() }
+                                )
+
+                                SetTextField(
+                                    onValueChange = {
+                                        editor.updateRoutine {
+                                            sets[i].weight =
+                                                it.takeIf { it.isNotEmpty() }
+                                                    ?.toDouble()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.float,
+                                    valueGetter = { set.weight?.toString() }
+                                )
+
+                                SetTextField(
+                                    onValueChange = {
+                                        editor.updateRoutine {
+                                            sets[i].time =
+                                                it.takeIf { it.isNotEmpty() }?.toInt()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.time,
+                                    valueGetter = { set.time?.toString() },
+                                    visualTransformation = timeVisualTransformation
+                                )
+
+                                SetTextField(
+                                    onValueChange = {
+                                        editor.updateRoutine {
+                                            sets[i].distance =
+                                                it.takeIf { it.isNotEmpty() }
+                                                    ?.toDouble()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.float,
+                                    valueGetter = { set.distance?.toString() }
+                                )
+                            }
                         }
                     }
-
-                    SwipeToDismiss(
-                        state = dismissState,
-                        background = {
-                            val direction =
-                                dismissState.dismissDirection ?: return@SwipeToDismiss
-                            val alignment = when (direction) {
-                                DismissDirection.StartToEnd -> Alignment.CenterStart
-                                DismissDirection.EndToStart -> Alignment.CenterEnd
-                            }
-                            Box(
-                                alignment = alignment,
-                                modifier = Modifier.fillMaxSize().background(Color.Red)
-                                    .padding(horizontal = 16.dp)
-                            ) {
-                                Icon(Icons.Default.Delete)
-                            }
-                        },
-                        dismissContent = {
-                            Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
-                                Row(
-                                    modifier = Modifier.padding(
-                                        vertical = 8.dp, horizontal = 16.dp
-                                    )
-                                ) {
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].reps =
-                                                    it.takeIf { it.isNotEmpty() }?.toInt()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.integer,
-                                        valueGetter = { set.reps?.toString() }
-                                    )
-
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].weight =
-                                                    it.takeIf { it.isNotEmpty() }
-                                                        ?.toDouble()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.float,
-                                        valueGetter = { set.weight?.toString() }
-                                    )
-
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].time =
-                                                    it.takeIf { it.isNotEmpty() }?.toInt()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.time,
-                                        valueGetter = { set.time?.toString() },
-                                        visualTransformation = timeVisualTransformation
-                                    )
-
-                                    SetTextField(
-                                        onValueChange = {
-                                            editor.updateRoutine {
-                                                sets[i].distance =
-                                                    it.takeIf { it.isNotEmpty() }
-                                                        ?.toDouble()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.float,
-                                        valueGetter = { set.distance?.toString() }
-                                    )
-                                }
-                            }
-                        }
-                    )
-                }
-                TextButton(
-                    onClick = { editor.addSet(setGroup[0].exerciseId) },
-                    content = {
-                        Icon(Icons.Default.Add)
-                        Text("Add Set")
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
+            TextButton(
+                onClick = { editor.addSet(setGroup[0].exerciseId) },
+                content = {
+                    Icon(Icons.Default.Add)
+                    Text("Add Set")
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
         }
     }
 }
