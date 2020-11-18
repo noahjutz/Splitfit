@@ -262,25 +262,25 @@ fun SetGroupCard(
                             SwipeToDismiss(
                                 state = dismissState,
                                 background = {
-                                    val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+                                    val direction =
+                                        dismissState.dismissDirection ?: return@SwipeToDismiss
                                     val alignment = when (direction) {
                                         DismissDirection.StartToEnd -> Alignment.CenterStart
                                         DismissDirection.EndToStart -> Alignment.CenterEnd
                                     }
                                     Box(
                                         alignment = alignment,
-                                        modifier = Modifier.fillMaxSize().background(Color.Red).padding(horizontal = 16.dp)
+                                        modifier = Modifier.fillMaxSize().background(Color.Red)
+                                            .padding(horizontal = 16.dp)
                                     ) {
                                         Icon(Icons.Default.Delete)
                                     }
                                 },
                                 dismissContent = {
-                                    Card(elevation = animate(if (dismissState.value == DismissValue.Default) 0.dp else 4.dp)) {
+                                    Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
                                         Row(
                                             modifier = Modifier.padding(
-                                                bottom = 16.dp,
-                                                start = 16.dp,
-                                                end = 16.dp
+                                                vertical = 8.dp, horizontal = 16.dp
                                             )
                                         ) {
                                             SetTextField(
