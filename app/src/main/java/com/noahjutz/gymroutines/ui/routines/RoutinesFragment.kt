@@ -23,17 +23,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.compose.animation.animate
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -47,6 +48,7 @@ class RoutinesFragment : Fragment() {
 
     private val viewModel: RoutinesViewModel by viewModels()
 
+    @ExperimentalMaterialApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,6 +78,7 @@ class RoutinesFragment : Fragment() {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun RoutinesScreen(
     addEditRoutine: (Int) -> Unit,
@@ -93,19 +96,32 @@ fun RoutinesScreen(
         var toDelete by remember { mutableStateOf<Routine?>(null) }
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
-            ListItem(
-                text = {
-                    Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
-                },
-                modifier = Modifier.clickable(
-                    onClick = {
-                        addEditRoutine(routine.routineId)
-                    },
-                    onLongClick = {
-                        toDelete = routine
-                        showDialog = true
+            val dismissState = rememberDismissState(
+                confirmStateChange = { false } // TODO Remove this line
+            )
+            SwipeToDismiss(
+                state = dismissState,
+                background = { /* TODO */ },
+                dismissContent = {
+                    Card(
+                        elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
+                    ) {
+                        ListItem(
+                            text = {
+                                Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                            },
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    addEditRoutine(routine.routineId)
+                                },
+                                onLongClick = {
+                                    toDelete = routine
+                                    showDialog = true
+                                }
+                            )
+                        )
                     }
-                )
+                }
             )
         }
         if (showDialog) {
