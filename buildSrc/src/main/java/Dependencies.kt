@@ -39,8 +39,8 @@ object Versions {
     const val navigation = "2.3.1"
     const val compose = "1.0.0-alpha07"
 
-    const val junit = "4.12"
-    const val assertJ = "3.11.1"
+    const val junit = "4.13.1"
+    const val assertJ = "3.18.1"
     const val mockK = "1.10.2"
 }
 
