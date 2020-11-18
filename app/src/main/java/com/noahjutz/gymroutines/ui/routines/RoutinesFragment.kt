@@ -147,7 +147,7 @@ fun RoutinesScreen(
                         Button(
                             onClick = {
                                 viewModel.deleteRoutine(routine.routineId)
-                                dismissState.reset()
+                                dismissState.snapTo(DismissValue.Default)
                             },
                             content = { Text("Yes") }
                         )
@@ -155,13 +155,13 @@ fun RoutinesScreen(
                     dismissButton = {
                         TextButton(
                             onClick = {
-                                dismissState.reset()
+                                dismissState.snapTo(DismissValue.Default)
                             },
                             content = { Text("Cancel") }
                         )
                     },
                     onDismissRequest = {
-                        dismissState.reset()
+                        dismissState.snapTo(DismissValue.Default)
                     }
                 )
             }
