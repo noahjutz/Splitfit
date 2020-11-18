@@ -118,9 +118,16 @@ fun RoutinesScreen(
                     state = dismissState,
                     background = {
                         if (dismissState.dismissDirection == null) return@SwipeToDismiss
+                        val background = animate(
+                            when (dismissState.targetValue) {
+                                DismissValue.Default -> Color.LightGray
+                                DismissValue.DismissedToEnd -> Color.Green
+                                DismissValue.DismissedToStart -> Color.Red
+                            }
+                        )
                         Box(
                             modifier = Modifier.fillMaxSize()
-                                .background(Color.Red)
+                                .background(background)
                                 .padding(horizontal = 20.dp),
                             alignment = Alignment.CenterEnd
                         ) {
