@@ -225,7 +225,7 @@ fun SetGroupCard(
                     })
             ) {
                 Text(
-                    modifier = Modifier.padding(vertical = 16.dp),
+                    modifier = Modifier.padding(16.dp),
                     text = presenter.getExerciseName(setGroup.first().exerciseId),
                     fontSize = 20.sp,
                 )
@@ -234,14 +234,14 @@ fun SetGroupCard(
                 visible = expanded.value
             ) {
                 Column {
-                    Row(modifier = Modifier.padding(bottom = 16.dp)) {
+                    Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
                         SetHeader("reps")
                         SetHeader("weight")
                         SetHeader("time")
                         SetHeader("distance")
                     }
                     setGroup.forEachIndexed { i, set ->
-                        Row(modifier = Modifier.padding(bottom = 16.dp)) {
+                        Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
                             SetTextField(
                                 onValueChange = {
                                     editor.updateRoutine {
