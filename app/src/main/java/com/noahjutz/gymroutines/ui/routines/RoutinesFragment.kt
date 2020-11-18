@@ -151,7 +151,7 @@ fun RoutinesScreen(
                 )
             }
 
-            if (dismissState.targetValue == DismissValue.DismissedToStart) {
+            if (dismissState.value == DismissValue.DismissedToStart) {
                 AlertDialog(
                     title = { Text("Delete ${routine.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
                     confirmButton = {
