@@ -20,81 +20,68 @@ package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
-import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.databinding.FragmentPickExerciseBinding
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
-import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @Suppress("unused")
 private const val TAG = "PickExerciseFragment"
 
 @AndroidEntryPoint
-class PickExerciseFragment : Fragment(), ExercisesAdapter.ExerciseListener {
+class PickExerciseFragment : Fragment() {
 
     private val exercisesViewModel: ExercisesViewModel by viewModels()
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
-
-    private lateinit var recyclerView: RecyclerView
-
-    // TODO: Field injection
-    private val adapter = ExercisesAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = DataBindingUtil.inflate<FragmentPickExerciseBinding>(
-        inflater, R.layout.fragment_pick_exercise, container, false
-    ).apply { fragment = this@PickExerciseFragment }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initActivity()
-        initRecyclerView()
-        initViewModel()
-    }
-
-    private fun initViewModel() {
-        exercisesViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            adapter.items = exercises.filter { !it.hidden }
-        }
-    }
-
-    private fun initActivity() {
-        requireActivity().apply {
-            title = "Pick Exercise"
-
-            recyclerView = findViewById(R.id.pick_exercises_list)
-        }
-    }
-
-    private fun initRecyclerView() {
-        recyclerView.apply {
-            adapter = this@PickExerciseFragment.adapter
-            layoutManager = LinearLayoutManager(this@PickExerciseFragment.requireContext())
-            setHasFixedSize(true)
-            addItemDecoration(
-                MarginItemDecoration(
-                    resources.getDimension(R.dimen.any_margin_default).toInt()
+    ) = ComposeView(requireContext()).apply {
+        setContent {
+            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+                Scaffold(
+                    bodyContent = {
+                        val exercises by exercisesViewModel.exercises.observeAsState()
+                        LazyColumnFor(exercises ?: emptyList()) { exercise ->
+                            var checked by mutableStateOf(false)
+                            ListItem(
+                                trailing = {
+                                    Icon(
+                                        asset = Icons.Filled.CheckCircle,
+                                        tint = androidx.compose.animation.animate(
+                                            if (checked) MaterialTheme.colors.primary
+                                            else AmbientContentColor.current.copy(alpha = 0.25f)
+                                        )
+                                    )
+                                },
+                                modifier = Modifier.clickable {
+                                    checked = !checked
+                                    if (checked) sharedExerciseViewModel.addExercise(exercise)
+                                    else sharedExerciseViewModel.removeExercise(exercise)
+                                }
+                            ) {
+                                Text(exercise.name)
+                            }
+                        }
+                    }
                 )
-            )
+            }
         }
-    }
-
-    override fun onExerciseClick(exercise: Exercise, card: MaterialCardView) {
-        card.isChecked = (!card.isChecked)
-        if (card.isChecked) sharedExerciseViewModel.addExercise(exercise)
-        else sharedExerciseViewModel.removeExercise(exercise)
     }
 }
