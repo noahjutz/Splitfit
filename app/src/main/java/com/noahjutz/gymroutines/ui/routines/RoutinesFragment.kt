@@ -95,14 +95,14 @@ fun RoutinesScreen(
         var toDelete by remember { mutableStateOf<Routine?>(null) }
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
-            val dismissState = rememberDismissState(
-                confirmStateChange = { dismissValue ->
-                    if (dismissValue != DismissValue.Default) {
-                        toDelete = routine
-                    }
-                    false // TODO Remove this line
+            val dismissState = rememberDismissState()
+
+            onCommit(dismissState.value) {
+                if (dismissState.value != DismissValue.Default) {
+                    toDelete = routine
                 }
-            )
+            }
+
             SwipeToDismiss(
                 state = dismissState,
                 background = { /* TODO */ },
@@ -121,27 +121,34 @@ fun RoutinesScreen(
                     }
                 }
             )
-        }
-        if (toDelete != null) {
-            AlertDialog(
-                title = { Text("Delete ${toDelete?.name?.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
-                            toDelete = null
-                        },
-                        content = { Text("Yes") }
-                    )
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = { toDelete = null },
-                        content = { Text("Cancel") }
-                    )
-                },
-                onDismissRequest = { toDelete = null }
-            )
+
+            if (toDelete != null) {
+                AlertDialog(
+                    title = { Text("Delete ${toDelete?.name?.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
+                                toDelete = null
+                            },
+                            content = { Text("Yes") }
+                        )
+                    },
+                    dismissButton = {
+                        TextButton(
+                            onClick = {
+                                dismissState.reset()
+                                toDelete = null
+                            },
+                            content = { Text("Cancel") }
+                        )
+                    },
+                    onDismissRequest = {
+                        dismissState.reset()
+                        toDelete = null
+                    }
+                )
+            }
         }
     }
 }
