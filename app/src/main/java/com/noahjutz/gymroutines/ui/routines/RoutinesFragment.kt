@@ -103,10 +103,14 @@ fun RoutinesScreen(
     ) {
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
-            val dismissState = rememberDismissState()
+            val dismissState = rememberDismissState(
+                confirmStateChange = {
+                    it != DismissValue.DismissedToEnd
+                }
+            )
 
             AnimatedVisibility(
-                visible = dismissState.value == DismissValue.Default,
+                visible = dismissState.value != DismissValue.DismissedToStart,
                 enter = expandVertically(),
                 exit = shrinkVertically()
             ) {
@@ -140,7 +144,7 @@ fun RoutinesScreen(
                 )
             }
 
-            if (dismissState.targetValue != DismissValue.Default) {
+            if (dismissState.targetValue == DismissValue.DismissedToStart) {
                 AlertDialog(
                     title = { Text("Delete ${routine.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
                     confirmButton = {
