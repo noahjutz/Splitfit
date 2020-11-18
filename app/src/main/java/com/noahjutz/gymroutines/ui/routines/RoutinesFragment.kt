@@ -24,16 +24,23 @@ import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.compose.animation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -105,7 +112,17 @@ fun RoutinesScreen(
             ) {
                 SwipeToDismiss(
                     state = dismissState,
-                    background = { /* TODO */ },
+                    background = {
+                        if (dismissState.dismissDirection == null) return@SwipeToDismiss
+                        Box(
+                            modifier = Modifier.fillMaxSize()
+                                .background(Color.Red)
+                                .padding(horizontal = 20.dp),
+                            alignment = Alignment.CenterEnd
+                        ) {
+                            Icon(Icons.Default.Delete)
+                        }
+                    },
                     dismissContent = {
                         Card(
                             elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
