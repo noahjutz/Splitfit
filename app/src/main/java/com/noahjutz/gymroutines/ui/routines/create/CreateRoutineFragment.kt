@@ -28,7 +28,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
@@ -49,7 +48,9 @@ import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focusObserver
-import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.gesture.LongPressDragObserver
+import androidx.compose.ui.gesture.longPressDragGestureFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
@@ -206,27 +207,25 @@ fun SetGroupCard(
     Card(
         elevation = 0.dp,
         modifier = Modifier.fillMaxWidth()
-            .draggable(
-                orientation = Orientation.Vertical,
-                onDragStarted = { expanded.value = false },
-                onDragStopped = {
-                    expanded.value = true
-                    offsetPosition.value = 0f
-                },
-                onDrag = { delta ->
-                    offsetPosition.value += delta
-                    // TODO: Set setGroup position in list according to offsetPosition
-                    // TODO: Move other setGroups out of the way
-                },
-            )
             .offsetPx(y = offsetPosition)
     ) {
-        Column(Modifier.padding(horizontal = 16.dp)) {
-            Text(
-                modifier = Modifier.padding(vertical = 16.dp),
-                text = presenter.getExerciseName(setGroup.first().exerciseId),
-                fontSize = 20.sp,
-            )
+        Column {
+            Box(modifier = Modifier.fillMaxWidth()
+                .clickable {}
+                .longPressDragGestureFilter(
+                    longPressDragObserver = object : LongPressDragObserver {
+                        override fun onDrag(dragDistance: Offset): Offset {
+                            offsetPosition.value += dragDistance.y
+                            return dragDistance
+                        }
+                    })
+            ) {
+                Text(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    text = presenter.getExerciseName(setGroup.first().exerciseId),
+                    fontSize = 20.sp,
+                )
+            }
             AnimatedVisibility(
                 visible = expanded.value
             ) {
@@ -344,7 +343,10 @@ fun RowScope.SetTextField(
                 if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
             },
         visualTransformation = visualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Done
+        ),
         onTextInputStarted = {
             kb = it
             value = TextFieldValue(value.text, TextRange(0, value.text.length))
