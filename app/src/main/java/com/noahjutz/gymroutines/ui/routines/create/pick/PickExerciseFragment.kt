@@ -26,7 +26,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -72,6 +74,26 @@ fun PickExercise(
     sharedExerciseViewModel: SharedExerciseViewModel
 ) {
     Scaffold(
+        topBar = {
+            val selectedCount by sharedExerciseViewModel.selectedCount.observeAsState()
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            // TODO
+                        },
+                        icon = {
+                            val asset =
+                                if (selectedCount == 0) Icons.Default.ArrowBack else Icons.Default.Done
+                            Icon(asset)
+                        }
+                    )
+                },
+                title = {
+                    Text("$selectedCount selected")
+                }
+            )
+        },
         bodyContent = {
             val exercises by exercisesViewModel.exercises.observeAsState()
             LazyColumnFor(exercises ?: emptyList()) { exercise ->

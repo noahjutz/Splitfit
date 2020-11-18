@@ -39,6 +39,8 @@ class SharedExerciseViewModel : ViewModel() {
     val exercises: LiveData<List<Exercise>>
         get() = _exercises
 
+    val selectedCount: LiveData<Int> = androidx.lifecycle.Transformations.map(exercises) { it.size }
+
     init {
         _exercises.value = ArrayList()
     }
