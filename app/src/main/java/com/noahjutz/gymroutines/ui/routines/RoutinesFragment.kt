@@ -114,6 +114,8 @@ fun RoutinesScreen(
                 }
             )
 
+            // TODO fix visual bug where the DismissValue of the next card is initially set to the current one if confirmButton is clicked.
+            //  Current workaround: Call dismissValue.reset()
             if (dismissState.targetValue != DismissValue.Default) {
                 AlertDialog(
                     title = { Text("Delete ${routine.name}?") },
@@ -121,6 +123,7 @@ fun RoutinesScreen(
                         Button(
                             onClick = {
                                 viewModel.deleteRoutine(routine.routineId)
+                                dismissState.reset()
                             },
                             content = { Text("Yes") }
                         )
