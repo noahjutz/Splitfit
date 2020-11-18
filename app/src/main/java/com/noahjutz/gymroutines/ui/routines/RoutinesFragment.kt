@@ -106,6 +106,9 @@ fun RoutinesScreen(
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
             val dismissState = rememberDismissState(
                 confirmStateChange = {
+                    if (it == DismissValue.DismissedToEnd) {
+                        addEditRoutine(routine.routineId)
+                    }
                     it != DismissValue.DismissedToEnd
                 }
             )
@@ -125,7 +128,7 @@ fun RoutinesScreen(
                         val background = animate(
                             when (dismissState.targetValue) {
                                 DismissValue.Default -> Color.LightGray
-                                DismissValue.DismissedToEnd -> Color.Green
+                                DismissValue.DismissedToEnd -> Color.Blue
                                 DismissValue.DismissedToStart -> Color.Red
                             }
                         )
