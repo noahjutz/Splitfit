@@ -25,6 +25,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -205,7 +206,7 @@ fun SetGroupCard(
 ) {
     val offsetPosition = remember { mutableStateOf(0f) }
     Card(
-        elevation = 0.dp,
+        elevation = animate(if (offsetPosition.value == 0f) 0.dp else 4.dp),
         modifier = Modifier.fillMaxWidth()
             .offsetPx(y = offsetPosition)
     ) {
@@ -217,6 +218,9 @@ fun SetGroupCard(
                         override fun onDrag(dragDistance: Offset): Offset {
                             offsetPosition.value += dragDistance.y
                             return dragDistance
+                        }
+                        override fun onStop(velocity: Offset) {
+                            offsetPosition.value = 0f
                         }
                     })
             ) {
