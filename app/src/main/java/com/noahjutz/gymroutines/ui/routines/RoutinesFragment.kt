@@ -23,14 +23,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.compose.animation.animate
+import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -47,6 +48,7 @@ class RoutinesFragment : Fragment() {
 
     private val viewModel: RoutinesViewModel by viewModels()
 
+    @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,6 +79,7 @@ class RoutinesFragment : Fragment() {
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun RoutinesScreen(
@@ -95,24 +98,30 @@ fun RoutinesScreen(
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
             val dismissState = rememberDismissState()
 
-            SwipeToDismiss(
-                state = dismissState,
-                background = { /* TODO */ },
-                dismissContent = {
-                    Card(
-                        elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
-                    ) {
-                        ListItem(
-                            text = {
-                                Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
-                            },
-                            modifier = Modifier.clickable {
-                                addEditRoutine(routine.routineId)
-                            }
-                        )
+            AnimatedVisibility(
+                visible = dismissState.targetValue == DismissValue.Default,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
+                SwipeToDismiss(
+                    state = dismissState,
+                    background = { /* TODO */ },
+                    dismissContent = {
+                        Card(
+                            elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
+                        ) {
+                            ListItem(
+                                text = {
+                                    Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                                },
+                                modifier = Modifier.clickable {
+                                    addEditRoutine(routine.routineId)
+                                }
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
 
             // TODO fix visual bug where the DismissValue of the next card is initially set to the current one if confirmButton is clicked.
             //  Current workaround: Call dismissValue.reset()
