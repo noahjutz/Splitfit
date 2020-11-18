@@ -23,7 +23,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.compose.animation.*
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -241,116 +242,106 @@ fun SetGroupCard(
                     fontSize = 20.sp,
                 )
             }
-            AnimatedVisibility(
-                visible = expanded.value
-            ) {
-                Column {
-                    Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
-                        SetHeader("reps")
-                        SetHeader("weight")
-                        SetHeader("time")
-                        SetHeader("distance")
-                    }
-                    setGroup.forEachIndexed { i, set ->
-                        val dismissState = rememberDismissState()
+            Column {
+                Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
+                    SetHeader("reps")
+                    SetHeader("weight")
+                    SetHeader("time")
+                    SetHeader("distance")
+                }
+                setGroup.forEachIndexed { i, set ->
+                    val dismissState = rememberDismissState()
 
-                        onCommit(dismissState.value) {
-                            if (dismissState.value != DismissValue.Default) {
-                                editor.updateRoutine { sets.removeAt(i) }
-                                dismissState.snapTo(DismissValue.Default)
+                    onCommit(dismissState.value) {
+                        if (dismissState.value != DismissValue.Default) {
+                            editor.updateRoutine { sets.removeAt(i) }
+                            dismissState.snapTo(DismissValue.Default)
+                        }
+                    }
+
+                    SwipeToDismiss(
+                        state = dismissState,
+                        background = {
+                            val direction =
+                                dismissState.dismissDirection ?: return@SwipeToDismiss
+                            val alignment = when (direction) {
+                                DismissDirection.StartToEnd -> Alignment.CenterStart
+                                DismissDirection.EndToStart -> Alignment.CenterEnd
+                            }
+                            Box(
+                                alignment = alignment,
+                                modifier = Modifier.fillMaxSize().background(Color.Red)
+                                    .padding(horizontal = 16.dp)
+                            ) {
+                                Icon(Icons.Default.Delete)
+                            }
+                        },
+                        dismissContent = {
+                            Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
+                                Row(
+                                    modifier = Modifier.padding(
+                                        vertical = 8.dp, horizontal = 16.dp
+                                    )
+                                ) {
+                                    SetTextField(
+                                        onValueChange = {
+                                            editor.updateRoutine {
+                                                sets[i].reps =
+                                                    it.takeIf { it.isNotEmpty() }?.toInt()
+                                            }
+                                        },
+                                        regexPattern = RegexPatterns.integer,
+                                        valueGetter = { set.reps?.toString() }
+                                    )
+
+                                    SetTextField(
+                                        onValueChange = {
+                                            editor.updateRoutine {
+                                                sets[i].weight =
+                                                    it.takeIf { it.isNotEmpty() }
+                                                        ?.toDouble()
+                                            }
+                                        },
+                                        regexPattern = RegexPatterns.float,
+                                        valueGetter = { set.weight?.toString() }
+                                    )
+
+                                    SetTextField(
+                                        onValueChange = {
+                                            editor.updateRoutine {
+                                                sets[i].time =
+                                                    it.takeIf { it.isNotEmpty() }?.toInt()
+                                            }
+                                        },
+                                        regexPattern = RegexPatterns.time,
+                                        valueGetter = { set.time?.toString() },
+                                        visualTransformation = timeVisualTransformation
+                                    )
+
+                                    SetTextField(
+                                        onValueChange = {
+                                            editor.updateRoutine {
+                                                sets[i].distance =
+                                                    it.takeIf { it.isNotEmpty() }
+                                                        ?.toDouble()
+                                            }
+                                        },
+                                        regexPattern = RegexPatterns.float,
+                                        valueGetter = { set.distance?.toString() }
+                                    )
+                                }
                             }
                         }
-
-                        AnimatedVisibility(
-                            visible = dismissState.value == DismissValue.Default,
-                            enter = expandVertically(),
-                            exit = shrinkVertically()
-                        ) {
-                            SwipeToDismiss(
-                                state = dismissState,
-                                background = {
-                                    val direction =
-                                        dismissState.dismissDirection ?: return@SwipeToDismiss
-                                    val alignment = when (direction) {
-                                        DismissDirection.StartToEnd -> Alignment.CenterStart
-                                        DismissDirection.EndToStart -> Alignment.CenterEnd
-                                    }
-                                    Box(
-                                        alignment = alignment,
-                                        modifier = Modifier.fillMaxSize().background(Color.Red)
-                                            .padding(horizontal = 16.dp)
-                                    ) {
-                                        Icon(Icons.Default.Delete)
-                                    }
-                                },
-                                dismissContent = {
-                                    Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
-                                        Row(
-                                            modifier = Modifier.padding(
-                                                vertical = 8.dp, horizontal = 16.dp
-                                            )
-                                        ) {
-                                            SetTextField(
-                                                onValueChange = {
-                                                    editor.updateRoutine {
-                                                        sets[i].reps =
-                                                            it.takeIf { it.isNotEmpty() }?.toInt()
-                                                    }
-                                                },
-                                                regexPattern = RegexPatterns.integer,
-                                                valueGetter = { set.reps?.toString() }
-                                            )
-
-                                            SetTextField(
-                                                onValueChange = {
-                                                    editor.updateRoutine {
-                                                        sets[i].weight =
-                                                            it.takeIf { it.isNotEmpty() }
-                                                                ?.toDouble()
-                                                    }
-                                                },
-                                                regexPattern = RegexPatterns.float,
-                                                valueGetter = { set.weight?.toString() }
-                                            )
-
-                                            SetTextField(
-                                                onValueChange = {
-                                                    editor.updateRoutine {
-                                                        sets[i].time =
-                                                            it.takeIf { it.isNotEmpty() }?.toInt()
-                                                    }
-                                                },
-                                                regexPattern = RegexPatterns.time,
-                                                valueGetter = { set.time?.toString() },
-                                                visualTransformation = timeVisualTransformation
-                                            )
-
-                                            SetTextField(
-                                                onValueChange = {
-                                                    editor.updateRoutine {
-                                                        sets[i].distance =
-                                                            it.takeIf { it.isNotEmpty() }
-                                                                ?.toDouble()
-                                                    }
-                                                },
-                                                regexPattern = RegexPatterns.float,
-                                                valueGetter = { set.distance?.toString() }
-                                            )
-                                        }
-                                    }
-                                }
-                            )
-                        }
-                    }
-                    TextButton(
-                        onClick = { editor.addSet(setGroup[0].exerciseId) },
-                        content = {
-                            Icon(Icons.Default.Add)
-                            Text("Add Set")
-                        },
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }
+                TextButton(
+                    onClick = { editor.addSet(setGroup[0].exerciseId) },
+                    content = {
+                        Icon(Icons.Default.Add)
+                        Text("Add Set")
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
             }
         }
     }
