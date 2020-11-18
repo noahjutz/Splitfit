@@ -97,7 +97,12 @@ fun RoutinesScreen(
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
             val dismissState = rememberDismissState(
-                confirmStateChange = { false } // TODO Remove this line
+                confirmStateChange = { dismissValue ->
+                    if (dismissValue != DismissValue.Default) {
+                        showDialog = true
+                    }
+                    false // TODO Remove this line
+                }
             )
             SwipeToDismiss(
                 state = dismissState,
