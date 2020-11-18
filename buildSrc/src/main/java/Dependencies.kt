@@ -26,17 +26,17 @@ object App {
 
 object Versions {
     const val gson = "2.8.6"
-    const val ktlintPlugin = "9.4.0"
+    const val ktlintPlugin = "9.4.1"
     const val ktlint = "0.39.0"
     const val gradle = "4.2.0-alpha16"
     const val kotlin = "1.4.10"
     const val hilt = "2.28-alpha"
     const val hiltExt = "1.0.0-alpha02"
     const val room = "2.2.5"
-    const val coroutines = "1.3.6"
-    const val material = "1.2.0"
+    const val coroutines = "1.4.1"
+    const val material = "1.2.1"
     const val lifecycle = "2.2.0"
-    const val navigation = "2.3.0"
+    const val navigation = "2.3.1"
     const val compose = "1.0.0-alpha07"
 
     const val junit = "4.12"
