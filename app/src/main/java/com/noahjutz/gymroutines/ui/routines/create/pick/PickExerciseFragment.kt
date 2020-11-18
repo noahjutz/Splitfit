@@ -27,12 +27,14 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -55,33 +57,44 @@ class PickExerciseFragment : Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                Scaffold(
-                    bodyContent = {
-                        val exercises by exercisesViewModel.exercises.observeAsState()
-                        LazyColumnFor(exercises ?: emptyList()) { exercise ->
-                            var checked by mutableStateOf(false)
-                            ListItem(
-                                trailing = {
-                                    Icon(
-                                        asset = Icons.Filled.CheckCircle,
-                                        tint = androidx.compose.animation.animate(
-                                            if (checked) MaterialTheme.colors.primary
-                                            else AmbientContentColor.current.copy(alpha = 0.25f)
-                                        )
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    checked = !checked
-                                    if (checked) sharedExerciseViewModel.addExercise(exercise)
-                                    else sharedExerciseViewModel.removeExercise(exercise)
-                                }
-                            ) {
-                                Text(exercise.name)
-                            }
-                        }
-                    }
+                PickExercise(
+                    exercisesViewModel = viewModel(),
+                    sharedExerciseViewModel = viewModel()
                 )
             }
         }
     }
+}
+
+@Composable
+fun PickExercise(
+    exercisesViewModel: ExercisesViewModel,
+    sharedExerciseViewModel: SharedExerciseViewModel
+) {
+    Scaffold(
+        bodyContent = {
+            val exercises by exercisesViewModel.exercises.observeAsState()
+            LazyColumnFor(exercises ?: emptyList()) { exercise ->
+                var checked by mutableStateOf(false)
+                ListItem(
+                    trailing = {
+                        Icon(
+                            asset = Icons.Filled.CheckCircle,
+                            tint = androidx.compose.animation.animate(
+                                if (checked) MaterialTheme.colors.primary
+                                else AmbientContentColor.current.copy(alpha = 0.25f)
+                            )
+                        )
+                    },
+                    modifier = Modifier.clickable {
+                        checked = !checked
+                        if (checked) sharedExerciseViewModel.addExercise(exercise)
+                        else sharedExerciseViewModel.removeExercise(exercise)
+                    }
+                ) {
+                    Text(exercise.name)
+                }
+            }
+        }
+    )
 }
