@@ -92,14 +92,13 @@ fun RoutinesScreen(
             )
         }
     ) {
-        var showDialog by remember { mutableStateOf(false) }
         var toDelete by remember { mutableStateOf<Routine?>(null) }
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
             val dismissState = rememberDismissState(
                 confirmStateChange = { dismissValue ->
                     if (dismissValue != DismissValue.Default) {
-                        showDialog = true
+                        toDelete = routine
                     }
                     false // TODO Remove this line
                 }
@@ -115,39 +114,33 @@ fun RoutinesScreen(
                             text = {
                                 Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
                             },
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    addEditRoutine(routine.routineId)
-                                },
-                                onLongClick = {
-                                    toDelete = routine
-                                    showDialog = true
-                                }
-                            )
+                            modifier = Modifier.clickable {
+                                addEditRoutine(routine.routineId)
+                            }
                         )
                     }
                 }
             )
         }
-        if (showDialog) {
+        if (toDelete != null) {
             AlertDialog(
                 title = { Text("Delete ${toDelete?.name?.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
                 confirmButton = {
                     Button(
                         onClick = {
                             toDelete?.routineId?.let { viewModel.deleteRoutine(it) }
-                            showDialog = false
+                            toDelete = null
                         },
                         content = { Text("Yes") }
                     )
                 },
                 dismissButton = {
                     TextButton(
-                        onClick = { showDialog = false },
+                        onClick = { toDelete = null },
                         content = { Text("Cancel") }
                     )
                 },
-                onDismissRequest = { showDialog = false }
+                onDismissRequest = { toDelete = null }
             )
         }
     }
