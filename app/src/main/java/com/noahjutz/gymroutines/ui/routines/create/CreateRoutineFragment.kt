@@ -23,6 +23,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -79,6 +81,7 @@ class CreateRoutineFragment : Fragment() {
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
     private val viewModel: CreateRoutineEditor by viewModels()
 
+    @ExperimentalAnimationApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -125,6 +128,7 @@ class CreateRoutineFragment : Fragment() {
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
@@ -188,6 +192,7 @@ fun CreateRoutineScreen(
     }
 }
 
+@ExperimentalAnimationApi
 @ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
@@ -221,72 +226,76 @@ fun SetGroupCard(
                 text = presenter.getExerciseName(setGroup.first().exerciseId),
                 fontSize = 20.sp,
             )
-            if (expanded.value) {
-                Row(modifier = Modifier.padding(bottom = 16.dp)) {
-                    SetHeader("reps")
-                    SetHeader("weight")
-                    SetHeader("time")
-                    SetHeader("distance")
-                }
-                setGroup.forEachIndexed { i, set ->
+            AnimatedVisibility(
+                visible = expanded.value
+            ) {
+                Column {
                     Row(modifier = Modifier.padding(bottom = 16.dp)) {
-                        SetTextField(
-                            onValueChange = {
-                                editor.updateRoutine {
-                                    sets[i].reps = it.takeIf { it.isNotEmpty() }?.toInt()
-                                }
-                            },
-                            regexPattern = RegexPatterns.integer,
-                            valueGetter = { set.reps?.toString() }
-                        )
+                        SetHeader("reps")
+                        SetHeader("weight")
+                        SetHeader("time")
+                        SetHeader("distance")
+                    }
+                    setGroup.forEachIndexed { i, set ->
+                        Row(modifier = Modifier.padding(bottom = 16.dp)) {
+                            SetTextField(
+                                onValueChange = {
+                                    editor.updateRoutine {
+                                        sets[i].reps = it.takeIf { it.isNotEmpty() }?.toInt()
+                                    }
+                                },
+                                regexPattern = RegexPatterns.integer,
+                                valueGetter = { set.reps?.toString() }
+                            )
 
-                        SetTextField(
-                            onValueChange = {
-                                editor.updateRoutine {
-                                    sets[i].weight = it.takeIf { it.isNotEmpty() }?.toDouble()
-                                }
-                            },
-                            regexPattern = RegexPatterns.float,
-                            valueGetter = { set.weight?.toString() }
-                        )
+                            SetTextField(
+                                onValueChange = {
+                                    editor.updateRoutine {
+                                        sets[i].weight = it.takeIf { it.isNotEmpty() }?.toDouble()
+                                    }
+                                },
+                                regexPattern = RegexPatterns.float,
+                                valueGetter = { set.weight?.toString() }
+                            )
 
-                        SetTextField(
-                            onValueChange = {
-                                editor.updateRoutine {
-                                    sets[i].time = it.takeIf { it.isNotEmpty() }?.toInt()
-                                }
-                            },
-                            regexPattern = RegexPatterns.time,
-                            valueGetter = { set.time?.toString() },
-                            visualTransformation = timeVisualTransformation
-                        )
+                            SetTextField(
+                                onValueChange = {
+                                    editor.updateRoutine {
+                                        sets[i].time = it.takeIf { it.isNotEmpty() }?.toInt()
+                                    }
+                                },
+                                regexPattern = RegexPatterns.time,
+                                valueGetter = { set.time?.toString() },
+                                visualTransformation = timeVisualTransformation
+                            )
 
-                        SetTextField(
-                            onValueChange = {
-                                editor.updateRoutine {
-                                    sets[i].distance = it.takeIf { it.isNotEmpty() }?.toDouble()
-                                }
+                            SetTextField(
+                                onValueChange = {
+                                    editor.updateRoutine {
+                                        sets[i].distance = it.takeIf { it.isNotEmpty() }?.toDouble()
+                                    }
+                                },
+                                regexPattern = RegexPatterns.float,
+                                valueGetter = { set.distance?.toString() }
+                            )
+                        }
+                    }
+                    Row(modifier = Modifier.align(Alignment.End).padding(bottom = 16.dp)) {
+                        TextButton(
+                            onClick = { editor.addSet(setGroup[0].exerciseId) },
+                            content = {
+                                Icon(Icons.Default.Add)
+                                Text("Add Set")
                             },
-                            regexPattern = RegexPatterns.float,
-                            valueGetter = { set.distance?.toString() }
+                        )
+                        TextButton(
+                            onClick = { editor.removeSet(setGroup[setGroup.size - 1]) },
+                            content = {
+                                Icon(Icons.Default.Remove)
+                                Text("Remove Set")
+                            },
                         )
                     }
-                }
-                Row(modifier = Modifier.align(Alignment.End).padding(bottom = 16.dp)) {
-                    TextButton(
-                        onClick = { editor.addSet(setGroup[0].exerciseId) },
-                        content = {
-                            Icon(Icons.Default.Add)
-                            Text("Add Set")
-                        },
-                    )
-                    TextButton(
-                        onClick = { editor.removeSet(setGroup[setGroup.size - 1]) },
-                        content = {
-                            Icon(Icons.Default.Remove)
-                            Text("Remove Set")
-                        },
-                    )
                 }
             }
         }
