@@ -180,7 +180,8 @@ fun CreateRoutineScreen(
     ) {
         val expanded = remember { mutableStateOf(true) }
         LazyColumnFor(
-            items = sets?.let { it.groupBy { it.exerciseId }.values.toList() } ?: emptyList()
+            items = sets?.let { it.groupBy { it.exerciseId }.values.toList() } ?: emptyList(),
+            modifier = Modifier.fillMaxHeight()
         ) { setGroup ->
             SetGroupCard(setGroup, editor, presenter, expanded)
         }
@@ -197,7 +198,6 @@ fun SetGroupCard(
     expanded: MutableState<Boolean>,
 ) {
     val offsetPosition = remember { mutableStateOf(0f) }
-    var canDrag by remember { mutableStateOf(false) }
     Card(
         Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp).fillMaxWidth()
             .draggable(
@@ -206,20 +206,12 @@ fun SetGroupCard(
                 onDragStopped = {
                     expanded.value = true
                     offsetPosition.value = 0f
-                    canDrag = false
                 },
                 onDrag = { delta ->
                     offsetPosition.value += delta
                     // TODO: Set setGroup position in list according to offsetPosition
                     // TODO: Move other setGroups out of the way
                 },
-                canDrag = { canDrag }
-            )
-            .clickable(
-                onLongClick = {
-                    canDrag = true
-                }, // TODO: Fix bug where long-clicking and releasing allows for instant dragging
-                onClick = {}
             )
             .offsetPx(y = offsetPosition)
     ) {
