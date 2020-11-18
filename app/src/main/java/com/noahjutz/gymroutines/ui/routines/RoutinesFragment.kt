@@ -35,6 +35,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -120,7 +121,7 @@ fun RoutinesScreen(
                         FractionalThreshold(if (direction == DismissDirection.StartToEnd) 0.25f else 0.5f)
                     },
                     background = {
-                        if (dismissState.dismissDirection == null) return@SwipeToDismiss
+                        val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
                         val background = animate(
                             when (dismissState.targetValue) {
                                 DismissValue.Default -> Color.LightGray
@@ -128,13 +129,21 @@ fun RoutinesScreen(
                                 DismissValue.DismissedToStart -> Color.Red
                             }
                         )
+                        val alignment = when (direction) {
+                            DismissDirection.StartToEnd -> Alignment.CenterStart
+                            DismissDirection.EndToStart -> Alignment.CenterEnd
+                        }
+                        val icon = when (direction) {
+                            DismissDirection.StartToEnd -> Icons.Default.Edit
+                            DismissDirection.EndToStart -> Icons.Default.Delete
+                        }
                         Box(
                             modifier = Modifier.fillMaxSize()
                                 .background(background)
                                 .padding(horizontal = 20.dp),
-                            alignment = Alignment.CenterEnd
+                            alignment = alignment
                         ) {
-                            Icon(Icons.Default.Delete)
+                            Icon(icon)
                         }
                     },
                     dismissContent = {
