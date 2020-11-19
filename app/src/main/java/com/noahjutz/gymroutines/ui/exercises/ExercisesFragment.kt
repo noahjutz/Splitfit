@@ -51,6 +51,11 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
+        // TODO:
+        //  - Reflect changes in ExercisesViewModel.exercises asynchronously  (LiveData/StateFlow)
+        //  - Implement SwipeToDismiss with AnimatedVisibility
+        //  - Add topBar (for RoutinesFragment as well)
+        //  - Refactor code (Extract layout from this code block, etc)
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
                 Scaffold(
