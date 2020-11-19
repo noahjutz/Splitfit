@@ -29,7 +29,7 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -68,13 +68,18 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
                     bodyContent = {
                         val exercises by viewModel.exercises.observeAsState()
                         LazyColumnFor(exercises ?: emptyList()) { exercise ->
-                            if (exercise.hidden) return@LazyColumnFor
-                            ListItem(
-                                Modifier.clickable(
-                                    onClick = { onExerciseClick(exercise) },
-                                    onLongClick = { viewModel.hide(exercise, true) }
-                                )
-                            ) { Text(exercise.name) }
+                            var visible by remember {mutableStateOf(!exercise.hidden)}
+                            if (visible) {
+                                ListItem(
+                                    Modifier.clickable(
+                                        onClick = { onExerciseClick(exercise) },
+                                        onLongClick = {
+                                            viewModel.hide(exercise, true)
+                                            visible = false
+                                        }
+                                    )
+                                ) { Text(exercise.name) }
+                            }
                         }
                     }
                 )
