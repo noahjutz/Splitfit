@@ -60,8 +60,8 @@ class PickExerciseFragment : Fragment() {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
                 PickExercise(
-                    exercisesViewModel = viewModel(),
-                    sharedExerciseViewModel = viewModel(),
+                    exercisesViewModel = exercisesViewModel,
+                    sharedExerciseViewModel = sharedExerciseViewModel,
                     popBackStack = ::popBackStack
                 )
             }
