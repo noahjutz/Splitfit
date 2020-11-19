@@ -23,100 +23,74 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.databinding.FragmentExercisesBinding
-import com.noahjutz.gymroutines.util.ItemTouchHelperBuilder
-import com.noahjutz.gymroutines.util.MarginItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
 
     private val viewModel: ExercisesViewModel by viewModels()
-    private val adapter = ExercisesAdapter(this)
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var fabPickExercises: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = DataBindingUtil.inflate<FragmentExercisesBinding>(
-        inflater, R.layout.fragment_exercises, container, false
-    ).apply {
-        viewmodel = viewModel
-        lifecycleOwner = viewLifecycleOwner
-        fragment = this@ExercisesFragment
-    }.root
+    ) = ComposeView(requireContext()).apply {
+        setContent {
+            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+                Scaffold(
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { addExercise() },
+                            icon = { Icon(Icons.Default.Add) }
+                        )
+                    },
+                    bodyContent = {
+                        val exercises by viewModel.exercises.observeAsState()
+                        LazyColumnFor(exercises ?: emptyList()) { exercise ->
+                            if (exercise.hidden) return@LazyColumnFor
+                            ListItem(
+                                Modifier.clickable(
+                                    onClick = { onExerciseClick(exercise) },
+                                    onLongClick = { viewModel.hide(exercise, true) }
+                                )
+                            ) { Text(exercise.name) }
+                        }
+                    }
+                )
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initActivity()
-        initRecyclerView()
-        initViewModel()
     }
 
     private fun initActivity() {
         requireActivity().apply {
-            title = "Exercises"
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = VISIBLE
-
-            recyclerView = findViewById(R.id.exercises_list)
-            fabPickExercises = findViewById(R.id.fab_pick_exercises)
-        }
-    }
-
-    private fun initRecyclerView() {
-        val itemTouchHelper = ItemTouchHelperBuilder(
-            swipeDirs = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-            onSwipedCall = { viewHolder, _ -> deleteExercise(viewHolder.adapterPosition) }
-        ).build()
-
-        recyclerView.apply {
-            adapter = this@ExercisesFragment.adapter
-            layoutManager = LinearLayoutManager(this@ExercisesFragment.requireContext())
-            setHasFixedSize(true)
-            addItemDecoration(
-                MarginItemDecoration(
-                    resources.getDimension(R.dimen.any_margin_default).toInt()
-                )
-            )
-            itemTouchHelper.attachToRecyclerView(this)
-        }
-    }
-
-    private fun initViewModel() {
-        viewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            adapter.items = exercises.filter { !it.hidden }
         }
     }
 
     fun addExercise() {
         val action = ExercisesFragmentDirections.addExercise(-1)
         findNavController().navigate(action)
-    }
-
-    private fun deleteExercise(position: Int) {
-        val exercise = adapter.items[position]
-        viewModel.hide(exercise, true)
-        Snackbar.make(recyclerView, "Deleted ${exercise.name}", Snackbar.LENGTH_SHORT)
-            .setAction("Undo") {
-                viewModel.hide(exercise, false)
-            }
-            .setAnchorView(fabPickExercises)
-            .show()
     }
 
     override fun onExerciseClick(exercise: Exercise) {
