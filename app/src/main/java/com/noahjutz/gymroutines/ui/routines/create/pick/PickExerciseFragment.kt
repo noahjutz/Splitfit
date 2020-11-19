@@ -27,7 +27,6 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -100,12 +99,9 @@ fun PickExercise(
                 var checked by mutableStateOf(false)
                 ListItem(
                     trailing = {
-                        Icon(
-                            asset = Icons.Filled.CheckCircle,
-                            tint = androidx.compose.animation.animate(
-                                if (checked) MaterialTheme.colors.primary
-                                else AmbientContentColor.current.copy(alpha = 0.25f)
-                            )
+                        Checkbox(
+                            checked = checked,
+                            onCheckedChange = { checked = it }
                         )
                     },
                     modifier = Modifier.clickable {
