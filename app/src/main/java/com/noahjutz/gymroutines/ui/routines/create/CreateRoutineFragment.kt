@@ -170,12 +170,15 @@ fun CreateRoutineScreen(
                                 nameFieldValue = it
                                 editor.updateRoutine { this.name = it.text }
                             },
-                            modifier = Modifier.focusObserver {
-                                focusState = it.isFocused
-                            },
+                            modifier = Modifier
+                                .focusObserver {
+                                    focusState = it.isFocused
+                                }
+                                .fillMaxWidth(),
                             textStyle = AmbientTextStyle.current.copy(
                                 color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                             ),
+                            maxLines = 1,
                             cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
