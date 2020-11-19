@@ -49,8 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/createRoutineFragment"
-        android:name="com.noahjutz.gymroutines.ui.routines.create.CreateRoutineFragment"
-        tools:layout="@layout/fragment_create_routine">
+        android:name="com.noahjutz.gymroutines.ui.routines.create.CreateRoutineFragment">
         <argument
             android:name="routineId"
             android:defaultValue="-1"
