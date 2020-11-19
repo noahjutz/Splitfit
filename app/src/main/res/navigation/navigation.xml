@@ -37,8 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/exercisesFragment"
-        android:name="com.noahjutz.gymroutines.ui.exercises.ExercisesFragment"
-        tools:layout="@layout/fragment_exercises">
+        android:name="com.noahjutz.gymroutines.ui.exercises.ExercisesFragment">
         <action
             android:id="@+id/add_exercise"
             app:destination="@id/createExerciseFragment"
