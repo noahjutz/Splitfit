@@ -39,6 +39,7 @@ import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,17 +61,23 @@ class PickExerciseFragment : Fragment() {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
                 PickExercise(
                     exercisesViewModel = viewModel(),
-                    sharedExerciseViewModel = viewModel()
+                    sharedExerciseViewModel = viewModel(),
+                    popBackStack = ::popBackStack
                 )
             }
         }
+    }
+
+    private fun popBackStack() {
+        findNavController().popBackStack()
     }
 }
 
 @Composable
 fun PickExercise(
     exercisesViewModel: ExercisesViewModel,
-    sharedExerciseViewModel: SharedExerciseViewModel
+    sharedExerciseViewModel: SharedExerciseViewModel,
+    popBackStack: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -78,9 +85,7 @@ fun PickExercise(
             TopAppBar(
                 navigationIcon = {
                     IconButton(
-                        onClick = {
-                            // TODO
-                        },
+                        onClick = popBackStack,
                         icon = {
                             val asset =
                                 if (selectedCount == 0) Icons.Default.ArrowBack else Icons.Default.Done
