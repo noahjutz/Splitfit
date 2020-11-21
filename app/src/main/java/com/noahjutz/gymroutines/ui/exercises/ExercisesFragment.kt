@@ -29,8 +29,11 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -38,11 +41,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
-import com.noahjutz.gymroutines.data.domain.Exercise
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
+class ExercisesFragment : Fragment() {
 
     private val viewModel: ExercisesViewModel by viewModels()
 
@@ -61,18 +63,18 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(
-                            onClick = { addExercise() },
+                            onClick = { addEditExercise(-1) },
                             icon = { Icon(Icons.Default.Add) }
                         )
                     },
                     bodyContent = {
                         val exercises by viewModel.exercises.observeAsState()
                         LazyColumnFor(exercises ?: emptyList()) { exercise ->
-                            var visible by remember {mutableStateOf(!exercise.hidden)}
+                            var visible by remember { mutableStateOf(!exercise.hidden) }
                             if (visible) {
                                 ListItem(
                                     Modifier.clickable(
-                                        onClick = { onExerciseClick(exercise) },
+                                        onClick = { addEditExercise(exercise.exerciseId) },
                                         onLongClick = {
                                             viewModel.hide(exercise, true)
                                             visible = false
@@ -98,13 +100,11 @@ class ExercisesFragment : Fragment(), ExercisesAdapter.ExerciseListener {
         }
     }
 
-    fun addExercise() {
-        val action = ExercisesFragmentDirections.addExercise(-1)
-        findNavController().navigate(action)
-    }
-
-    override fun onExerciseClick(exercise: Exercise) {
-        val action = ExercisesFragmentDirections.addExercise(exercise.exerciseId)
+    fun addEditExercise(exerciseId: Int) {
+        val exerciseIdToEdit =
+            if (exerciseId < 1) viewModel.addExercise().toInt()
+            else exerciseId
+        val action = ExercisesFragmentDirections.addExercise(exerciseIdToEdit)
         findNavController().navigate(action)
     }
 }
