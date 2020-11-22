@@ -123,6 +123,7 @@ dependencies {
     implementation(Libs.composeLivedata)
     implementation(Libs.composeMaterial)
     implementation(Libs.composeTooling)
+    implementation(Libs.composeNavigation)
 }
 
 ktlint {

@@ -38,6 +38,7 @@ object Versions {
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.1"
     const val compose = "1.0.0-alpha07"
+    const val composeNavigation = "1.0.0-alpha02"
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
@@ -75,6 +76,7 @@ object Libs {
     const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.compose}"
     const val composeIconsExt = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+    const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 }
 
 object TestLibs {
