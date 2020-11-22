@@ -29,11 +29,8 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
@@ -53,38 +50,10 @@ class ExercisesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
-        // TODO:
-        //  - Reflect changes in ExercisesViewModel.exercises asynchronously  (LiveData/StateFlow)
-        //  - Implement SwipeToDismiss with AnimatedVisibility
-        //  - Add topBar (for RoutinesFragment as well)
-        //  - Refactor code (Extract layout from this code block, etc)
+        // TODO: Implement SwipeToDismiss with AnimatedVisibility
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                Scaffold(
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = { addEditExercise(-1) },
-                            icon = { Icon(Icons.Default.Add) }
-                        )
-                    },
-                    bodyContent = {
-                        val exercises by viewModel.exercises.observeAsState()
-                        LazyColumnFor(exercises ?: emptyList()) { exercise ->
-                            var visible by remember { mutableStateOf(!exercise.hidden) }
-                            if (visible) {
-                                ListItem(
-                                    Modifier.clickable(
-                                        onClick = { addEditExercise(exercise.exerciseId) },
-                                        onLongClick = {
-                                            viewModel.hide(exercise, true)
-                                            visible = false
-                                        }
-                                    )
-                                ) { Text(exercise.name) }
-                            }
-                        }
-                    }
-                )
+                ExercisesScreen(addEditExercise = ::addEditExercise, viewModel = viewModel)
             }
         }
     }
@@ -107,4 +76,36 @@ class ExercisesFragment : Fragment() {
         val action = ExercisesFragmentDirections.addExercise(exerciseIdToEdit)
         findNavController().navigate(action)
     }
+}
+
+@Composable
+fun ExercisesScreen(
+    addEditExercise: (Int) -> Unit,
+    viewModel: ExercisesViewModel
+) {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { addEditExercise(-1) },
+                icon = { Icon(Icons.Default.Add) }
+            )
+        },
+        bodyContent = {
+            val exercises by viewModel.exercises.observeAsState()
+            LazyColumnFor(exercises ?: emptyList()) { exercise ->
+                var visible by remember { mutableStateOf(!exercise.hidden) }
+                if (visible) {
+                    ListItem(
+                        Modifier.clickable(
+                            onClick = { addEditExercise(exercise.exerciseId) },
+                            onLongClick = {
+                                viewModel.hide(exercise, true)
+                                visible = false
+                            }
+                        )
+                    ) { Text(exercise.name) }
+                }
+            }
+        }
+    )
 }
