@@ -18,30 +18,27 @@
 
 package com.noahjutz.gymroutines.ui.routines.create
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Routine
 import com.noahjutz.gymroutines.data.domain.Set
-import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 
 class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
-    @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
-    private val routine = repository.getRoutineLive(args[ARGS_ROUTINE_ID]!!)!!
+    var routineId = 0
+    private val routine = repository.getRoutineLive(routineId)!!
     val sets = Transformations.map(routine) { it?.sets ?: emptyList() }
     val name = Transformations.map(routine) { it?.name.toString() }
     val initialName: String
-        get() = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
+        get() = repository.getRoutine(routineId)?.name.toString()
 
     fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
 
     fun updateRoutine(action: Routine.() -> Unit) {
-        repository.insert(repository.getRoutine(args[ARGS_ROUTINE_ID]!!)!!.apply(action))
+        repository.insert(repository.getRoutine(routineId)!!.apply(action))
     }
 
     fun addSet(exerciseId: Int) {

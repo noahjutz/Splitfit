@@ -19,6 +19,7 @@
 package com.noahjutz.gymroutines.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -28,12 +29,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.viewinterop.viewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.*
 import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,23 +62,28 @@ fun MainScreen() {
     val navController = rememberNavController()
     Scaffold {
         val routinesVM = viewModel<RoutinesViewModel>()
-        //val createRoutineEditor = viewModel<CreateRoutineEditor>()
-        //val createRoutinePresenter = viewModel<CreateRoutinePresenter>()
+        val createRoutineVM = viewModel<CreateRoutineViewModel>()
         NavHost(navController, startDestination = "routines") {
             composable("routines") {
                 RoutinesScreen(
-                    addEditRoutine = { navController.navigate("createRoutine") },
+                    addEditRoutine = { routineId ->
+                        navController.navigate("createRoutine/$routineId")
+                    },
                     viewModel = routinesVM
                 )
             }
-            //composable("createRoutine") {
-            //    CreateRoutineScreen(
-            //        onAddExercise = { navController.navigate("pickExercise") },
-            //        popBackStack = { navController.popBackStack() },
-            //        presenter = createRoutinePresenter,
-            //        editor = createRoutineEditor
-            //    )
-            //}
+            composable(
+                route = "createRoutine/{routineId}",
+                arguments = listOf(navArgument("routineId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val routineId: Int = backStackEntry.arguments?.getInt("routineId") ?: -1
+                createRoutineVM.routineId = routineId
+                CreateRoutineScreen(
+                    onAddExercise = { navController.navigate("pickExercise") },
+                    popBackStack = { navController.popBackStack() },
+                    viewModel = createRoutineVM
+                )
+            }
             //composable("pickExercise") {
             //    PickExercise(
             //        exercisesViewModel = viewModel(),
