@@ -24,9 +24,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
+import com.noahjutz.gymroutines.data.domain.Routine
+import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 
-class CreateRoutinePresenter @ViewModelInject constructor(
+class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
     @Assisted private val args: SavedStateHandle
 ) : ViewModel() {
@@ -37,4 +39,17 @@ class CreateRoutinePresenter @ViewModelInject constructor(
         get() = repository.getRoutine(args[ARGS_ROUTINE_ID] ?: -1)?.name.toString()
 
     fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
+
+    fun updateRoutine(action: Routine.() -> Unit) {
+        repository.insert(repository.getRoutine(args[ARGS_ROUTINE_ID]!!)!!.apply(action))
+    }
+
+    fun addSet(exerciseId: Int) {
+        updateRoutine {
+            sets.apply {
+                add(Set(exerciseId = exerciseId))
+                sortBy { it.exerciseId }
+            }
+        }
+    }
 }
