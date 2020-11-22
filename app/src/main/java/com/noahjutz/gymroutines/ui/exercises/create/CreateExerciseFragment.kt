@@ -64,122 +64,7 @@ class CreateExerciseFragment : Fragment() {
     ) = ComposeView(requireActivity()).apply {
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                val viewModel = viewModel<CreateExerciseViewModel>()
-                val exercise by viewModel.exercise.observeAsState()
-                // TODO: Merge copy-paste-code from CreateRoutineFragment
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            navigationIcon = {
-                                IconButton(
-                                    onClick = ::popBackStack,
-                                    icon = { Icon(Icons.Default.ArrowBack) },
-                                )
-                            },
-                            title = {
-                                Box {
-                                    var nameFieldValue by remember {
-                                        mutableStateOf(
-                                            TextFieldValue(
-                                                viewModel.exercise.value?.name ?: "Unnamed"
-                                            )
-                                        )
-                                    }
-                                    var focusState by remember { mutableStateOf(false) }
-                                    BasicTextField(
-                                        value = nameFieldValue,
-                                        onValueChange = {
-                                            nameFieldValue = it
-                                            viewModel.updateExercise { name = it.text }
-                                        },
-                                        modifier = Modifier
-                                            .focusObserver {
-                                                focusState = it.isFocused
-                                            }
-                                            .fillMaxWidth(),
-                                        textStyle = AmbientTextStyle.current.copy(
-                                            color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
-                                        ),
-                                        maxLines = 1,
-                                        cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
-                                    )
-                                    if (nameFieldValue.text.isEmpty() && !focusState) {
-                                        Text("Unnamed", modifier = Modifier.drawOpacity(0.5f))
-                                    }
-                                }
-                            }
-                        )
-                    },
-                    bodyContent = {
-                        // TODO: Reuse checkbox ListItem component
-                        ScrollableColumn {
-                            var repsChecked by remember { mutableStateOf(exercise!!.logReps) }
-                            onCommit(repsChecked) {
-                                viewModel.updateExercise {
-                                    logReps = repsChecked
-                                }
-                            }
-                            ListItem(
-                                text = { Text("Log Reps") },
-                                icon = {
-                                    Checkbox(
-                                        checked = repsChecked,
-                                        onCheckedChange = { repsChecked = it }
-                                    )
-                                },
-                                modifier = Modifier.clickable { repsChecked = !repsChecked }
-                            )
-                            var weightChecked by remember { mutableStateOf(exercise!!.logWeight) }
-                            onCommit(weightChecked) {
-                                viewModel.updateExercise {
-                                    logWeight = weightChecked
-                                }
-                            }
-                            ListItem(
-                                text = { Text("Log Weight") },
-                                icon = {
-                                    Checkbox(
-                                        checked = weightChecked,
-                                        onCheckedChange = { weightChecked = it }
-                                    )
-                                },
-                                modifier = Modifier.clickable { weightChecked = !weightChecked }
-                            )
-                            var timeChecked by remember { mutableStateOf(exercise!!.logTime) }
-                            onCommit(timeChecked) {
-                                viewModel.updateExercise {
-                                    logTime = timeChecked
-                                }
-                            }
-                            ListItem(
-                                text = { Text("Log Time") },
-                                icon = {
-                                    Checkbox(
-                                        checked = timeChecked,
-                                        onCheckedChange = { timeChecked = it }
-                                    )
-                                },
-                                modifier = Modifier.clickable { timeChecked = !timeChecked }
-                            )
-                            var distanceChecked by remember { mutableStateOf(exercise!!.logDistance) }
-                            onCommit(distanceChecked) {
-                                viewModel.updateExercise {
-                                    logDistance = distanceChecked
-                                }
-                            }
-                            ListItem(
-                                text = { Text("Log Distance") },
-                                icon = {
-                                    Checkbox(
-                                        checked = distanceChecked,
-                                        onCheckedChange = { distanceChecked = it }
-                                    )
-                                },
-                                modifier = Modifier.clickable { distanceChecked = !distanceChecked }
-                            )
-                        }
-                    }
-                )
+                CreateExerciseScreen(popBackStack = ::popBackStack, viewModel = viewModel)
             }
         }
     }
@@ -194,4 +79,126 @@ class CreateExerciseFragment : Fragment() {
             findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
         }
     }
+}
+
+@ExperimentalFocus
+@Composable
+fun CreateExerciseScreen(
+    popBackStack: () -> Unit,
+    viewModel: CreateExerciseViewModel
+) {
+    val exercise by viewModel.exercise.observeAsState()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = {
+                    IconButton(
+                        onClick = popBackStack,
+                        icon = { Icon(Icons.Default.ArrowBack) },
+                    )
+                },
+                title = {
+                    Box {
+                        var nameFieldValue by remember {
+                            mutableStateOf(
+                                TextFieldValue(
+                                    viewModel.exercise.value?.name ?: "Unnamed"
+                                )
+                            )
+                        }
+                        var focusState by remember { mutableStateOf(false) }
+                        BasicTextField(
+                            value = nameFieldValue,
+                            onValueChange = {
+                                nameFieldValue = it
+                                viewModel.updateExercise { name = it.text }
+                            },
+                            modifier = Modifier
+                                .focusObserver {
+                                    focusState = it.isFocused
+                                }
+                                .fillMaxWidth(),
+                            textStyle = AmbientTextStyle.current.copy(
+                                color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
+                            ),
+                            maxLines = 1,
+                            cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
+                        )
+                        if (nameFieldValue.text.isEmpty() && !focusState) {
+                            Text("Unnamed", modifier = Modifier.drawOpacity(0.5f))
+                        }
+                    }
+                }
+            )
+        },
+        bodyContent = {
+            // TODO: Reuse checkbox ListItem component
+            ScrollableColumn {
+                var repsChecked by remember { mutableStateOf(exercise!!.logReps) }
+                onCommit(repsChecked) {
+                    viewModel.updateExercise {
+                        logReps = repsChecked
+                    }
+                }
+                ListItem(
+                    text = { Text("Log Reps") },
+                    icon = {
+                        Checkbox(
+                            checked = repsChecked,
+                            onCheckedChange = { repsChecked = it }
+                        )
+                    },
+                    modifier = Modifier.clickable { repsChecked = !repsChecked }
+                )
+                var weightChecked by remember { mutableStateOf(exercise!!.logWeight) }
+                onCommit(weightChecked) {
+                    viewModel.updateExercise {
+                        logWeight = weightChecked
+                    }
+                }
+                ListItem(
+                    text = { Text("Log Weight") },
+                    icon = {
+                        Checkbox(
+                            checked = weightChecked,
+                            onCheckedChange = { weightChecked = it }
+                        )
+                    },
+                    modifier = Modifier.clickable { weightChecked = !weightChecked }
+                )
+                var timeChecked by remember { mutableStateOf(exercise!!.logTime) }
+                onCommit(timeChecked) {
+                    viewModel.updateExercise {
+                        logTime = timeChecked
+                    }
+                }
+                ListItem(
+                    text = { Text("Log Time") },
+                    icon = {
+                        Checkbox(
+                            checked = timeChecked,
+                            onCheckedChange = { timeChecked = it }
+                        )
+                    },
+                    modifier = Modifier.clickable { timeChecked = !timeChecked }
+                )
+                var distanceChecked by remember { mutableStateOf(exercise!!.logDistance) }
+                onCommit(distanceChecked) {
+                    viewModel.updateExercise {
+                        logDistance = distanceChecked
+                    }
+                }
+                ListItem(
+                    text = { Text("Log Distance") },
+                    icon = {
+                        Checkbox(
+                            checked = distanceChecked,
+                            onCheckedChange = { distanceChecked = it }
+                        )
+                    },
+                    modifier = Modifier.clickable { distanceChecked = !distanceChecked }
+                )
+            }
+        }
+    )
 }
