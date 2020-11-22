@@ -32,14 +32,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
-import com.noahjutz.gymroutines.ui.exercises.ExercisesScreen
-import com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineEditor
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutinePresenter
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
-import com.noahjutz.gymroutines.ui.routines.create.pick.PickExercise
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

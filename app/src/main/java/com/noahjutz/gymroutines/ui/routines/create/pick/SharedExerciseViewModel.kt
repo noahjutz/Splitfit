@@ -22,7 +22,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineEditor
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineFragment
 
 @Suppress("unused")
@@ -32,7 +32,7 @@ private const val TAG = "PickExerciseViewModel"
  * Shared [ViewModel] between [PickExerciseFragment] and [CreateRoutineFragment]
  *
  * [PickExerciseFragment] uses [addExercise] and [removeExercise] to edit [exercises]
- * [CreateRoutineFragment] observes [exercises] to update [CreateRoutineEditor]
+ * [CreateRoutineFragment] observes [exercises] to update [CreateRoutineViewModel]
  */
 class SharedExerciseViewModel : ViewModel() {
     private val _exercises: MutableLiveData<List<Exercise>> = MutableLiveData()

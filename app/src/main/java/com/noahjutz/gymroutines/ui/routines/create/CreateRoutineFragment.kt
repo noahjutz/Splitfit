@@ -81,7 +81,7 @@ import java.util.*
 class CreateRoutineFragment : Fragment() {
 
     private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
-    private val viewModel: CreateRoutineEditor by viewModels()
+    private val viewModel: CreateRoutineViewModel by viewModels()
 
     @ExperimentalMaterialApi
     @ExperimentalAnimationApi
@@ -95,8 +95,7 @@ class CreateRoutineFragment : Fragment() {
                 CreateRoutineScreen(
                     onAddExercise = ::addExercise,
                     popBackStack = ::popBackStack,
-                    presenter = viewModel(),
-                    editor = viewModel()
+                    viewModel = viewModel()
                 )
             }
         }
@@ -139,10 +138,9 @@ class CreateRoutineFragment : Fragment() {
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
-    presenter: CreateRoutinePresenter,
-    editor: CreateRoutineEditor
+    viewModel: CreateRoutineViewModel,
 ) {
-    val sets by presenter.sets.observeAsState()
+    val sets by viewModel.sets.observeAsState()
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -162,13 +160,13 @@ fun CreateRoutineScreen(
                 },
                 title = {
                     Box {
-                        var nameFieldValue by remember { mutableStateOf(TextFieldValue(presenter.initialName)) }
+                        var nameFieldValue by remember { mutableStateOf(TextFieldValue(viewModel.initialName)) }
                         var focusState by remember { mutableStateOf(false) }
                         BasicTextField(
                             value = nameFieldValue,
                             onValueChange = {
                                 nameFieldValue = it
-                                editor.updateRoutine { this.name = it.text }
+                                viewModel.updateRoutine { this.name = it.text }
                             },
                             modifier = Modifier
                                 .focusObserver {
@@ -193,7 +191,7 @@ fun CreateRoutineScreen(
             items = sets?.let { it.groupBy { it.exerciseId }.values.toList() } ?: emptyList(),
             modifier = Modifier.fillMaxHeight()
         ) { setGroup ->
-            SetGroupCard(setGroup, editor, presenter)
+            SetGroupCard(setGroup, viewModel)
         }
     }
 }
@@ -205,8 +203,7 @@ fun CreateRoutineScreen(
 @Composable
 fun SetGroupCard(
     setGroup: List<Set>,
-    editor: CreateRoutineEditor,
-    presenter: CreateRoutinePresenter,
+    viewModel: CreateRoutineViewModel,
 ) {
     val offsetPosition = remember { mutableStateOf(0f) }
     Card(
@@ -237,7 +234,7 @@ fun SetGroupCard(
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = presenter.getExerciseName(setGroup.first().exerciseId),
+                    text = viewModel.getExerciseName(setGroup.first().exerciseId),
                     fontSize = 20.sp,
                 )
             }
@@ -252,7 +249,7 @@ fun SetGroupCard(
 
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
-                        editor.updateRoutine { sets.removeAt(i) }
+                        viewModel.updateRoutine { sets.removeAt(i) }
                         dismissState.snapTo(DismissValue.Default)
                     }
                 }
@@ -283,7 +280,7 @@ fun SetGroupCard(
                             ) {
                                 SetTextField(
                                     onValueChange = {
-                                        editor.updateRoutine {
+                                        viewModel.updateRoutine {
                                             sets[i].reps =
                                                 it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
@@ -294,7 +291,7 @@ fun SetGroupCard(
 
                                 SetTextField(
                                     onValueChange = {
-                                        editor.updateRoutine {
+                                        viewModel.updateRoutine {
                                             sets[i].weight =
                                                 it.takeIf { it.isNotEmpty() }
                                                     ?.toDouble()
@@ -306,7 +303,7 @@ fun SetGroupCard(
 
                                 SetTextField(
                                     onValueChange = {
-                                        editor.updateRoutine {
+                                        viewModel.updateRoutine {
                                             sets[i].time =
                                                 it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
@@ -318,7 +315,7 @@ fun SetGroupCard(
 
                                 SetTextField(
                                     onValueChange = {
-                                        editor.updateRoutine {
+                                        viewModel.updateRoutine {
                                             sets[i].distance =
                                                 it.takeIf { it.isNotEmpty() }
                                                     ?.toDouble()
@@ -333,7 +330,7 @@ fun SetGroupCard(
                 )
             }
             TextButton(
-                onClick = { editor.addSet(setGroup[0].exerciseId) },
+                onClick = { viewModel.addSet(setGroup[0].exerciseId) },
                 content = {
                     Icon(Icons.Default.Add)
                     Text("Add Set")

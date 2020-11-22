@@ -26,8 +26,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.ui.test.*
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.MainActivity
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineEditor
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutinePresenter
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import io.mockk.every
 import io.mockk.mockk
@@ -42,12 +41,11 @@ class CreateRoutineScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    private val presenter = mockk<CreateRoutinePresenter>(relaxed = true).apply {
+    private val viewModel = mockk<CreateRoutineViewModel>(relaxed = true).apply {
         every { initialName } returns "Test Routine Name"
         every { sets } returns MutableLiveData(listOf(Set(-1), Set(-1), Set(-1)))
         every { getExerciseName(-1) } returns "Test Exercise Name"
     }
-    private val editor = mockk<CreateRoutineEditor>(relaxed = true)
     private val onAddExercise: () -> Unit = mockk(relaxed = true)
     private val popBackStack: () -> Unit = mockk(relaxed = true)
 
@@ -59,8 +57,7 @@ class CreateRoutineScreenTest {
                     CreateRoutineScreen(
                         onAddExercise = onAddExercise,
                         popBackStack = popBackStack,
-                        presenter = presenter,
-                        editor = editor
+                        viewModel = viewModel
                     )
                 }
             }
