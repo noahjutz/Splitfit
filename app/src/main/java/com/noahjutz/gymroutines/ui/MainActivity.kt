@@ -35,6 +35,9 @@ import androidx.navigation.compose.rememberNavController
 import com.noahjutz.gymroutines.ui.exercises.ExercisesScreen
 import com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
+import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineEditor
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutinePresenter
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.gymroutines.ui.routines.create.pick.PickExercise
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,40 +66,43 @@ class MainActivity : AppCompatActivity() {
 fun MainScreen() {
     val navController = rememberNavController()
     Scaffold {
+        val routinesVM = viewModel<RoutinesViewModel>()
+        //val createRoutineEditor = viewModel<CreateRoutineEditor>()
+        //val createRoutinePresenter = viewModel<CreateRoutinePresenter>()
         NavHost(navController, startDestination = "routines") {
             composable("routines") {
                 RoutinesScreen(
                     addEditRoutine = { navController.navigate("createRoutine") },
-                    viewModel = viewModel()
+                    viewModel = routinesVM
                 )
             }
-            composable("createRoutine") {
-                CreateRoutineScreen(
-                    onAddExercise = { navController.navigate("pickExercise") },
-                    popBackStack = { navController.popBackStack() },
-                    presenter = viewModel(),
-                    editor = viewModel()
-                )
-            }
-            composable("pickExercise") {
-                PickExercise(
-                    exercisesViewModel = viewModel(),
-                    sharedExerciseViewModel = viewModel(),
-                    popBackStack = { navController.popBackStack() }
-                )
-            }
-            composable("exercises") {
-                ExercisesScreen(
-                    addEditExercise = { navController.navigate("createExercise") },
-                    viewModel = viewModel()
-                )
-            }
-            composable("createExercise") {
-                CreateExerciseScreen(
-                    popBackStack = { navController.popBackStack() },
-                    viewModel = viewModel()
-                )
-            }
+            //composable("createRoutine") {
+            //    CreateRoutineScreen(
+            //        onAddExercise = { navController.navigate("pickExercise") },
+            //        popBackStack = { navController.popBackStack() },
+            //        presenter = createRoutinePresenter,
+            //        editor = createRoutineEditor
+            //    )
+            //}
+            //composable("pickExercise") {
+            //    PickExercise(
+            //        exercisesViewModel = viewModel(),
+            //        sharedExerciseViewModel = viewModel(),
+            //        popBackStack = { navController.popBackStack() }
+            //    )
+            //}
+            //composable("exercises") {
+            //    ExercisesScreen(
+            //        addEditExercise = { navController.navigate("createExercise") },
+            //        viewModel = viewModel()
+            //    )
+            //}
+            //composable("createExercise") {
+            //    CreateExerciseScreen(
+            //        popBackStack = { navController.popBackStack() },
+            //        viewModel = viewModel()
+            //    )
+            //}
         }
     }
 }
