@@ -20,27 +20,83 @@ package com.noahjutz.gymroutines.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.noahjutz.gymroutines.R
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.focus.ExperimentalFocus
+import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.viewinterop.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
+import com.noahjutz.gymroutines.ui.exercises.ExercisesScreen
+import com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseScreen
+import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
+import com.noahjutz.gymroutines.ui.routines.create.pick.PickExercise
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var navController: NavController
-
+    @ExperimentalFoundationApi
+    @ExperimentalFocus
+    @ExperimentalMaterialApi
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        initBottomNavigation()
+        setContent {
+            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+                MainScreen()
+            }
+        }
     }
+}
 
-    private fun initBottomNavigation() {
-        navController = findNavController(R.id.nav_host_fragment)
-        findViewById<BottomNavigationView>(R.id.bottom_nav).setupWithNavController(navController)
+@ExperimentalFoundationApi
+@ExperimentalFocus
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    Scaffold {
+        NavHost(navController, startDestination = "routines") {
+            composable("routines") {
+                RoutinesScreen(
+                    addEditRoutine = { navController.navigate("createRoutine") },
+                    viewModel = viewModel()
+                )
+            }
+            composable("createRoutine") {
+                CreateRoutineScreen(
+                    onAddExercise = { navController.navigate("pickExercise") },
+                    popBackStack = { navController.popBackStack() },
+                    presenter = viewModel(),
+                    editor = viewModel()
+                )
+            }
+            composable("pickExercise") {
+                PickExercise(
+                    exercisesViewModel = viewModel(),
+                    sharedExerciseViewModel = viewModel(),
+                    popBackStack = { navController.popBackStack() }
+                )
+            }
+            composable("exercises") {
+                ExercisesScreen(
+                    addEditExercise = { navController.navigate("createExercise") },
+                    viewModel = viewModel()
+                )
+            }
+            composable("createExercise") {
+                CreateExerciseScreen(
+                    popBackStack = { navController.popBackStack() },
+                    viewModel = viewModel()
+                )
+            }
+        }
     }
 }
