@@ -104,31 +104,21 @@ fun RoutinesScreen(
     ) {
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
-            val dismissState = rememberDismissState(
-                confirmStateChange = {
-                    if (it == DismissValue.DismissedToEnd) {
-                        addEditRoutine(routine.routineId)
-                    }
-                    it != DismissValue.DismissedToEnd
-                }
-            )
+            val dismissState = rememberDismissState()
 
             AnimatedVisibility(
-                visible = dismissState.value != DismissValue.DismissedToStart,
+                visible = dismissState.value == DismissValue.Default,
                 enter = expandVertically(),
                 exit = shrinkVertically()
             ) {
                 SwipeToDismiss(
                     state = dismissState,
-                    dismissThresholds = { direction ->
-                        FractionalThreshold(if (direction == DismissDirection.StartToEnd) 0.25f else 0.5f)
-                    },
                     background = {
                         val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
                         val background = animate(
                             when (dismissState.targetValue) {
                                 DismissValue.Default -> Color.LightGray
-                                DismissValue.DismissedToEnd -> Color.Blue
+                                DismissValue.DismissedToEnd -> Color.Red
                                 DismissValue.DismissedToStart -> Color.Red
                             }
                         )
@@ -136,17 +126,13 @@ fun RoutinesScreen(
                             DismissDirection.StartToEnd -> Alignment.CenterStart
                             DismissDirection.EndToStart -> Alignment.CenterEnd
                         }
-                        val icon = when (direction) {
-                            DismissDirection.StartToEnd -> Icons.Default.Edit
-                            DismissDirection.EndToStart -> Icons.Default.Delete
-                        }
                         Box(
                             modifier = Modifier.fillMaxSize()
                                 .background(background)
                                 .padding(horizontal = 20.dp),
                             alignment = alignment
                         ) {
-                            Icon(icon)
+                            Icon(Icons.Default.Delete)
                         }
                     },
                     dismissContent = {
@@ -166,7 +152,7 @@ fun RoutinesScreen(
                 )
             }
 
-            if (dismissState.value == DismissValue.DismissedToStart) {
+            if (dismissState.value != DismissValue.Default) {
                 AlertDialog(
                     title = { Text("Delete ${routine.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
                     confirmButton = {
