@@ -18,6 +18,8 @@
 
 package com.noahjutz.gymroutines.ui.routines.create
 
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -123,9 +125,11 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            for (e in exercises) viewModel.addSet(e.exerciseId)
-            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
+        lifecycleScope.launch {
+            sharedExerciseViewModel.exercises.value.let { exercises ->
+                for (e in exercises) viewModel.addSet(e.exerciseId)
+                sharedExerciseViewModel.clear()
+            }
         }
     }
 }
