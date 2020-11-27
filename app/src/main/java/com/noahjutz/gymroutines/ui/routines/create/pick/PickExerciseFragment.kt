@@ -39,7 +39,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

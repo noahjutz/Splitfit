@@ -24,7 +24,6 @@ import androidx.lifecycle.*
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.util.ARGS_EXERCISE_ID
-import com.noahjutz.gymroutines.util.ARGS_ROUTINE_ID
 import kotlinx.coroutines.runBlocking
 
 class CreateExerciseViewModel @ViewModelInject constructor(
