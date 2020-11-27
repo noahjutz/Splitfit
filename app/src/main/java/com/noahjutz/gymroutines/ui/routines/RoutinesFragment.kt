@@ -35,7 +35,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -106,51 +105,45 @@ fun RoutinesScreen(
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
             val dismissState = rememberDismissState()
 
-            AnimatedVisibility(
-                visible = dismissState.value == DismissValue.Default,
-                enter = expandVertically(),
-                exit = shrinkVertically()
-            ) {
-                SwipeToDismiss(
-                    state = dismissState,
-                    background = {
-                        val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-                        val background = animate(
-                            when (dismissState.targetValue) {
-                                DismissValue.Default -> Color.LightGray
-                                DismissValue.DismissedToEnd -> Color.Red
-                                DismissValue.DismissedToStart -> Color.Red
+            SwipeToDismiss(
+                state = dismissState,
+                background = {
+                    val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+                    val background = animate(
+                        when (dismissState.targetValue) {
+                            DismissValue.Default -> Color.LightGray
+                            DismissValue.DismissedToEnd -> Color.Red
+                            DismissValue.DismissedToStart -> Color.Red
+                        }
+                    )
+                    val alignment = when (direction) {
+                        DismissDirection.StartToEnd -> Alignment.CenterStart
+                        DismissDirection.EndToStart -> Alignment.CenterEnd
+                    }
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                            .background(background)
+                            .padding(horizontal = 20.dp),
+                        alignment = alignment
+                    ) {
+                        Icon(Icons.Default.Delete)
+                    }
+                },
+                dismissContent = {
+                    Card(
+                        elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
+                    ) {
+                        ListItem(
+                            text = {
+                                Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                            },
+                            modifier = Modifier.clickable {
+                                addEditRoutine(routine.routineId)
                             }
                         )
-                        val alignment = when (direction) {
-                            DismissDirection.StartToEnd -> Alignment.CenterStart
-                            DismissDirection.EndToStart -> Alignment.CenterEnd
-                        }
-                        Box(
-                            modifier = Modifier.fillMaxSize()
-                                .background(background)
-                                .padding(horizontal = 20.dp),
-                            alignment = alignment
-                        ) {
-                            Icon(Icons.Default.Delete)
-                        }
-                    },
-                    dismissContent = {
-                        Card(
-                            elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
-                        ) {
-                            ListItem(
-                                text = {
-                                    Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
-                                },
-                                modifier = Modifier.clickable {
-                                    addEditRoutine(routine.routineId)
-                                }
-                            )
-                        }
                     }
-                )
-            }
+                }
+            )
 
             if (dismissState.value != DismissValue.Default) {
                 AlertDialog(
