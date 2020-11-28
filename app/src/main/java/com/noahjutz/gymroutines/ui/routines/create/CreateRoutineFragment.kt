@@ -143,7 +143,7 @@ fun CreateRoutineScreen(
             sharedExerciseVM.clear()
         }
     }
-    val sets by viewModel.sets.observeAsState()
+    val sets = emptyList<Set>() // TODO: Use [CreateRoutineViewModel]
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(

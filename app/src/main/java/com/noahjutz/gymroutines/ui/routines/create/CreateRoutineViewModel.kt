@@ -30,10 +30,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 ) : ViewModel() {
     var routineId = 0
 
-    // TODO: Fix routine.value always being null
-    private val routine = repository.getRoutineLive(routineId)!!
-    val sets = Transformations.map(routine) { it?.sets ?: emptyList() }
-    val name = Transformations.map(routine) { it?.name.toString() }
+    // TODO: Add sets value
     val initialName: String
         get() = repository.getRoutine(routineId)?.name.toString()
 
