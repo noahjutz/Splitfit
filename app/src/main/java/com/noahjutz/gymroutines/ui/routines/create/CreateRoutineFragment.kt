@@ -19,6 +19,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -62,7 +63,6 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -74,6 +74,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -93,13 +94,7 @@ class CreateRoutineFragment : Fragment() {
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
         setContent {
-            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen(
-                    onAddExercise = ::addExercise,
-                    popBackStack = ::popBackStack,
-                    viewModel = viewModel()
-                )
-            }
+
         }
     }
 
@@ -126,10 +121,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
-            sharedExerciseViewModel.exercises.value.let { exercises ->
-                for (e in exercises) viewModel.addSet(e.exerciseId)
-                sharedExerciseViewModel.clear()
-            }
+
         }
     }
 }
@@ -143,7 +135,14 @@ fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
     viewModel: CreateRoutineViewModel,
+    sharedExerciseVM: SharedExerciseViewModel
 ) {
+    rememberCoroutineScope().launch {
+        sharedExerciseVM.exercises.value.let { exercises ->
+            for (e in exercises) viewModel.addSet(e.exerciseId)
+            sharedExerciseVM.clear()
+        }
+    }
     val sets by viewModel.sets.observeAsState()
     Scaffold(
         floatingActionButton = {

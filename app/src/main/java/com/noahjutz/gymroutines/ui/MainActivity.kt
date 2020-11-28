@@ -77,6 +77,7 @@ fun MainScreen(
             composable("routines") {
                 RoutinesScreen(
                     addEditRoutine = { routineId ->
+                        // TODO: handle routineId = -1
                         navController.navigate("createRoutine/$routineId")
                     },
                     viewModel = routinesVM
@@ -91,10 +92,11 @@ fun MainScreen(
                 CreateRoutineScreen(
                     onAddExercise = { navController.navigate("pickExercise") },
                     popBackStack = { navController.popBackStack() },
-                    viewModel = createRoutineVM
+                    viewModel = createRoutineVM,
+                    sharedExerciseVM = sharedExerciseVM
                 )
             }
-            composable("pickExercise") { // TODO: Fix exercises not being passed back by sharedVM
+            composable("pickExercise") {
                 PickExercise(
                     exercisesViewModel = exercisesVM,
                     sharedExerciseViewModel = sharedExerciseVM,

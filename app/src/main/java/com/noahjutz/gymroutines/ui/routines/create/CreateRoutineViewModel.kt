@@ -41,6 +41,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
         repository.insert(repository.getRoutine(routineId)!!.apply(action))
     }
 
+    // TODO: Fix set not being added
     fun addSet(exerciseId: Int) {
         updateRoutine {
             sets.apply {
