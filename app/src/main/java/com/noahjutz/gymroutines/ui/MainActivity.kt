@@ -19,7 +19,7 @@
 package com.noahjutz.gymroutines.ui
 
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -31,14 +31,21 @@ import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
+import com.noahjutz.gymroutines.ui.routines.create.pick.PickExercise
+import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val sharedExerciseVM: SharedExerciseViewModel by viewModels()
+
     @ExperimentalFoundationApi
     @ExperimentalFocus
     @ExperimentalMaterialApi
@@ -47,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                MainScreen()
+                MainScreen(sharedExerciseVM)
             }
         }
     }
@@ -58,11 +65,14 @@ class MainActivity : AppCompatActivity() {
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    sharedExerciseVM: SharedExerciseViewModel
+) {
     val navController = rememberNavController()
     Scaffold {
         val routinesVM = viewModel<RoutinesViewModel>()
         val createRoutineVM = viewModel<CreateRoutineViewModel>()
+        val exercisesVM = viewModel<ExercisesViewModel>()
         NavHost(navController, startDestination = "routines") {
             composable("routines") {
                 RoutinesScreen(
@@ -84,13 +94,13 @@ fun MainScreen() {
                     viewModel = createRoutineVM
                 )
             }
-            //composable("pickExercise") {
-            //    PickExercise(
-            //        exercisesViewModel = viewModel(),
-            //        sharedExerciseViewModel = viewModel(),
-            //        popBackStack = { navController.popBackStack() }
-            //    )
-            //}
+            composable("pickExercise") { // TODO: Fix exercises not being passed back by sharedVM
+                PickExercise(
+                    exercisesViewModel = exercisesVM,
+                    sharedExerciseViewModel = sharedExerciseVM,
+                    popBackStack = { navController.popBackStack() }
+                )
+            }
             //composable("exercises") {
             //    ExercisesScreen(
             //        addEditExercise = { navController.navigate("createExercise") },
