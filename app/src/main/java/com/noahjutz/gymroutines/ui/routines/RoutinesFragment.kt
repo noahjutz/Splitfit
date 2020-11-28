@@ -35,7 +35,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -104,69 +103,42 @@ fun RoutinesScreen(
     ) {
         val routines by viewModel.routines.observeAsState()
         LazyColumnFor(items = routines ?: emptyList()) { routine ->
-            val dismissState = rememberDismissState(
-                confirmStateChange = {
-                    if (it == DismissValue.DismissedToEnd) {
-                        addEditRoutine(routine.routineId)
+            val dismissState = rememberDismissState()
+
+            SwipeToDismiss(
+                state = dismissState,
+                background = {
+                    val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+                    val alignment = when (direction) {
+                        DismissDirection.StartToEnd -> Alignment.CenterStart
+                        DismissDirection.EndToStart -> Alignment.CenterEnd
                     }
-                    it != DismissValue.DismissedToEnd
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                            .background(Color.Red)
+                            .padding(horizontal = 20.dp),
+                        alignment = alignment
+                    ) {
+                        Icon(Icons.Default.Delete)
+                    }
+                },
+                dismissContent = {
+                    Card(
+                        elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
+                    ) {
+                        ListItem(
+                            text = {
+                                Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                            },
+                            modifier = Modifier.clickable {
+                                addEditRoutine(routine.routineId)
+                            }
+                        )
+                    }
                 }
             )
 
-            AnimatedVisibility(
-                visible = dismissState.value != DismissValue.DismissedToStart,
-                enter = expandVertically(),
-                exit = shrinkVertically()
-            ) {
-                SwipeToDismiss(
-                    state = dismissState,
-                    dismissThresholds = { direction ->
-                        FractionalThreshold(if (direction == DismissDirection.StartToEnd) 0.25f else 0.5f)
-                    },
-                    background = {
-                        val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-                        val background = animate(
-                            when (dismissState.targetValue) {
-                                DismissValue.Default -> Color.LightGray
-                                DismissValue.DismissedToEnd -> Color.Blue
-                                DismissValue.DismissedToStart -> Color.Red
-                            }
-                        )
-                        val alignment = when (direction) {
-                            DismissDirection.StartToEnd -> Alignment.CenterStart
-                            DismissDirection.EndToStart -> Alignment.CenterEnd
-                        }
-                        val icon = when (direction) {
-                            DismissDirection.StartToEnd -> Icons.Default.Edit
-                            DismissDirection.EndToStart -> Icons.Default.Delete
-                        }
-                        Box(
-                            modifier = Modifier.fillMaxSize()
-                                .background(background)
-                                .padding(horizontal = 20.dp),
-                            alignment = alignment
-                        ) {
-                            Icon(icon)
-                        }
-                    },
-                    dismissContent = {
-                        Card(
-                            elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
-                        ) {
-                            ListItem(
-                                text = {
-                                    Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
-                                },
-                                modifier = Modifier.clickable {
-                                    addEditRoutine(routine.routineId)
-                                }
-                            )
-                        }
-                    }
-                )
-            }
-
-            if (dismissState.value == DismissValue.DismissedToStart) {
+            if (dismissState.value != DismissValue.Default) {
                 AlertDialog(
                     title = { Text("Delete ${routine.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
                     confirmButton = {

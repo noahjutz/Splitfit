@@ -18,12 +18,11 @@
 
 package com.noahjutz.gymroutines.ui.routines.create.pick
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineFragment
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @Suppress("unused")
 private const val TAG = "PickExerciseViewModel"
@@ -31,31 +30,22 @@ private const val TAG = "PickExerciseViewModel"
 /**
  * Shared [ViewModel] between [PickExerciseFragment] and [CreateRoutineFragment]
  *
- * [PickExerciseFragment] uses [addExercise] and [removeExercise] to edit [exercises]
- * [CreateRoutineFragment] observes [exercises] to update [CreateRoutineViewModel]
+ * [PickExerciseFragment] modifies [exercises]
+ * [CreateRoutineFragment] accesses [exercises]
  */
 class SharedExerciseViewModel : ViewModel() {
-    private val _exercises: MutableLiveData<List<Exercise>> = MutableLiveData()
-    val exercises: LiveData<List<Exercise>>
-        get() = _exercises
+    private val _exercises = MutableStateFlow<MutableList<Exercise>>(mutableListOf())
+    val exercises = _exercises.asStateFlow()
 
-    val selectedCount: LiveData<Int> = androidx.lifecycle.Transformations.map(exercises) { it.size }
-
-    init {
-        _exercises.value = ArrayList()
+    fun add(exercise: Exercise) {
+        _exercises.value.add(exercise)
     }
 
-    fun addExercise(exercise: Exercise) {
-        _exercises.value = (exercises.value as ArrayList).apply {
-            if (!contains(exercise)) add(exercise)
-        }
+    fun remove(exercise: Exercise) {
+        _exercises.value.remove(exercise)
     }
 
-    fun removeExercise(exercise: Exercise) {
-        _exercises.value = (exercises.value as ArrayList).apply { remove(exercise) }
-    }
-
-    fun clearExercises() {
-        _exercises.value = ArrayList()
+    fun clear() {
+        _exercises.value.clear()
     }
 }

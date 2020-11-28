@@ -35,7 +35,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -79,9 +78,9 @@ fun PickExercise(
     sharedExerciseViewModel: SharedExerciseViewModel,
     popBackStack: () -> Unit
 ) {
+    val selectedCount = -1 // TODO: Use sharedVM.exercises.collectAsState()
     Scaffold(
         topBar = {
-            val selectedCount by sharedExerciseViewModel.selectedCount.observeAsState()
             TopAppBar(
                 navigationIcon = {
                     IconButton(
@@ -111,8 +110,8 @@ fun PickExercise(
                     },
                     modifier = Modifier.clickable {
                         checked = !checked
-                        if (checked) sharedExerciseViewModel.addExercise(exercise)
-                        else sharedExerciseViewModel.removeExercise(exercise)
+                        if (checked) sharedExerciseViewModel.add(exercise)
+                        else sharedExerciseViewModel.remove(exercise)
                     }
                 ) {
                     Text(exercise.name)

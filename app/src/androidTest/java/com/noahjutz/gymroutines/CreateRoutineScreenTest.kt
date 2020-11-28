@@ -26,8 +26,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.ui.test.*
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.MainActivity
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
+import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

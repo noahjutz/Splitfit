@@ -66,6 +66,7 @@ import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.noahjutz.gymroutines.R
@@ -73,6 +74,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.*
 
 @ExperimentalFocus
@@ -123,9 +125,11 @@ class CreateRoutineFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        sharedExerciseViewModel.exercises.observe(viewLifecycleOwner) { exercises ->
-            for (e in exercises) viewModel.addSet(e.exerciseId)
-            if (exercises.isNotEmpty()) sharedExerciseViewModel.clearExercises()
+        lifecycleScope.launch {
+            sharedExerciseViewModel.exercises.value.let { exercises ->
+                for (e in exercises) viewModel.addSet(e.exerciseId)
+                sharedExerciseViewModel.clear()
+            }
         }
     }
 }
@@ -212,25 +216,27 @@ fun SetGroupCard(
             .offsetPx(y = offsetPosition)
     ) {
         Column {
-            Box(modifier = Modifier.fillMaxWidth()
-                .clickable {}
-                .longPressDragGestureFilter(
-                    longPressDragObserver = object : LongPressDragObserver {
-                        override fun onDrag(dragDistance: Offset): Offset {
-                            super.onDrag(dragDistance)
-                            offsetPosition.value += dragDistance.y
-                            return dragDistance
-                        }
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .clickable {}
+                    .longPressDragGestureFilter(
+                        longPressDragObserver = object : LongPressDragObserver {
+                            override fun onDrag(dragDistance: Offset): Offset {
+                                super.onDrag(dragDistance)
+                                offsetPosition.value += dragDistance.y
+                                return dragDistance
+                            }
 
-                        override fun onStop(velocity: Offset) {
-                            super.onStop(velocity)
-                            offsetPosition.value = 0f
-                        }
+                            override fun onStop(velocity: Offset) {
+                                super.onStop(velocity)
+                                offsetPosition.value = 0f
+                            }
 
-                        override fun onDragStart() {
-                            super.onDragStart()
+                            override fun onDragStart() {
+                                super.onDragStart()
+                            }
                         }
-                    })
+                    )
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
