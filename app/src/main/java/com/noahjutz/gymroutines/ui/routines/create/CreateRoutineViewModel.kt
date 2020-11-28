@@ -29,6 +29,8 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
 ) : ViewModel() {
     var routineId = 0
+
+    // TODO: Fix routine.value always being null
     private val routine = repository.getRoutineLive(routineId)!!
     val sets = Transformations.map(routine) { it?.sets ?: emptyList() }
     val name = Transformations.map(routine) { it?.name.toString() }
@@ -41,7 +43,6 @@ class CreateRoutineViewModel @ViewModelInject constructor(
         repository.insert(repository.getRoutine(routineId)!!.apply(action))
     }
 
-    // TODO: Fix set not being added
     fun addSet(exerciseId: Int) {
         updateRoutine {
             sets.apply {
