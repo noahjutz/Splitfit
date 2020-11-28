@@ -39,7 +39,6 @@ import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.gymroutines.ui.routines.create.pick.PickExercise
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -76,8 +75,8 @@ fun MainScreen(
         NavHost(navController, startDestination = "routines") {
             composable("routines") {
                 RoutinesScreen(
-                    addEditRoutine = { routineId ->
-                        // TODO: handle routineId = -1
+                    addEditRoutine = {
+                        val routineId = if (it < 0) routinesVM.addRoutine().toInt() else it
                         navController.navigate("createRoutine/$routineId")
                     },
                     viewModel = routinesVM
