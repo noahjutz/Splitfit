@@ -18,7 +18,4 @@
 
 <resources>
     <string name="app_name">Gym Routines</string>
-
-    <string name="create_routine_hint_title">Title</string>
-    <string name="create_routine_hint_description">Notes</string>
 </resources>
