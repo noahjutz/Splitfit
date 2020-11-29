@@ -18,37 +18,33 @@
 
 package com.noahjutz.gymroutines.ui.exercises.create
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.util.ARGS_EXERCISE_ID
 import kotlinx.coroutines.runBlocking
 
 class CreateExerciseViewModel @ViewModelInject constructor(
-    private val repository: Repository,
-    @Assisted private val args: SavedStateHandle
+    private val repository: Repository
 ) : ViewModel() {
-    private val _exercise = MediatorLiveData<Exercise>()
-    val exercise: LiveData<Exercise>
-        get() = _exercise
-
-    init {
-        initExercise()
-    }
-
-    private fun initExercise() {
-        _exercise.run {
-            value = getExerciseById(args[ARGS_EXERCISE_ID] ?: -1)
-                ?: repository.getExercise(repository.insert(Exercise()).toInt())
-        }
-    }
+    private var _exercise: Exercise? = null
+    private val _exerciseLiveData = MutableLiveData<Exercise>()
+    val exerciseLiveData: LiveData<Exercise>
+        get() = _exerciseLiveData
 
     /** [repository] access functions */
     private fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExercise(id) }
 
     fun updateExercise(action: Exercise.() -> Unit) {
-        repository.insert(repository.getExercise(args[ARGS_EXERCISE_ID]!!)!!.apply(action))
+        repository.insert(repository.getExercise(_exercise!!.exerciseId)!!.apply(action))
+    }
+
+    fun setExercise(exerciseId: Int = -1) {
+        _exerciseLiveData.value = getExerciseById(exerciseId)
+            ?: repository.getExercise(repository.insert(Exercise()).toInt())
+        _exercise = getExerciseById(exerciseId)
     }
 }

@@ -41,7 +41,6 @@ import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focusObserver
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -87,7 +86,7 @@ fun CreateExerciseScreen(
     popBackStack: () -> Unit,
     viewModel: CreateExerciseViewModel
 ) {
-    val exercise by viewModel.exercise.observeAsState()
+    val exercise by viewModel.exerciseLiveData.observeAsState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -102,7 +101,7 @@ fun CreateExerciseScreen(
                         var nameFieldValue by remember {
                             mutableStateOf(
                                 TextFieldValue(
-                                    viewModel.exercise.value?.name ?: "Unnamed"
+                                    viewModel.exerciseLiveData.value?.name ?: "Unnamed"
                                 )
                             )
                         }

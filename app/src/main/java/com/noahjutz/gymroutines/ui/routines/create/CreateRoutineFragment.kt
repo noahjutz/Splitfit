@@ -62,10 +62,10 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -93,13 +93,7 @@ class CreateRoutineFragment : Fragment() {
         savedInstanceState: Bundle?
     ) = ComposeView(requireContext()).apply {
         setContent {
-            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateRoutineScreen(
-                    onAddExercise = ::addExercise,
-                    popBackStack = ::popBackStack,
-                    viewModel = viewModel()
-                )
-            }
+
         }
     }
 
@@ -126,10 +120,7 @@ class CreateRoutineFragment : Fragment() {
 
     private fun initViewModel() {
         lifecycleScope.launch {
-            sharedExerciseViewModel.exercises.value.let { exercises ->
-                for (e in exercises) viewModel.addSet(e.exerciseId)
-                sharedExerciseViewModel.clear()
-            }
+
         }
     }
 }
@@ -143,8 +134,15 @@ fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
     viewModel: CreateRoutineViewModel,
+    sharedExerciseVM: SharedExerciseViewModel
 ) {
-    val sets by viewModel.sets.observeAsState()
+    rememberCoroutineScope().launch {
+        sharedExerciseVM.exercises.value.let { exercises ->
+            for (e in exercises) viewModel.addSet(e.exerciseId)
+            sharedExerciseVM.clear()
+        }
+    }
+    val sets by Transformations.map(viewModel.routineLiveData!!) {it?.sets ?: emptyList()}.observeAsState()
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(

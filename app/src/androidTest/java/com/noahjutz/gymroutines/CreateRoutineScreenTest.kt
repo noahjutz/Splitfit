@@ -18,7 +18,9 @@
 
 package com.noahjutz.gymroutines
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.input.key.ExperimentalKeyInput
@@ -28,6 +30,7 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.MainActivity
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
+import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -43,12 +46,14 @@ class CreateRoutineScreenTest {
 
     private val viewModel = mockk<CreateRoutineViewModel>(relaxed = true).apply {
         every { initialName } returns "Test Routine Name"
-        every { sets } returns MutableLiveData(listOf(Set(-1), Set(-1), Set(-1)))
         every { getExerciseName(-1) } returns "Test Exercise Name"
     }
+    private val sharedViewModel = mockk<SharedExerciseViewModel>(relaxed = true)
     private val onAddExercise: () -> Unit = mockk(relaxed = true)
     private val popBackStack: () -> Unit = mockk(relaxed = true)
 
+    @ExperimentalAnimationApi
+    @ExperimentalMaterialApi
     @Before
     fun initializeComopseTestRule() {
         composeTestRule.apply {
@@ -57,7 +62,8 @@ class CreateRoutineScreenTest {
                     CreateRoutineScreen(
                         onAddExercise = onAddExercise,
                         popBackStack = popBackStack,
-                        viewModel = viewModel
+                        viewModel = viewModel,
+                        sharedExerciseVM = sharedViewModel
                     )
                 }
             }
