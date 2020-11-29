@@ -27,7 +27,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsRun
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.ExperimentalFocus
@@ -44,7 +43,7 @@ import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
-import com.noahjutz.gymroutines.ui.routines.create.pick.PickExercise
+import com.noahjutz.gymroutines.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -132,7 +131,7 @@ fun MainScreen(
                 )
             }
             composable("pickExercise") {
-                PickExercise(
+                PickExerciseScreen(
                     exercisesViewModel = exercisesVM,
                     sharedExerciseViewModel = sharedExerciseVM,
                     popBackStack = { navController.popBackStack() }

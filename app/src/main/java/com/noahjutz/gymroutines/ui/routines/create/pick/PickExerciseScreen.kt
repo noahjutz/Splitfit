@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 
 @Composable
-fun PickExercise(
+fun PickExerciseScreen(
     exercisesViewModel: ExercisesViewModel,
     sharedExerciseViewModel: SharedExerciseViewModel,
     popBackStack: () -> Unit
