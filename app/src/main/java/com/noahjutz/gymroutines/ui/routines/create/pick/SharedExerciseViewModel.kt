@@ -20,7 +20,6 @@ package com.noahjutz.gymroutines.ui.routines.create.pick
 
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.domain.Exercise
-import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineFragment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

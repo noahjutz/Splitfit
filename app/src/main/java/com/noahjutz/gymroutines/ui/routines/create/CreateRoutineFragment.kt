@@ -18,11 +18,6 @@
 
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.View.GONE
-import android.view.ViewGroup
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -52,7 +47,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.LongPressDragObserver
 import androidx.compose.ui.gesture.longPressDragGestureFilter
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SoftwareKeyboardController
@@ -62,68 +56,12 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.noahjutz.gymroutines.R
 import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.*
-
-@ExperimentalFocus
-@ExperimentalFoundationApi
-@AndroidEntryPoint
-class CreateRoutineFragment : Fragment() {
-
-    private val sharedExerciseViewModel: SharedExerciseViewModel by activityViewModels()
-    private val viewModel: CreateRoutineViewModel by viewModels()
-
-    @ExperimentalMaterialApi
-    @ExperimentalAnimationApi
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = ComposeView(requireContext()).apply {
-        setContent {
-
-        }
-    }
-
-    private fun popBackStack() {
-        findNavController().popBackStack()
-    }
-
-    fun addExercise() {
-        val action = CreateRoutineFragmentDirections.addExercise()
-        findNavController().navigate(action)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initViewModel()
-        initActivity()
-    }
-
-    private fun initActivity() {
-        requireActivity().apply {
-            findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
-        }
-    }
-
-    private fun initViewModel() {
-        lifecycleScope.launch {
-
-        }
-    }
-}
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -142,7 +80,8 @@ fun CreateRoutineScreen(
             sharedExerciseVM.clear()
         }
     }
-    val sets by Transformations.map(viewModel.routineLiveData!!) {it?.sets ?: emptyList()}.observeAsState()
+    val sets by Transformations.map(viewModel.routineLiveData!!) { it?.sets ?: emptyList() }
+        .observeAsState()
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
