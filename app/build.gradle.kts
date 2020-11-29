@@ -115,11 +115,12 @@ dependencies {
     implementation(Libs.navigation)
     implementation(Libs.navigationUi)
 
-    testImplementation(TestLibs.junit)
+    testImplementation(TestLibs.junit4)
     testImplementation(TestLibs.assertJ)
     testImplementation(TestLibs.mockkUnit)
     androidTestImplementation(TestLibs.mockkInstrumented)
     androidTestImplementation(TestLibs.composeTest)
+    androidTestImplementation(TestLibs.composeTestJunit4)
 
     implementation(Libs.compose)
     implementation(Libs.composeFoundation)

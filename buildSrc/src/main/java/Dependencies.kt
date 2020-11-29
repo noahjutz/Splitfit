@@ -80,11 +80,12 @@ object Libs {
 }
 
 object TestLibs {
-    const val junit = "junit:junit:${Versions.junit}"
+    const val junit4 = "junit:junit:${Versions.junit}"
     const val assertJ = "org.assertj:assertj-core:${Versions.assertJ}"
     const val mockkUnit = "io.mockk:mockk:${Versions.mockK}"
     const val mockkInstrumented = "io.mockk:mockk-android:${Versions.mockK}"
-    const val composeTest = "androidx.ui:ui-test:${Versions.compose}"
+    const val composeTest = "androidx.compose.ui:ui-test:${Versions.compose}"
+    const val composeTestJunit4 = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
 }
 
 object GradlePlugins {

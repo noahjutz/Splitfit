@@ -24,7 +24,8 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.input.key.ExperimentalKeyInput
-import androidx.ui.test.*
+import androidx.compose.ui.test.*
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.ui.MainActivity
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
