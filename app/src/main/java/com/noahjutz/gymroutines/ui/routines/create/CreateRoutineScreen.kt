@@ -25,7 +25,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -76,7 +76,7 @@ fun CreateRoutineScreen(
 ) {
     rememberCoroutineScope().launch {
         sharedExerciseVM.exercises.value.let { exercises ->
-            for (e in exercises) viewModel.addSet(e.exerciseId)
+            viewModel.appendSets(exercises.map { it.exerciseId })
             sharedExerciseVM.clear()
         }
     }
@@ -134,11 +134,14 @@ fun CreateRoutineScreen(
                 .toList()
         } ?: emptyList()
 
-        LazyColumnFor(
+        LazyColumnForIndexed(
             items = setGroups,
             modifier = Modifier.fillMaxHeight()
-        ) { setGroup ->
-            SetGroupCard(setGroup, viewModel)
+        ) { i, setGroup ->
+            SetGroupCard(
+                setGroup = setGroup,
+                viewModel = viewModel,
+            )
         }
     }
 }
