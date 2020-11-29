@@ -87,7 +87,7 @@ fun MainScreen(
                 arguments = listOf(navArgument("routineId") { type = NavType.IntType })
             ) { backStackEntry ->
                 val routineId: Int = backStackEntry.arguments?.getInt("routineId") ?: -1
-                createRoutineVM.routineId = routineId
+                createRoutineVM.setRoutine(routineId)
                 CreateRoutineScreen(
                     onAddExercise = { navController.navigate("pickExercise") },
                     popBackStack = { navController.popBackStack() },

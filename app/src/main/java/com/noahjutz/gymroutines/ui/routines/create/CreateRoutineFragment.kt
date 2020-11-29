@@ -19,7 +19,6 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -66,6 +65,7 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -74,7 +74,6 @@ import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -143,7 +142,7 @@ fun CreateRoutineScreen(
             sharedExerciseVM.clear()
         }
     }
-    val sets = emptyList<Set>() // TODO: Use [CreateRoutineViewModel]
+    val sets by Transformations.map(viewModel.routineLiveData!!) {it?.sets ?: emptyList()}.observeAsState()
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(

@@ -19,7 +19,7 @@
 package com.noahjutz.gymroutines.ui.routines.create
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Routine
@@ -28,16 +28,17 @@ import com.noahjutz.gymroutines.data.domain.Set
 class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
 ) : ViewModel() {
-    var routineId = 0
-
-    // TODO: Add sets value
+    private var routine: Routine? = null
+    var routineLiveData: LiveData<Routine?>? = null
     val initialName: String
-        get() = repository.getRoutine(routineId)?.name.toString()
+        get() = routine?.name ?: ""
 
     fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
 
     fun updateRoutine(action: Routine.() -> Unit) {
-        repository.insert(repository.getRoutine(routineId)!!.apply(action))
+        routine?.routineId?.let { id ->
+            repository.insert(repository.getRoutine(id)!!.apply(action))
+        }
     }
 
     fun addSet(exerciseId: Int) {
@@ -47,5 +48,10 @@ class CreateRoutineViewModel @ViewModelInject constructor(
                 sortBy { it.exerciseId }
             }
         }
+    }
+
+    fun setRoutine(routineId: Int) {
+        routineLiveData = repository.getRoutineLive(routineId)
+        routine = repository.getRoutine(routineId)
     }
 }
