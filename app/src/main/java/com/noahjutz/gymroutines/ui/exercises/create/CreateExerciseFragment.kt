@@ -18,11 +18,6 @@
 
 package com.noahjutz.gymroutines.ui.exercises.create
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.View.GONE
-import android.view.ViewGroup
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -39,46 +34,7 @@ import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focusObserver
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.noahjutz.gymroutines.R
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class CreateExerciseFragment : Fragment() {
-
-    private val viewModel: CreateExerciseViewModel by viewModels()
-    private val args: CreateExerciseFragmentArgs by navArgs()
-
-    @ExperimentalFocus
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = ComposeView(requireActivity()).apply {
-        setContent {
-            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                CreateExerciseScreen(popBackStack = ::popBackStack, viewModel = viewModel)
-            }
-        }
-    }
-
-    private fun popBackStack() {
-        findNavController().popBackStack()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().apply {
-            findViewById<BottomNavigationView>(R.id.bottom_nav).visibility = GONE
-        }
-    }
-}
 
 @ExperimentalFocus
 @Composable
