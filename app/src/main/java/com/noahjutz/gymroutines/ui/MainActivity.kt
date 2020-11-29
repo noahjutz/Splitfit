@@ -38,6 +38,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.noahjutz.gymroutines.ui.exercises.ExercisesScreen
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
+import com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseScreen
+import com.noahjutz.gymroutines.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
@@ -105,6 +107,7 @@ fun MainScreen(
         val routinesVM = viewModel<RoutinesViewModel>()
         val createRoutineVM = viewModel<CreateRoutineViewModel>()
         val exercisesVM = viewModel<ExercisesViewModel>()
+        val createExerciseVM = viewModel<CreateExerciseViewModel>()
         NavHost(navController, startDestination = "routines") {
             composable("routines") {
                 RoutinesScreen(
@@ -137,16 +140,24 @@ fun MainScreen(
             }
             composable("exercises") {
                 ExercisesScreen(
-                    addEditExercise = { navController.navigate("createExercise") },
+                    addEditExercise = {
+                        val exerciseId = if (it < 0) exercisesVM.addExercise() else it
+                        navController.navigate("createExercise/$exerciseId")
+                    },
                     viewModel = exercisesVM
                 )
             }
-            //composable("createExercise") {
-            //    CreateExerciseScreen(
-            //        popBackStack = { navController.popBackStack() },
-            //        viewModel = viewModel()
-            //    )
-            //}
+            composable(
+                route = "createExercise/{exerciseId}",
+                arguments = listOf(navArgument("exerciseId") {type = NavType.IntType})
+            ) { backStackEntry ->
+                val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
+                createExerciseVM.setExercise(exerciseId)
+                CreateExerciseScreen(
+                    popBackStack = { navController.popBackStack() },
+                    viewModel = createExerciseVM
+                )
+            }
         }
     }
 }
