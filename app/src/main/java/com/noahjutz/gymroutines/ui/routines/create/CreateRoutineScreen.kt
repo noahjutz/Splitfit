@@ -128,8 +128,14 @@ fun CreateRoutineScreen(
             )
         }
     ) {
+        val setGroups = sets?.let { sets ->
+            sets.sortedBy { it.exerciseId /* TODO sort by position */ }
+                .groupBy { it.exerciseId }.values
+                .toList()
+        } ?: emptyList()
+
         LazyColumnFor(
-            items = sets?.let { it.groupBy { it.exerciseId }.values.toList() } ?: emptyList(),
+            items = setGroups,
             modifier = Modifier.fillMaxHeight()
         ) { setGroup ->
             SetGroupCard(setGroup, viewModel)
