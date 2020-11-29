@@ -28,7 +28,4 @@ data class Set(
     var weight: Double? = null,
     var time: Int? = null,
     var distance: Double? = null
-) {
-    @PrimaryKey(autoGenerate = true)
-    var setId: Int = 0
-}
+)

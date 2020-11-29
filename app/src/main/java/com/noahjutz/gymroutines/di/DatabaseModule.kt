@@ -45,7 +45,4 @@ object DatabaseModule {
 
     @Provides
     fun provideRoutineDao(database: AppDatabase) = database.routineDao
-
-    @Provides
-    fun provideSetDao(database: AppDatabase) = database.setDao
 }

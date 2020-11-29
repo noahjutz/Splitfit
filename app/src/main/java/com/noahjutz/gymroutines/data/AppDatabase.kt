@@ -30,13 +30,11 @@ import com.noahjutz.gymroutines.data.domain.Set
     entities = [
         Exercise::class,
         Routine::class,
-        Set::class
     ],
-    version = 27
+    version = 28
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val routineDao: RoutineDao
-    abstract val setDao: SetDao
 }

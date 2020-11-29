@@ -21,10 +21,8 @@ package com.noahjutz.gymroutines.data
 import androidx.lifecycle.LiveData
 import com.noahjutz.gymroutines.data.dao.ExerciseDao
 import com.noahjutz.gymroutines.data.dao.RoutineDao
-import com.noahjutz.gymroutines.data.dao.SetDao
 import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.data.domain.Set
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -35,7 +33,6 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val exerciseDao: ExerciseDao,
     private val routineDao: RoutineDao,
-    private val setDao: SetDao
 ) {
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
@@ -50,25 +47,6 @@ class Repository @Inject constructor(
     fun getExercise(id: Int): Exercise? = runBlocking {
         withContext(IO) {
             exerciseDao.getExercise(id)
-        }
-    }
-
-    /** [Set] */
-    fun insert(set: Set) = runBlocking {
-        withContext(IO) {
-            setDao.insert(set)
-        }
-    }
-
-    fun delete(set: Set) = runBlocking {
-        withContext(IO) {
-            setDao.delete(set)
-        }
-    }
-
-    fun getSet(id: Int): Set? = runBlocking {
-        withContext(IO) {
-            setDao.getSetById(id)
         }
     }
 
