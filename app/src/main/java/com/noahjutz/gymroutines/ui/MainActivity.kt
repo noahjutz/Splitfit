@@ -148,7 +148,7 @@ fun MainScreen(
             }
             composable(
                 route = "createExercise/{exerciseId}",
-                arguments = listOf(navArgument("exerciseId") {type = NavType.IntType})
+                arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
             ) { backStackEntry ->
                 val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
                 createExerciseVM.setExercise(exerciseId)
