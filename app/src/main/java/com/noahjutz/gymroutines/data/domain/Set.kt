@@ -27,5 +27,6 @@ data class Set(
     var reps: Int? = null,
     var weight: Double? = null,
     var time: Int? = null,
-    var distance: Double? = null
+    var distance: Double? = null,
+    var position: Int = -1
 )

@@ -129,7 +129,7 @@ fun CreateRoutineScreen(
         }
     ) {
         val setGroups = sets?.let { sets ->
-            sets.sortedBy { it.exerciseId /* TODO sort by position */ }
+            sets.sortedBy { it.position }
                 .groupBy { it.exerciseId }.values
                 .toList()
         } ?: emptyList()
