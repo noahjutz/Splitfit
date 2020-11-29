@@ -52,7 +52,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
     fun appendSets(exerciseIds: List<Int>) {
         updateRoutine {
             val setList = exerciseIds.mapIndexed { i, id ->
-                Set(id, position = i + sets.lastIndex)
+                Set(id, position = i + sets.size)
             }.filter { it.exerciseId !in sets.map { it.exerciseId } }
             sets.addAll(setList)
         }
