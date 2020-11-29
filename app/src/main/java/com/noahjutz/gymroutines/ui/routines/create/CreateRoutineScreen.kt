@@ -174,10 +174,6 @@ fun SetGroupCard(
                                 super.onStop(velocity)
                                 offsetPosition.value = 0f
                             }
-
-                            override fun onDragStart() {
-                                super.onDragStart()
-                            }
                         }
                     )
             ) {
