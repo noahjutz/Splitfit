@@ -24,9 +24,8 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.input.key.ExperimentalKeyInput
-import androidx.lifecycle.MutableLiveData
 import androidx.ui.test.*
-import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.data.domain.Exercise
 import com.noahjutz.gymroutines.ui.MainActivity
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.gymroutines.ui.routines.create.CreateRoutineViewModel
@@ -34,6 +33,8 @@ import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,7 +49,9 @@ class CreateRoutineScreenTest {
         every { initialName } returns "Test Routine Name"
         every { getExerciseName(-1) } returns "Test Exercise Name"
     }
-    private val sharedViewModel = mockk<SharedExerciseViewModel>(relaxed = true)
+    private val sharedViewModel = mockk<SharedExerciseViewModel>(relaxed = true).apply {
+        every { exercises } returns MutableStateFlow<MutableList<Exercise>>(mutableListOf()).asStateFlow()
+    }
     private val onAddExercise: () -> Unit = mockk(relaxed = true)
     private val popBackStack: () -> Unit = mockk(relaxed = true)
 
