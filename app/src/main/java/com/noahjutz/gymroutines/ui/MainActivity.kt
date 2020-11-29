@@ -25,12 +25,18 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DirectionsRun
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.ExperimentalFocus
+import androidx.compose.ui.graphics.vector.VectorAsset
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.noahjutz.gymroutines.ui.exercises.ExercisesScreen
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 import com.noahjutz.gymroutines.ui.routines.RoutinesScreen
 import com.noahjutz.gymroutines.ui.routines.RoutinesViewModel
@@ -68,7 +74,34 @@ fun MainScreen(
     sharedExerciseVM: SharedExerciseViewModel
 ) {
     val navController = rememberNavController()
-    Scaffold {
+    Scaffold(
+        bottomBar = {
+            val navBackStackEntry = navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
+            if (currentRoute in items.map { it.route }) {
+                BottomNavigation {
+                    items.forEach { screen ->
+                        BottomNavigationItem(
+                            icon = { Icon(screen.icon) },
+                            label = { Text(screen.name) },
+                            selected = currentRoute == screen.route,
+                            onClick = {
+                                // This is the equivalent to popUpTo the start destination
+                                navController.popBackStack(
+                                    navController.graph.startDestination,
+                                    false
+                                )
+
+                                // This if check gives us a "singleTop" behavior where we do not create a
+                                // second instance of the composable if we are already on that destination
+                                if (currentRoute != screen.route) navController.navigate(screen.route)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    ) {
         val routinesVM = viewModel<RoutinesViewModel>()
         val createRoutineVM = viewModel<CreateRoutineViewModel>()
         val exercisesVM = viewModel<ExercisesViewModel>()
@@ -102,12 +135,12 @@ fun MainScreen(
                     popBackStack = { navController.popBackStack() }
                 )
             }
-            //composable("exercises") {
-            //    ExercisesScreen(
-            //        addEditExercise = { navController.navigate("createExercise") },
-            //        viewModel = viewModel()
-            //    )
-            //}
+            composable("exercises") {
+                ExercisesScreen(
+                    addEditExercise = { navController.navigate("createExercise") },
+                    viewModel = exercisesVM
+                )
+            }
             //composable("createExercise") {
             //    CreateExerciseScreen(
             //        popBackStack = { navController.popBackStack() },
@@ -117,3 +150,13 @@ fun MainScreen(
         }
     }
 }
+
+sealed class Screen(val route: String, val name: String, val icon: VectorAsset) {
+    object Routines : Screen("routines", "Routines", Icons.Default.ViewAgenda)
+    object Exercises : Screen("exercises", "Exercises", Icons.Default.DirectionsRun)
+}
+
+val items = listOf(
+    Screen.Routines,
+    Screen.Exercises
+)
