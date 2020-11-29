@@ -18,15 +18,10 @@
 
 package com.noahjutz.gymroutines.ui.routines
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.View.VISIBLE
-import android.view.ViewGroup
-import androidx.compose.animation.*
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animate
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -41,50 +36,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.noahjutz.gymroutines.R
-import dagger.hilt.android.AndroidEntryPoint
-
-@AndroidEntryPoint
-class RoutinesFragment : Fragment() {
-
-    private val viewModel: RoutinesViewModel by viewModels()
-
-    @ExperimentalAnimationApi
-    @ExperimentalMaterialApi
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = ComposeView(requireContext()).apply {
-        setContent {
-            MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                RoutinesScreen(::addEditRoutine, viewModel)
-            }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().apply {
-            title = "Routines"
-            findViewById<BottomNavigationView>(R.id.bottom_nav)?.visibility = VISIBLE
-        }
-    }
-
-    private fun addEditRoutine(routineId: Int) {
-        val routineIdToEdit =
-            if (routineId < 0) viewModel.addRoutine().toInt()
-            else routineId
-
-        findNavController().navigate(RoutinesFragmentDirections.addRoutine(routineIdToEdit))
-    }
-}
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
