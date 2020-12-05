@@ -231,8 +231,8 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            // sets[i].reps = // TODO
-                                            //    it.takeIf { it.isNotEmpty() }?.toInt()
+                                            setGroups[setGroupIndex].sets[setIndex].reps =
+                                               it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
                                     },
                                     regexPattern = RegexPatterns.integer,
@@ -242,9 +242,9 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            //sets[i].weight = // TODO
-                                            //    it.takeIf { it.isNotEmpty() }
-                                            //        ?.toDouble()
+                                            setGroups[setGroupIndex].sets[setIndex].weight =
+                                                it.takeIf { it.isNotEmpty() }
+                                                    ?.toDouble()
                                         }
                                     },
                                     regexPattern = RegexPatterns.float,
@@ -254,8 +254,8 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            //sets[i].time = // TODO
-                                            //    it.takeIf { it.isNotEmpty() }?.toInt()
+                                            setGroups[setGroupIndex].sets[setIndex].time =
+                                                it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
                                     },
                                     regexPattern = RegexPatterns.time,
@@ -266,9 +266,9 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            //sets[i].distance = // TODO
-                                            //    it.takeIf { it.isNotEmpty() }
-                                            //        ?.toDouble()
+                                            setGroups[setGroupIndex].sets[setIndex].distance =
+                                                it.takeIf { it.isNotEmpty() }
+                                                    ?.toDouble()
                                         }
                                     },
                                     regexPattern = RegexPatterns.float,
