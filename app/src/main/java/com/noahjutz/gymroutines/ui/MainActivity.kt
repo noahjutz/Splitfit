@@ -16,6 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
+
 package com.noahjutz.gymroutines.ui
 
 import android.os.Bundle
@@ -24,14 +26,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsRun
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -77,8 +82,8 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     Scaffold(
-        bottomBar = {
-            MainScreenBottomBar(navController = navController)
+        topBar = {
+            MainScreenTopBar(navController)
         }
     ) {
         val routinesVM = viewModel<RoutinesViewModel>()
@@ -198,6 +203,45 @@ fun MainScreenBottomBar(
                         if (currentRoute != screen.route) navController.navigate(screen.route)
                     }
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun MainScreenTopBar(
+    navController: NavHostController
+) {
+    val items = listOf(
+        Screen.Routines,
+        Screen.Exercises
+    )
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
+    if (currentRoute in items.map { it.route }) {
+        TabRow(selectedTabIndex = items.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
+            ?: 0) {
+            items.forEachIndexed { i, screen ->
+                Tab(
+                    selected = screen.route == currentRoute,
+                    onClick = {
+                        // This is the equivalent to popUpTo the start destination
+                        navController.popBackStack(
+                            navController.graph.startDestination,
+                            false
+                        )
+
+                        // This if check gives us a "singleTop" behavior where we do not create a
+                        // second instance of the composable if we are already on that destination
+                        if (currentRoute != screen.route) navController.navigate(screen.route)
+                    }
+                ) {
+                    Text(
+                        screen.name,
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.padding(vertical = 16.dp)
+                    )
+                }
             }
         }
     }
