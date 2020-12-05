@@ -29,7 +29,7 @@ object Versions {
     const val ktlintPlugin = "9.4.1"
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha02"
-    const val kotlin = "1.4.10"
+    const val kotlin = "1.4.20"
     const val hilt = "2.28-alpha"
     const val hiltExt = "1.0.0-alpha02"
     const val room = "2.2.5"
@@ -37,8 +37,8 @@ object Versions {
     const val material = "1.2.1"
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.1"
-    const val compose = "1.0.0-alpha07"
-    const val composeNavigation = "1.0.0-alpha02"
+    const val compose = "1.0.0-alpha08"
+    const val composeNavigation = "1.0.0-alpha03"
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
@@ -70,7 +70,7 @@ object Libs {
     const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 
     const val compose = "androidx.compose.ui:ui:${Versions.compose}"
-    const val composeTooling = "androidx.ui:ui-tooling:${Versions.compose}"
+    const val composeTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.compose}"

@@ -49,7 +49,7 @@ fun RoutinesScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { addEditRoutine(-1) },
-                icon = { Icon(Icons.Default.Add) }
+                content = { Icon(Icons.Default.Add) }
             )
         }
     ) {
@@ -69,7 +69,7 @@ fun RoutinesScreen(
                         modifier = Modifier.fillMaxSize()
                             .background(Color.Red)
                             .padding(horizontal = 20.dp),
-                        alignment = alignment
+                        contentAlignment = alignment
                     ) {
                         Icon(Icons.Default.Delete)
                     }

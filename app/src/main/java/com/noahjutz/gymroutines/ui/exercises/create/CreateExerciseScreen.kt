@@ -49,7 +49,7 @@ fun CreateExerciseScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        icon = { Icon(Icons.Default.ArrowBack) },
+                        content = { Icon(Icons.Default.ArrowBack) },
                     )
                 },
                 title = {

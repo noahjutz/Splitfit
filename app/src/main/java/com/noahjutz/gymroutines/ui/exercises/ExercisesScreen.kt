@@ -36,7 +36,7 @@ fun ExercisesScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { addEditExercise(-1) },
-                icon = { Icon(Icons.Default.Add) }
+                content = { Icon(Icons.Default.Add) }
             )
         },
         bodyContent = {

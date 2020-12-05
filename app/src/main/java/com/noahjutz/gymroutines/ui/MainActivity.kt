@@ -30,7 +30,7 @@ import androidx.compose.material.icons.filled.DirectionsRun
 import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.ExperimentalFocus
-import androidx.compose.ui.graphics.vector.VectorAsset
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.viewinterop.viewModel
 import androidx.navigation.NavType
@@ -161,7 +161,7 @@ fun MainScreen(
     }
 }
 
-sealed class Screen(val route: String, val name: String, val icon: VectorAsset) {
+sealed class Screen(val route: String, val name: String, val icon: ImageVector) {
     object Routines : Screen("routines", "Routines", Icons.Default.ViewAgenda)
     object Exercises : Screen("exercises", "Exercises", Icons.Default.DirectionsRun)
 }

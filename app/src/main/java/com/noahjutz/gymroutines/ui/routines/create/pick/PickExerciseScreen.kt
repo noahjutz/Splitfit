@@ -45,7 +45,7 @@ fun PickExerciseScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        icon = {
+                        content = {
                             val asset =
                                 if (selectedCount == 0) Icons.Default.ArrowBack else Icons.Default.Done
                             Icon(asset)

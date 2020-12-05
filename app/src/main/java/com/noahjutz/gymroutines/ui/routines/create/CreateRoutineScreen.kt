@@ -86,7 +86,7 @@ fun CreateRoutineScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddExercise,
-                icon = { Icon(Icons.Default.Add) },
+                content = { Icon(Icons.Default.Add) },
                 modifier = Modifier.testTag("addExerciseFab")
             )
         },
@@ -95,7 +95,7 @@ fun CreateRoutineScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        icon = { Icon(Icons.Default.ArrowBack) },
+                        content = { Icon(Icons.Default.ArrowBack) },
                         modifier = Modifier.testTag("backButton")
                     )
                 },
@@ -213,7 +213,7 @@ fun SetGroupCard(
                             DismissDirection.EndToStart -> Alignment.CenterEnd
                         }
                         Box(
-                            alignment = alignment,
+                            contentAlignment = alignment,
                             modifier = Modifier.fillMaxSize().background(Color.Red)
                                 .padding(horizontal = 16.dp)
                         ) {
