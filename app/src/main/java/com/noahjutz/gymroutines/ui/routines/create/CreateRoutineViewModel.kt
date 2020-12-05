@@ -51,10 +51,10 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     fun appendSets(exerciseIds: List<Int>) {
         updateRoutine {
-            val setList = exerciseIds.mapIndexed { i, exerciseId ->
+            val setGroups = exerciseIds.map { exerciseId ->
                 SetGroup(exerciseId)
             }.filter { it.exerciseId !in setGroups.map { it.exerciseId } }
-            setGroups.addAll(setList)
+            this.setGroups.addAll(setGroups)
         }
     }
 
