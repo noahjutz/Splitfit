@@ -82,7 +82,7 @@ fun CreateRoutineScreen(
         }
     }
     val setGroups by Transformations.map(viewModel.routineLiveData!!) {
-        it?.setGroups ?: emptyList()
+        it?.setGroups?.sortedBy { it.position } ?: emptyList()
     }
         .observeAsState()
     Scaffold(
