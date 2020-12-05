@@ -24,14 +24,15 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.data.domain.SetGroup
 
 class Converters {
     private val gson = Gson()
-    private val setType = object : TypeToken<MutableList<Set>>() {}.type
+    private val setGroupsType = object : TypeToken<MutableList<SetGroup>>() {}.type
 
     @TypeConverter
-    fun fromList(list: MutableList<Set>): String = gson.toJson(list)
+    fun fromSetGroups(setGroups: List<SetGroup>): String = gson.toJson(setGroups)
 
     @TypeConverter
-    fun toSetList(json: String): MutableList<Set> = gson.fromJson(json, setType)
+    fun toSetGroups(json: String): MutableList<SetGroup> = gson.fromJson(json, setGroupsType)
 }

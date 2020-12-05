@@ -18,14 +18,8 @@
 
 package com.noahjutz.gymroutines.data.domain
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "routine_table")
-data class Routine(
-    var name: String = "",
-    val setGroups: MutableList<SetGroup> = mutableListOf()
-) {
-    @PrimaryKey(autoGenerate = true)
-    var routineId: Int = 0
-}
+data class SetGroup(
+    var position: Int,
+    val exerciseId: Int,
+    var sets: MutableList<Set> = mutableListOf(Set(exerciseId)),
+)

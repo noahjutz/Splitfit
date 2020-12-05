@@ -31,7 +31,7 @@ import com.noahjutz.gymroutines.data.domain.Set
         Exercise::class,
         Routine::class,
     ],
-    version = 28
+    version = 29
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

@@ -80,7 +80,7 @@ fun CreateRoutineScreen(
             sharedExerciseVM.clear()
         }
     }
-    val sets by Transformations.map(viewModel.routineLiveData!!) { it?.sets ?: emptyList() }
+    val setGroups by Transformations.map(viewModel.routineLiveData!!) { it?.setGroups ?: emptyList() }
         .observeAsState()
     Scaffold(
         floatingActionButton = {
@@ -128,18 +128,12 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        val setGroups = sets?.let { sets ->
-            sets.sortedBy { it.position }
-                .groupBy { it.exerciseId }.values
-                .toList()
-        } ?: emptyList()
-
         LazyColumnForIndexed(
-            items = setGroups,
+            items = setGroups ?: emptyList(),
             modifier = Modifier.fillMaxHeight()
         ) { i, setGroup ->
             SetGroupCard(
-                setGroup = setGroup,
+                setGroup = setGroup.sets,
                 viewModel = viewModel,
             )
         }
@@ -198,7 +192,7 @@ fun SetGroupCard(
 
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
-                        viewModel.updateRoutine { sets.removeAt(i) }
+                        // viewModel.updateRoutine { sets.removeAt(i) } // TODO
                         dismissState.snapTo(DismissValue.Default)
                     }
                 }
@@ -231,8 +225,8 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            sets[i].reps =
-                                                it.takeIf { it.isNotEmpty() }?.toInt()
+                                            // sets[i].reps = // TODO
+                                            //    it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
                                     },
                                     regexPattern = RegexPatterns.integer,
@@ -242,9 +236,9 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            sets[i].weight =
-                                                it.takeIf { it.isNotEmpty() }
-                                                    ?.toDouble()
+                                            //sets[i].weight = // TODO
+                                            //    it.takeIf { it.isNotEmpty() }
+                                            //        ?.toDouble()
                                         }
                                     },
                                     regexPattern = RegexPatterns.float,
@@ -254,8 +248,8 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            sets[i].time =
-                                                it.takeIf { it.isNotEmpty() }?.toInt()
+                                            //sets[i].time = // TODO
+                                            //    it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
                                     },
                                     regexPattern = RegexPatterns.time,
@@ -266,9 +260,9 @@ fun SetGroupCard(
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
-                                            sets[i].distance =
-                                                it.takeIf { it.isNotEmpty() }
-                                                    ?.toDouble()
+                                            //sets[i].distance = // TODO
+                                            //    it.takeIf { it.isNotEmpty() }
+                                            //        ?.toDouble()
                                         }
                                     },
                                     regexPattern = RegexPatterns.float,
