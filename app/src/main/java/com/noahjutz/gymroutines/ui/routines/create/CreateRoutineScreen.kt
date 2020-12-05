@@ -25,7 +25,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -80,7 +80,9 @@ fun CreateRoutineScreen(
             sharedExerciseVM.clear()
         }
     }
-    val setGroups by Transformations.map(viewModel.routineLiveData!!) { it?.setGroups ?: emptyList() }
+    val setGroups by Transformations.map(viewModel.routineLiveData!!) {
+        it?.setGroups ?: emptyList()
+    }
         .observeAsState()
     Scaffold(
         floatingActionButton = {
@@ -128,10 +130,10 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        LazyColumnForIndexed(
+        LazyColumnFor(
             items = setGroups ?: emptyList(),
             modifier = Modifier.fillMaxHeight()
-        ) { i, setGroup ->
+        ) { setGroup ->
             SetGroupCard(
                 setGroup = setGroup.sets,
                 viewModel = viewModel,
@@ -187,7 +189,7 @@ fun SetGroupCard(
                 SetHeader("time")
                 SetHeader("distance")
             }
-            setGroup.forEachIndexed { i, set ->
+            setGroup.forEach { set ->
                 val dismissState = rememberDismissState()
 
                 onCommit(dismissState.value) {
