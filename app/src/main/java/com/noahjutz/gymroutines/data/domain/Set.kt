@@ -24,5 +24,4 @@ data class Set(
     var weight: Double? = null,
     var time: Int? = null,
     var distance: Double? = null,
-    var position: Int = -1
 )

@@ -82,7 +82,7 @@ fun CreateRoutineScreen(
         }
     }
     val setGroups by Transformations.map(viewModel.routineLiveData!!) {
-        it?.setGroups?.sortedBy { it.position } ?: emptyList()
+        it?.setGroups ?: emptyList()
     }
         .observeAsState()
     Scaffold(
@@ -182,10 +182,8 @@ fun SetGroupCard(
                     text = viewModel.getExerciseName(setGroup.sets.first().exerciseId),
                     fontSize = 20.sp,
                 )
-                Text(setGroup.position.toString()) // TODO remove this debug line
             }
             Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
-                SetHeader("pos")
                 SetHeader("reps")
                 SetHeader("weight")
                 SetHeader("time")
@@ -225,7 +223,6 @@ fun SetGroupCard(
                                     vertical = 8.dp, horizontal = 16.dp
                                 )
                             ) {
-                                Text(set.position.toString(), Modifier.weight(1f))
                                 SetTextField(
                                     onValueChange = {
                                         viewModel.updateRoutine {
