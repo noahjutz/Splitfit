@@ -303,8 +303,8 @@ fun RowScope.SetHeader(
 @ExperimentalFoundationApi
 @Composable
 fun RowScope.SetTextField(
-    onValueChange: (String) -> Unit = {},
     modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
     regexPattern: Regex = Regex(""),
     valueGetter: () -> String? = { null },
