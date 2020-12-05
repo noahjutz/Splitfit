@@ -21,5 +21,5 @@ package com.noahjutz.gymroutines.data.domain
 data class SetGroup(
     var position: Int,
     val exerciseId: Int,
-    var sets: MutableList<Set> = mutableListOf(Set(exerciseId)),
+    var sets: MutableList<Set> = mutableListOf(Set(exerciseId, position = 0)),
 )
