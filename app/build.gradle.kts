@@ -74,11 +74,6 @@ android {
         kotlinCompilerVersion = Versions.kotlin
         kotlinCompilerExtensionVersion = Versions.compose
     }
-
-    packagingOptions {
-        exclude("META-INF/AL2.0")
-        exclude("META-INF/LGPL2.1")
-    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
