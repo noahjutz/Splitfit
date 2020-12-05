@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Transformations
 import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.data.domain.SetGroup
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import kotlinx.coroutines.launch
@@ -135,7 +136,7 @@ fun CreateRoutineScreen(
             modifier = Modifier.fillMaxHeight()
         ) { setGroup ->
             SetGroupCard(
-                setGroup = setGroup.sets,
+                setGroup = setGroup,
                 viewModel = viewModel,
             )
         }
@@ -148,7 +149,7 @@ fun CreateRoutineScreen(
 @ExperimentalFoundationApi
 @Composable
 fun SetGroupCard(
-    setGroup: List<Set>,
+    setGroup: SetGroup,
     viewModel: CreateRoutineViewModel,
 ) {
     val offsetPosition = remember { mutableStateOf(0f) }
@@ -158,7 +159,7 @@ fun SetGroupCard(
             .offsetPx(y = offsetPosition)
     ) {
         Column {
-            Box(
+            Row(
                 modifier = Modifier.fillMaxWidth()
                     .clickable {}
                     .longPressDragGestureFilter(
@@ -178,9 +179,10 @@ fun SetGroupCard(
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = viewModel.getExerciseName(setGroup.first().exerciseId),
+                    text = viewModel.getExerciseName(setGroup.sets.first().exerciseId),
                     fontSize = 20.sp,
                 )
+                Text(setGroup.position.toString()) // TODO remove this debug line
             }
             Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
                 SetHeader("pos")
@@ -189,7 +191,7 @@ fun SetGroupCard(
                 SetHeader("time")
                 SetHeader("distance")
             }
-            setGroup.forEach { set ->
+            for (set in setGroup.sets) {
                 val dismissState = rememberDismissState()
 
                 onCommit(dismissState.value) {
@@ -276,7 +278,7 @@ fun SetGroupCard(
                 )
             }
             TextButton(
-                onClick = { viewModel.addSet(setGroup[0].exerciseId) },
+                onClick = { viewModel.addSet(setGroup.sets[0].exerciseId) },
                 content = {
                     Icon(Icons.Default.Add)
                     Text("Add Set")
