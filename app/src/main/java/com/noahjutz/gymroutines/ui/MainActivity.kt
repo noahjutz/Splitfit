@@ -33,6 +33,7 @@ import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.viewinterop.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.noahjutz.gymroutines.ui.exercises.ExercisesScreen
@@ -77,86 +78,87 @@ fun MainScreen(
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
-            val navBackStackEntry = navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
-            if (currentRoute in items.map { it.route }) {
-                BottomNavigation {
-                    items.forEach { screen ->
-                        BottomNavigationItem(
-                            icon = { Icon(screen.icon) },
-                            label = { Text(screen.name) },
-                            selected = currentRoute == screen.route,
-                            onClick = {
-                                // This is the equivalent to popUpTo the start destination
-                                navController.popBackStack(
-                                    navController.graph.startDestination,
-                                    false
-                                )
-
-                                // This if check gives us a "singleTop" behavior where we do not create a
-                                // second instance of the composable if we are already on that destination
-                                if (currentRoute != screen.route) navController.navigate(screen.route)
-                            }
-                        )
-                    }
-                }
-            }
+            MainScreenBottomBar(navController = navController)
         }
     ) {
         val routinesVM = viewModel<RoutinesViewModel>()
         val createRoutineVM = viewModel<CreateRoutineViewModel>()
         val exercisesVM = viewModel<ExercisesViewModel>()
         val createExerciseVM = viewModel<CreateExerciseViewModel>()
-        NavHost(navController, startDestination = "routines") {
-            composable("routines") {
-                RoutinesScreen(
-                    addEditRoutine = {
-                        val routineId = if (it < 0) routinesVM.addRoutine().toInt() else it
-                        navController.navigate("createRoutine/$routineId")
-                    },
-                    viewModel = routinesVM
-                )
-            }
-            composable(
-                route = "createRoutine/{routineId}",
-                arguments = listOf(navArgument("routineId") { type = NavType.IntType })
-            ) { backStackEntry ->
-                val routineId: Int = backStackEntry.arguments?.getInt("routineId") ?: -1
-                createRoutineVM.setRoutine(routineId)
-                CreateRoutineScreen(
-                    onAddExercise = { navController.navigate("pickExercise") },
-                    popBackStack = { navController.popBackStack() },
-                    viewModel = createRoutineVM,
-                    sharedExerciseVM = sharedExerciseVM
-                )
-            }
-            composable("pickExercise") {
-                PickExerciseScreen(
-                    exercisesViewModel = exercisesVM,
-                    sharedExerciseViewModel = sharedExerciseVM,
-                    popBackStack = { navController.popBackStack() }
-                )
-            }
-            composable("exercises") {
-                ExercisesScreen(
-                    addEditExercise = {
-                        val exerciseId = if (it < 0) exercisesVM.addExercise() else it
-                        navController.navigate("createExercise/$exerciseId")
-                    },
-                    viewModel = exercisesVM
-                )
-            }
-            composable(
-                route = "createExercise/{exerciseId}",
-                arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
-            ) { backStackEntry ->
-                val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
-                createExerciseVM.setExercise(exerciseId)
-                CreateExerciseScreen(
-                    popBackStack = { navController.popBackStack() },
-                    viewModel = createExerciseVM
-                )
-            }
+
+        MainScreenContent(
+            navController = navController,
+            routinesVM = routinesVM,
+            createRoutineVM = createRoutineVM,
+            exercisesVM = exercisesVM,
+            createExerciseVM = createExerciseVM,
+            sharedExerciseVM = sharedExerciseVM
+        )
+    }
+}
+
+@ExperimentalFoundationApi
+@ExperimentalFocus
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
+@Composable
+fun MainScreenContent(
+    navController: NavHostController,
+    routinesVM: RoutinesViewModel,
+    createRoutineVM: CreateRoutineViewModel,
+    exercisesVM: ExercisesViewModel,
+    createExerciseVM: CreateExerciseViewModel,
+    sharedExerciseVM: SharedExerciseViewModel
+) {
+    NavHost(navController, startDestination = "routines") {
+        composable("routines") {
+            RoutinesScreen(
+                addEditRoutine = {
+                    val routineId = if (it < 0) routinesVM.addRoutine().toInt() else it
+                    navController.navigate("createRoutine/$routineId")
+                },
+                viewModel = routinesVM
+            )
+        }
+        composable(
+            route = "createRoutine/{routineId}",
+            arguments = listOf(navArgument("routineId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val routineId: Int = backStackEntry.arguments?.getInt("routineId") ?: -1
+            createRoutineVM.setRoutine(routineId)
+            CreateRoutineScreen(
+                onAddExercise = { navController.navigate("pickExercise") },
+                popBackStack = { navController.popBackStack() },
+                viewModel = createRoutineVM,
+                sharedExerciseVM = sharedExerciseVM
+            )
+        }
+        composable("pickExercise") {
+            PickExerciseScreen(
+                exercisesViewModel = exercisesVM,
+                sharedExerciseViewModel = sharedExerciseVM,
+                popBackStack = { navController.popBackStack() }
+            )
+        }
+        composable("exercises") {
+            ExercisesScreen(
+                addEditExercise = {
+                    val exerciseId = if (it < 0) exercisesVM.addExercise() else it
+                    navController.navigate("createExercise/$exerciseId")
+                },
+                viewModel = exercisesVM
+            )
+        }
+        composable(
+            route = "createExercise/{exerciseId}",
+            arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
+            createExerciseVM.setExercise(exerciseId)
+            CreateExerciseScreen(
+                popBackStack = { navController.popBackStack() },
+                viewModel = createExerciseVM
+            )
         }
     }
 }
@@ -166,7 +168,37 @@ sealed class Screen(val route: String, val name: String, val icon: ImageVector) 
     object Exercises : Screen("exercises", "Exercises", Icons.Default.DirectionsRun)
 }
 
-val items = listOf(
-    Screen.Routines,
-    Screen.Exercises
-)
+@Composable
+fun MainScreenBottomBar(
+    navController: NavHostController
+) {
+
+    val items = listOf(
+        Screen.Routines,
+        Screen.Exercises
+    )
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
+    if (currentRoute in items.map { it.route }) {
+        BottomNavigation {
+            items.forEach { screen ->
+                BottomNavigationItem(
+                    icon = { Icon(screen.icon) },
+                    label = { Text(screen.name) },
+                    selected = currentRoute == screen.route,
+                    onClick = {
+                        // This is the equivalent to popUpTo the start destination
+                        navController.popBackStack(
+                            navController.graph.startDestination,
+                            false
+                        )
+
+                        // This if check gives us a "singleTop" behavior where we do not create a
+                        // second instance of the composable if we are already on that destination
+                        if (currentRoute != screen.route) navController.navigate(screen.route)
+                    }
+                )
+            }
+        }
+    }
+}
