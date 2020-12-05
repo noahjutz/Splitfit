@@ -23,7 +23,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Routine
-import com.noahjutz.gymroutines.data.domain.Set
+import com.noahjutz.gymroutines.data.domain.SetGroup
 
 class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
@@ -51,10 +51,13 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     fun appendSets(exerciseIds: List<Int>) {
         updateRoutine {
-            //val setList = exerciseIds.mapIndexed { i, id ->
-            //    Set(id, position = i + sets.size)
-            //}.filter { it.exerciseId !in sets.map { it.exerciseId } }
-            //sets.addAll(setList) // TODO
+            val setList = exerciseIds.map { exerciseId ->
+                SetGroup(
+                    exerciseId = exerciseId,
+                    position = -1
+                )
+            }.filter { it.exerciseId !in setGroups.map { it.exerciseId } }
+            setGroups.addAll(setList)
         }
     }
 
