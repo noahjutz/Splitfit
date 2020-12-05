@@ -189,12 +189,14 @@ fun SetGroupCard(
                 SetHeader("time")
                 SetHeader("distance")
             }
-            for (set in setGroup.sets) {
+            setGroup.sets.forEachIndexed { setIndex, set ->
                 val dismissState = rememberDismissState()
 
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
-                        // viewModel.updateRoutine { sets.removeAt(i) } // TODO
+                        viewModel.updateRoutine {
+                            setGroups[setGroups.indexOf(setGroup)].sets.removeAt(setIndex)
+                        }
                         dismissState.snapTo(DismissValue.Default)
                     }
                 }
