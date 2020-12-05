@@ -179,7 +179,7 @@ fun SetGroupCard(
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = viewModel.getExerciseName(setGroup.sets.first().exerciseId),
+                    text = viewModel.getExerciseName(setGroup.exerciseId),
                     fontSize = 20.sp,
                 )
             }
@@ -275,7 +275,7 @@ fun SetGroupCard(
                 )
             }
             TextButton(
-                onClick = { viewModel.addSet(setGroup.sets[0].exerciseId) },
+                onClick = { viewModel.addSet(setGroup.exerciseId) },
                 content = {
                     Icon(Icons.Default.Add)
                     Text("Add Set")

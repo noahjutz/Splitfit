@@ -19,7 +19,6 @@
 package com.noahjutz.gymroutines.data.domain
 
 data class Set(
-    val exerciseId: Int,
     var reps: Int? = null,
     var weight: Double? = null,
     var time: Int? = null,
