@@ -18,6 +18,7 @@
 
 package com.noahjutz.gymroutines.ui.routines.create
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -25,7 +26,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -58,7 +58,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Transformations
-import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.data.domain.SetGroup
 import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
@@ -155,7 +154,31 @@ fun SetGroupCard(
     setGroup: SetGroup,
     viewModel: CreateRoutineViewModel,
 ) {
+    // Temporary rearranging solution
     var offsetPosition by remember { mutableStateOf(0f) }
+    var dragging by remember { mutableStateOf(false) }
+    var toSwap by remember { mutableStateOf(Pair(0, 0)) }
+    onCommit(offsetPosition) {
+        Log.d("CreateRoutine", "$offsetPosition")
+        if (dragging) {
+            when {
+                offsetPosition < -150 -> {
+                    if (viewModel.getSetGroup(setGroupIndex - 1) != null) {
+                        toSwap = Pair(setGroupIndex, setGroupIndex - 1)
+                    }
+                }
+                offsetPosition > 150 -> {
+                    if (viewModel.getSetGroup(setGroupIndex + 1) != null) {
+                        toSwap = Pair(setGroupIndex, setGroupIndex + 1)
+                    }
+                }
+            }
+        } else {
+            viewModel.swapSetGroups(toSwap.first, toSwap.second)
+            toSwap = Pair(0, 0)
+        }
+    }
+
     Card(
         elevation = animate(if (offsetPosition == 0f) 0.dp else 4.dp),
         modifier = Modifier.fillMaxWidth()
@@ -169,12 +192,14 @@ fun SetGroupCard(
                         longPressDragObserver = object : LongPressDragObserver {
                             override fun onDrag(dragDistance: Offset): Offset {
                                 super.onDrag(dragDistance)
+                                dragging = true
                                 offsetPosition += dragDistance.y
                                 return dragDistance
                             }
 
                             override fun onStop(velocity: Offset) {
                                 super.onStop(velocity)
+                                dragging = false
                                 offsetPosition = 0f
                             }
                         }
@@ -199,7 +224,9 @@ fun SetGroupCard(
                     if (dismissState.value != DismissValue.Default) {
                         viewModel.updateRoutine {
                             setGroups[setGroupIndex].sets.removeAt(setIndex)
-                            if (setGroups[setGroupIndex].sets.isEmpty()) setGroups.removeAt(setGroupIndex)
+                            if (setGroups[setGroupIndex].sets.isEmpty()) setGroups.removeAt(
+                                setGroupIndex
+                            )
                         }
                         dismissState.snapTo(DismissValue.Default)
                     }
@@ -233,7 +260,7 @@ fun SetGroupCard(
                                     onValueChange = {
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].reps =
-                                               it.takeIf { it.isNotEmpty() }?.toInt()
+                                                it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
                                     },
                                     regexPattern = RegexPatterns.integer,

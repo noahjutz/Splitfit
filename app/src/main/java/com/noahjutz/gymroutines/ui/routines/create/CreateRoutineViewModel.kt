@@ -61,4 +61,16 @@ class CreateRoutineViewModel @ViewModelInject constructor(
         routineLiveData = repository.getRoutineLive(routineId)
         routine = repository.getRoutine(routineId)
     }
+
+    fun getSetGroup(index: Int) = routine?.setGroups?.getOrNull(index)
+
+    fun swapSetGroups(i1: Int, i2: Int) {
+        updateRoutine {
+            setGroups.apply {
+                val tmp = this[i1]
+                this[i1] = this[i2]
+                this[i2] = tmp
+            }
+        }
+    }
 }
