@@ -199,6 +199,7 @@ fun SetGroupCard(
                     if (dismissState.value != DismissValue.Default) {
                         viewModel.updateRoutine {
                             setGroups[setGroupIndex].sets.removeAt(setIndex)
+                            if (setGroups[setGroupIndex].sets.isEmpty()) setGroups.removeAt(setGroupIndex)
                         }
                         dismissState.snapTo(DismissValue.Default)
                     }
