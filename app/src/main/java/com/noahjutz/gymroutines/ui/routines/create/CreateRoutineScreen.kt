@@ -155,11 +155,11 @@ fun SetGroupCard(
     setGroup: SetGroup,
     viewModel: CreateRoutineViewModel,
 ) {
-    val offsetPosition = remember { mutableStateOf(0f) }
+    var offsetPosition by remember { mutableStateOf(0f) }
     Card(
-        elevation = animate(if (offsetPosition.value == 0f) 0.dp else 4.dp),
+        elevation = animate(if (offsetPosition == 0f) 0.dp else 4.dp),
         modifier = Modifier.fillMaxWidth()
-            .offsetPx(y = offsetPosition)
+            .offset(y = { offsetPosition })
     ) {
         Column {
             Row(
@@ -169,13 +169,13 @@ fun SetGroupCard(
                         longPressDragObserver = object : LongPressDragObserver {
                             override fun onDrag(dragDistance: Offset): Offset {
                                 super.onDrag(dragDistance)
-                                offsetPosition.value += dragDistance.y
+                                offsetPosition += dragDistance.y
                                 return dragDistance
                             }
 
                             override fun onStop(velocity: Offset) {
                                 super.onStop(velocity)
-                                offsetPosition.value = 0f
+                                offsetPosition = 0f
                             }
                         }
                     )
