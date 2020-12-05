@@ -26,6 +26,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -131,11 +132,12 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        LazyColumnFor(
+        LazyColumnForIndexed(
             items = setGroups ?: emptyList(),
             modifier = Modifier.fillMaxHeight()
-        ) { setGroup ->
+        ) { i, setGroup ->
             SetGroupCard(
+                setGroupIndex = i,
                 setGroup = setGroup,
                 viewModel = viewModel,
             )
@@ -149,6 +151,7 @@ fun CreateRoutineScreen(
 @ExperimentalFoundationApi
 @Composable
 fun SetGroupCard(
+    setGroupIndex: Int,
     setGroup: SetGroup,
     viewModel: CreateRoutineViewModel,
 ) {
@@ -195,7 +198,7 @@ fun SetGroupCard(
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
                         viewModel.updateRoutine {
-                            setGroups[setGroups.indexOf(setGroup)].sets.removeAt(setIndex)
+                            setGroups[setGroupIndex].sets.removeAt(setIndex)
                         }
                         dismissState.snapTo(DismissValue.Default)
                     }
