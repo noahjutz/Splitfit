@@ -23,6 +23,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.gymroutines.data.Repository
 import com.noahjutz.gymroutines.data.domain.Routine
+import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.data.domain.SetGroup
 
 class CreateRoutineViewModel @ViewModelInject constructor(
@@ -43,9 +44,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     fun addSet(exerciseId: Int) {
         updateRoutine {
-            //sets.apply {
-            //    add(Set(exerciseId = exerciseId)) // TODO
-            //}
+            setGroups.first { it.exerciseId == exerciseId }.sets.add(Set())
         }
     }
 
