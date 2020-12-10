@@ -62,7 +62,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
         routine = repository.getRoutine(routineId)
     }
 
-    fun getSetGroup(index: Int) = routine?.setGroups?.getOrNull(index)
+    fun getSetGroup(index: Int) = routineLiveData?.value?.setGroups?.getOrNull(index)
 
     fun swapSetGroups(i1: Int, i2: Int) {
         updateRoutine {
