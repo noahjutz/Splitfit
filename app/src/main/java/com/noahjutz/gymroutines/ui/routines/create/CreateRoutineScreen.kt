@@ -18,7 +18,6 @@
 
 package com.noahjutz.gymroutines.ui.routines.create
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -159,23 +158,23 @@ fun SetGroupCard(
     var dragging by remember { mutableStateOf(false) }
     var toSwap by remember { mutableStateOf(Pair(0, 0)) }
     onCommit(offsetPosition) {
-        Log.d("CreateRoutine", "$offsetPosition")
         if (dragging) {
-            when {
-                offsetPosition < -150 -> {
-                    if (viewModel.getSetGroup(setGroupIndex - 1) != null) {
-                        toSwap = Pair(setGroupIndex, setGroupIndex - 1)
-                    }
-                }
-                offsetPosition > 150 -> {
-                    if (viewModel.getSetGroup(setGroupIndex + 1) != null) {
-                        toSwap = Pair(setGroupIndex, setGroupIndex + 1)
-                    }
-                }
+            toSwap = when {
+                offsetPosition < -150 && viewModel.getSetGroup(setGroupIndex - 1) != null -> Pair(
+                    setGroupIndex,
+                    setGroupIndex - 1
+                )
+                offsetPosition > 150 && viewModel.getSetGroup(setGroupIndex + 1) != null -> Pair(
+                    setGroupIndex,
+                    setGroupIndex + 1
+                )
+                else -> Pair(0, 0)
             }
         } else {
-            viewModel.swapSetGroups(toSwap.first, toSwap.second)
-            toSwap = Pair(0, 0)
+            if (toSwap != Pair(0, 0)) {
+                viewModel.swapSetGroups(toSwap.first, toSwap.second)
+                toSwap = Pair(0, 0)
+            }
         }
     }
 
