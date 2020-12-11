@@ -61,6 +61,7 @@ import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.floor
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -350,7 +351,12 @@ fun SetTextField(
 ) {
     var tfValue by remember { mutableStateOf(TextFieldValue(value)) }
     onCommit(value) {
-        if (tfValue.text != value) tfValue = TextFieldValue(value, TextRange(value.length))
+        val v = when {
+            value.isEmpty() -> value
+            value.toDouble() == floor(value.toDouble()) -> value.toDouble().toInt().toString()
+            else -> value
+        }
+        if (tfValue.text != value) tfValue = TextFieldValue(v, TextRange(value.length))
     }
     BasicTextField(
         value = tfValue,
