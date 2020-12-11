@@ -348,13 +348,16 @@ fun SetTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     regexPattern: Regex = Regex(""),
 ) {
-    var value by remember { mutableStateOf(TextFieldValue(value)) }
+    var tfValue by remember { mutableStateOf(TextFieldValue(value)) }
+    onCommit(value) {
+        if (tfValue.text != value) tfValue = TextFieldValue(value, TextRange(value.length))
+    }
     BasicTextField(
-        value = value,
+        value = tfValue,
         onValueChange = {
             // TODO: Keep single-char values selected
-            if (it.text.matches(regexPattern) && (it.text != value.text || it.text.length <= 1)) {
-                value = TextFieldValue(it.text, TextRange(it.text.length))
+            if (it.text.matches(regexPattern) && (it.text != tfValue.text || it.text.length <= 1)) {
+                tfValue = TextFieldValue(it.text, TextRange(it.text.length))
                 onValueChange(it.text)
             }
         },
@@ -366,7 +369,7 @@ fun SetTextField(
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onTextInputStarted = {
-            value = TextFieldValue(value.text, TextRange(0, value.text.length))
+            tfValue = TextFieldValue(tfValue.text, TextRange(0, tfValue.text.length))
         },
         textStyle = AmbientTextStyle.current.copy(
             textAlign = TextAlign.Center,
