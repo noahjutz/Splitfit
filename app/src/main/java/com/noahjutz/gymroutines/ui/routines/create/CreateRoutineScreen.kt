@@ -160,14 +160,10 @@ fun SetGroupCard(
     onCommit(offsetPosition) {
         if (dragging) {
             toSwap = when {
-                offsetPosition < -150 && viewModel.getSetGroup(setGroupIndex - 1) != null -> Pair(
-                    setGroupIndex,
-                    setGroupIndex - 1
-                )
-                offsetPosition > 150 && viewModel.getSetGroup(setGroupIndex + 1) != null -> Pair(
-                    setGroupIndex,
-                    setGroupIndex + 1
-                )
+                offsetPosition < -150 && viewModel.getSetGroup(setGroupIndex - 1) != null ->
+                    Pair(setGroupIndex, setGroupIndex - 1)
+                offsetPosition > 150 && viewModel.getSetGroup(setGroupIndex + 1) != null ->
+                    Pair(setGroupIndex, setGroupIndex + 1)
                 else -> Pair(0, 0)
             }
         } else {
