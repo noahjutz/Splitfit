@@ -252,6 +252,7 @@ fun SetGroupCard(
                                 )
                             ) {
                                 SetTextField(
+                                    modifier = Modifier.weight(1f),
                                     onValueChange = {
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].reps =
@@ -263,6 +264,7 @@ fun SetGroupCard(
                                 )
 
                                 SetTextField(
+                                    modifier = Modifier.weight(1f),
                                     onValueChange = {
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].weight =
@@ -275,6 +277,7 @@ fun SetGroupCard(
                                 )
 
                                 SetTextField(
+                                    modifier = Modifier.weight(1f),
                                     onValueChange = {
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].time =
@@ -287,6 +290,7 @@ fun SetGroupCard(
                                 )
 
                                 SetTextField(
+                                    modifier = Modifier.weight(1f),
                                     onValueChange = {
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].distance =
@@ -330,7 +334,7 @@ fun RowScope.SetHeader(
 @ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
-fun RowScope.SetTextField(
+fun SetTextField(
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -348,9 +352,11 @@ fun RowScope.SetTextField(
                 onValueChange(it.text)
             }
         },
-        modifier = modifier.weight(1f).fillMaxWidth().padding(horizontal = 4.dp)
+        modifier = modifier
+            .padding(horizontal = 4.dp)
             .clip(shape = RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f)).padding(4.dp)
+            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
+            .padding(4.dp)
             .focusObserver {
                 if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
             },
