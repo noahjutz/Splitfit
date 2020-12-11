@@ -61,7 +61,6 @@ import com.noahjutz.gymroutines.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.gymroutines.util.RegexPatterns
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.math.floor
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -251,7 +250,7 @@ fun SetGroupCard(
                                     vertical = 8.dp, horizontal = 16.dp
                                 )
                             ) {
-                                var reps = set.reps?.toString() ?: ""
+                                var reps by remember { mutableStateOf(set.reps?.toString() ?: "") }
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
                                     value = reps,
@@ -265,7 +264,11 @@ fun SetGroupCard(
                                     regexPattern = RegexPatterns.integer,
                                 )
 
-                                var weight = set.weight?.toString() ?: ""
+                                var weight by remember {
+                                    mutableStateOf(
+                                        set.weight?.toString() ?: ""
+                                    )
+                                }
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
                                     value = weight,
@@ -280,7 +283,7 @@ fun SetGroupCard(
                                     regexPattern = RegexPatterns.float,
                                 )
 
-                                var time = set.time?.toString() ?: ""
+                                var time by remember { mutableStateOf(set.time?.toString() ?: "") }
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
                                     value = time,
@@ -295,7 +298,11 @@ fun SetGroupCard(
                                     visualTransformation = timeVisualTransformation
                                 )
 
-                                var distance = set.distance?.toString() ?: ""
+                                var distance by remember {
+                                    mutableStateOf(
+                                        set.distance?.toString() ?: ""
+                                    )
+                                }
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
                                     value = distance,
@@ -351,12 +358,7 @@ fun SetTextField(
 ) {
     var tfValue by remember { mutableStateOf(TextFieldValue(value)) }
     onCommit(value) {
-        val v = when {
-            value.isEmpty() -> value
-            value.toDouble() == floor(value.toDouble()) -> value.toDouble().toInt().toString()
-            else -> value
-        }
-        if (tfValue.text != value) tfValue = TextFieldValue(v, TextRange(value.length))
+        if (tfValue.text != value) tfValue = TextFieldValue(value, TextRange(value.length))
     }
     BasicTextField(
         value = tfValue,
