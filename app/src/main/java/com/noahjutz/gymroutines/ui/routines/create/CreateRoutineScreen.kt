@@ -49,7 +49,6 @@ import androidx.compose.ui.gesture.longPressDragGestureFilter
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
@@ -342,7 +341,6 @@ fun SetTextField(
     valueGetter: () -> String? = { null },
 ) {
     var value by remember { mutableStateOf(TextFieldValue(valueGetter() ?: "")) }
-    var kb: SoftwareKeyboardController? by remember { mutableStateOf(null) }
     BasicTextField(
         value = value,
         onValueChange = {
@@ -356,17 +354,10 @@ fun SetTextField(
             .padding(horizontal = 4.dp)
             .clip(shape = RoundedCornerShape(8.dp))
             .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
-            .padding(4.dp)
-            .focusObserver {
-                if (!it.isFocused) value = TextFieldValue(valueGetter() ?: value.text)
-            },
+            .padding(4.dp),
         visualTransformation = visualTransformation,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Done
-        ),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onTextInputStarted = {
-            kb = it
             value = TextFieldValue(value.text, TextRange(0, value.text.length))
         },
         textStyle = AmbientTextStyle.current.copy(
@@ -374,11 +365,6 @@ fun SetTextField(
             color = MaterialTheme.colors.onSurface
         ),
         cursorColor = MaterialTheme.colors.onSurface,
-        onImeActionPerformed = {
-            val text = valueGetter() ?: value.text
-            value = TextFieldValue(text, TextRange(0, text.length))
-            kb?.hideSoftwareKeyboard()
-        },
         maxLines = 1
     )
 }
