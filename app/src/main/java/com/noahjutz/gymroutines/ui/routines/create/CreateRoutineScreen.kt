@@ -250,21 +250,26 @@ fun SetGroupCard(
                                     vertical = 8.dp, horizontal = 16.dp
                                 )
                             ) {
+                                var reps = set.reps?.toString() ?: ""
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
+                                    value = reps,
                                     onValueChange = {
+                                        reps = it
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].reps =
                                                 it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
                                     },
                                     regexPattern = RegexPatterns.integer,
-                                    valueGetter = { set.reps?.toString() }
                                 )
 
+                                var weight = set.weight?.toString() ?: ""
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
+                                    value = weight,
                                     onValueChange = {
+                                        weight = it
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].weight =
                                                 it.takeIf { it.isNotEmpty() }
@@ -272,25 +277,29 @@ fun SetGroupCard(
                                         }
                                     },
                                     regexPattern = RegexPatterns.float,
-                                    valueGetter = { set.weight?.toString() }
                                 )
 
+                                var time = set.time?.toString() ?: ""
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
+                                    value = time,
                                     onValueChange = {
+                                        time = it
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].time =
                                                 it.takeIf { it.isNotEmpty() }?.toInt()
                                         }
                                     },
                                     regexPattern = RegexPatterns.time,
-                                    valueGetter = { set.time?.toString() },
                                     visualTransformation = timeVisualTransformation
                                 )
 
+                                var distance = set.distance?.toString() ?: ""
                                 SetTextField(
                                     modifier = Modifier.weight(1f),
+                                    value = distance,
                                     onValueChange = {
+                                        distance = it
                                         viewModel.updateRoutine {
                                             setGroups[setGroupIndex].sets[setIndex].distance =
                                                 it.takeIf { it.isNotEmpty() }
@@ -298,7 +307,6 @@ fun SetGroupCard(
                                         }
                                     },
                                     regexPattern = RegexPatterns.float,
-                                    valueGetter = { set.distance?.toString() }
                                 )
                             }
                         }
@@ -335,12 +343,12 @@ fun RowScope.SetHeader(
 @Composable
 fun SetTextField(
     modifier: Modifier = Modifier,
+    value: String,
     onValueChange: (String) -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
     regexPattern: Regex = Regex(""),
-    valueGetter: () -> String? = { null },
 ) {
-    var value by remember { mutableStateOf(TextFieldValue(valueGetter() ?: "")) }
+    var value by remember { mutableStateOf(TextFieldValue(value)) }
     BasicTextField(
         value = value,
         onValueChange = {
