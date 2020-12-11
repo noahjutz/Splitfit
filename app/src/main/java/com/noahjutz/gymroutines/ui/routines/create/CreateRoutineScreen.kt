@@ -47,6 +47,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.LongPressDragObserver
 import androidx.compose.ui.gesture.longPressDragGestureFilter
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.AmbientFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
@@ -157,6 +158,7 @@ fun SetGroupCard(
     var offsetPosition by remember { mutableStateOf(0f) }
     var dragging by remember { mutableStateOf(false) }
     var toSwap by remember { mutableStateOf(Pair(0, 0)) }
+    val focusManager = AmbientFocusManager.current
     onCommit(offsetPosition) {
         if (dragging) {
             toSwap = when {
@@ -168,6 +170,7 @@ fun SetGroupCard(
             }
         } else {
             if (toSwap != Pair(0, 0)) {
+                focusManager.clearFocus()
                 viewModel.swapSetGroups(toSwap.first, toSwap.second)
                 toSwap = Pair(0, 0)
             }
@@ -217,6 +220,7 @@ fun SetGroupCard(
 
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
+                        focusManager.clearFocus()
                         viewModel.updateRoutine {
                             setGroups[setGroupIndex].sets.removeAt(setIndex)
                             if (setGroups[setGroupIndex].sets.isEmpty()) setGroups.removeAt(
