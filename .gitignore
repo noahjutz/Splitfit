@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 buildSrc/build
+.apk
+.aab
