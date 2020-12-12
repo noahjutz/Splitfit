@@ -19,7 +19,6 @@
 package com.noahjutz.gymroutines.ui.exercises.create
 
 import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -87,65 +86,56 @@ fun CreateExerciseScreen(
             )
         },
         bodyContent = {
-            // TODO: Reuse checkbox ListItem component
             ScrollableColumn {
                 var repsChecked by remember { mutableStateOf(exercise!!.logReps) }
-                onCommit(repsChecked) {
-                    viewModel.updateExercise {
-                        logReps = repsChecked
-                    }
-                }
                 ListItem(
                     text = { Text("Log Reps") },
                     icon = {
                         Checkbox(
                             checked = repsChecked,
-                            onCheckedChange = { repsChecked = it }
+                            onCheckedChange = {
+                                repsChecked = it
+                                viewModel.updateExercise { logReps = repsChecked }
+                            }
                         )
                     },
                 )
                 var weightChecked by remember { mutableStateOf(exercise!!.logWeight) }
-                onCommit(weightChecked) {
-                    viewModel.updateExercise {
-                        logWeight = weightChecked
-                    }
-                }
                 ListItem(
                     text = { Text("Log Weight") },
                     icon = {
                         Checkbox(
                             checked = weightChecked,
-                            onCheckedChange = { weightChecked = it }
+                            onCheckedChange = {
+                                weightChecked = it
+                                viewModel.updateExercise { logWeight = weightChecked }
+                            }
                         )
                     },
                 )
                 var timeChecked by remember { mutableStateOf(exercise!!.logTime) }
-                onCommit(timeChecked) {
-                    viewModel.updateExercise {
-                        logTime = timeChecked
-                    }
-                }
                 ListItem(
                     text = { Text("Log Time") },
                     icon = {
                         Checkbox(
                             checked = timeChecked,
-                            onCheckedChange = { timeChecked = it }
+                            onCheckedChange = {
+                                timeChecked = it
+                                viewModel.updateExercise { logTime = timeChecked }
+                            }
                         )
                     },
                 )
                 var distanceChecked by remember { mutableStateOf(exercise!!.logDistance) }
-                onCommit(distanceChecked) {
-                    viewModel.updateExercise {
-                        logDistance = distanceChecked
-                    }
-                }
                 ListItem(
                     text = { Text("Log Distance") },
                     icon = {
                         Checkbox(
                             checked = distanceChecked,
-                            onCheckedChange = { distanceChecked = it }
+                            onCheckedChange = {
+                                distanceChecked = it
+                                viewModel.updateExercise { logDistance = distanceChecked }
+                            }
                         )
                     },
                 )
