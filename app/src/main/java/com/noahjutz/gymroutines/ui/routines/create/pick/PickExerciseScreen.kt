@@ -24,11 +24,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.noahjutz.gymroutines.ui.exercises.ExercisesViewModel
 
@@ -60,7 +57,11 @@ fun PickExerciseScreen(
         bodyContent = {
             val exercises by exercisesViewModel.exercises.observeAsState()
             LazyColumnFor(exercises ?: emptyList()) { exercise ->
-                var checked by mutableStateOf(false)
+                var checked by remember { mutableStateOf(false) }
+                onCommit(checked) {
+                    if (checked) sharedExerciseViewModel.add(exercise)
+                    else sharedExerciseViewModel.remove(exercise)
+                }
                 ListItem(
                     trailing = {
                         Checkbox(
@@ -68,11 +69,7 @@ fun PickExerciseScreen(
                             onCheckedChange = { checked = it }
                         )
                     },
-                    modifier = Modifier.clickable {
-                        checked = !checked
-                        if (checked) sharedExerciseViewModel.add(exercise)
-                        else sharedExerciseViewModel.remove(exercise)
-                    }
+                    modifier = Modifier.clickable { checked = !checked }
                 ) {
                     Text(exercise.name)
                 }
