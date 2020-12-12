@@ -103,7 +103,6 @@ fun CreateExerciseScreen(
                             onCheckedChange = { repsChecked = it }
                         )
                     },
-                    modifier = Modifier.clickable { repsChecked = !repsChecked }
                 )
                 var weightChecked by remember { mutableStateOf(exercise!!.logWeight) }
                 onCommit(weightChecked) {
@@ -119,7 +118,6 @@ fun CreateExerciseScreen(
                             onCheckedChange = { weightChecked = it }
                         )
                     },
-                    modifier = Modifier.clickable { weightChecked = !weightChecked }
                 )
                 var timeChecked by remember { mutableStateOf(exercise!!.logTime) }
                 onCommit(timeChecked) {
@@ -135,7 +133,6 @@ fun CreateExerciseScreen(
                             onCheckedChange = { timeChecked = it }
                         )
                     },
-                    modifier = Modifier.clickable { timeChecked = !timeChecked }
                 )
                 var distanceChecked by remember { mutableStateOf(exercise!!.logDistance) }
                 onCommit(distanceChecked) {
@@ -151,7 +148,6 @@ fun CreateExerciseScreen(
                             onCheckedChange = { distanceChecked = it }
                         )
                     },
-                    modifier = Modifier.clickable { distanceChecked = !distanceChecked }
                 )
             }
         }
