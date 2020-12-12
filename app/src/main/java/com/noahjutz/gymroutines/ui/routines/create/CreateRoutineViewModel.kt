@@ -36,6 +36,8 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
 
+    fun getExercise(exerciseId: Int) = repository.getExercise(exerciseId)
+
     fun updateRoutine(action: Routine.() -> Unit) {
         routine?.routineId?.let { id ->
             repository.insert(repository.getRoutine(id)!!.apply(action))
