@@ -38,11 +38,7 @@ class CreateExerciseViewModel @ViewModelInject constructor(
     private fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExercise(id) }
 
     fun updateExercise(action: Exercise.() -> Unit) {
-        repository.insert(repository.getExercise(_exercise!!.exerciseId)!!.apply {
-            action()
-            // TODO reflect following change in the check box
-            if (!logReps && !logWeight && !logTime && !logDistance) logReps = true
-        })
+        repository.insert(repository.getExercise(_exercise!!.exerciseId)!!.apply(action))
     }
 
     fun setExercise(exerciseId: Int = -1) {
