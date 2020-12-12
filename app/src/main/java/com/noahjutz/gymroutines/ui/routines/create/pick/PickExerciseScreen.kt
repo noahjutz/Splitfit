@@ -23,7 +23,6 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -42,11 +41,7 @@ fun PickExerciseScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        content = {
-                            val asset =
-                                if (selectedCount == 0) Icons.Default.ArrowBack else Icons.Default.Done
-                            Icon(asset)
-                        }
+                        content = { Icon(Icons.Default.ArrowBack) }
                     )
                 },
                 title = {
