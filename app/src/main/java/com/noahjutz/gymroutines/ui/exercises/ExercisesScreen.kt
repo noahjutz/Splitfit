@@ -54,44 +54,47 @@ fun ExercisesScreen(
             val exercises by viewModel.exercises.observeAsState()
             LazyColumnFor(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
                 val dismissState = rememberDismissState()
+                var hidden by remember { mutableStateOf(false) }
 
-                SwipeToDismiss(
-                    state = dismissState,
-                    background = {
-                        val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-                        val alignment = when (direction) {
-                            DismissDirection.StartToEnd -> Alignment.CenterStart
-                            DismissDirection.EndToStart -> Alignment.CenterEnd
+                if (!hidden) {
+                    SwipeToDismiss(
+                        state = dismissState,
+                        background = {
+                            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+                            val alignment = when (direction) {
+                                DismissDirection.StartToEnd -> Alignment.CenterStart
+                                DismissDirection.EndToStart -> Alignment.CenterEnd
+                            }
+                            Box(
+                                modifier = Modifier.fillMaxSize()
+                                    .background(Color.Red)
+                                    .padding(horizontal = 20.dp),
+                                contentAlignment = alignment
+                            ) {
+                                Icon(Icons.Default.Delete)
+                            }
+                        },
+                        dismissContent = {
+                            Card(
+                                elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
+                            ) {
+                                ListItem(
+                                    text = {
+                                        Text(
+                                            text = exercise.name.takeIf { it.isNotBlank() }
+                                                ?: "Unnamed",
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                        )
+                                    },
+                                    modifier = Modifier.clickable {
+                                        addEditExercise(exercise.exerciseId)
+                                    }
+                                )
+                            }
                         }
-                        Box(
-                            modifier = Modifier.fillMaxSize()
-                                .background(Color.Red)
-                                .padding(horizontal = 20.dp),
-                            contentAlignment = alignment
-                        ) {
-                            Icon(Icons.Default.Delete)
-                        }
-                    },
-                    dismissContent = {
-                        Card(
-                            elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
-                        ) {
-                            ListItem(
-                                text = {
-                                    Text(
-                                        text = exercise.name.takeIf { it.isNotBlank() }
-                                            ?: "Unnamed",
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                    )
-                                },
-                                modifier = Modifier.clickable {
-                                    addEditExercise(exercise.exerciseId)
-                                }
-                            )
-                        }
-                    }
-                )
+                    )
+                }
 
                 if (dismissState.value != DismissValue.Default) {
                     AlertDialog(
@@ -100,6 +103,7 @@ fun ExercisesScreen(
                             Button(
                                 onClick = {
                                     viewModel.hide(exercise, true)
+                                    hidden = true
                                     dismissState.snapTo(DismissValue.Default)
                                 },
                                 content = { Text("Yes") }
