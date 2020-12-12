@@ -207,7 +207,8 @@ fun SetGroupCard(
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = viewModel.getExerciseName(setGroup.exerciseId),
+                    text = viewModel.getExerciseName(setGroup.exerciseId).takeIf { it.isNotBlank() }
+                        ?: "Unnamed",
                     fontSize = 20.sp,
                 )
             }
