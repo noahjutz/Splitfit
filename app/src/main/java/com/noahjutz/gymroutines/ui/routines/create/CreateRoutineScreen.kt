@@ -222,10 +222,10 @@ fun SetGroupCard(
                     if (dismissState.value != DismissValue.Default) {
                         focusManager.clearFocus()
                         viewModel.updateRoutine {
-                            setGroups[setGroupIndex].sets.removeAt(setIndex)
-                            if (setGroups[setGroupIndex].sets.isEmpty()) setGroups.removeAt(
-                                setGroupIndex
-                            )
+                            if (setGroups[setGroupIndex].sets.lastIndex >= setIndex)
+                                setGroups[setGroupIndex].sets.removeAt(setIndex)
+                            if (setGroups[setGroupIndex].sets.isEmpty())
+                                setGroups.removeAt(setGroupIndex)
                         }
                         dismissState.snapTo(DismissValue.Default)
                     }
