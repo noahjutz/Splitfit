@@ -56,7 +56,7 @@ fun PickExerciseScreen(
         },
         bodyContent = {
             val exercises by exercisesViewModel.exercises.observeAsState()
-            LazyColumnFor(exercises ?: emptyList()) { exercise ->
+            LazyColumnFor(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
                 var checked by remember { mutableStateOf(false) }
                 onCommit(checked) {
                     if (checked) sharedExerciseViewModel.add(exercise)
