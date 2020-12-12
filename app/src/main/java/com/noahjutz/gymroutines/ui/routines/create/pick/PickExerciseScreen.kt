@@ -34,7 +34,6 @@ fun PickExerciseScreen(
     sharedExerciseViewModel: SharedExerciseViewModel,
     popBackStack: () -> Unit
 ) {
-    val selectedCount = -1 // TODO: Use sharedVM.exercises.collectAsState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -45,7 +44,7 @@ fun PickExerciseScreen(
                     )
                 },
                 title = {
-                    Text("$selectedCount selected")
+                    Text("Select Exercise")
                 }
             )
         },
