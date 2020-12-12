@@ -36,6 +36,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @ExperimentalAnimationApi
@@ -80,7 +81,11 @@ fun RoutinesScreen(
                     ) {
                         ListItem(
                             text = {
-                                Text(routine.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                                Text(
+                                    text = routine.name.takeIf { it.isNotBlank() } ?: "Unnamed",
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
                             },
                             modifier = Modifier.clickable {
                                 addEditRoutine(routine.routineId)

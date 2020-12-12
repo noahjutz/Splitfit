@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
 fun ExercisesScreen(
@@ -52,7 +53,13 @@ fun ExercisesScreen(
                                 visible = false
                             }
                         )
-                    ) { Text(exercise.name) }
+                    ) {
+                        Text(
+                            text = exercise.name,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
         }
