@@ -76,7 +76,7 @@ fun CreateExerciseScreen(
                             textStyle = AmbientTextStyle.current.copy(
                                 color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                             ),
-                            maxLines = 1,
+                            singleLine = true,
                             cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
