@@ -171,39 +171,30 @@ sealed class Screen(val route: String, val name: String) {
 fun MainScreenTopBar(
     navController: NavHostController
 ) {
-    val items = listOf(
+    val screens = listOf(
         Screen.Routines,
         Screen.Exercises
     )
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
-    if (currentRoute in items.map { it.route }) {
+    if (currentRoute in screens.map { it.route }) {
         TabRow(
-            selectedTabIndex = items.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
+            selectedTabIndex = screens.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
                 ?: 0
         ) {
-            items.forEachIndexed { i, screen ->
+            for (screen in screens)
                 Tab(
                     selected = screen.route == currentRoute,
                     onClick = {
-                        // This is the equivalent to popUpTo the start destination
-                        navController.popBackStack(
-                            navController.graph.startDestination,
-                            false
-                        )
-
-                        // This if check gives us a "singleTop" behavior where we do not create a
-                        // second instance of the composable if we are already on that destination
+                        navController.popBackStack(navController.graph.startDestination, false)
                         if (currentRoute != screen.route) navController.navigate(screen.route)
                     }
                 ) {
                     Text(
                         screen.name,
-                        style = MaterialTheme.typography.body1,
                         modifier = Modifier.padding(vertical = 16.dp)
                     )
                 }
-            }
         }
     }
 }
