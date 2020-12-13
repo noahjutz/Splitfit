@@ -51,7 +51,6 @@ import androidx.compose.ui.platform.AmbientFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
@@ -213,11 +212,11 @@ fun SetGroupCard(
                     fontSize = 20.sp,
                 )
             }
-            if (exercise != null
-                && !exercise.logReps
-                && !exercise.logWeight
-                && !exercise.logTime
-                && !exercise.logDistance
+            if (exercise != null &&
+                !exercise.logReps &&
+                !exercise.logWeight &&
+                !exercise.logTime &&
+                !exercise.logDistance
             ) {
                 Text(
                     text = "This exercise is not logging any values. Please update it.",

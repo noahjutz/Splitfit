@@ -95,11 +95,13 @@ fun CreateExerciseScreen(
                             checked = repsChecked,
                             onCheckedChange = {
                                 repsChecked = it
-                                viewModel.updateExercise { logReps = repsChecked
+                                viewModel.updateExercise {
+                                    logReps = repsChecked
                                     if (!logWeight && !logTime && !logDistance) {
                                         logReps = true
                                         repsChecked = true
-                                    }}
+                                    } 
+                                }
                             }
                         )
                     },

@@ -16,8 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-
 package com.noahjutz.gymroutines.ui
 
 import android.os.Bundle
@@ -219,8 +217,10 @@ fun MainScreenTopBar(
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
     if (currentRoute in items.map { it.route }) {
-        TabRow(selectedTabIndex = items.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
-            ?: 0) {
+        TabRow(
+            selectedTabIndex = items.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
+                ?: 0
+        ) {
             items.forEachIndexed { i, screen ->
                 Tab(
                     selected = screen.route == currentRoute,

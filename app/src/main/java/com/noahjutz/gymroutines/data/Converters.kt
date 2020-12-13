@@ -23,7 +23,6 @@ package com.noahjutz.gymroutines.data
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.noahjutz.gymroutines.data.domain.Set
 import com.noahjutz.gymroutines.data.domain.SetGroup
 
 class Converters {
