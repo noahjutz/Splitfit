@@ -26,13 +26,9 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DirectionsRun
-import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.ExperimentalFocus
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
@@ -166,44 +162,9 @@ fun MainScreenContent(
     }
 }
 
-sealed class Screen(val route: String, val name: String, val icon: ImageVector) {
-    object Routines : Screen("routines", "Routines", Icons.Default.ViewAgenda)
-    object Exercises : Screen("exercises", "Exercises", Icons.Default.DirectionsRun)
-}
-
-@Composable
-fun MainScreenBottomBar(
-    navController: NavHostController
-) {
-
-    val items = listOf(
-        Screen.Routines,
-        Screen.Exercises
-    )
-    val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
-    if (currentRoute in items.map { it.route }) {
-        BottomNavigation {
-            items.forEach { screen ->
-                BottomNavigationItem(
-                    icon = { Icon(screen.icon) },
-                    label = { Text(screen.name) },
-                    selected = currentRoute == screen.route,
-                    onClick = {
-                        // This is the equivalent to popUpTo the start destination
-                        navController.popBackStack(
-                            navController.graph.startDestination,
-                            false
-                        )
-
-                        // This if check gives us a "singleTop" behavior where we do not create a
-                        // second instance of the composable if we are already on that destination
-                        if (currentRoute != screen.route) navController.navigate(screen.route)
-                    }
-                )
-            }
-        }
-    }
+sealed class Screen(val route: String, val name: String) {
+    object Routines : Screen("routines", "Routines")
+    object Exercises : Screen("exercises", "Exercises")
 }
 
 @Composable
