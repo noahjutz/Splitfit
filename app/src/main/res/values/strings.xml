@@ -18,4 +18,8 @@
 
 <resources>
     <string name="app_name">Splitfit</string>
+    <string name="unnamed_routine">Unnamed</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_delete">Do you want to delete %1$s?</string>
 </resources>

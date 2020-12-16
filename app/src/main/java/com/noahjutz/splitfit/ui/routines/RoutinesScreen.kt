@@ -36,8 +36,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.noahjutz.splitfit.R
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -82,7 +84,8 @@ fun RoutinesScreen(
                         ListItem(
                             text = {
                                 Text(
-                                    text = routine.name.takeIf { it.isNotBlank() } ?: "Unnamed",
+                                    text = routine.name.takeIf { it.isNotBlank() }
+                                        ?: stringResource(R.string.unnamed_routine),
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                 )
@@ -97,14 +100,22 @@ fun RoutinesScreen(
 
             if (dismissState.value != DismissValue.Default) {
                 AlertDialog(
-                    title = { Text("Delete ${routine.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
+                    title = {
+                        Text(
+                            stringResource(
+                                R.string.confirm_delete,
+                                routine.name.takeIf { it.isNotBlank() }
+                                    ?: stringResource(R.string.unnamed_routine)
+                            )
+                        )
+                    },
                     confirmButton = {
                         Button(
                             onClick = {
                                 viewModel.deleteRoutine(routine.routineId)
                                 dismissState.snapTo(DismissValue.Default)
                             },
-                            content = { Text("Yes") }
+                            content = { Text(stringResource(R.string.yes)) }
                         )
                     },
                     dismissButton = {
@@ -112,7 +123,7 @@ fun RoutinesScreen(
                             onClick = {
                                 dismissState.snapTo(DismissValue.Default)
                             },
-                            content = { Text("Cancel") }
+                            content = { Text(stringResource(R.string.cancel)) }
                         )
                     },
                     onDismissRequest = {
