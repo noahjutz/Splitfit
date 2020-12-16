@@ -15,3 +15,4 @@
 buildSrc/build
 .apk
 .aab
+app/release
