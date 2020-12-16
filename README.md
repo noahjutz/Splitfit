@@ -4,9 +4,7 @@
 Save workout routines and track your progress.
 
 ## Roadmap
-- [x] 0.1.0-dev1
-- First functional release
-- [ ] 0.1.0-dev2
+- [x] 0.1.0-dev2
 - Rebranding
 - [ ] 0.1.0
 - Code cleanup
