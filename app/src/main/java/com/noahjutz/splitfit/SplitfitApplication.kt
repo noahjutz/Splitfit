@@ -16,28 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.noahjutz.splitfit
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
+@HiltAndroidApp
+class SplitfitApplication : Application()

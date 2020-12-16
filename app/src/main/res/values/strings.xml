@@ -1,5 +1,5 @@
 <!--
-  ~ GymRoutines
+  ~ Splitfit
   ~ Copyright (C) 2020  Noah Jutz
   ~
   ~ This program is free software: you can redistribute it and/or modify
@@ -17,5 +17,5 @@
   -->
 
 <resources>
-    <string name="app_name">Gym Routines</string>
+    <string name="app_name">Splitfit</string>
 </resources>

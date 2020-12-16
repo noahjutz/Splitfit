@@ -16,28 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.noahjutz.splitfit
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+import com.noahjutz.splitfit.data.Converters
+import com.noahjutz.splitfit.data.domain.Set
+import org.junit.Assert
+import org.junit.Test
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
+class ConvertersTest {
+    val converters: Converters = Converters()
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    @Test
+    fun `List of Sets can be turned into JSON and back`() {
+        val list = mutableListOf(
+            Set(12),
+            Set(33),
+            Set(0)
+        )
+        val json = converters.fromList(list)
+        val backToList = converters.toSetList(json)
+        Assert.assertEquals(list, backToList)
+    }
 }

@@ -16,28 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.noahjutz.splitfit.data.domain
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+@Entity(tableName = "routine_table")
+data class Routine(
+    var name: String = "",
+    val setGroups: MutableList<SetGroup> = mutableListOf()
+) {
+    @PrimaryKey(autoGenerate = true)
+    var routineId: Int = 0
 }

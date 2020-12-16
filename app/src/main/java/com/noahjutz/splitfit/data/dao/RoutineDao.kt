@@ -16,28 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.noahjutz.splitfit.data.dao
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.noahjutz.splitfit.data.domain.Routine
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
+@Dao
+interface RoutineDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(routine: Routine): Long
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    @Delete
+    suspend fun delete(routine: Routine)
+
+    @Query("SELECT * FROM routine_table")
+    fun getRoutines(): LiveData<List<Routine>>
+
+    @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
+    fun getRoutine(routineId: Int): Routine?
+
+    @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
+    fun getRoutineLive(routineId: Int): LiveData<Routine?>?
 }

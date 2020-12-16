@@ -16,28 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.noahjutz.splitfit.data
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.noahjutz.splitfit.data.dao.*
+import com.noahjutz.splitfit.data.domain.Exercise
+import com.noahjutz.splitfit.data.domain.Routine
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+@Database(
+    entities = [
+        Exercise::class,
+        Routine::class,
+    ],
+    version = 29
+)
+@TypeConverters(Converters::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract val exerciseDao: ExerciseDao
+    abstract val routineDao: RoutineDao
 }

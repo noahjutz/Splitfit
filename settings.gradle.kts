@@ -1,5 +1,5 @@
 /*
- * GymRoutines
+ * Splitfit
  * Copyright (C) 2020  Noah Jutz
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,5 +16,5 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "Gym Routines"
+rootProject.name = "Splitfit"
 include(":app")

@@ -16,28 +16,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.noahjutz.splitfit.ui.routines
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.domain.Routine
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
+class RoutinesViewModel @ViewModelInject constructor(
+    private val repository: Repository
+) : ViewModel() {
+    val routines: LiveData<List<Routine>>
+        get() = repository.routines
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+    fun deleteRoutine(routineId: Int) {
+        repository.getRoutine(routineId)?.let { repository.delete(it) }
+    }
+
+    fun addRoutine(): Long = repository.insert(Routine())
 }

@@ -16,28 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.noahjutz.splitfit.data.domain
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+@Entity(tableName = "exercise_table")
+data class Exercise(
+    var name: String = "",
+    var logReps: Boolean = true,
+    var logWeight: Boolean = false,
+    var logTime: Boolean = false,
+    var logDistance: Boolean = false,
+    var hidden: Boolean = false,
+) {
+    @PrimaryKey(autoGenerate = true)
+    var exerciseId: Int = 0
 }

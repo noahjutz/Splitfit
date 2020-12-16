@@ -16,28 +16,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+@file:Suppress("IllegalIdentifier")
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.hilt)
-        classpath(GradlePlugins.safeArgs)
-    }
-}
+package com.noahjutz.splitfit.data
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
+import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.noahjutz.splitfit.data.domain.SetGroup
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+class Converters {
+    private val gson = Gson()
+    private val setGroupsType = object : TypeToken<MutableList<SetGroup>>() {}.type
+
+    @TypeConverter
+    fun fromSetGroups(setGroups: List<SetGroup>): String = gson.toJson(setGroups)
+
+    @TypeConverter
+    fun toSetGroups(json: String): MutableList<SetGroup> = gson.fromJson(json, setGroupsType)
 }
