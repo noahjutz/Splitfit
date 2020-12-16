@@ -30,7 +30,7 @@ android {
     buildToolsVersion = "30.0.2"
 
     defaultConfig {
-        applicationId = "com.noahjutz.gymroutines"
+        applicationId = App.applicationId
         minSdkVersion(App.minSdk)
         targetSdkVersion(App.targetSdk)
         versionCode = App.versionCode
