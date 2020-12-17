@@ -3,6 +3,9 @@
 # Splitfit
 Save workout routines and track your progress.
 
+## Contributing
+Contributions are always welcome! See the [contribution guidelines](https://github.com/noahjutz/Splitfit/blob/master/CONTRIBUTING.md) for more.
+
 ## Roadmap
 - [x] 0.1.0-dev2
 - Rebranding
