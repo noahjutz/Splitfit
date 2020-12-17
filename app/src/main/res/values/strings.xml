@@ -22,4 +22,9 @@
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_delete">Do you want to delete %1$s?</string>
+    <string name="add_set">Add Set</string>
+    <string name="reps">Reps</string>
+    <string name="weight">Weight</string>
+    <string name="time">Time</string>
+    <string name="distance">Distance</string>
 </resources>

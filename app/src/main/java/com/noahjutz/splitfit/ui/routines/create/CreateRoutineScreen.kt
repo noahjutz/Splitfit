@@ -47,6 +47,7 @@ import androidx.compose.ui.gesture.LongPressDragObserver
 import androidx.compose.ui.gesture.longPressDragGestureFilter
 import androidx.compose.ui.platform.AmbientFocusManager
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -55,6 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Transformations
+import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
@@ -123,7 +125,10 @@ fun CreateRoutineScreen(
                             cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
-                            Text("Unnamed", modifier = Modifier.alpha(0.5f))
+                            Text(
+                                stringResource(R.string.unnamed_routine),
+                                modifier = Modifier.alpha(0.5f)
+                            )
                         }
                     }
                 }
@@ -215,10 +220,10 @@ fun SetGroupCard(
                 )
             }
             Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
-                if (exercise?.logReps == true) SetHeader("reps")
-                if (exercise?.logWeight == true) SetHeader("weight")
-                if (exercise?.logTime == true) SetHeader("time")
-                if (exercise?.logDistance == true) SetHeader("distance")
+                if (exercise?.logReps == true) SetHeader(stringResource(R.string.reps))
+                if (exercise?.logWeight == true) SetHeader(stringResource(R.string.weight))
+                if (exercise?.logTime == true) SetHeader(stringResource(R.string.time))
+                if (exercise?.logDistance == true) SetHeader(stringResource(R.string.distance))
             }
             setGroup.sets.forEachIndexed { setIndex, set ->
                 val dismissState = rememberDismissState()
@@ -316,7 +321,7 @@ fun SetGroupCard(
                 onClick = { viewModel.addSet(setGroup.exerciseId) },
                 content = {
                     Icon(Icons.Default.Add)
-                    Text("Add Set")
+                    Text(stringResource(R.string.add_set))
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
