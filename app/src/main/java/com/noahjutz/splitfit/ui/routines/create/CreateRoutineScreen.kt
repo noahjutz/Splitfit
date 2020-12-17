@@ -131,7 +131,7 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        LazyColumn {
+        LazyColumn(Modifier.fillMaxHeight()) {
             itemsIndexed(setGroups ?: emptyList()) { i, setGroup ->
                 SetGroupCard(
                     setGroupIndex = i,
