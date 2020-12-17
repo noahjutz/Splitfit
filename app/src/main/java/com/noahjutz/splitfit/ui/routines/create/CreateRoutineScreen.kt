@@ -25,7 +25,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -131,15 +131,14 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        LazyColumnForIndexed(
-            items = setGroups ?: emptyList(),
-            modifier = Modifier.fillMaxHeight()
-        ) { i, setGroup ->
-            SetGroupCard(
-                setGroupIndex = i,
-                setGroup = setGroup,
-                viewModel = viewModel,
-            )
+        LazyColumn {
+            itemsIndexed(setGroups ?: emptyList()) { i, setGroup ->
+                SetGroupCard(
+                    setGroupIndex = i,
+                    setGroup = setGroup,
+                    viewModel = viewModel
+                )
+            }
         }
     }
 }
