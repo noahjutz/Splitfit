@@ -57,27 +57,19 @@ fun ExercisesScreen(
                     if (!hidden) {
                         SwipeToDismiss(
                             state = dismissState,
-                            background = { SwipeToDeleteBackground(dismissState) },
-                            dismissContent = {
-                                Card(
-                                    elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)
-                                ) {
-                                    ListItem(
-                                        text = {
-                                            Text(
-                                                text = exercise.name.takeIf { it.isNotBlank() }
-                                                    ?: "Unnamed",
-                                                maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis,
-                                            )
-                                        },
-                                        modifier = Modifier.clickable {
-                                            addEditExercise(exercise.exerciseId)
-                                        }
+                            background = { SwipeToDeleteBackground(dismissState) }
+                        ) {
+                            Card(elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)) {
+                                ListItem(Modifier.clickable { addEditExercise(exercise.exerciseId) }) {
+                                    Text(
+                                        text = exercise.name.takeIf { it.isNotBlank() }
+                                            ?: "Unnamed",
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
                                     )
                                 }
                             }
-                        )
+                        }
                     }
 
                     if (dismissState.value != DismissValue.Default) {
