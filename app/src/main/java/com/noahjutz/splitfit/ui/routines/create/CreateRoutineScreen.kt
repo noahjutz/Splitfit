@@ -139,6 +139,10 @@ fun CreateRoutineScreen(
                     viewModel = viewModel
                 )
             }
+            item {
+                // Fix FAB overlap
+                Box(Modifier.height(72.dp)) {}
+            }
         }
     }
 }
