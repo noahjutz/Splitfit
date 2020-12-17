@@ -33,7 +33,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -46,7 +45,6 @@ import androidx.compose.ui.focusObserver
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.LongPressDragObserver
 import androidx.compose.ui.gesture.longPressDragGestureFilter
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.AmbientFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
@@ -60,6 +58,7 @@ import androidx.lifecycle.Transformations
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
+import com.noahjutz.splitfit.util.SwipeToDeleteBackground
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.math.floor
@@ -239,94 +238,79 @@ fun SetGroupCard(
 
                 SwipeToDismiss(
                     state = dismissState,
-                    background = {
-                        val direction =
-                            dismissState.dismissDirection ?: return@SwipeToDismiss
-                        val alignment = when (direction) {
-                            DismissDirection.StartToEnd -> Alignment.CenterStart
-                            DismissDirection.EndToStart -> Alignment.CenterEnd
-                        }
-                        Box(
-                            contentAlignment = alignment,
-                            modifier = Modifier.fillMaxSize().background(Color.Red)
-                                .padding(horizontal = 16.dp)
+                    background = { SwipeToDeleteBackground(dismissState) }
+                ) {
+                    Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
+                        Row(
+                            modifier = Modifier.padding(
+                                vertical = 8.dp, horizontal = 16.dp
+                            )
                         ) {
-                            Icon(Icons.Default.Delete)
-                        }
-                    },
-                    dismissContent = {
-                        Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
-                            Row(
-                                modifier = Modifier.padding(
-                                    vertical = 8.dp, horizontal = 16.dp
+                            var reps = set.reps?.toString() ?: ""
+                            if (exercise?.logReps == true)
+                                SetTextField(
+                                    modifier = Modifier.weight(1f),
+                                    value = reps,
+                                    onValueChange = {
+                                        reps = it
+                                        viewModel.updateRoutine {
+                                            setGroups[setGroupIndex].sets[setIndex].reps =
+                                                it.takeIf { it.isNotEmpty() }?.toInt()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.integer,
                                 )
-                            ) {
-                                var reps = set.reps?.toString() ?: ""
-                                if (exercise?.logReps == true)
-                                    SetTextField(
-                                        modifier = Modifier.weight(1f),
-                                        value = reps,
-                                        onValueChange = {
-                                            reps = it
-                                            viewModel.updateRoutine {
-                                                setGroups[setGroupIndex].sets[setIndex].reps =
-                                                    it.takeIf { it.isNotEmpty() }?.toInt()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.integer,
-                                    )
 
-                                var weight = set.weight?.toString() ?: ""
-                                if (exercise?.logWeight == true)
-                                    SetTextField(
-                                        modifier = Modifier.weight(1f),
-                                        value = weight,
-                                        onValueChange = {
-                                            weight = it
-                                            viewModel.updateRoutine {
-                                                setGroups[setGroupIndex].sets[setIndex].weight =
-                                                    it.takeIf { it.isNotEmpty() }
-                                                        ?.toDouble()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.float,
-                                    )
+                            var weight = set.weight?.toString() ?: ""
+                            if (exercise?.logWeight == true)
+                                SetTextField(
+                                    modifier = Modifier.weight(1f),
+                                    value = weight,
+                                    onValueChange = {
+                                        weight = it
+                                        viewModel.updateRoutine {
+                                            setGroups[setGroupIndex].sets[setIndex].weight =
+                                                it.takeIf { it.isNotEmpty() }
+                                                    ?.toDouble()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.float,
+                                )
 
-                                var time = set.time?.toString() ?: ""
-                                if (exercise?.logTime == true)
-                                    SetTextField(
-                                        modifier = Modifier.weight(1f),
-                                        value = time,
-                                        onValueChange = {
-                                            time = it
-                                            viewModel.updateRoutine {
-                                                setGroups[setGroupIndex].sets[setIndex].time =
-                                                    it.takeIf { it.isNotEmpty() }?.toInt()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.time,
-                                        visualTransformation = timeVisualTransformation
-                                    )
+                            var time = set.time?.toString() ?: ""
+                            if (exercise?.logTime == true)
+                                SetTextField(
+                                    modifier = Modifier.weight(1f),
+                                    value = time,
+                                    onValueChange = {
+                                        time = it
+                                        viewModel.updateRoutine {
+                                            setGroups[setGroupIndex].sets[setIndex].time =
+                                                it.takeIf { it.isNotEmpty() }?.toInt()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.time,
+                                    visualTransformation = timeVisualTransformation
+                                )
 
-                                var distance = set.distance?.toString() ?: ""
-                                if (exercise?.logDistance == true)
-                                    SetTextField(
-                                        modifier = Modifier.weight(1f),
-                                        value = distance,
-                                        onValueChange = {
-                                            distance = it
-                                            viewModel.updateRoutine {
-                                                setGroups[setGroupIndex].sets[setIndex].distance =
-                                                    it.takeIf { it.isNotEmpty() }
-                                                        ?.toDouble()
-                                            }
-                                        },
-                                        regexPattern = RegexPatterns.float,
-                                    )
-                            }
+                            var distance = set.distance?.toString() ?: ""
+                            if (exercise?.logDistance == true)
+                                SetTextField(
+                                    modifier = Modifier.weight(1f),
+                                    value = distance,
+                                    onValueChange = {
+                                        distance = it
+                                        viewModel.updateRoutine {
+                                            setGroups[setGroupIndex].sets[setIndex].distance =
+                                                it.takeIf { it.isNotEmpty() }
+                                                    ?.toDouble()
+                                        }
+                                    },
+                                    regexPattern = RegexPatterns.float,
+                                )
                         }
                     }
-                )
+                }
             }
             TextButton(
                 onClick = { viewModel.addSet(setGroup.exerciseId) },
