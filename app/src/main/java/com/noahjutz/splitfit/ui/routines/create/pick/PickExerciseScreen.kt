@@ -19,13 +19,17 @@
 package com.noahjutz.splitfit.ui.routines.create.pick
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
 
 @Composable
@@ -50,22 +54,28 @@ fun PickExerciseScreen(
         },
         bodyContent = {
             val exercises by exercisesViewModel.exercises.observeAsState()
-            LazyColumnFor(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
-                var checked by remember { mutableStateOf(false) }
-                onCommit(checked) {
-                    if (checked) sharedExerciseViewModel.add(exercise)
-                    else sharedExerciseViewModel.remove(exercise)
+            LazyColumn(Modifier.fillMaxHeight()) {
+                items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
+                    var checked by remember { mutableStateOf(false) }
+                    onCommit(checked) {
+                        if (checked) sharedExerciseViewModel.add(exercise)
+                        else sharedExerciseViewModel.remove(exercise)
+                    }
+                    ListItem(
+                        trailing = {
+                            Checkbox(
+                                checked = checked,
+                                onCheckedChange = { checked = it }
+                            )
+                        },
+                        modifier = Modifier.clickable { checked = !checked }
+                    ) {
+                        Text(exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                    }
                 }
-                ListItem(
-                    trailing = {
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = { checked = it }
-                        )
-                    },
-                    modifier = Modifier.clickable { checked = !checked }
-                ) {
-                    Text(exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                item {
+                    // Fix FAB overlap
+                    Box(Modifier.height(72.dp)) {}
                 }
             }
         }
