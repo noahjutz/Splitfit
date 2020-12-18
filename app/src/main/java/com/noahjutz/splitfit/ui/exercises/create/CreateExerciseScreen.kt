@@ -30,12 +30,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawOpacity
-import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.isFocused
-import androidx.compose.ui.focusObserver
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.TextFieldValue
 
-@ExperimentalFocus
 @Composable
 fun CreateExerciseScreen(
     popBackStack: () -> Unit,
@@ -68,7 +66,7 @@ fun CreateExerciseScreen(
                                 viewModel.updateExercise { name = it.text }
                             },
                             modifier = Modifier
-                                .focusObserver {
+                                .onFocusChanged {
                                     focusState = it.isFocused
                                 }
                                 .fillMaxWidth(),
@@ -100,7 +98,7 @@ fun CreateExerciseScreen(
                                     if (!logWeight && !logTime && !logDistance) {
                                         logReps = true
                                         repsChecked = true
-                                    } 
+                                    }
                                 }
                             }
                         )
