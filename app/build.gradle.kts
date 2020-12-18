@@ -127,21 +127,6 @@ dependencies {
 }
 
 ktlint {
-    version.set(Versions.ktlint)
-    debug.set(true)
-    verbose.set(true)
-    android.set(false)
-    outputToConsole.set(true)
+    android.set(true)
     ignoreFailures.set(true)
-    kotlinScriptAdditionalPaths {
-        include(fileTree("scripts/"))
-    }
-    filter {
-        exclude("**/generated/**")
-        include("**/kotlin/**")
-    }
-}
-
-subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 }
