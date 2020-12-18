@@ -373,11 +373,13 @@ fun SetTextField(
     BasicTextField(
         value = tfValue,
         onValueChange = {
-            if (it.text.matches(regexPattern) && !valueChangeLock) {
+            if (valueChangeLock) {
+                valueChangeLock = false
+                return@BasicTextField
+            }
+            if (it.text.matches(regexPattern)) {
                 tfValue = TextFieldValue(it.text, TextRange(it.text.length))
                 onValueChange(it.text)
-            } else {
-                valueChangeLock = false
             }
         },
         modifier = modifier
