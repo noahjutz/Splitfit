@@ -59,8 +59,14 @@ fun ExercisesScreen(
                             state = dismissState,
                             background = { SwipeToDeleteBackground(dismissState) }
                         ) {
-                            Card(elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)) {
-                                ListItem(Modifier.clickable { addEditExercise(exercise.exerciseId) }) {
+                            Card(
+                                elevation = animate(
+                                    if (dismissState.dismissDirection != null) 4.dp else 0.dp
+                                )
+                            ) {
+                                ListItem(
+                                    Modifier.clickable { addEditExercise(exercise.exerciseId) }
+                                ) {
                                     Text(
                                         text = exercise.name.takeIf { it.isNotBlank() }
                                             ?: "Unnamed",
@@ -74,7 +80,11 @@ fun ExercisesScreen(
 
                     if (dismissState.value != DismissValue.Default) {
                         AlertDialog(
-                            title = { Text("Delete ${exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?") },
+                            title = {
+                                Text(
+                                    "Delete ${exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?"
+                                )
+                            },
                             confirmButton = {
                                 Button(
                                     onClick = {

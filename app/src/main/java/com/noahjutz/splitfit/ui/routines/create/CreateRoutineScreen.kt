@@ -41,7 +41,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.focusObserver
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.LongPressDragObserver
 import androidx.compose.ui.gesture.longPressDragGestureFilter
@@ -61,9 +60,9 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
-import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.math.floor
+import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -104,7 +103,11 @@ fun CreateRoutineScreen(
                 },
                 title = {
                     Box {
-                        var nameFieldValue by remember { mutableStateOf(TextFieldValue(viewModel.initialName)) }
+                        var nameFieldValue by remember {
+                            mutableStateOf(
+                                TextFieldValue(viewModel.initialName)
+                            )
+                        }
                         var focusState by remember { mutableStateOf(false) }
                         BasicTextField(
                             value = nameFieldValue,
@@ -243,10 +246,15 @@ fun SetGroupCard(
                     state = dismissState,
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
-                    Card(elevation = animate(if (dismissState.dismissDirection == null) 0.dp else 4.dp)) {
+                    Card(
+                        elevation = animate(
+                            if (dismissState.dismissDirection == null) 0.dp else 4.dp
+                        )
+                    ) {
                         Row(
                             modifier = Modifier.padding(
-                                vertical = 8.dp, horizontal = 16.dp
+                                vertical = 8.dp,
+                                horizontal = 16.dp
                             )
                         ) {
                             var reps = set.reps?.toString() ?: ""

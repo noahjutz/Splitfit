@@ -62,7 +62,11 @@ fun RoutinesScreen(
                     state = dismissState,
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
-                    Card(elevation = animate(if (dismissState.dismissDirection != null) 4.dp else 0.dp)) {
+                    Card(
+                        elevation = animate(
+                            if (dismissState.dismissDirection != null) 4.dp else 0.dp
+                        )
+                    ) {
                         ListItem(Modifier.clickable { addEditRoutine(routine.routineId) }) {
                             Text(
                                 text = routine.name.takeIf { it.isNotBlank() }

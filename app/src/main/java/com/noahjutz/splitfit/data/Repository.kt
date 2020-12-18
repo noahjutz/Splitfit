@@ -23,12 +23,12 @@ import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
 import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Routine
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val exerciseDao: ExerciseDao,
