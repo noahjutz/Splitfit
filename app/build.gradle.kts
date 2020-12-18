@@ -129,4 +129,5 @@ dependencies {
 ktlint {
     android.set(true)
     ignoreFailures.set(true)
+    disabledRules.add("no-wildcard-imports")
 }
