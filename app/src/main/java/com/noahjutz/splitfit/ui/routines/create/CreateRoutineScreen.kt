@@ -366,13 +366,18 @@ fun SetTextField(
         }
         if (tfValue.text != value) tfValue = TextFieldValue(v, TextRange(value.length))
     }
+
+    // onValueChange is called after onFocusChanged, overriding the selection in onFocusChanged.
+    // Fix: Lock onValueChange when calling onFocusChanged
+    var valueChangeLock = false
     BasicTextField(
         value = tfValue,
         onValueChange = {
-            // TODO: Keep single-char values selected
-            if (it.text.matches(regexPattern) && (it.text != tfValue.text || it.text.length <= 1)) {
+            if (it.text.matches(regexPattern) && !valueChangeLock) {
                 tfValue = TextFieldValue(it.text, TextRange(it.text.length))
                 onValueChange(it.text)
+            } else {
+                valueChangeLock = false
             }
         },
         modifier = modifier
@@ -382,6 +387,7 @@ fun SetTextField(
             .padding(4.dp)
             .onFocusChanged {
                 tfValue = if (it.isFocused) {
+                    valueChangeLock = true
                     TextFieldValue(value, TextRange(0, value.length))
                 } else {
                     TextFieldValue(value, TextRange(value.length))
