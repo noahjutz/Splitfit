@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.viewModel
@@ -53,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     private val sharedExerciseVM: SharedExerciseViewModel by viewModels()
 
     @ExperimentalFoundationApi
-    @ExperimentalFocus
     @ExperimentalMaterialApi
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 }
 
 @ExperimentalFoundationApi
-@ExperimentalFocus
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
@@ -97,7 +94,6 @@ fun MainScreen(
 }
 
 @ExperimentalFoundationApi
-@ExperimentalFocus
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
