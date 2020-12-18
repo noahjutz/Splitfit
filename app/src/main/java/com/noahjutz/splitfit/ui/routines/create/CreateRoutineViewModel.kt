@@ -29,17 +29,17 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
 ) : ViewModel() {
-    private var routine: Routine? = null
+    private var initialRoutine: Routine? = null
     var routineLiveData: LiveData<Routine?>? = null
     val initialName: String
-        get() = routine?.name ?: ""
+        get() = initialRoutine?.name ?: ""
 
     fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
 
     fun getExercise(exerciseId: Int) = repository.getExercise(exerciseId)
 
     fun updateRoutine(action: Routine.() -> Unit) {
-        routine?.routineId?.let { id ->
+        initialRoutine?.routineId?.let { id ->
             repository.insert(repository.getRoutine(id)!!.apply(action))
         }
     }
@@ -61,7 +61,7 @@ class CreateRoutineViewModel @ViewModelInject constructor(
 
     fun setRoutine(routineId: Int) {
         routineLiveData = repository.getRoutineLive(routineId)
-        routine = repository.getRoutine(routineId)
+        initialRoutine = repository.getRoutine(routineId)
     }
 
     fun getSetGroup(index: Int) = routineLiveData?.value?.setGroups?.getOrNull(index)
