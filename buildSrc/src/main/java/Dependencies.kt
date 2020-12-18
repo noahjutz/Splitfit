@@ -30,7 +30,7 @@ object Versions {
     const val ktlintPlugin = "9.4.1"
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha03"
-    const val kotlin = "1.4.20"
+    const val kotlin = "1.4.21"
     const val hilt = "2.28-alpha"
     const val hiltExt = "1.0.0-alpha02"
     const val room = "2.2.5"
