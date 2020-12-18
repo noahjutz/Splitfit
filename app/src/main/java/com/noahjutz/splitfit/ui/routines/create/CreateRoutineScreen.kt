@@ -39,8 +39,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.isFocused
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focusObserver
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.LongPressDragObserver
@@ -67,7 +67,6 @@ import kotlin.math.floor
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
-@ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
 fun CreateRoutineScreen(
@@ -114,7 +113,7 @@ fun CreateRoutineScreen(
                                 viewModel.updateRoutine { this.name = it.text }
                             },
                             modifier = Modifier
-                                .focusObserver {
+                                .onFocusChanged {
                                     focusState = it.isFocused
                                 }
                                 .fillMaxWidth(),
@@ -153,7 +152,6 @@ fun CreateRoutineScreen(
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
-@ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
 fun SetGroupCard(
@@ -189,7 +187,7 @@ fun SetGroupCard(
     Card(
         elevation = animate(if (offsetPosition == 0f) 0.dp else 4.dp),
         modifier = Modifier.fillMaxWidth()
-            .offset(y = { offsetPosition })
+            .offset(y = offsetPosition.dp)
     ) {
         Column {
             Row(
@@ -342,7 +340,6 @@ fun RowScope.SetHeader(
     )
 }
 
-@ExperimentalFocus
 @ExperimentalFoundationApi
 @Composable
 fun SetTextField(
