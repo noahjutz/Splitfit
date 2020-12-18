@@ -388,11 +388,9 @@ fun SetTextField(
             .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
             .padding(4.dp)
             .onFocusChanged {
-                tfValue = if (it.isFocused) {
+                if (it.isFocused) {
                     valueChangeLock = true
-                    TextFieldValue(value, TextRange(0, value.length))
-                } else {
-                    TextFieldValue(value, TextRange(value.length))
+                    tfValue = TextFieldValue(value, TextRange(0, value.length))
                 }
             },
         visualTransformation = visualTransformation,
