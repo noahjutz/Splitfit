@@ -53,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.hours
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Transformations
 import com.noahjutz.splitfit.R
@@ -413,9 +414,9 @@ val timeVisualTransformation = object : VisualTransformation {
 
     override fun filter(text: AnnotatedString): TransformedText {
         val withZeroes = "0".repeat((4 - text.text.length).takeIf { it > 0 } ?: 0) + text.text
-        val withColons = "${withZeroes[0]}${withZeroes[1]}:${withZeroes[2]}${withZeroes[3]}"
+        val withColon = withZeroes.let { it.substring(0, 2) + ":" + it.substring(2, 4) }
         return TransformedText(
-            AnnotatedString(if (text.text.isEmpty()) "" else withColons),
+            AnnotatedString(if (text.text.isEmpty()) "" else withColon),
             offsetMap
         )
     }
