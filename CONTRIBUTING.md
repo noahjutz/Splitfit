@@ -16,7 +16,7 @@ Thanks for contributing to Splitfit!
 
 * If you want to help out with an existing bug report or feature request, leave a comment on that issue saying you want to try your hand at it.
 * If there is no existing issue for what you want to work on, open a new one describing your changes. This gives the team and the community a chance to give feedback before you spend time on something that is already in development, should be done differently, or should be avoided completely.
-* Stick to Splitfit's style conventions of [Ktlint](https://ktlint.github.io/). It runs each time you build the project.
+* Stick to Splitfit's style conventions of [Ktlint](https://ktlint.github.io/). Run it using `./gradlew ktlintCheck`.
 * Do not bring non-free software (e.g. binary blobs) into the project. Make sure you do not introduce Google
   libraries.
 * Stick to [F-Droid contribution guidelines](https://f-droid.org/wiki/page/Inclusion_Policy).
