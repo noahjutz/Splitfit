@@ -48,7 +48,7 @@ fun RoutinesScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { addEditRoutine(-1) },
+                onClick = { addEditRoutine(viewModel.addRoutine().toInt()) },
                 content = { Icon(Icons.Default.Add) }
             )
         }

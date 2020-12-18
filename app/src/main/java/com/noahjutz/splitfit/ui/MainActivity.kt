@@ -108,8 +108,7 @@ fun MainScreenContent(
     NavHost(navController, startDestination = "routines") {
         composable("routines") {
             RoutinesScreen(
-                addEditRoutine = {
-                    val routineId = if (it < 0) routinesVM.addRoutine().toInt() else it
+                addEditRoutine = { routineId ->
                     navController.navigate("createRoutine/$routineId")
                 },
                 viewModel = routinesVM
@@ -137,8 +136,7 @@ fun MainScreenContent(
         }
         composable("exercises") {
             ExercisesScreen(
-                addEditExercise = {
-                    val exerciseId = if (it < 0) exercisesVM.addExercise() else it
+                addEditExercise = { exerciseId ->
                     navController.navigate("createExercise/$exerciseId")
                 },
                 viewModel = exercisesVM

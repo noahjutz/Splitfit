@@ -43,7 +43,7 @@ fun ExercisesScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { addEditExercise(-1) },
+                onClick = { addEditExercise(viewModel.addExercise().toInt()) },
                 content = { Icon(Icons.Default.Add) }
             )
         },
