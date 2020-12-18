@@ -60,9 +60,9 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.math.floor
-import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -379,12 +379,16 @@ fun SetTextField(
             .padding(horizontal = 4.dp)
             .clip(shape = RoundedCornerShape(8.dp))
             .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12f))
-            .padding(4.dp),
+            .padding(4.dp)
+            .onFocusChanged {
+                tfValue = if (it.isFocused) {
+                    TextFieldValue(value, TextRange(0, value.length))
+                } else {
+                    TextFieldValue(value, TextRange(value.length))
+                }
+            },
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        onTextInputStarted = {
-            tfValue = TextFieldValue(tfValue.text, TextRange(0, tfValue.text.length))
-        },
         textStyle = AmbientTextStyle.current.copy(
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
