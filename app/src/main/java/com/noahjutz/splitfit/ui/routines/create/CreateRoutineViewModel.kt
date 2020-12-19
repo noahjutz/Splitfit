@@ -25,7 +25,70 @@ import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Routine
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
+// TODO adopt new CreateRoutineEditor/Presenter
+class CreateRoutineController(
+    private val repository: Repository,
+    routineId: Int,
+) {
+    private val _routine = MutableStateFlow(repository.getRoutine(routineId)!!)
+
+    inner class Editor {
+        private fun updateRoutine(action: Routine.() -> Unit) {
+            _routine.value = _routine.value.copy().apply(action)
+        }
+
+        fun setName(newName: String) {
+            updateRoutine {
+                name = newName
+            }
+        }
+
+        fun addSetTo(setGroupIndex: Int) {
+            updateRoutine {
+                setGroups[setGroupIndex].sets.add(Set())
+            }
+        }
+
+        fun deleteSetFrom(setGroupIndex: Int, setIndex: Int) {
+            updateRoutine {
+                setGroups[setGroupIndex].sets.removeAt(setIndex)
+                setGroups.removeAll { it.sets.isEmpty() }
+            }
+        }
+
+        fun addSetGroup(exerciseId: Int) {
+            updateRoutine {
+                val setGroup = SetGroup(exerciseId)
+                if (setGroup !in setGroups) {
+                    setGroups.add(setGroup)
+                }
+            }
+        }
+
+        fun swapSetGroups(i1: Int, i2: Int) {
+            if (i1 < 0 || i2 < 0) return
+            updateRoutine {
+                if (setGroups.lastIndex < i1 || setGroups.lastIndex < i2) return@updateRoutine
+                setGroups[i1] = setGroups[i2].also { setGroups[i2] = setGroups[i1] }
+            }
+        }
+
+        fun close() {
+            repository.insert(_routine.value)
+        }
+    }
+
+    inner class Presenter {
+        val routine = _routine.asStateFlow()
+
+        fun getExercise(exerciseId: Int) = repository.getExercise(exerciseId)
+    }
+}
+
+@Deprecated("Use new CreateRoutineVM")
 class CreateRoutineViewModel @ViewModelInject constructor(
     private val repository: Repository,
 ) : ViewModel() {
