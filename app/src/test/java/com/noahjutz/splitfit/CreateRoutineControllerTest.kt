@@ -1,0 +1,145 @@
+/*
+ * Splitfit
+ * Copyright (C) 2020  Noah Jutz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package com.noahjutz.splitfit
+
+import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.domain.Exercise
+import com.noahjutz.splitfit.data.domain.Routine
+import com.noahjutz.splitfit.data.domain.Set
+import com.noahjutz.splitfit.data.domain.SetGroup
+import com.noahjutz.splitfit.ui.routines.create.CreateRoutineController
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import org.junit.Assert
+import org.junit.Test
+
+class CreateRoutineControllerTest {
+
+    ////////////
+    // Values //
+    ////////////
+
+    // Sample values //
+
+    private val sampleName = "Full body"
+    private val sampleSetGroups = mutableListOf(
+        SetGroup(
+            exerciseId = 1,
+            sets = mutableListOf(
+                Set(12),
+                Set(2)
+            )
+        )
+    )
+    private val sampleRoutine = Routine(sampleName, sampleSetGroups)
+
+    // Dependencies //
+
+    private val repository: Repository = mockk<Repository>(relaxed = true).apply {
+        every { getRoutine(1) } returns sampleRoutine
+        every { getExercise(1) } returns Exercise("Push up")
+    }
+
+    // Tested class //
+
+    private val controller = CreateRoutineController(repository, 1)
+    private val presenter = controller.Presenter()
+    private val editor = controller.Editor()
+
+    ///////////
+    // Tests //
+    ///////////
+
+    // Presenter //
+
+    @Test
+    fun `Has correct routine name`() {
+        Assert.assertEquals(presenter.routine.value.name, sampleName)
+    }
+
+    @Test
+    fun `Has correct setGroups`() {
+        Assert.assertEquals(presenter.routine.value.setGroups, sampleSetGroups)
+    }
+
+    @Test
+    fun `Has correct Routine`() {
+        Assert.assertEquals(sampleRoutine, presenter.routine.value)
+    }
+
+    // Editor //
+
+    @Test
+    fun `Name can be changed`() {
+        val newName = "New sample name"
+        editor.setName(newName)
+        Assert.assertEquals(presenter.routine.value.name, newName)
+    }
+
+    @Test
+    fun `Can add SetGroup`() {
+        val setGroup = SetGroup(1)
+        val sizeBefore = presenter.routine.value.setGroups.size
+        editor.addSetGroup(presenter.routine.value.setGroups.indexOf(setGroup))
+        val sizeAfter = presenter.routine.value.setGroups.size
+        Assert.assertEquals(sizeBefore + 1, sizeAfter)
+    }
+
+    @Test
+    fun `Can add Set to SetGroup`() {
+        val sizeBefore = presenter.routine.value.setGroups.first().sets.size
+        editor.addSetTo(presenter.routine.value.setGroups.indexOf(sampleSetGroups.first()))
+        val sizeAfter = presenter.routine.value.setGroups.first().sets.size
+        Assert.assertEquals(sizeBefore + 1, sizeAfter)
+    }
+
+    @Test
+    fun `Can remove Set from SetGroup`() {
+        editor.addSetGroup(2)
+        val sizeBefore = presenter.routine.value.setGroups.first().sets.size
+        editor.deleteSetFrom(0, 1)
+        val sizeAfter = presenter.routine.value.setGroups.first().sets.size
+        Assert.assertEquals(sizeBefore - 1, sizeAfter)
+    }
+
+    @Test
+    fun `Removing last Set from SetGroup removes SetGroup`() {
+        Assert.assertFalse(presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null)
+        editor.deleteSetFrom(0, 1)
+        editor.deleteSetFrom(0, 0)
+        Assert.assertTrue(presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null)
+    }
+
+    @Test
+    fun `Can save`() {
+        editor.close()
+        verify { repository.insert(presenter.routine.value) }
+    }
+
+    @Test
+    fun `Empty routine is auto deleted`() {
+        editor.setName("")
+        editor.deleteSetFrom(0, 1)
+        editor.deleteSetFrom(0, 0)
+        editor.close()
+        verify { repository.delete(presenter.routine.value) }
+        // TODO implement this behavior to make this test pass
+    }
+}

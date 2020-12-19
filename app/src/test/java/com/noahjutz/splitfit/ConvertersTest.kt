@@ -19,7 +19,7 @@
 package com.noahjutz.splitfit
 
 import com.noahjutz.splitfit.data.Converters
-import com.noahjutz.splitfit.data.domain.Set
+import com.noahjutz.splitfit.data.domain.SetGroup
 import org.junit.Assert
 import org.junit.Test
 
@@ -29,12 +29,11 @@ class ConvertersTest {
     @Test
     fun `List of Sets can be turned into JSON and back`() {
         val list = mutableListOf(
-            Set(12),
-            Set(33),
-            Set(0)
+            SetGroup(0),
+            SetGroup(1)
         )
-        val json = converters.fromList(list)
-        val backToList = converters.toSetList(json)
+        val json = converters.fromSetGroups(list)
+        val backToList = converters.toSetGroups(json)
         Assert.assertEquals(list, backToList)
     }
 }
