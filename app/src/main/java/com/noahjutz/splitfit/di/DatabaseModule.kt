@@ -21,8 +21,10 @@ package com.noahjutz.splitfit.di
 import android.content.Context
 import androidx.room.Room
 import com.noahjutz.splitfit.data.AppDatabase
+import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
+import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.Module
 import dagger.Provides
@@ -73,7 +75,15 @@ val koinModule = module {
         get<AppDatabase>().routineDao
     }
 
+    factory<Repository> {
+        Repository(get<ExerciseDao>(), get<RoutineDao>())
+    }
+
     factory<SharedExerciseViewModel> {
         SharedExerciseViewModel()
+    }
+
+    factory<RoutinesViewModel> {
+        RoutinesViewModel(get<Repository>())
     }
 }

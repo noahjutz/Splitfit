@@ -46,6 +46,7 @@ import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
+import org.koin.java.KoinJavaComponent.get
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -78,14 +79,12 @@ fun MainScreen(
             MainScreenTopBar(navController)
         }
     ) {
-        val routinesVM = viewModel<RoutinesViewModel>()
         val createRoutineVM = viewModel<CreateRoutineViewModel>()
         val exercisesVM = viewModel<ExercisesViewModel>()
         val createExerciseVM = viewModel<CreateExerciseViewModel>()
 
         MainScreenContent(
             navController = navController,
-            routinesVM = routinesVM,
             createRoutineVM = createRoutineVM,
             exercisesVM = exercisesVM,
             createExerciseVM = createExerciseVM,
@@ -100,7 +99,6 @@ fun MainScreen(
 @Composable
 fun MainScreenContent(
     navController: NavHostController,
-    routinesVM: RoutinesViewModel,
     createRoutineVM: CreateRoutineViewModel,
     exercisesVM: ExercisesViewModel,
     createExerciseVM: CreateExerciseViewModel,
@@ -112,7 +110,7 @@ fun MainScreenContent(
                 addEditRoutine = { routineId ->
                     navController.navigate("createRoutine/$routineId")
                 },
-                viewModel = routinesVM
+                viewModel = get(RoutinesViewModel::class.java)
             )
         }
         composable(
