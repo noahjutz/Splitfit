@@ -34,14 +34,14 @@ class SharedExerciseViewModel : ViewModel() {
     val exercises = _exercises.asStateFlow()
 
     fun add(exercise: Exercise) {
-        _exercises.value.add(exercise)
+        _exercises.value = _exercises.value.toMutableList().also { it.add(exercise) }
     }
 
     fun remove(exercise: Exercise) {
-        _exercises.value.remove(exercise)
+        _exercises.value = _exercises.value.toMutableList().also { it.remove(exercise) }
     }
 
     fun clear() {
-        _exercises.value.clear()
+        _exercises.value = mutableListOf()
     }
 }
