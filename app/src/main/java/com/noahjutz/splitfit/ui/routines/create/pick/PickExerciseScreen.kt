@@ -36,7 +36,7 @@ import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
 fun PickExerciseScreen(
     exercisesViewModel: ExercisesViewModel,
     sharedExerciseViewModel: SharedExerciseViewModel,
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -52,32 +52,31 @@ fun PickExerciseScreen(
                 }
             )
         },
-        bodyContent = {
-            val exercises by exercisesViewModel.exercises.observeAsState()
-            LazyColumn(Modifier.fillMaxHeight()) {
-                items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
-                    var checked by remember { mutableStateOf(false) }
-                    onCommit(checked) {
-                        if (checked) sharedExerciseViewModel.add(exercise)
-                        else sharedExerciseViewModel.remove(exercise)
-                    }
-                    ListItem(
-                        trailing = {
-                            Checkbox(
-                                checked = checked,
-                                onCheckedChange = { checked = it }
-                            )
-                        },
-                        modifier = Modifier.clickable { checked = !checked }
-                    ) {
-                        Text(exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed")
-                    }
+    ) {
+        val exercises by exercisesViewModel.exercises.observeAsState()
+        LazyColumn(Modifier.fillMaxHeight()) {
+            items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
+                var checked by remember { mutableStateOf(false) }
+                onCommit(checked) {
+                    if (checked) sharedExerciseViewModel.add(exercise)
+                    else sharedExerciseViewModel.remove(exercise)
                 }
-                item {
-                    // Fix FAB overlap
-                    Box(Modifier.height(72.dp)) {}
+                ListItem(
+                    trailing = {
+                        Checkbox(
+                            checked = checked,
+                            onCheckedChange = { checked = it }
+                        )
+                    },
+                    modifier = Modifier.clickable { checked = !checked }
+                ) {
+                    Text(exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed")
                 }
             }
+            item {
+                // Fix FAB overlap
+                Box(Modifier.height(72.dp)) {}
+            }
         }
-    )
+    }
 }
