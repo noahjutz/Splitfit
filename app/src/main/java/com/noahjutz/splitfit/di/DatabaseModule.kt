@@ -21,13 +21,18 @@ package com.noahjutz.splitfit.di
 import android.content.Context
 import androidx.room.Room
 import com.noahjutz.splitfit.data.AppDatabase
+import com.noahjutz.splitfit.data.dao.ExerciseDao
+import com.noahjutz.splitfit.data.dao.RoutineDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 import javax.inject.Singleton
 
+@Deprecated("Use koin instead of hilt", ReplaceWith("koinModule"))
 @InstallIn(ApplicationComponent::class)
 @Module
 object DatabaseModule {
@@ -45,4 +50,25 @@ object DatabaseModule {
 
     @Provides
     fun provideRoutineDao(database: AppDatabase) = database.routineDao
+}
+
+val koinModule = module {
+    single<AppDatabase> {
+        Room
+            .databaseBuilder(
+                androidContext(),
+                AppDatabase::class.java,
+                "workout_routines_database"
+            )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    factory<ExerciseDao> {
+        get<AppDatabase>().exerciseDao
+    }
+
+    factory<RoutineDao> {
+        get<AppDatabase>().routineDao
+    }
 }
