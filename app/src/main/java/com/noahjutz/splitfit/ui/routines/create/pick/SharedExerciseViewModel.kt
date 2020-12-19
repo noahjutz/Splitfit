@@ -27,10 +27,7 @@ import kotlinx.coroutines.flow.asStateFlow
 private const val TAG = "PickExerciseViewModel"
 
 /**
- * Shared [ViewModel] between [PickExerciseFragment] and [CreateRoutineFragment]
- *
- * [PickExerciseFragment] modifies [exercises]
- * [CreateRoutineFragment] accesses [exercises]
+ * Used to pass back exercises from PickExercise to CreateRoutine
  */
 class SharedExerciseViewModel : ViewModel() {
     private val _exercises = MutableStateFlow<MutableList<Exercise>>(mutableListOf())
