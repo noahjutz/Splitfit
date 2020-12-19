@@ -23,6 +23,7 @@ import androidx.room.Room
 import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
+import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -70,5 +71,9 @@ val koinModule = module {
 
     factory<RoutineDao> {
         get<AppDatabase>().routineDao
+    }
+
+    factory<SharedExerciseViewModel> {
+        SharedExerciseViewModel()
     }
 }

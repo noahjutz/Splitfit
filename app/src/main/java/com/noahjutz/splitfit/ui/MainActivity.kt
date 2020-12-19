@@ -45,11 +45,12 @@ import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.android.ext.android.inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val sharedExerciseVM: SharedExerciseViewModel by viewModels()
+    private val sharedExerciseVM: SharedExerciseViewModel by inject()
 
     @ExperimentalFoundationApi
     @ExperimentalMaterialApi
