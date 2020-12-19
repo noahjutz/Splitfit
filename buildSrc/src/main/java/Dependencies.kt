@@ -80,7 +80,7 @@ object Libs {
     const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
     const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 
-    const val koin = "org.koin:koin-core:${Versions.koin}"
+    const val koin = "org.koin:koin-android:${Versions.koin}"
 }
 
 object TestLibs {
