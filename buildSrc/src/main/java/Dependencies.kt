@@ -40,6 +40,7 @@ object Versions {
     const val navigation = "2.3.1"
     const val compose = "1.0.0-alpha09"
     const val composeNavigation = "1.0.0-alpha04"
+    const val koin = "2.2.2"
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
@@ -78,15 +79,21 @@ object Libs {
     const val composeIconsExt = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
     const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
+
+    const val koin = "org.koin:koin-core:${Versions.koin}"
 }
 
 object TestLibs {
     const val junit4 = "junit:junit:${Versions.junit}"
     const val assertJ = "org.assertj:assertj-core:${Versions.assertJ}"
+
     const val mockkUnit = "io.mockk:mockk:${Versions.mockK}"
     const val mockkInstrumented = "io.mockk:mockk-android:${Versions.mockK}"
+
     const val composeTest = "androidx.compose.ui:ui-test:${Versions.compose}"
     const val composeTestJunit4 = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+
+    const val koinTest = "org.koin:koin-test:${Versions.koin}"
 }
 
 object GradlePlugins {

@@ -124,6 +124,9 @@ dependencies {
     implementation(Libs.composeMaterial)
     implementation(Libs.composeTooling)
     implementation(Libs.composeNavigation)
+
+    implementation(Libs.koin)
+    testImplementation(TestLibs.koinTest)
 }
 
 ktlint {
