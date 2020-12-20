@@ -25,6 +25,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Radio
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
@@ -74,10 +76,12 @@ fun MainScreen(
     sharedExerciseVM: SharedExerciseViewModel
 ) {
     val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
-        }
+        },
+        scaffoldState = scaffoldState,
     ) {
         val exercisesVM = viewModel<ExercisesViewModel>()
         val createExerciseVM = viewModel<CreateExerciseViewModel>()
@@ -86,7 +90,8 @@ fun MainScreen(
             navController = navController,
             exercisesVM = exercisesVM,
             createExerciseVM = createExerciseVM,
-            sharedExerciseVM = sharedExerciseVM
+            sharedExerciseVM = sharedExerciseVM,
+            scaffoldState = scaffoldState
         )
     }
 }
@@ -99,7 +104,8 @@ fun MainScreenContent(
     navController: NavHostController,
     exercisesVM: ExercisesViewModel,
     createExerciseVM: CreateExerciseViewModel,
-    sharedExerciseVM: SharedExerciseViewModel
+    sharedExerciseVM: SharedExerciseViewModel,
+    scaffoldState: ScaffoldState,
 ) {
     NavHost(navController, startDestination = "routines") {
         composable("routines") {
@@ -119,7 +125,8 @@ fun MainScreenContent(
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
                 controller = CreateRoutineController(get(Repository::class.java), routineId),
-                sharedExerciseVM = sharedExerciseVM
+                sharedExerciseVM = sharedExerciseVM,
+                showSnackbar = { scaffoldState.snackbarHostState.showSnackbar(it) }
             )
         }
         composable("pickExercise") {
@@ -158,7 +165,7 @@ sealed class Screen(val route: String, val name: String) {
 
 @Composable
 fun MainScreenTopBar(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     val screens = listOf(
         Screen.Routines,

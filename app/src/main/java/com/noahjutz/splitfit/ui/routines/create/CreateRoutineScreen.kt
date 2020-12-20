@@ -58,9 +58,12 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.coroutines.coroutineContext
 import kotlin.math.floor
 
 @ExperimentalMaterialApi
@@ -72,6 +75,7 @@ fun CreateRoutineScreen(
     popBackStack: () -> Unit,
     controller: CreateRoutineController,
     sharedExerciseVM: SharedExerciseViewModel,
+    showSnackbar: suspend (String) -> Unit
 ) {
     val editor = controller.Editor()
     val presenter = controller.Presenter()
@@ -84,6 +88,11 @@ fun CreateRoutineScreen(
     }
 
     onDispose {
+        if (presenter.routine.value.isEmpty()) {
+            MainScope().launch {
+                showSnackbar("Empty routine discarded")
+            }
+        }
         editor.close()
     }
 

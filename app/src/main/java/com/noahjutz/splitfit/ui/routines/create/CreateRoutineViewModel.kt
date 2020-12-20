@@ -20,6 +20,7 @@ package com.noahjutz.splitfit.ui.routines.create
 
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Exercise
+import com.noahjutz.splitfit.data.domain.Routine
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -73,7 +74,11 @@ class CreateRoutineController(
         }
 
         fun close() {
-            repository.insert(_routine.value)
+            if (_routine.value.isEmpty()) {
+                repository.delete(_routine.value)
+            } else {
+                repository.insert(_routine.value)
+            }
         }
     }
 
@@ -83,3 +88,5 @@ class CreateRoutineController(
         fun getExercise(exerciseId: Int) = repository.getExercise(exerciseId)
     }
 }
+
+fun Routine.isEmpty() = name.isBlank() && setGroups.isEmpty()
