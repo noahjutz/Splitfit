@@ -31,12 +31,17 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.onActive
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.ui.routines.create.isEmpty
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -44,7 +49,7 @@ import com.noahjutz.splitfit.util.SwipeToDeleteBackground
 fun RoutinesScreen(
     addEditRoutine: (Int) -> Unit,
     viewModel: RoutinesViewModel,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
 ) {
     Scaffold(
         floatingActionButton = {
@@ -55,7 +60,15 @@ fun RoutinesScreen(
         },
         scaffoldState = scaffoldState
     ) {
+
         val routines by viewModel.routines.observeAsState()
+
+        onActive {
+            MainScope().launch {
+                delay(500) // TODO use MutableStateFlow in viewModel to make routines non nullable, and remove this delay
+                routines?.filter { it.isEmpty() }?.forEach { viewModel.deleteRoutine(it.routineId) }
+            }
+        }
         LazyColumn(Modifier.fillMaxHeight()) {
             items(items = routines ?: emptyList()) { routine ->
                 val dismissState = rememberDismissState()

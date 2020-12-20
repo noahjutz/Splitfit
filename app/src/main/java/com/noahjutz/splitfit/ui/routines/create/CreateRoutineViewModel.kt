@@ -74,11 +74,7 @@ class CreateRoutineController(
         }
 
         fun close() {
-            if (_routine.value.isEmpty()) {
-                repository.delete(_routine.value)
-            } else {
-                repository.insert(_routine.value)
-            }
+            repository.insert(_routine.value)
         }
     }
 
