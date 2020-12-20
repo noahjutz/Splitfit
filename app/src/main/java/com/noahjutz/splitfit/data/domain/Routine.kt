@@ -23,7 +23,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "routine_table")
 data class Routine(
-    var name: String = "",
+    val name: String = "",
     val setGroups: List<SetGroup> = emptyList(),
 ) {
     @PrimaryKey(autoGenerate = true)
