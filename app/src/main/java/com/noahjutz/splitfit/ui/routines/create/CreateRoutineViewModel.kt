@@ -22,13 +22,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Routine
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-// TODO adopt new CreateRoutineEditor/Presenter
 class CreateRoutineController(
     private val repository: Repository,
     routineId: Int,
@@ -59,12 +59,11 @@ class CreateRoutineController(
             }
         }
 
-        fun addSetGroup(exerciseId: Int) {
+        fun addExercises(exercises: List<Exercise>) {
             updateRoutine {
-                val setGroup = SetGroup(exerciseId)
-                if (setGroup !in setGroups) {
-                    setGroups.add(setGroup)
-                }
+                val newSetGroups =
+                    exercises.map { SetGroup(it.exerciseId) }.filter { it !in setGroups }
+                setGroups.addAll(newSetGroups)
             }
         }
 

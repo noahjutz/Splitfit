@@ -19,7 +19,6 @@
 package com.noahjutz.splitfit.ui
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -43,7 +42,6 @@ import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineController
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,13 +79,11 @@ fun MainScreen(
             MainScreenTopBar(navController)
         }
     ) {
-        val createRoutineVM = viewModel<CreateRoutineViewModel>()
         val exercisesVM = viewModel<ExercisesViewModel>()
         val createExerciseVM = viewModel<CreateExerciseViewModel>()
 
         MainScreenContent(
             navController = navController,
-            createRoutineVM = createRoutineVM,
             exercisesVM = exercisesVM,
             createExerciseVM = createExerciseVM,
             sharedExerciseVM = sharedExerciseVM
@@ -101,7 +97,6 @@ fun MainScreen(
 @Composable
 fun MainScreenContent(
     navController: NavHostController,
-    createRoutineVM: CreateRoutineViewModel,
     exercisesVM: ExercisesViewModel,
     createExerciseVM: CreateExerciseViewModel,
     sharedExerciseVM: SharedExerciseViewModel
@@ -120,11 +115,9 @@ fun MainScreenContent(
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) { backStackEntry ->
             val routineId: Int = backStackEntry.arguments?.getInt("routineId") ?: -1
-            createRoutineVM.setRoutine(routineId)
             CreateRoutineScreen(
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
-                viewModel = createRoutineVM,
                 controller = CreateRoutineController(get(Repository::class.java), routineId),
                 sharedExerciseVM = sharedExerciseVM
             )

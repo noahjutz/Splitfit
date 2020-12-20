@@ -34,7 +34,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -53,14 +52,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.hours
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.Transformations
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.math.floor
@@ -72,22 +70,23 @@ import kotlin.math.floor
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
-    viewModel: CreateRoutineViewModel,
     controller: CreateRoutineController,
-    sharedExerciseVM: SharedExerciseViewModel
+    sharedExerciseVM: SharedExerciseViewModel,
 ) {
     val editor = controller.Editor()
     val presenter = controller.Presenter()
+
     rememberCoroutineScope().launch {
         sharedExerciseVM.exercises.value.let { exercises ->
-            viewModel.appendSets(exercises.map { it.exerciseId })
+            editor.addExercises(exercises)
             sharedExerciseVM.clear()
         }
     }
-    val setGroups by Transformations.map(viewModel.routineLiveData!!) {
-        it?.setGroups ?: emptyList()
+
+    onDispose {
+        editor.close()
     }
-        .observeAsState()
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -109,7 +108,7 @@ fun CreateRoutineScreen(
                     Box {
                         var nameFieldValue by remember {
                             mutableStateOf(
-                                TextFieldValue(viewModel.initialName)
+                                TextFieldValue(presenter.routine.value.name)
                             )
                         }
                         var focusState by remember { mutableStateOf(false) }
@@ -117,7 +116,7 @@ fun CreateRoutineScreen(
                             value = nameFieldValue,
                             onValueChange = {
                                 nameFieldValue = it
-                                viewModel.updateRoutine { this.name = it.text }
+                                editor.setName(it.text)
                             },
                             modifier = Modifier
                                 .onFocusChanged {
@@ -141,12 +140,14 @@ fun CreateRoutineScreen(
             )
         }
     ) {
+        val setGroups by presenter.routine.mapLatest { it.setGroups }.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
-            itemsIndexed(setGroups ?: emptyList()) { i, setGroup ->
+            itemsIndexed(setGroups) { i, setGroup ->
                 SetGroupCard(
                     setGroupIndex = i,
                     setGroup = setGroup,
-                    viewModel = viewModel
+                    editor = editor,
+                    presenter = presenter
                 )
             }
             item {
@@ -164,9 +165,10 @@ fun CreateRoutineScreen(
 fun SetGroupCard(
     setGroupIndex: Int,
     setGroup: SetGroup,
-    viewModel: CreateRoutineViewModel,
+    editor: CreateRoutineController.Editor,
+    presenter: CreateRoutineController.Presenter,
 ) {
-    val exercise = viewModel.getExercise(setGroup.exerciseId)
+    val exercise = presenter.getExercise(setGroup.exerciseId)
 
     // Temporary rearranging solution
     var offsetPosition by remember { mutableStateOf(0f) }
@@ -176,16 +178,14 @@ fun SetGroupCard(
     onCommit(offsetPosition) {
         if (dragging) {
             toSwap = when {
-                offsetPosition < -150 && viewModel.getSetGroup(setGroupIndex - 1) != null ->
-                    Pair(setGroupIndex, setGroupIndex - 1)
-                offsetPosition > 150 && viewModel.getSetGroup(setGroupIndex + 1) != null ->
-                    Pair(setGroupIndex, setGroupIndex + 1)
+                offsetPosition < -150 -> Pair(setGroupIndex, setGroupIndex - 1)
+                offsetPosition > 150 -> Pair(setGroupIndex, setGroupIndex + 1)
                 else -> Pair(0, 0)
             }
         } else {
             if (toSwap != Pair(0, 0)) {
                 focusManager.clearFocus()
-                viewModel.swapSetGroups(toSwap.first, toSwap.second)
+                editor.swapSetGroups(toSwap.first, toSwap.second)
                 toSwap = Pair(0, 0)
             }
         }
@@ -219,8 +219,7 @@ fun SetGroupCard(
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = viewModel.getExerciseName(setGroup.exerciseId).takeIf { it.isNotBlank() }
-                        ?: "Unnamed",
+                    text = exercise?.name?.takeIf { it.isNotBlank() } ?: "Unnamed",
                     fontSize = 20.sp,
                 )
             }
@@ -236,12 +235,7 @@ fun SetGroupCard(
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
                         focusManager.clearFocus()
-                        viewModel.updateRoutine {
-                            if (setGroups[setGroupIndex].sets.lastIndex >= setIndex)
-                                setGroups[setGroupIndex].sets.removeAt(setIndex)
-                            if (setGroups[setGroupIndex].sets.isEmpty())
-                                setGroups.removeAt(setGroupIndex)
-                        }
+                        editor.deleteSetFrom(setGroupIndex, setIndex)
                         dismissState.snapTo(DismissValue.Default)
                     }
                 }
@@ -268,10 +262,10 @@ fun SetGroupCard(
                                     value = reps,
                                     onValueChange = {
                                         reps = it
-                                        viewModel.updateRoutine {
-                                            setGroups[setGroupIndex].sets[setIndex].reps =
-                                                it.takeIf { it.isNotEmpty() }?.toInt()
-                                        }
+                                        //viewModel.updateRoutine {
+                                        //    setGroups[setGroupIndex].sets[setIndex].reps =
+                                        //        it.takeIf { it.isNotEmpty() }?.toInt()
+                                        //}
                                     },
                                     regexPattern = RegexPatterns.integer,
                                 )
@@ -283,11 +277,11 @@ fun SetGroupCard(
                                     value = weight,
                                     onValueChange = {
                                         weight = it
-                                        viewModel.updateRoutine {
-                                            setGroups[setGroupIndex].sets[setIndex].weight =
-                                                it.takeIf { it.isNotEmpty() }
-                                                    ?.toDouble()
-                                        }
+                                        //viewModel.updateRoutine {
+                                        //    setGroups[setGroupIndex].sets[setIndex].weight =
+                                        //        it.takeIf { it.isNotEmpty() }
+                                        //            ?.toDouble()
+                                        //}
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
@@ -299,10 +293,10 @@ fun SetGroupCard(
                                     value = time,
                                     onValueChange = {
                                         time = it
-                                        viewModel.updateRoutine {
-                                            setGroups[setGroupIndex].sets[setIndex].time =
-                                                it.takeIf { it.isNotEmpty() }?.toInt()
-                                        }
+                                        //viewModel.updateRoutine {
+                                        //    setGroups[setGroupIndex].sets[setIndex].time =
+                                        //        it.takeIf { it.isNotEmpty() }?.toInt()
+                                        //}
                                     },
                                     regexPattern = RegexPatterns.time,
                                     visualTransformation = timeVisualTransformation
@@ -315,11 +309,11 @@ fun SetGroupCard(
                                     value = distance,
                                     onValueChange = {
                                         distance = it
-                                        viewModel.updateRoutine {
-                                            setGroups[setGroupIndex].sets[setIndex].distance =
-                                                it.takeIf { it.isNotEmpty() }
-                                                    ?.toDouble()
-                                        }
+                                        //viewModel.updateRoutine {
+                                        //    setGroups[setGroupIndex].sets[setIndex].distance =
+                                        //        it.takeIf { it.isNotEmpty() }
+                                        //            ?.toDouble()
+                                        //}
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
@@ -328,7 +322,7 @@ fun SetGroupCard(
                 }
             }
             TextButton(
-                onClick = { viewModel.addSet(setGroup.exerciseId) },
+                onClick = { editor.addSetTo(presenter.routine.value.setGroups.indexOf(setGroup)) },
                 content = {
                     Icon(Icons.Default.Add)
                     Text(stringResource(R.string.add_set))
@@ -341,7 +335,7 @@ fun SetGroupCard(
 
 @Composable
 fun RowScope.SetHeader(
-    text: String
+    text: String,
 ) {
     Text(
         text = text.capitalize(Locale.getDefault()),
