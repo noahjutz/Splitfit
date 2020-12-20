@@ -75,8 +75,7 @@ fun CreateRoutineScreen(
     popBackStack: () -> Unit,
     controller: CreateRoutineController,
     sharedExerciseVM: SharedExerciseViewModel,
-    showSnackbar: suspend (String) -> Unit,
-    hideSnackbar: () -> Unit
+    scaffoldState: ScaffoldState
 ) {
     val editor = controller.Editor()
     val presenter = controller.Presenter()
@@ -89,12 +88,11 @@ fun CreateRoutineScreen(
     }
 
     onDispose {
+        scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
         if (presenter.routine.value.isEmpty()) {
             MainScope().launch {
-                showSnackbar("Empty routine discarded")
+                scaffoldState.snackbarHostState.showSnackbar("Empty routine discarded")
             }
-        } else {
-            hideSnackbar()
         }
         editor.close()
     }
