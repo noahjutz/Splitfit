@@ -25,8 +25,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Radio
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
@@ -73,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 @ExperimentalAnimationApi
 @Composable
 fun MainScreen(
-    sharedExerciseVM: SharedExerciseViewModel
+    sharedExerciseVM: SharedExerciseViewModel,
 ) {
     val navController = rememberNavController()
     Scaffold(
@@ -124,7 +122,8 @@ fun MainScreenContent(
                 popBackStack = { navController.popBackStack() },
                 controller = CreateRoutineController(get(Repository::class.java), routineId),
                 sharedExerciseVM = sharedExerciseVM,
-                showSnackbar = { routinesScaffoldState.snackbarHostState.showSnackbar(it) }
+                showSnackbar = { routinesScaffoldState.snackbarHostState.showSnackbar(it) },
+                hideSnackbar = { routinesScaffoldState.snackbarHostState.currentSnackbarData?.dismiss() }
             )
         }
         composable("pickExercise") {
