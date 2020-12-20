@@ -73,8 +73,11 @@ fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
     viewModel: CreateRoutineViewModel,
+    controller: CreateRoutineController,
     sharedExerciseVM: SharedExerciseViewModel
 ) {
+    val editor = controller.Editor()
+    val presenter = controller.Presenter()
     rememberCoroutineScope().launch {
         sharedExerciseVM.exercises.value.let { exercises ->
             viewModel.appendSets(exercises.map { it.exerciseId })
