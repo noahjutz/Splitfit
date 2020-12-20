@@ -122,7 +122,10 @@ fun MainScreenContent(
                 popBackStack = { navController.popBackStack() },
                 controller = CreateRoutineController(get(Repository::class.java), routineId),
                 sharedExerciseVM = sharedExerciseVM,
-                showSnackbar = { routinesScaffoldState.snackbarHostState.showSnackbar(it) },
+                showSnackbar = {
+                    routinesScaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                    routinesScaffoldState.snackbarHostState.showSnackbar(it)
+                },
                 hideSnackbar = { routinesScaffoldState.snackbarHostState.currentSnackbarData?.dismiss() }
             )
         }
