@@ -43,7 +43,8 @@ import com.noahjutz.splitfit.util.SwipeToDeleteBackground
 @Composable
 fun RoutinesScreen(
     addEditRoutine: (Int) -> Unit,
-    viewModel: RoutinesViewModel
+    viewModel: RoutinesViewModel,
+    scaffoldState: ScaffoldState
 ) {
     Scaffold(
         floatingActionButton = {
@@ -51,7 +52,8 @@ fun RoutinesScreen(
                 onClick = { addEditRoutine(viewModel.addRoutine().toInt()) },
                 content = { Icon(Icons.Default.Add) }
             )
-        }
+        },
+        scaffoldState = scaffoldState
     ) {
         val routines by viewModel.routines.observeAsState()
         LazyColumn(Modifier.fillMaxHeight()) {

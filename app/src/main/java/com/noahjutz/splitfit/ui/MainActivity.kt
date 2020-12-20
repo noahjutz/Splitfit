@@ -76,12 +76,10 @@ fun MainScreen(
     sharedExerciseVM: SharedExerciseViewModel
 ) {
     val navController = rememberNavController()
-    val scaffoldState = rememberScaffoldState()
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
         },
-        scaffoldState = scaffoldState,
     ) {
         val exercisesVM = viewModel<ExercisesViewModel>()
         val createExerciseVM = viewModel<CreateExerciseViewModel>()
@@ -91,7 +89,6 @@ fun MainScreen(
             exercisesVM = exercisesVM,
             createExerciseVM = createExerciseVM,
             sharedExerciseVM = sharedExerciseVM,
-            scaffoldState = scaffoldState
         )
     }
 }
@@ -105,15 +102,16 @@ fun MainScreenContent(
     exercisesVM: ExercisesViewModel,
     createExerciseVM: CreateExerciseViewModel,
     sharedExerciseVM: SharedExerciseViewModel,
-    scaffoldState: ScaffoldState,
 ) {
+    val routinesScaffoldState = rememberScaffoldState()
     NavHost(navController, startDestination = "routines") {
         composable("routines") {
             RoutinesScreen(
                 addEditRoutine = { routineId ->
                     navController.navigate("createRoutine/$routineId")
                 },
-                viewModel = get(RoutinesViewModel::class.java)
+                viewModel = get(RoutinesViewModel::class.java),
+                scaffoldState = routinesScaffoldState
             )
         }
         composable(
@@ -126,7 +124,7 @@ fun MainScreenContent(
                 popBackStack = { navController.popBackStack() },
                 controller = CreateRoutineController(get(Repository::class.java), routineId),
                 sharedExerciseVM = sharedExerciseVM,
-                showSnackbar = { scaffoldState.snackbarHostState.showSnackbar(it) }
+                showSnackbar = { routinesScaffoldState.snackbarHostState.showSnackbar(it) }
             )
         }
         composable("pickExercise") {
