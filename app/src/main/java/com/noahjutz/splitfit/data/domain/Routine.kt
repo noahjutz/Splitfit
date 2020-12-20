@@ -25,7 +25,7 @@ import androidx.room.PrimaryKey
 data class Routine(
     val name: String = "",
     val setGroups: List<SetGroup> = emptyList(),
-) {
+
     @PrimaryKey(autoGenerate = true)
-    var routineId: Int = 0
-}
+    var routineId: Int = 0,
+)
