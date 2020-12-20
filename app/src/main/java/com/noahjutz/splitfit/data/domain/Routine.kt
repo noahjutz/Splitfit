@@ -24,7 +24,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "routine_table")
 data class Routine(
     var name: String = "",
-    val setGroups: MutableList<SetGroup> = mutableListOf()
+    val setGroups: List<SetGroup> = emptyList(),
 ) {
     @PrimaryKey(autoGenerate = true)
     var routineId: Int = 0

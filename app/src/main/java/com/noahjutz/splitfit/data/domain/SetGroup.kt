@@ -20,5 +20,5 @@ package com.noahjutz.splitfit.data.domain
 
 data class SetGroup(
     val exerciseId: Int,
-    var sets: MutableList<Set> = mutableListOf(Set()),
+    val sets: List<Set> = listOf(Set()),
 )

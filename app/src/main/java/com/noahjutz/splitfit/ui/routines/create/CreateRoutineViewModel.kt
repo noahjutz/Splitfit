@@ -18,12 +18,8 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Exercise
-import com.noahjutz.splitfit.data.domain.Routine
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,43 +32,44 @@ class CreateRoutineController(
     private val _routine = MutableStateFlow(repository.getRoutine(routineId)!!)
 
     inner class Editor {
-        private fun updateRoutine(action: Routine.() -> Unit) {
-            _routine.value = _routine.value.copy().apply(action)
+        fun setName(name: String) {
+            _routine.value = _routine.value.copy(name = name)
         }
 
-        fun setName(newName: String) {
-            updateRoutine {
-                name = newName
+        fun addSetTo(setGroup: SetGroup) {
+            val setGroups = _routine.value.setGroups.toMutableList().also {
+                val i = it.indexOf(setGroup)
+                val sets = it[i].sets + Set()
+                it[i] = it[i].copy(sets = sets)
             }
+            _routine.value = _routine.value.copy(setGroups = setGroups)
         }
 
-        fun addSetTo(setGroupIndex: Int) {
-            updateRoutine {
-                setGroups[setGroupIndex].sets.add(Set())
+        fun deleteSetFrom(setGroup: SetGroup, setIndex: Int) {
+            val setGroups = _routine.value.setGroups.toMutableList().also {
+                val i = it.indexOf(setGroup)
+                val sets = it[i].sets.toMutableList().apply { removeAt(setIndex) }
+                it[i] = it[i].copy(sets = sets)
+                it.removeAll { it.sets.isEmpty() }
             }
-        }
-
-        fun deleteSetFrom(setGroupIndex: Int, setIndex: Int) {
-            updateRoutine {
-                setGroups[setGroupIndex].sets.removeAt(setIndex)
-                setGroups.removeAll { it.sets.isEmpty() }
-            }
+            _routine.value = _routine.value.copy(setGroups = setGroups)
         }
 
         fun addExercises(exercises: List<Exercise>) {
-            updateRoutine {
-                val newSetGroups =
-                    exercises.map { SetGroup(it.exerciseId) }.filter { it !in setGroups }
-                setGroups.addAll(newSetGroups)
-            }
+            val setGroups = _routine.value.setGroups + exercises.map { SetGroup(it.exerciseId) }
+                .filter { it.exerciseId !in _routine.value.setGroups.map { it.exerciseId } }
+            _routine.value = _routine.value.copy(setGroups = setGroups)
         }
 
         fun swapSetGroups(i1: Int, i2: Int) {
             if (i1 < 0 || i2 < 0) return
-            updateRoutine {
-                if (setGroups.lastIndex < i1 || setGroups.lastIndex < i2) return@updateRoutine
-                setGroups[i1] = setGroups[i2].also { setGroups[i2] = setGroups[i1] }
-            }
+            val setGroups = _routine.value.setGroups.toMutableList()
+                .apply {
+                    if (!(lastIndex < i1 || lastIndex < i2)) {
+                        this[i1] = this[i2].also { this[i2] = this[i1] }
+                    }
+                }
+            _routine.value = _routine.value.copy(setGroups = setGroups)
         }
 
         fun close() {
@@ -84,57 +81,5 @@ class CreateRoutineController(
         val routine = _routine.asStateFlow()
 
         fun getExercise(exerciseId: Int) = repository.getExercise(exerciseId)
-    }
-}
-
-@Deprecated("Use new CreateRoutineVM")
-class CreateRoutineViewModel @ViewModelInject constructor(
-    private val repository: Repository,
-) : ViewModel() {
-    private var initialRoutine: Routine? = null
-    var routineLiveData: LiveData<Routine?>? = null
-    val initialName: String
-        get() = initialRoutine?.name ?: ""
-
-    fun getExerciseName(exerciseId: Int) = repository.getExercise(exerciseId)?.name.toString()
-
-    fun getExercise(exerciseId: Int) = repository.getExercise(exerciseId)
-
-    fun updateRoutine(action: Routine.() -> Unit) {
-        initialRoutine?.routineId?.let { id ->
-            repository.insert(repository.getRoutine(id)!!.apply(action))
-        }
-    }
-
-    fun addSet(exerciseId: Int) {
-        updateRoutine {
-            setGroups.first { it.exerciseId == exerciseId }.sets.add(Set())
-        }
-    }
-
-    fun appendSets(exerciseIds: List<Int>) {
-        updateRoutine {
-            val setGroups = exerciseIds.map { exerciseId ->
-                SetGroup(exerciseId)
-            }.filter { it.exerciseId !in setGroups.map { it.exerciseId } }
-            this.setGroups.addAll(setGroups)
-        }
-    }
-
-    fun setRoutine(routineId: Int) {
-        routineLiveData = repository.getRoutineLive(routineId)
-        initialRoutine = repository.getRoutine(routineId)
-    }
-
-    fun getSetGroup(index: Int) = routineLiveData?.value?.setGroups?.getOrNull(index)
-
-    fun swapSetGroups(i1: Int, i2: Int) {
-        updateRoutine {
-            setGroups.apply {
-                val tmp = this[i1]
-                this[i1] = this[i2]
-                this[i2] = tmp
-            }
-        }
     }
 }

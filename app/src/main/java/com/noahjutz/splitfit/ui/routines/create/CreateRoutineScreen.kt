@@ -235,7 +235,7 @@ fun SetGroupCard(
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
                         focusManager.clearFocus()
-                        editor.deleteSetFrom(setGroupIndex, setIndex)
+                        editor.deleteSetFrom(setGroup, setIndex)
                         dismissState.snapTo(DismissValue.Default)
                     }
                 }
@@ -322,7 +322,7 @@ fun SetGroupCard(
                 }
             }
             TextButton(
-                onClick = { editor.addSetTo(presenter.routine.value.setGroups.indexOf(setGroup)) },
+                onClick = { editor.addSetTo(setGroup) },
                 content = {
                     Icon(Icons.Default.Add)
                     Text(stringResource(R.string.add_set))
