@@ -29,6 +29,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.onActive
@@ -61,16 +62,16 @@ fun RoutinesScreen(
         scaffoldState = scaffoldState
     ) {
 
-        val routines by viewModel.routines.observeAsState()
+        val routines by viewModel.routines.collectAsState(emptyList())
 
         onActive {
             MainScope().launch {
-                delay(500) // TODO use MutableStateFlow in viewModel to make routines non nullable, and remove this delay
-                routines?.filter { it.isEmpty() }?.forEach { viewModel.deleteRoutine(it.routineId) }
+                delay(500) // TODO remove this delay
+                routines.filter { it.isEmpty() }.forEach { viewModel.deleteRoutine(it.routineId) }
             }
         }
         LazyColumn(Modifier.fillMaxHeight()) {
-            items(items = routines ?: emptyList()) { routine ->
+            items(items = routines) { routine ->
                 val dismissState = rememberDismissState()
 
                 SwipeToDismiss(

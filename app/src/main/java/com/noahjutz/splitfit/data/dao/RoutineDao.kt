@@ -21,6 +21,8 @@ package com.noahjutz.splitfit.data.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.splitfit.data.domain.Routine
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface RoutineDao {
@@ -31,7 +33,7 @@ interface RoutineDao {
     suspend fun delete(routine: Routine)
 
     @Query("SELECT * FROM routine_table")
-    fun getRoutines(): LiveData<List<Routine>>
+    fun getRoutines(): Flow<List<Routine>>
 
     @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
     fun getRoutine(routineId: Int): Routine?

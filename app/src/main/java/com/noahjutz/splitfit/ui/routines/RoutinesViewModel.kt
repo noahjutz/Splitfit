@@ -19,15 +19,16 @@
 package com.noahjutz.splitfit.ui.routines
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Routine
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 class RoutinesViewModel @ViewModelInject constructor(
-    private val repository: Repository
+    private val repository: Repository,
 ) : ViewModel() {
-    val routines: LiveData<List<Routine>>
+    val routines: Flow<List<Routine>>
         get() = repository.routines
 
     fun deleteRoutine(routineId: Int) {

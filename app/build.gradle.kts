@@ -99,7 +99,7 @@ dependencies {
     implementation(Libs.hiltExt)
     kapt(Libs.hiltExtCompiler)
 
-    implementation(Libs.room)
+    implementation(Libs.roomKtx)
     kapt(Libs.roomCompiler)
     implementation(Libs.roomRuntime)
 
