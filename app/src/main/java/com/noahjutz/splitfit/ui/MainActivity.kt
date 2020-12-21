@@ -101,7 +101,6 @@ fun MainScreenContent(
     createExerciseVM: CreateExerciseViewModel,
     sharedExerciseVM: SharedExerciseViewModel,
 ) {
-    val routinesScaffoldState = rememberScaffoldState()
     NavHost(navController, startDestination = "routines") {
         composable("routines") {
             RoutinesScreen(
@@ -109,7 +108,6 @@ fun MainScreenContent(
                     navController.navigate("createRoutine/$routineId")
                 },
                 viewModel = get(RoutinesViewModel::class.java),
-                scaffoldState = routinesScaffoldState
             )
         }
         composable(
@@ -122,7 +120,6 @@ fun MainScreenContent(
                 popBackStack = { navController.popBackStack() },
                 controller = CreateRoutineController(get(Repository::class.java), routineId),
                 sharedExerciseVM = sharedExerciseVM,
-                scaffoldState = routinesScaffoldState,
             )
         }
         composable("pickExercise") {

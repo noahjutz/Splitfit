@@ -75,7 +75,6 @@ fun CreateRoutineScreen(
     popBackStack: () -> Unit,
     controller: CreateRoutineController,
     sharedExerciseVM: SharedExerciseViewModel,
-    scaffoldState: ScaffoldState
 ) {
     val editor = controller.Editor()
     val presenter = controller.Presenter()

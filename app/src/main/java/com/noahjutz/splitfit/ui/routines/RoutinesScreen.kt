@@ -50,7 +50,6 @@ import kotlinx.coroutines.launch
 fun RoutinesScreen(
     addEditRoutine: (Int) -> Unit,
     viewModel: RoutinesViewModel,
-    scaffoldState: ScaffoldState,
 ) {
     Scaffold(
         floatingActionButton = {
@@ -59,7 +58,6 @@ fun RoutinesScreen(
                 content = { Icon(Icons.Default.Add) }
             )
         },
-        scaffoldState = scaffoldState
     ) {
 
         val routines by viewModel.routines.collectAsState(emptyList())
