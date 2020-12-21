@@ -94,27 +94,26 @@ class CreateRoutineControllerTest {
     }
 
     @Test
-    fun `Can add SetGroup`() {
-        val setGroup = SetGroup(1)
+    fun `Can add Exercises (SetGroups)`() {
         val sizeBefore = presenter.routine.value.setGroups.size
-        editor.addSetGroup(presenter.routine.value.setGroups.indexOf(setGroup))
+        editor.addExercises(listOf(Exercise(), Exercise()))
         val sizeAfter = presenter.routine.value.setGroups.size
-        Assert.assertEquals(sizeBefore + 1, sizeAfter)
+        Assert.assertEquals(sizeBefore + 2, sizeAfter)
     }
 
     @Test
     fun `Can add Set to SetGroup`() {
         val sizeBefore = presenter.routine.value.setGroups.first().sets.size
-        editor.addSetTo(presenter.routine.value.setGroups.indexOf(sampleSetGroups.first()))
+        editor.addSetTo(sampleSetGroups.first())
         val sizeAfter = presenter.routine.value.setGroups.first().sets.size
         Assert.assertEquals(sizeBefore + 1, sizeAfter)
     }
 
     @Test
     fun `Can remove Set from SetGroup`() {
-        editor.addSetGroup(2)
+        editor.addExercises(listOf(Exercise()))
         val sizeBefore = presenter.routine.value.setGroups.first().sets.size
-        editor.deleteSetFrom(0, 1)
+        editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 1)
         val sizeAfter = presenter.routine.value.setGroups.first().sets.size
         Assert.assertEquals(sizeBefore - 1, sizeAfter)
     }
@@ -122,8 +121,8 @@ class CreateRoutineControllerTest {
     @Test
     fun `Removing last Set from SetGroup removes SetGroup`() {
         Assert.assertFalse(presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null)
-        editor.deleteSetFrom(0, 1)
-        editor.deleteSetFrom(0, 0)
+        editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 1)
+        editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 0)
         Assert.assertTrue(presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null)
     }
 
@@ -136,8 +135,8 @@ class CreateRoutineControllerTest {
     @Test
     fun `Empty routine is auto deleted`() {
         editor.setName("")
-        editor.deleteSetFrom(0, 1)
-        editor.deleteSetFrom(0, 0)
+        editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 1)
+        editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 0)
         editor.close()
         verify { repository.delete(presenter.routine.value) }
         // TODO implement this behavior to make this test pass
