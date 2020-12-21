@@ -25,7 +25,7 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class CreateRoutineController(
+class CreateRoutineViewModel(
     private val repository: Repository,
     routineId: Int,
 ) {

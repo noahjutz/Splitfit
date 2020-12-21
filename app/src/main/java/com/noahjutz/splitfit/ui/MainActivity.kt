@@ -39,7 +39,7 @@ import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineController
+import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
@@ -106,7 +106,7 @@ fun MainScreenContent(
             CreateRoutineScreen(
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
-                controller = CreateRoutineController(get(Repository::class.java), routineId),
+                viewModel = CreateRoutineViewModel(get(Repository::class.java), routineId),
                 sharedExerciseVM = sharedExerciseViewModel,
             )
         }

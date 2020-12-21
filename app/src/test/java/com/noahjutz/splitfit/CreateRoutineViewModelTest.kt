@@ -23,14 +23,14 @@ import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Routine
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineController
+import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Assert
 import org.junit.Test
 
-class CreateRoutineControllerTest {
+class CreateRoutineViewModelTest {
     // Sample values
 
     private val sampleName = "Full body"
@@ -54,7 +54,7 @@ class CreateRoutineControllerTest {
 
     // Tested class
 
-    private val controller = CreateRoutineController(repository, 1)
+    private val controller = CreateRoutineViewModel(repository, 1)
     private val presenter = controller.Presenter()
     private val editor = controller.Editor()
 

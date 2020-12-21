@@ -70,11 +70,11 @@ import kotlin.math.floor
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
-    controller: CreateRoutineController,
+    viewModel: CreateRoutineViewModel,
     sharedExerciseVM: SharedExerciseViewModel,
 ) {
-    val editor = controller.Editor()
-    val presenter = controller.Presenter()
+    val editor = viewModel.Editor()
+    val presenter = viewModel.Presenter()
 
     rememberCoroutineScope().launch {
         sharedExerciseVM.exercises.value.let { exercises ->
@@ -165,8 +165,8 @@ fun CreateRoutineScreen(
 fun SetGroupCard(
     setGroupIndex: Int,
     setGroup: SetGroup,
-    editor: CreateRoutineController.Editor,
-    presenter: CreateRoutineController.Presenter,
+    editor: CreateRoutineViewModel.Editor,
+    presenter: CreateRoutineViewModel.Presenter,
 ) {
     val exercise = presenter.getExercise(setGroup.exerciseId)
 
