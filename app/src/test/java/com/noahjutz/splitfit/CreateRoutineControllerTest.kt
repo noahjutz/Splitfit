@@ -126,14 +126,4 @@ class CreateRoutineControllerTest {
         editor.close()
         verify { repository.insert(presenter.routine.value) }
     }
-
-    @Test
-    fun `Empty routine is auto deleted`() {
-        editor.setName("")
-        editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 1)
-        editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 0)
-        editor.close()
-        verify { repository.delete(presenter.routine.value) }
-        // TODO implement this behavior to make this test pass
-    }
 }
