@@ -25,8 +25,6 @@ import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
 import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
-import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
-import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel_AssistedFactory
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
@@ -35,9 +33,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Singleton
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import javax.inject.Singleton
 
 @Deprecated("Use koin instead of hilt", ReplaceWith("koinModule"))
 @InstallIn(ApplicationComponent::class)
@@ -83,7 +81,7 @@ val koinModule = module {
         Repository(get<ExerciseDao>(), get<RoutineDao>())
     }
 
-    factory<SharedExerciseViewModel> {
+    single<SharedExerciseViewModel> {
         SharedExerciseViewModel()
     }
 

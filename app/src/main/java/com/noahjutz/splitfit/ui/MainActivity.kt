@@ -29,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                MainScreen(sharedExerciseVM)
+                MainScreen()
             }
         }
     }
@@ -71,19 +70,14 @@ class MainActivity : AppCompatActivity() {
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun MainScreen(
-    sharedExerciseVM: SharedExerciseViewModel,
-) {
+fun MainScreen() {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
         },
     ) {
-        MainScreenContent(
-            navController = navController,
-            sharedExerciseVM = sharedExerciseVM,
-        )
+        MainScreenContent(navController = navController)
     }
 }
 
@@ -93,8 +87,8 @@ fun MainScreen(
 @Composable
 fun MainScreenContent(
     navController: NavHostController,
-    sharedExerciseVM: SharedExerciseViewModel,
 ) {
+    val sharedExerciseViewModel = get(SharedExerciseViewModel::class.java)
     NavHost(navController, startDestination = "routines") {
         composable("routines") {
             RoutinesScreen(
@@ -113,13 +107,13 @@ fun MainScreenContent(
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
                 controller = CreateRoutineController(get(Repository::class.java), routineId),
-                sharedExerciseVM = sharedExerciseVM,
+                sharedExerciseVM = sharedExerciseViewModel,
             )
         }
         composable("pickExercise") {
             PickExerciseScreen(
                 viewModel = get(PickExerciseViewModel::class.java),
-                sharedExerciseViewModel = sharedExerciseVM,
+                sharedExerciseViewModel = sharedExerciseViewModel,
                 popBackStack = { navController.popBackStack() }
             )
         }
