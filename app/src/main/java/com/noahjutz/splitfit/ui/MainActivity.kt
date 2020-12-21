@@ -80,11 +80,8 @@ fun MainScreen(
             MainScreenTopBar(navController)
         },
     ) {
-        val createExerciseVM = viewModel<CreateExerciseViewModel>()
-
         MainScreenContent(
             navController = navController,
-            createExerciseVM = createExerciseVM,
             sharedExerciseVM = sharedExerciseVM,
         )
     }
@@ -96,7 +93,6 @@ fun MainScreen(
 @Composable
 fun MainScreenContent(
     navController: NavHostController,
-    createExerciseVM: CreateExerciseViewModel,
     sharedExerciseVM: SharedExerciseViewModel,
 ) {
     NavHost(navController, startDestination = "routines") {
@@ -140,6 +136,7 @@ fun MainScreenContent(
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) { backStackEntry ->
             val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
+            val createExerciseVM = CreateExerciseViewModel(get(Repository::class.java))
             createExerciseVM.setExercise(exerciseId)
             CreateExerciseScreen(
                 popBackStack = { navController.popBackStack() },
