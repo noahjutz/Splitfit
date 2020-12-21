@@ -39,19 +39,14 @@ import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
+import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import org.koin.android.ext.android.inject
 import org.koin.java.KoinJavaComponent.get
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val sharedExerciseVM: SharedExerciseViewModel by inject()
 
     @ExperimentalFoundationApi
     @ExperimentalMaterialApi

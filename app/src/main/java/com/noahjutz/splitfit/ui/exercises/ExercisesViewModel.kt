@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.ui.exercises
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,8 +25,8 @@ import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Exercise
 import kotlinx.coroutines.launch
 
-class ExercisesViewModel @ViewModelInject constructor(
-    private val repository: Repository
+class ExercisesViewModel(
+    private val repository: Repository,
 ) : ViewModel() {
     val exercises: LiveData<List<Exercise>>
         get() = repository.exercises

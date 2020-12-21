@@ -18,13 +18,12 @@
 
 package com.noahjutz.splitfit.ui.routines
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Routine
 import kotlinx.coroutines.flow.Flow
 
-class RoutinesViewModel @ViewModelInject constructor(
+class RoutinesViewModel(
     private val repository: Repository,
 ) : ViewModel() {
     val routines: Flow<List<Routine>>

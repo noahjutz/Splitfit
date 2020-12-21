@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.di
 
-import android.content.Context
 import androidx.room.Room
 import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.Repository
@@ -28,34 +27,8 @@ import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.qualifiers.ApplicationContext
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import javax.inject.Singleton
-
-@Deprecated("Use koin instead of hilt", ReplaceWith("koinModule"))
-@InstallIn(ApplicationComponent::class)
-@Module
-object DatabaseModule {
-    @Provides
-    @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "workout_routines_database"
-        ).fallbackToDestructiveMigration().build()
-
-    @Provides
-    fun provideExerciseDao(database: AppDatabase) = database.exerciseDao
-
-    @Provides
-    fun provideRoutineDao(database: AppDatabase) = database.routineDao
-}
 
 val koinModule = module {
     single<AppDatabase> {
