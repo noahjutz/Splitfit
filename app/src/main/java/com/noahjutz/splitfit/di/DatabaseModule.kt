@@ -31,9 +31,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Singleton
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import javax.inject.Singleton
 
 @Deprecated("Use koin instead of hilt", ReplaceWith("koinModule"))
 @InstallIn(ApplicationComponent::class)

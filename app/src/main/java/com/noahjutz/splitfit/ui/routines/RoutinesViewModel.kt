@@ -23,7 +23,6 @@ import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Routine
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 class RoutinesViewModel @ViewModelInject constructor(
     private val repository: Repository,

@@ -22,7 +22,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.splitfit.data.domain.Routine
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface RoutineDao {

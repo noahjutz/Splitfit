@@ -58,13 +58,10 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.coroutineScope
+import java.util.*
+import kotlin.math.floor
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.coroutines.coroutineContext
-import kotlin.math.floor
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -265,10 +262,10 @@ fun SetGroupCard(
                                     value = reps,
                                     onValueChange = {
                                         reps = it
-                                        //viewModel.updateRoutine {
+                                        // viewModel.updateRoutine {
                                         //    setGroups[setGroupIndex].sets[setIndex].reps =
                                         //        it.takeIf { it.isNotEmpty() }?.toInt()
-                                        //}
+                                        // }
                                     },
                                     regexPattern = RegexPatterns.integer,
                                 )
@@ -280,11 +277,11 @@ fun SetGroupCard(
                                     value = weight,
                                     onValueChange = {
                                         weight = it
-                                        //viewModel.updateRoutine {
+                                        // viewModel.updateRoutine {
                                         //    setGroups[setGroupIndex].sets[setIndex].weight =
                                         //        it.takeIf { it.isNotEmpty() }
                                         //            ?.toDouble()
-                                        //}
+                                        // }
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
@@ -296,10 +293,10 @@ fun SetGroupCard(
                                     value = time,
                                     onValueChange = {
                                         time = it
-                                        //viewModel.updateRoutine {
+                                        // viewModel.updateRoutine {
                                         //    setGroups[setGroupIndex].sets[setIndex].time =
                                         //        it.takeIf { it.isNotEmpty() }?.toInt()
-                                        //}
+                                        // }
                                     },
                                     regexPattern = RegexPatterns.time,
                                     visualTransformation = timeVisualTransformation
@@ -312,11 +309,11 @@ fun SetGroupCard(
                                     value = distance,
                                     onValueChange = {
                                         distance = it
-                                        //viewModel.updateRoutine {
+                                        // viewModel.updateRoutine {
                                         //    setGroups[setGroupIndex].sets[setIndex].distance =
                                         //        it.takeIf { it.isNotEmpty() }
                                         //            ?.toDouble()
-                                        //}
+                                        // }
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )

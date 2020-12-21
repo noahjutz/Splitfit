@@ -32,9 +32,9 @@ import org.junit.Test
 
 class CreateRoutineControllerTest {
 
-    ////////////
+    // //////////
     // Values //
-    ////////////
+    // //////////
 
     // Sample values //
 
@@ -63,9 +63,9 @@ class CreateRoutineControllerTest {
     private val presenter = controller.Presenter()
     private val editor = controller.Editor()
 
-    ///////////
+    // /////////
     // Tests //
-    ///////////
+    // /////////
 
     // Presenter //
 
@@ -120,10 +120,14 @@ class CreateRoutineControllerTest {
 
     @Test
     fun `Removing last Set from SetGroup removes SetGroup`() {
-        Assert.assertFalse(presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null)
+        Assert.assertFalse(
+            presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null
+        )
         editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 1)
         editor.deleteSetFrom(presenter.routine.value.setGroups.first(), 0)
-        Assert.assertTrue(presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null)
+        Assert.assertTrue(
+            presenter.routine.value.setGroups.find { it.exerciseId == sampleSetGroups.first().exerciseId } == null
+        )
     }
 
     @Test
