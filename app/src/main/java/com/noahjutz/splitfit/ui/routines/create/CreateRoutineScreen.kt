@@ -86,6 +86,10 @@ fun CreateRoutineScreen(
         }
     }
 
+    onDispose {
+        editor.close()
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
