@@ -24,7 +24,11 @@ import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
+import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
+import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel_AssistedFactory
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
+import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.Module
 import dagger.Provides
@@ -85,5 +89,13 @@ val koinModule = module {
 
     factory<RoutinesViewModel> {
         RoutinesViewModel(get<Repository>())
+    }
+
+    factory<ExercisesViewModel> {
+        ExercisesViewModel(get<Repository>())
+    }
+
+    factory<PickExerciseViewModel> {
+        PickExerciseViewModel(get<Repository>())
     }
 }

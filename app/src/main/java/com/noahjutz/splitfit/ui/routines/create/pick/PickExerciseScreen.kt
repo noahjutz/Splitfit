@@ -32,12 +32,11 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
 
 @ExperimentalAnimationApi
 @Composable
 fun PickExerciseScreen(
-    exercisesViewModel: ExercisesViewModel,
+    viewModel: PickExerciseViewModel,
     sharedExerciseViewModel: SharedExerciseViewModel,
     popBackStack: () -> Unit,
 ) {
@@ -73,7 +72,7 @@ fun PickExerciseScreen(
             }
         }
     ) {
-        val exercises by exercisesViewModel.exercises.observeAsState()
+        val exercises by viewModel.exercises.observeAsState()
         LazyColumn(Modifier.fillMaxHeight()) {
             items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
                 var checked by remember { mutableStateOf(false) }

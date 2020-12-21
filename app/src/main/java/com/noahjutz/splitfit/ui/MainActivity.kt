@@ -43,6 +43,7 @@ import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineController
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
+import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
@@ -124,7 +125,7 @@ fun MainScreenContent(
         }
         composable("pickExercise") {
             PickExerciseScreen(
-                exercisesViewModel = exercisesVM,
+                viewModel = get(PickExerciseViewModel::class.java),
                 sharedExerciseViewModel = sharedExerciseVM,
                 popBackStack = { navController.popBackStack() }
             )
