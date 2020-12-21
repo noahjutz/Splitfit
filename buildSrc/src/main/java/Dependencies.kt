@@ -69,7 +69,7 @@ object Libs {
     const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
 
     const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-    const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+    const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 
     const val compose = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
@@ -78,7 +78,6 @@ object Libs {
     const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.compose}"
     const val composeIconsExt = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
-    const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 
     const val koin = "org.koin:koin-android:${Versions.koin}"
 }

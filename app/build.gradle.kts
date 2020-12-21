@@ -107,7 +107,7 @@ dependencies {
     implementation(Libs.livedata)
 
     implementation(Libs.navigation)
-    implementation(Libs.navigationUi)
+    implementation(Libs.composeNavigation)
 
     testImplementation(TestLibs.junit4)
     testImplementation(TestLibs.assertJ)
@@ -123,7 +123,6 @@ dependencies {
     implementation(Libs.composeLivedata)
     implementation(Libs.composeMaterial)
     implementation(Libs.composeTooling)
-    implementation(Libs.composeNavigation)
 
     implementation(Libs.koin)
     testImplementation(TestLibs.koinTest)
