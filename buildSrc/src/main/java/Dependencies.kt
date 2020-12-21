@@ -33,7 +33,7 @@ object Versions {
     const val kotlin = "1.4.21"
     const val hilt = "2.28-alpha"
     const val hiltExt = "1.0.0-alpha02"
-    const val room = "2.2.5"
+    const val room = "2.2.6"
     const val coroutines = "1.4.1"
     const val material = "1.2.1"
     const val lifecycle = "2.2.0"
