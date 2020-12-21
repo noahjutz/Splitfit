@@ -85,4 +85,3 @@ class CreateRoutineController(
     }
 }
 
-fun Routine.isEmpty() = name.isBlank() && setGroups.isEmpty()
