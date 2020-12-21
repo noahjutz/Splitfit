@@ -87,16 +87,6 @@ fun CreateRoutineScreen(
         }
     }
 
-    onDispose {
-        scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-        if (presenter.routine.value.isEmpty()) {
-            MainScope().launch {
-                scaffoldState.snackbarHostState.showSnackbar("Empty routine discarded")
-            }
-        }
-        editor.close()
-    }
-
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(

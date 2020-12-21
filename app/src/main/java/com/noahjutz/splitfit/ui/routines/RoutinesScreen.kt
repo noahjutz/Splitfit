@@ -64,12 +64,6 @@ fun RoutinesScreen(
 
         val routines by viewModel.routines.collectAsState(emptyList())
 
-        onActive {
-            MainScope().launch {
-                delay(500) // TODO remove this delay
-                routines.filter { it.isEmpty() }.forEach { viewModel.deleteRoutine(it.routineId) }
-            }
-        }
         LazyColumn(Modifier.fillMaxHeight()) {
             items(items = routines) { routine ->
                 val dismissState = rememberDismissState()
