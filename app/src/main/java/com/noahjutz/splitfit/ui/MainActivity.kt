@@ -80,12 +80,10 @@ fun MainScreen(
             MainScreenTopBar(navController)
         },
     ) {
-        val exercisesVM = viewModel<ExercisesViewModel>()
         val createExerciseVM = viewModel<CreateExerciseViewModel>()
 
         MainScreenContent(
             navController = navController,
-            exercisesVM = exercisesVM,
             createExerciseVM = createExerciseVM,
             sharedExerciseVM = sharedExerciseVM,
         )
@@ -98,7 +96,6 @@ fun MainScreen(
 @Composable
 fun MainScreenContent(
     navController: NavHostController,
-    exercisesVM: ExercisesViewModel,
     createExerciseVM: CreateExerciseViewModel,
     sharedExerciseVM: SharedExerciseViewModel,
 ) {
@@ -135,7 +132,7 @@ fun MainScreenContent(
                 addEditExercise = { exerciseId ->
                     navController.navigate("createExercise/$exerciseId")
                 },
-                viewModel = exercisesVM
+                viewModel = get(ExercisesViewModel::class.java)
             )
         }
         composable(
