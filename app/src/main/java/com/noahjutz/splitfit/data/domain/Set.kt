@@ -19,8 +19,8 @@
 package com.noahjutz.splitfit.data.domain
 
 data class Set(
-    var reps: Int? = null,
-    var weight: Double? = null,
-    var time: Int? = null,
-    var distance: Double? = null,
+    val reps: Int? = null,
+    val weight: Double? = null,
+    val time: Int? = null,
+    val distance: Double? = null,
 )
