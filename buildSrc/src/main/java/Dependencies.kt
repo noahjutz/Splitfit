@@ -31,8 +31,6 @@ object Versions {
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha03"
     const val kotlin = "1.4.21"
-    const val hilt = "2.28-alpha"
-    const val hiltExt = "1.0.0-alpha02"
     const val room = "2.2.6"
     const val coroutines = "1.4.1"
     const val material = "1.2.1"
@@ -55,11 +53,6 @@ object Libs {
     const val material = "com.google.android.material:material:${Versions.material}"
 
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
-
-    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
-    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
-    const val hiltExt = "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.hiltExt}"
-    const val hiltExtCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltExt}"
 
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
@@ -98,6 +91,5 @@ object TestLibs {
 object GradlePlugins {
     const val android = "com.android.tools.build:gradle:${Versions.gradle}"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
     const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 }

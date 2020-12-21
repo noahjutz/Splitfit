@@ -20,7 +20,6 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
     id("org.jlleitschuh.gradle.ktlint") version Versions.ktlintPlugin
 }
@@ -93,11 +92,6 @@ dependencies {
     implementation(Libs.material)
 
     implementation(Libs.gson)
-
-    implementation(Libs.hilt)
-    kapt(Libs.hiltCompiler)
-    implementation(Libs.hiltExt)
-    kapt(Libs.hiltExtCompiler)
 
     implementation(Libs.roomKtx)
     kapt(Libs.roomCompiler)
