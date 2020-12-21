@@ -31,12 +31,7 @@ import org.junit.Assert
 import org.junit.Test
 
 class CreateRoutineControllerTest {
-
-    // //////////
-    // Values //
-    // //////////
-
-    // Sample values //
+    // Sample values
 
     private val sampleName = "Full body"
     private val sampleSetGroups = mutableListOf(
@@ -50,24 +45,20 @@ class CreateRoutineControllerTest {
     )
     private val sampleRoutine = Routine(sampleName, sampleSetGroups)
 
-    // Dependencies //
+    // Dependencies
 
     private val repository: Repository = mockk<Repository>(relaxed = true).apply {
         every { getRoutine(1) } returns sampleRoutine
         every { getExercise(1) } returns Exercise("Push up")
     }
 
-    // Tested class //
+    // Tested class
 
     private val controller = CreateRoutineController(repository, 1)
     private val presenter = controller.Presenter()
     private val editor = controller.Editor()
 
-    // /////////
-    // Tests //
-    // /////////
-
-    // Presenter //
+    // Presenter
 
     @Test
     fun `Has correct routine name`() {
@@ -84,7 +75,7 @@ class CreateRoutineControllerTest {
         Assert.assertEquals(sampleRoutine, presenter.routine.value)
     }
 
-    // Editor //
+    // Editor
 
     @Test
     fun `Name can be changed`() {
