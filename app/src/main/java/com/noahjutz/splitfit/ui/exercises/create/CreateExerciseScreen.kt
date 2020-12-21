@@ -27,7 +27,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.isFocused
@@ -37,9 +36,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Composable
 fun CreateExerciseScreen(
     popBackStack: () -> Unit,
-    viewModel: CreateExerciseViewModel
+    viewModel: CreateExerciseViewModel,
 ) {
-    val exercise by viewModel.exerciseLiveData.observeAsState()
+    val editor = viewModel.Editor()
+    val presenter = viewModel.Presenter()
+
+    onDispose {
+        editor.close()
+    }
+
+    val exercise by presenter.exercise.collectAsState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,7 +60,7 @@ fun CreateExerciseScreen(
                         var nameFieldValue by remember {
                             mutableStateOf(
                                 TextFieldValue(
-                                    viewModel.exerciseLiveData.value?.name ?: "Unnamed"
+                                    exercise.name
                                 )
                             )
                         }
@@ -63,7 +69,7 @@ fun CreateExerciseScreen(
                             value = nameFieldValue,
                             onValueChange = {
                                 nameFieldValue = it
-                                viewModel.updateExercise { name = it.text }
+                                editor.updateExercise(name = it.text)
                             },
                             modifier = Modifier
                                 .onFocusChanged {
@@ -85,7 +91,7 @@ fun CreateExerciseScreen(
         },
         bodyContent = {
             ScrollableColumn {
-                var repsChecked by remember { mutableStateOf(exercise!!.logReps) }
+                var repsChecked by remember { mutableStateOf(exercise.logReps) }
                 ListItem(
                     text = { Text("Log Reps") },
                     icon = {
@@ -93,18 +99,12 @@ fun CreateExerciseScreen(
                             checked = repsChecked,
                             onCheckedChange = {
                                 repsChecked = it
-                                viewModel.updateExercise {
-                                    logReps = repsChecked
-                                    if (!logWeight && !logTime && !logDistance) {
-                                        logReps = true
-                                        repsChecked = true
-                                    }
-                                }
+                                editor.updateExercise(logReps = repsChecked)
                             }
                         )
                     },
                 )
-                var weightChecked by remember { mutableStateOf(exercise!!.logWeight) }
+                var weightChecked by remember { mutableStateOf(exercise.logWeight) }
                 ListItem(
                     text = { Text("Log Weight") },
                     icon = {
@@ -112,18 +112,12 @@ fun CreateExerciseScreen(
                             checked = weightChecked,
                             onCheckedChange = {
                                 weightChecked = it
-                                viewModel.updateExercise {
-                                    logWeight = weightChecked
-                                    if (!logReps && !logTime && !logDistance) {
-                                        logWeight = true
-                                        weightChecked = true
-                                    }
-                                }
+                                editor.updateExercise(logWeight = weightChecked)
                             }
                         )
                     },
                 )
-                var timeChecked by remember { mutableStateOf(exercise!!.logTime) }
+                var timeChecked by remember { mutableStateOf(exercise.logTime) }
                 ListItem(
                     text = { Text("Log Time") },
                     icon = {
@@ -131,18 +125,12 @@ fun CreateExerciseScreen(
                             checked = timeChecked,
                             onCheckedChange = {
                                 timeChecked = it
-                                viewModel.updateExercise {
-                                    logTime = timeChecked
-                                    if (!logWeight && !logReps && !logDistance) {
-                                        logTime = true
-                                        timeChecked = true
-                                    }
-                                }
+                                editor.updateExercise(logTime = timeChecked)
                             }
                         )
                     },
                 )
-                var distanceChecked by remember { mutableStateOf(exercise!!.logDistance) }
+                var distanceChecked by remember { mutableStateOf(exercise.logDistance) }
                 ListItem(
                     text = { Text("Log Distance") },
                     icon = {
@@ -150,13 +138,7 @@ fun CreateExerciseScreen(
                             checked = distanceChecked,
                             onCheckedChange = {
                                 distanceChecked = it
-                                viewModel.updateExercise {
-                                    logDistance = distanceChecked
-                                    if (!logWeight && !logReps && !logTime) {
-                                        logDistance = true
-                                        distanceChecked = true
-                                    }
-                                }
+                                editor.updateExercise(logDistance = distanceChecked)
                             }
                         )
                     },

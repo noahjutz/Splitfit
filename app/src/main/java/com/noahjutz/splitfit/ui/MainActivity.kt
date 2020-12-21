@@ -130,8 +130,7 @@ fun MainScreenContent(
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) { backStackEntry ->
             val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
-            val createExerciseVM = CreateExerciseViewModel(get(Repository::class.java))
-            createExerciseVM.setExercise(exerciseId)
+            val createExerciseVM = CreateExerciseViewModel(get(Repository::class.java), exerciseId)
             CreateExerciseScreen(
                 popBackStack = { navController.popBackStack() },
                 viewModel = createExerciseVM

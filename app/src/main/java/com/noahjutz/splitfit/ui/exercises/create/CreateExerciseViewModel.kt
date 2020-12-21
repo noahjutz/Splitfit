@@ -18,32 +18,40 @@
 
 package com.noahjutz.splitfit.ui.exercises.create
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
-import com.noahjutz.splitfit.data.domain.Exercise
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-class CreateExerciseViewModel @ViewModelInject constructor(
-    private val repository: Repository
+class CreateExerciseViewModel(
+    private val repository: Repository,
+    exerciseId: Int,
 ) : ViewModel() {
-    private var _exercise: Exercise? = null
-    private val _exerciseLiveData = MutableLiveData<Exercise>()
-    val exerciseLiveData: LiveData<Exercise>
-        get() = _exerciseLiveData
+    private val _exercise = MutableStateFlow(repository.getExercise(exerciseId)!!)
 
-    /** [repository] access functions */
-    private fun getExerciseById(id: Int): Exercise? = runBlocking { repository.getExercise(id) }
+    inner class Editor {
+        fun updateExercise(
+            name: String = _exercise.value.name,
+            logReps: Boolean = _exercise.value.logReps,
+            logWeight: Boolean = _exercise.value.logWeight,
+            logTime: Boolean = _exercise.value.logTime,
+            logDistance: Boolean = _exercise.value.logDistance,
+        ) {
+            _exercise.value = _exercise.value.copy(
+                name = name,
+                logReps = logReps,
+                logWeight = logWeight,
+                logTime = logTime,
+                logDistance = logDistance
+            )
+        }
 
-    fun updateExercise(action: Exercise.() -> Unit) {
-        repository.insert(repository.getExercise(_exercise!!.exerciseId)!!.apply(action))
+        fun close() {
+            repository.insert(_exercise.value)
+        }
     }
 
-    fun setExercise(exerciseId: Int = -1) {
-        _exerciseLiveData.value = getExerciseById(exerciseId)
-            ?: repository.getExercise(repository.insert(Exercise()).toInt())
-        _exercise = getExerciseById(exerciseId)
+    inner class Presenter {
+        val exercise = _exercise.asStateFlow()
     }
 }
