@@ -126,4 +126,32 @@ class CreateRoutineControllerTest {
         editor.close()
         verify { repository.insert(presenter.routine.value) }
     }
+
+    @Test
+    fun `Set reps, weight, time and duration update properly`() {
+        editor.updateSet(
+            setGroupIndex = 0,
+            setIndex = 0,
+            reps = 12,
+            weight = 13.0,
+            time = 14,
+            distance = 15.0
+        )
+        Assert.assertEquals(
+            12,
+            presenter.routine.value.setGroups.first().sets.first().reps
+        )
+        Assert.assertEquals(
+            13.0,
+            presenter.routine.value.setGroups.first().sets.first().weight
+        )
+        Assert.assertEquals(
+            14,
+            presenter.routine.value.setGroups.first().sets.first().time
+        )
+        Assert.assertEquals(
+            15.0,
+            presenter.routine.value.setGroups.first().sets.first().distance
+        )
+    }
 }

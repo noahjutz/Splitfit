@@ -75,6 +75,29 @@ class CreateRoutineController(
         fun close() {
             repository.insert(_routine.value)
         }
+
+        fun updateSet(
+            setGroupIndex: Int,
+            setIndex: Int,
+            reps: Int? = _routine.value.setGroups[setGroupIndex].sets[setIndex].reps,
+            weight: Double? = _routine.value.setGroups[setGroupIndex].sets[setIndex].weight,
+            time: Int? = _routine.value.setGroups[setGroupIndex].sets[setIndex].time,
+            distance: Double? = _routine.value.setGroups[setGroupIndex].sets[setIndex].distance
+        ) {
+            val setGroups = _routine.value.setGroups.toMutableList().apply {
+                this[setGroupIndex] = this[setGroupIndex].copy(
+                    sets = this[setGroupIndex].sets.toMutableList().apply {
+                        this[setIndex] = this[setIndex].copy(
+                            reps = reps,
+                            weight = weight,
+                            time = time,
+                            distance = distance,
+                        )
+                    }
+                )
+            }
+            _routine.value = _routine.value.copy(setGroups = setGroups)
+        }
     }
 
     inner class Presenter {

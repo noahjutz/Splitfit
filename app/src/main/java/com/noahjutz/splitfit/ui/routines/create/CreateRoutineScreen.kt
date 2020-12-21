@@ -58,10 +58,10 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
-import java.util.*
-import kotlin.math.floor
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.math.floor
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -262,10 +262,8 @@ fun SetGroupCard(
                                     value = reps,
                                     onValueChange = {
                                         reps = it
-                                        // viewModel.updateRoutine {
-                                        //    setGroups[setGroupIndex].sets[setIndex].reps =
-                                        //        it.takeIf { it.isNotEmpty() }?.toInt()
-                                        // }
+                                        val repsValue = it.takeIf { it.isNotEmpty() }?.toInt()
+                                        editor.updateSet(setGroupIndex, setIndex, reps = repsValue)
                                     },
                                     regexPattern = RegexPatterns.integer,
                                 )
@@ -277,11 +275,10 @@ fun SetGroupCard(
                                     value = weight,
                                     onValueChange = {
                                         weight = it
-                                        // viewModel.updateRoutine {
-                                        //    setGroups[setGroupIndex].sets[setIndex].weight =
-                                        //        it.takeIf { it.isNotEmpty() }
-                                        //            ?.toDouble()
-                                        // }
+                                        val weightValue = it.takeIf { it.isNotEmpty() }?.toDouble()
+                                        editor.updateSet(setGroupIndex,
+                                            setIndex,
+                                            weight = weightValue)
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
@@ -293,10 +290,8 @@ fun SetGroupCard(
                                     value = time,
                                     onValueChange = {
                                         time = it
-                                        // viewModel.updateRoutine {
-                                        //    setGroups[setGroupIndex].sets[setIndex].time =
-                                        //        it.takeIf { it.isNotEmpty() }?.toInt()
-                                        // }
+                                        val timeValue = it.takeIf { it.isNotEmpty() }?.toInt()
+                                        editor.updateSet(setGroupIndex, setIndex, time = timeValue)
                                     },
                                     regexPattern = RegexPatterns.time,
                                     visualTransformation = timeVisualTransformation
@@ -309,11 +304,11 @@ fun SetGroupCard(
                                     value = distance,
                                     onValueChange = {
                                         distance = it
-                                        // viewModel.updateRoutine {
-                                        //    setGroups[setGroupIndex].sets[setIndex].distance =
-                                        //        it.takeIf { it.isNotEmpty() }
-                                        //            ?.toDouble()
-                                        // }
+                                        val distanceValue =
+                                            it.takeIf { it.isNotEmpty() }?.toDouble()
+                                        editor.updateSet(setGroupIndex,
+                                            setIndex,
+                                            distance = distanceValue)
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
