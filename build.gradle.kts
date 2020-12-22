@@ -26,7 +26,6 @@ buildscript {
     dependencies {
         classpath(GradlePlugins.android)
         classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.safeArgs)
     }
 }
 
