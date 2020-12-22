@@ -18,6 +18,9 @@
 
 package com.noahjutz.splitfit.data.domain
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class SetGroup(
     val exerciseId: Int,
     val sets: List<Set> = listOf(Set()),

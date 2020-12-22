@@ -26,7 +26,7 @@ object App {
 }
 
 object Versions {
-    const val gson = "2.8.6"
+    const val serialization = "1.0.1"
     const val ktlintPlugin = "9.4.1"
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha03"
@@ -52,7 +52,7 @@ object Libs {
 
     const val material = "com.google.android.material:material:${Versions.material}"
 
-    const val gson = "com.google.code.gson:gson:${Versions.gson}"
+    const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
 
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"

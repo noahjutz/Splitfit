@@ -20,6 +20,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version Versions.kotlin
     id("org.jlleitschuh.gradle.ktlint") version Versions.ktlintPlugin
 }
 
@@ -90,7 +91,7 @@ dependencies {
 
     implementation(Libs.material)
 
-    implementation(Libs.gson)
+    implementation(Libs.serializationJson)
 
     implementation(Libs.roomKtx)
     kapt(Libs.roomCompiler)

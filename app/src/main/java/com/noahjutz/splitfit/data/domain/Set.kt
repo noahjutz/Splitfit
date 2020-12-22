@@ -18,6 +18,9 @@
 
 package com.noahjutz.splitfit.data.domain
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Set(
     val reps: Int? = null,
     val weight: Double? = null,

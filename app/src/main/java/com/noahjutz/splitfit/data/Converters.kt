@@ -21,17 +21,15 @@
 package com.noahjutz.splitfit.data
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.noahjutz.splitfit.data.domain.SetGroup
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class Converters {
-    private val gson = Gson()
-    private val setGroupsType = object : TypeToken<MutableList<SetGroup>>() {}.type
+    @TypeConverter
+    fun fromSetGroups(setGroups: List<SetGroup>): String = Json.encodeToString(setGroups)
 
     @TypeConverter
-    fun fromSetGroups(setGroups: List<SetGroup>): String = gson.toJson(setGroups)
-
-    @TypeConverter
-    fun toSetGroups(json: String): MutableList<SetGroup> = gson.fromJson(json, setGroupsType)
+    fun toSetGroups(json: String): MutableList<SetGroup> = Json.decodeFromString(json)
 }
