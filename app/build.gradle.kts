@@ -93,7 +93,7 @@ dependencies {
 
     implementation(Libs.serializationJson)
 
-    implementation(Libs.roomKtx)
+    implementation(Libs.room)
     kapt(Libs.roomCompiler)
     implementation(Libs.roomRuntime)
 
