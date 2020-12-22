@@ -28,6 +28,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
@@ -83,7 +84,7 @@ fun CreateExerciseScreen(
                             cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
-                            Text("Unnamed", modifier = Modifier.drawOpacity(0.5f))
+                            Text("Unnamed", modifier = Modifier.alpha(0.5f))
                         }
                     }
                 }
