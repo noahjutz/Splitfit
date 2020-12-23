@@ -29,7 +29,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.TextFieldValue
@@ -93,6 +92,16 @@ fun CreateExerciseScreen(
         bodyContent = {
             ScrollableColumn {
                 var repsChecked by remember { mutableStateOf(exercise.logReps) }
+
+                val onAnyCheckedChange = {
+                    presenter.exercise.value.let {
+                        if (!it.logReps && !it.logWeight && !it.logTime && !it.logDistance) {
+                            repsChecked = true
+                            editor.updateExercise(logReps = true)
+                        }
+                    }
+                }
+
                 ListItem(
                     text = { Text("Log Reps") },
                     icon = {
@@ -101,6 +110,7 @@ fun CreateExerciseScreen(
                             onCheckedChange = {
                                 repsChecked = it
                                 editor.updateExercise(logReps = repsChecked)
+                                onAnyCheckedChange()
                             }
                         )
                     },
@@ -114,6 +124,7 @@ fun CreateExerciseScreen(
                             onCheckedChange = {
                                 weightChecked = it
                                 editor.updateExercise(logWeight = weightChecked)
+                                onAnyCheckedChange()
                             }
                         )
                     },
@@ -127,6 +138,7 @@ fun CreateExerciseScreen(
                             onCheckedChange = {
                                 timeChecked = it
                                 editor.updateExercise(logTime = timeChecked)
+                                onAnyCheckedChange()
                             }
                         )
                     },
@@ -140,6 +152,7 @@ fun CreateExerciseScreen(
                             onCheckedChange = {
                                 distanceChecked = it
                                 editor.updateExercise(logDistance = distanceChecked)
+                                onAnyCheckedChange()
                             }
                         )
                     },
