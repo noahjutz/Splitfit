@@ -29,4 +29,9 @@
     <string name="distance">Distance</string>
     <string name="pick_exercise">Pick Exercise</string>
     <string name="unnamed_exercise">Unnamed</string>
+    <string name="alert_no_log_value_selected">Please select at least one value.</string>
+    <string name="log_reps">Log Reps</string>
+    <string name="log_weight">Log Weight</string>
+    <string name="log_time">Log Time</string>
+    <string name="log_distance">Log Distance</string>
 </resources>

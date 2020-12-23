@@ -31,7 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
+import com.noahjutz.splitfit.R
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -88,7 +90,8 @@ fun CreateExerciseScreen(
                             cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
-                            Text("Unnamed", modifier = Modifier.alpha(0.5f))
+                            Text(stringResource(R.string.unnamed_exercise),
+                                modifier = Modifier.alpha(0.5f))
                         }
                     }
                 }
@@ -101,6 +104,7 @@ fun CreateExerciseScreen(
                 var timeChecked by remember { mutableStateOf(exercise.logTime) }
                 var distanceChecked by remember { mutableStateOf(exercise.logDistance) }
 
+                val alertNoLogValueSelected = stringResource(R.string.alert_no_log_value_selected)
                 val onAnyCheckedChange = {
                     presenter.exercise.value.let {
                         if (!it.logReps && !it.logWeight && !it.logTime && !it.logDistance) {
@@ -109,7 +113,7 @@ fun CreateExerciseScreen(
                             MainScope().launch {
                                 scaffoldState.snackbarHostState.let {
                                     it.currentSnackbarData?.dismiss()
-                                    it.showSnackbar("Please select at least one value.")
+                                    it.showSnackbar(alertNoLogValueSelected)
                                 }
                             }
                         }
@@ -117,7 +121,7 @@ fun CreateExerciseScreen(
                 }
 
                 ListItem(
-                    text = { Text("Log Reps") },
+                    text = { Text(stringResource(R.string.log_reps)) },
                     icon = {
                         Checkbox(
                             checked = repsChecked,
@@ -130,7 +134,7 @@ fun CreateExerciseScreen(
                     },
                 )
                 ListItem(
-                    text = { Text("Log Weight") },
+                    text = { Text(stringResource(R.string.log_weight)) },
                     icon = {
                         Checkbox(
                             checked = weightChecked,
@@ -143,7 +147,7 @@ fun CreateExerciseScreen(
                     },
                 )
                 ListItem(
-                    text = { Text("Log Time") },
+                    text = { Text(stringResource(R.string.log_time)) },
                     icon = {
                         Checkbox(
                             checked = timeChecked,
@@ -156,7 +160,7 @@ fun CreateExerciseScreen(
                     },
                 )
                 ListItem(
-                    text = { Text("Log Distance") },
+                    text = { Text(stringResource(R.string.log_distance)) },
                     icon = {
                         Checkbox(
                             checked = distanceChecked,
