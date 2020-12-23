@@ -263,7 +263,10 @@ fun SetGroupCard(
                                     onValueChange = {
                                         reps = it
                                         val repsValue = it.takeIf { it.isNotEmpty() }?.toInt()
-                                        editor.updateSet(setGroupIndex, setIndex, reps = repsValue)
+                                        editor.updateSet(
+                                            setGroupIndex, setIndex,
+                                            reps = repsValue
+                                        )
                                     },
                                     regexPattern = RegexPatterns.integer,
                                 )
@@ -276,9 +279,10 @@ fun SetGroupCard(
                                     onValueChange = {
                                         weight = it
                                         val weightValue = it.takeIf { it.isNotEmpty() }?.toDouble()
-                                        editor.updateSet(setGroupIndex,
-                                            setIndex,
-                                            weight = weightValue)
+                                        editor.updateSet(
+                                            setGroupIndex, setIndex,
+                                            weight = weightValue
+                                        )
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
@@ -291,7 +295,10 @@ fun SetGroupCard(
                                     onValueChange = {
                                         time = it
                                         val timeValue = it.takeIf { it.isNotEmpty() }?.toInt()
-                                        editor.updateSet(setGroupIndex, setIndex, time = timeValue)
+                                        editor.updateSet(
+                                            setGroupIndex, setIndex,
+                                            time = timeValue
+                                        )
                                     },
                                     regexPattern = RegexPatterns.time,
                                     visualTransformation = timeVisualTransformation
@@ -306,9 +313,10 @@ fun SetGroupCard(
                                         distance = it
                                         val distanceValue =
                                             it.takeIf { it.isNotEmpty() }?.toDouble()
-                                        editor.updateSet(setGroupIndex,
-                                            setIndex,
-                                            distance = distanceValue)
+                                        editor.updateSet(
+                                            setGroupIndex, setIndex,
+                                            distance = distanceValue
+                                        )
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
