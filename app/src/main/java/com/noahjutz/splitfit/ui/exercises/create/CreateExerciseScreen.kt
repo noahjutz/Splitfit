@@ -92,6 +92,9 @@ fun CreateExerciseScreen(
         bodyContent = {
             ScrollableColumn {
                 var repsChecked by remember { mutableStateOf(exercise.logReps) }
+                var weightChecked by remember { mutableStateOf(exercise.logWeight) }
+                var timeChecked by remember { mutableStateOf(exercise.logTime) }
+                var distanceChecked by remember { mutableStateOf(exercise.logDistance) }
 
                 val onAnyCheckedChange = {
                     presenter.exercise.value.let {
@@ -115,7 +118,6 @@ fun CreateExerciseScreen(
                         )
                     },
                 )
-                var weightChecked by remember { mutableStateOf(exercise.logWeight) }
                 ListItem(
                     text = { Text("Log Weight") },
                     icon = {
@@ -129,7 +131,6 @@ fun CreateExerciseScreen(
                         )
                     },
                 )
-                var timeChecked by remember { mutableStateOf(exercise.logTime) }
                 ListItem(
                     text = { Text("Log Time") },
                     icon = {
@@ -143,7 +144,6 @@ fun CreateExerciseScreen(
                         )
                     },
                 )
-                var distanceChecked by remember { mutableStateOf(exercise.logDistance) }
                 ListItem(
                     text = { Text("Log Distance") },
                     icon = {
