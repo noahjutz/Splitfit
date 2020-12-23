@@ -37,9 +37,4 @@ class NumFormatUtilTest {
     fun `null returns empty string`() {
         Assert.assertEquals("", null.formatString())
     }
-
-    @Test
-    fun `Int is turned into String`() {
-        Assert.assertEquals("123", 123.formatString())
-    }
 }
