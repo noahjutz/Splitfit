@@ -32,7 +32,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.TextFieldValue
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
 fun CreateExerciseScreen(
     popBackStack: () -> Unit,
@@ -46,7 +49,9 @@ fun CreateExerciseScreen(
     }
 
     val exercise by presenter.exercise.collectAsState()
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 navigationIcon = {
@@ -101,6 +106,12 @@ fun CreateExerciseScreen(
                         if (!it.logReps && !it.logWeight && !it.logTime && !it.logDistance) {
                             repsChecked = true
                             editor.updateExercise(logReps = true)
+                            MainScope().launch {
+                                scaffoldState.snackbarHostState.let {
+                                    it.currentSnackbarData?.dismiss()
+                                    it.showSnackbar("Please select at least one value.")
+                                }
+                            }
                         }
                     }
                 }
