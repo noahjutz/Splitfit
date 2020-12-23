@@ -30,15 +30,17 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
 
 @ExperimentalMaterialApi
 @Composable
 fun ExercisesScreen(
     addEditExercise: (Int) -> Unit,
-    viewModel: ExercisesViewModel
+    viewModel: ExercisesViewModel,
 ) {
     Scaffold(
         floatingActionButton = {
@@ -69,7 +71,7 @@ fun ExercisesScreen(
                                 ) {
                                     Text(
                                         text = exercise.name.takeIf { it.isNotBlank() }
-                                            ?: "Unnamed",
+                                            ?: stringResource(R.string.unnamed_exercise),
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                     )
@@ -82,7 +84,11 @@ fun ExercisesScreen(
                         AlertDialog(
                             title = {
                                 Text(
-                                    "Delete ${exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed"}?"
+                                    stringResource(
+                                        R.string.confirm_delete,
+                                        exercise.name.takeIf { it.isNotBlank() }
+                                            ?: stringResource(R.string.unnamed_exercise)
+                                    )
                                 )
                             },
                             confirmButton = {
@@ -92,7 +98,7 @@ fun ExercisesScreen(
                                         hidden = true
                                         dismissState.snapTo(DismissValue.Default)
                                     },
-                                    content = { Text("Yes") }
+                                    content = { Text(stringResource(R.string.yes)) }
                                 )
                             },
                             dismissButton = {
@@ -100,7 +106,7 @@ fun ExercisesScreen(
                                     onClick = {
                                         dismissState.snapTo(DismissValue.Default)
                                     },
-                                    content = { Text("Cancel") }
+                                    content = { Text(stringResource(R.string.cancel)) }
                                 )
                             },
                             onDismissRequest = {
