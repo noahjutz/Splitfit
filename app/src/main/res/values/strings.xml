@@ -27,4 +27,6 @@
     <string name="weight">Weight</string>
     <string name="time">Time</string>
     <string name="distance">Distance</string>
+    <string name="pick_exercise">Pick Exercise</string>
+    <string name="unnamed_exercise">Unnamed</string>
 </resources>

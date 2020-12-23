@@ -31,7 +31,9 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.noahjutz.splitfit.R
 
 @ExperimentalAnimationApi
 @Composable
@@ -55,7 +57,7 @@ fun PickExerciseScreen(
                     )
                 },
                 title = {
-                    Text("Select Exercise")
+                    Text(stringResource(R.string.pick_exercise))
                 }
             )
         },
@@ -89,7 +91,7 @@ fun PickExerciseScreen(
                     },
                     modifier = Modifier.clickable { checked = !checked }
                 ) {
-                    Text(exercise.name.takeIf { it.isNotBlank() } ?: "Unnamed")
+                    Text(exercise.name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_exercise))
                 }
             }
             item {
