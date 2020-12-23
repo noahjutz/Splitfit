@@ -19,6 +19,7 @@
 package com.noahjutz.splitfit.ui
 
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -28,10 +29,12 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.ui.exercises.ExercisesScreen
 import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
@@ -134,9 +137,9 @@ fun MainScreenContent(
     }
 }
 
-sealed class Screen(val route: String, val name: String) {
-    object Routines : Screen("routines", "Routines")
-    object Exercises : Screen("exercises", "Exercises")
+sealed class Screen(val route: String, @StringRes val name: Int) {
+    object Routines : Screen("routines", R.string.tab_routines)
+    object Exercises : Screen("exercises", R.string.tab_exercises)
 }
 
 @Composable
@@ -163,7 +166,7 @@ fun MainScreenTopBar(
                     }
                 ) {
                     Text(
-                        screen.name,
+                        stringResource(screen.name),
                         modifier = Modifier.padding(vertical = 16.dp)
                     )
                 }

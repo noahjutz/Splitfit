@@ -34,4 +34,6 @@
     <string name="log_weight">Log Weight</string>
     <string name="log_time">Log Time</string>
     <string name="log_distance">Log Distance</string>
+    <string name="tab_routines">Routines</string>
+    <string name="tab_exercises">Exercises</string>
 </resources>
