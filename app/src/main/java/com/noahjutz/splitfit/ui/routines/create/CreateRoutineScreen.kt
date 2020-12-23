@@ -219,7 +219,8 @@ fun SetGroupCard(
             ) {
                 Text(
                     modifier = Modifier.padding(16.dp),
-                    text = exercise?.name?.takeIf { it.isNotBlank() } ?: "Unnamed",
+                    text = exercise?.name?.takeIf { it.isNotBlank() }
+                        ?: stringResource(R.string.unnamed_routine),
                     fontSize = 20.sp,
                 )
             }
