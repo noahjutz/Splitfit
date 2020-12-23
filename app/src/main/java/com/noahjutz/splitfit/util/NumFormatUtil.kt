@@ -21,12 +21,19 @@ package com.noahjutz.splitfit.util
 import kotlin.math.floor
 
 object NumFormatUtil {
+    fun Nothing?.formatString(): String = ""
+
     fun Double?.formatString(): String {
         // Handle null
         if (this == null) return ""
         // Handle
         if (this == floor(this)) return this.toInt().toString()
         // Anything else
+        return this.toString()
+    }
+
+    fun Int?.formatString(): String {
+        if (this == null) return ""
         return this.toString()
     }
 }
