@@ -33,4 +33,3 @@ data class Exercise(
     @PrimaryKey(autoGenerate = true)
     val exerciseId: Int = 0
 )
-

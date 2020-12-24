@@ -90,8 +90,10 @@ fun CreateExerciseScreen(
                             cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
                         )
                         if (nameFieldValue.text.isEmpty() && !focusState) {
-                            Text(stringResource(R.string.unnamed_exercise),
-                                modifier = Modifier.alpha(0.5f))
+                            Text(
+                                stringResource(R.string.unnamed_exercise),
+                                modifier = Modifier.alpha(0.5f)
+                            )
                         }
                     }
                 }

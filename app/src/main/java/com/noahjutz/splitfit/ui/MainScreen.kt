@@ -85,7 +85,10 @@ fun MainScreenContent(
             CreateRoutineScreen(
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
-                viewModel = CreateRoutineViewModel(KoinJavaComponent.get(Repository::class.java), routineId),
+                viewModel = CreateRoutineViewModel(
+                    KoinJavaComponent.get(Repository::class.java),
+                    routineId
+                ),
                 sharedExerciseVM = sharedExerciseViewModel,
             )
         }
@@ -109,7 +112,10 @@ fun MainScreenContent(
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) { backStackEntry ->
             val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
-            val createExerciseVM = CreateExerciseViewModel(KoinJavaComponent.get(Repository::class.java), exerciseId)
+            val createExerciseVM = CreateExerciseViewModel(
+                KoinJavaComponent.get(Repository::class.java),
+                exerciseId
+            )
             CreateExerciseScreen(
                 popBackStack = { navController.popBackStack() },
                 viewModel = createExerciseVM

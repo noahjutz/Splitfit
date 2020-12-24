@@ -58,10 +58,10 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.math.floor
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -265,7 +265,8 @@ fun SetGroupCard(
                                         reps = it
                                         val repsValue = it.takeIf { it.isNotEmpty() }?.toInt()
                                         editor.updateSet(
-                                            setGroupIndex, setIndex,
+                                            setGroupIndex,
+                                            setIndex,
                                             reps = repsValue
                                         )
                                     },
@@ -281,7 +282,8 @@ fun SetGroupCard(
                                         weight = it
                                         val weightValue = it.takeIf { it.isNotEmpty() }?.toDouble()
                                         editor.updateSet(
-                                            setGroupIndex, setIndex,
+                                            setGroupIndex,
+                                            setIndex,
                                             weight = weightValue
                                         )
                                     },
@@ -297,7 +299,8 @@ fun SetGroupCard(
                                         time = it
                                         val timeValue = it.takeIf { it.isNotEmpty() }?.toInt()
                                         editor.updateSet(
-                                            setGroupIndex, setIndex,
+                                            setGroupIndex,
+                                            setIndex,
                                             time = timeValue
                                         )
                                     },
@@ -315,7 +318,8 @@ fun SetGroupCard(
                                         val distanceValue =
                                             it.takeIf { it.isNotEmpty() }?.toDouble()
                                         editor.updateSet(
-                                            setGroupIndex, setIndex,
+                                            setGroupIndex,
+                                            setIndex,
                                             distance = distanceValue
                                         )
                                     },

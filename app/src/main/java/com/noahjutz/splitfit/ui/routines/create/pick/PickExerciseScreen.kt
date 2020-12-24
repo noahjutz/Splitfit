@@ -91,7 +91,11 @@ fun PickExerciseScreen(
                     },
                     modifier = Modifier.clickable { checked = !checked }
                 ) {
-                    Text(exercise.name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_exercise))
+                    Text(
+                        exercise.name.takeIf { it.isNotBlank() } ?: stringResource(
+                            R.string.unnamed_exercise
+                        )
+                    )
                 }
             }
             item {
