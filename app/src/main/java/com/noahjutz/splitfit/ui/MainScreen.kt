@@ -56,7 +56,7 @@ fun MainScreen() {
             MainScreenTopBar(navController)
         },
     ) {
-        MainScreenContent(navController = navController)
+        NavGraph(navController = navController)
     }
 }
 
@@ -64,11 +64,11 @@ fun MainScreen() {
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
-fun MainScreenContent(
+fun NavGraph(
     navController: NavHostController,
 ) {
-    val sharedExerciseViewModel = KoinJavaComponent.get(SharedExerciseViewModel::class.java)
     NavHost(navController, startDestination = "routines") {
+        val sharedExerciseViewModel = KoinJavaComponent.get(SharedExerciseViewModel::class.java)
         composable("routines") {
             RoutinesScreen(
                 addEditRoutine = { routineId ->
