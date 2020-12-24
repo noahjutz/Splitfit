@@ -58,10 +58,10 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
-import java.util.*
-import kotlin.math.floor
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.math.floor
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -77,10 +77,8 @@ fun CreateRoutineScreen(
     val presenter = viewModel.Presenter()
 
     rememberCoroutineScope().launch {
-        sharedExerciseVM.exercises.value.let { exercises ->
-            editor.addExercises(exercises)
-            sharedExerciseVM.clear()
-        }
+        editor.addExercises(sharedExerciseVM.exercises.value)
+        sharedExerciseVM.clear()
     }
 
     onDispose {
