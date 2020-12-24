@@ -49,6 +49,7 @@ import org.koin.java.KoinJavaComponent
 @Composable
 fun NavGraph(
     navController: NavHostController,
+    startWorkout: () -> Unit
 ) {
     NavHost(navController, startDestination = "routines") {
         val sharedExerciseViewModel = KoinJavaComponent.get(SharedExerciseViewModel::class.java)
@@ -67,6 +68,7 @@ fun NavGraph(
             val routineId: Int = backStackEntry.arguments?.getInt("routineId") ?: -1
             CreateRoutineScreen(
                 onAddExercise = { navController.navigate("pickExercise") },
+                startWorkout = startWorkout,
                 popBackStack = { navController.popBackStack() },
                 viewModel = CreateRoutineViewModel(
                     KoinJavaComponent.get(Repository::class.java),
