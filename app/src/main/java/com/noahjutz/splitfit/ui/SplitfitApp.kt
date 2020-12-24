@@ -38,7 +38,7 @@ import com.noahjutz.splitfit.R
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun MainScreen() {
+fun SplitfitApp() {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
