@@ -124,27 +124,28 @@ fun NavGraph(
     }
 }
 
-sealed class Screen(val route: String, @StringRes val name: Int) {
-    object Routines : Screen("routines", R.string.tab_routines)
-    object Exercises : Screen("exercises", R.string.tab_exercises)
+sealed class HomeTabs(val route: String, @StringRes val name: Int) {
+    object Routines : HomeTabs("routines", R.string.tab_routines)
+    object Exercises : HomeTabs("exercises", R.string.tab_exercises)
 }
+
+val homeTabs = listOf(
+    HomeTabs.Routines,
+    HomeTabs.Exercises
+)
 
 @Composable
 fun MainScreenTopBar(
     navController: NavHostController,
 ) {
-    val screens = listOf(
-        Screen.Routines,
-        Screen.Exercises
-    )
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
-    if (currentRoute in screens.map { it.route }) {
+    if (currentRoute in homeTabs.map { it.route }) {
         TabRow(
-            selectedTabIndex = screens.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
+            selectedTabIndex = homeTabs.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
                 ?: 0
         ) {
-            for (screen in screens)
+            for (screen in homeTabs)
                 Tab(
                     selected = screen.route == currentRoute,
                     onClick = {
