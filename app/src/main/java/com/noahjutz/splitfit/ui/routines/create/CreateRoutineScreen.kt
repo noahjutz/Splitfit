@@ -31,8 +31,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -133,6 +132,22 @@ fun CreateRoutineScreen(
                                 stringResource(R.string.unnamed_routine),
                                 modifier = Modifier.alpha(0.5f)
                             )
+                        }
+                    }
+                },
+                actions = {
+                    var showMenu by remember { mutableStateOf(false) }
+                    DropdownMenu(
+                        toggle = {
+                            IconButton(onClick = { showMenu = true }) {
+                                Icon(Icons.Default.MoreVert)
+                            }
+                        },
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false }
+                    ) {
+                        DropdownMenuItem(onClick = { /*TODO*/ }) {
+                            Text("Start workout")
                         }
                     }
                 }
