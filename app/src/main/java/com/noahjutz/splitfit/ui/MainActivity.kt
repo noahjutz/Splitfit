@@ -19,35 +19,15 @@
 package com.noahjutz.splitfit.ui
 
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.*
-import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.data.Repository
-import com.noahjutz.splitfit.ui.exercises.ExercisesScreen
-import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
-import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
-import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
-import com.noahjutz.splitfit.ui.routines.RoutinesScreen
-import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
-import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
-import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
-import org.koin.java.KoinJavaComponent.get
 
 class MainActivity : AppCompatActivity() {
 
