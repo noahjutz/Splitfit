@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
@@ -41,26 +42,7 @@ fun SplitfitApp() {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
-            val navBackStackEntry = navController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
-            if (currentRoute in homeTabs.map { it.route }) {
-                TabRow(
-                    selectedTabIndex = homeTabs.map { it.route }
-                        .indexOf(currentRoute)
-                        .takeIf { it > 0 } ?: 0
-                ) {
-                    for (screen in homeTabs)
-                        Tab(
-                            modifier = Modifier.padding(vertical = 16.dp),
-                            selected = screen.route == currentRoute,
-                            onClick = {
-                                navController.popBackStack(navController.graph.startDestination,
-                                    false)
-                                if (currentRoute != screen.route) navController.navigate(screen.route)
-                            }
-                        ) { Text(stringResource(screen.name)) }
-                }
-            }
+            MainScreenTopBar(navController)
         },
     ) {
         NavGraph(navController = navController)
@@ -77,3 +59,30 @@ val homeTabs = listOf(
     HomeTabs.Exercises
 )
 
+@Composable
+fun MainScreenTopBar(
+    navController: NavHostController,
+) {
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
+    if (currentRoute in homeTabs.map { it.route }) {
+        TabRow(
+            selectedTabIndex = homeTabs.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
+                ?: 0
+        ) {
+            for (screen in homeTabs)
+                Tab(
+                    selected = screen.route == currentRoute,
+                    onClick = {
+                        navController.popBackStack(navController.graph.startDestination, false)
+                        if (currentRoute != screen.route) navController.navigate(screen.route)
+                    }
+                ) {
+                    Text(
+                        stringResource(screen.name),
+                        modifier = Modifier.padding(vertical = 16.dp)
+                    )
+                }
+        }
+    }
+}
