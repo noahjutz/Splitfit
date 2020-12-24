@@ -75,8 +75,9 @@ fun CreateRoutineScreen(
 ) {
     val editor = viewModel.Editor()
     val presenter = viewModel.Presenter()
+    val scope = rememberCoroutineScope()
 
-    rememberCoroutineScope().launch {
+    scope.launch {
         editor.addExercises(sharedExerciseVM.exercises.value)
         sharedExerciseVM.clear()
     }
