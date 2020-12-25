@@ -28,6 +28,7 @@ import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val koinModule = module {
@@ -54,19 +55,19 @@ val koinModule = module {
         Repository(get<ExerciseDao>(), get<RoutineDao>())
     }
 
-    single<SharedExerciseViewModel> {
+    viewModel {
         SharedExerciseViewModel()
     }
 
-    factory<RoutinesViewModel> {
-        RoutinesViewModel(get<Repository>())
+    viewModel {
+        RoutinesViewModel(get())
     }
 
-    factory<ExercisesViewModel> {
-        ExercisesViewModel(get<Repository>())
+    viewModel {
+        ExercisesViewModel(get())
     }
 
-    factory<PickExerciseViewModel> {
-        PickExerciseViewModel(get<Repository>())
+    viewModel {
+        PickExerciseViewModel(get())
     }
 }
