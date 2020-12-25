@@ -119,6 +119,7 @@ dependencies {
     implementation(Libs.composeTooling)
 
     implementation(Libs.koin)
+    implementation(Libs.koinViewModel)
     testImplementation(TestLibs.koinTest)
 }
 

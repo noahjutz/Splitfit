@@ -73,6 +73,7 @@ object Libs {
     const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
 
     const val koin = "org.koin:koin-android:${Versions.koin}"
+    const val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
 }
 
 object TestLibs {
