@@ -57,11 +57,10 @@ fun NavGraph(
             route = "createRoutine/{routineId}",
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) { backStackEntry ->
-            val routineId: Int = backStackEntry.arguments?.getInt("routineId") ?: -1
             CreateRoutineScreen(
+                routineId = backStackEntry.arguments!!.getInt("routineId"),
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
-                routineId = routineId,
                 sharedExerciseVM = sharedExerciseViewModel,
             )
         }
@@ -80,10 +79,9 @@ fun NavGraph(
             route = "createExercise/{exerciseId}",
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) { backStackEntry ->
-            val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
             CreateExerciseScreen(
+                exerciseId = backStackEntry.arguments!!.getInt("exerciseId"),
                 popBackStack = { navController.popBackStack() },
-                exerciseId = exerciseId,
             )
         }
     }
