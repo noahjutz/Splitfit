@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
+import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Set
@@ -28,7 +29,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class CreateRoutineViewModel(
     private val repository: Repository,
     routineId: Int,
-) {
+) : ViewModel() {
     private val _routine = MutableStateFlow(repository.getRoutine(routineId)!!)
 
     inner class Editor {
