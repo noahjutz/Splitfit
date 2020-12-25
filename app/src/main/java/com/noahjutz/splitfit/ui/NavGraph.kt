@@ -61,7 +61,7 @@ fun NavGraph(
             CreateRoutineScreen(
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
-                viewModel = getViewModel { parametersOf(routineId) },
+                routineId = routineId,
                 sharedExerciseVM = sharedExerciseViewModel,
             )
         }

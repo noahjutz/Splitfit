@@ -59,6 +59,8 @@ import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 import java.util.*
 import kotlin.math.floor
 
@@ -69,7 +71,8 @@ import kotlin.math.floor
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
     popBackStack: () -> Unit,
-    viewModel: CreateRoutineViewModel,
+    routineId: Int,
+    viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
     sharedExerciseVM: SharedExerciseViewModel,
 ) {
     val editor = viewModel.Editor()
