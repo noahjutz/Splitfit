@@ -31,12 +31,10 @@ object Versions {
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha03"
     const val kotlin = "1.4.21"
-    const val room = "2.2.6"
     const val coroutines = "1.4.1"
     const val material = "1.2.1"
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.1"
-    const val compose = "1.0.0-alpha09"
     const val composeNavigation = "1.0.0-alpha04"
     const val koin = "2.2.2"
 
@@ -69,14 +67,18 @@ object Libs {
     const val composeNavigation =
         "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 
-    const val compose = "androidx.compose.ui:ui:${Versions.compose}"
-    const val composeTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
-    const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.compose}"
-    const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
-    const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.compose}"
-    const val composeIconsExt =
-        "androidx.compose.material:material-icons-extended:${Versions.compose}"
-    const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+    object Compose {
+        const val version = "1.0.0-alpha09"
+        const val ui = "androidx.compose.ui:ui:$version"
+        const val tooling = "androidx.compose.ui:ui-tooling:$version"
+        const val foundation = "androidx.compose.foundation:foundation:$version"
+        const val material = "androidx.compose.material:material:$version"
+        const val iconsCore = "androidx.compose.material:material-icons-core:$version"
+        const val iconsExtended = "androidx.compose.material:material-icons-extended:$version"
+        const val livedata = "androidx.compose.runtime:runtime-livedata:$version"
+        const val test = "androidx.compose.ui:ui-test:$version"
+        const val testJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
+    }
 
     const val koin = "org.koin:koin-android:${Versions.koin}"
     const val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
@@ -90,9 +92,6 @@ object TestLibs {
 
     const val mockkUnit = "io.mockk:mockk:${Versions.mockK}"
     const val mockkInstrumented = "io.mockk:mockk-android:${Versions.mockK}"
-
-    const val composeTest = "androidx.compose.ui:ui-test:${Versions.compose}"
-    const val composeTestJunit4 = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
 
     const val koinTest = "org.koin:koin-test:${Versions.koin}"
 }

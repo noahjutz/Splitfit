@@ -70,7 +70,7 @@ android {
 
     composeOptions {
         kotlinCompilerVersion = Versions.kotlin
-        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerExtensionVersion = Libs.Compose.version
     }
 }
 
@@ -107,16 +107,16 @@ dependencies {
     testImplementation(TestLibs.assertJ)
     testImplementation(TestLibs.mockkUnit)
     androidTestImplementation(TestLibs.mockkInstrumented)
-    androidTestImplementation(TestLibs.composeTest)
-    androidTestImplementation(TestLibs.composeTestJunit4)
 
-    implementation(Libs.compose)
-    implementation(Libs.composeFoundation)
-    implementation(Libs.composeIconsCore)
-    implementation(Libs.composeIconsExt)
-    implementation(Libs.composeLivedata)
-    implementation(Libs.composeMaterial)
-    implementation(Libs.composeTooling)
+    implementation(Libs.Compose.ui)
+    implementation(Libs.Compose.foundation)
+    implementation(Libs.Compose.iconsCore)
+    implementation(Libs.Compose.iconsExtended)
+    implementation(Libs.Compose.livedata)
+    implementation(Libs.Compose.material)
+    implementation(Libs.Compose.tooling)
+    androidTestImplementation(Libs.Compose.test)
+    androidTestImplementation(Libs.Compose.testJunit4)
 
     implementation(Libs.koin)
     implementation(Libs.koinViewModel)
