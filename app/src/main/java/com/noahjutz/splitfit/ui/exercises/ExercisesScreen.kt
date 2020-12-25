@@ -35,12 +35,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
+import org.koin.core.context.GlobalContext.get
 
 @ExperimentalMaterialApi
 @Composable
 fun ExercisesScreen(
     addEditExercise: (Int) -> Unit,
-    viewModel: ExercisesViewModel,
+    viewModel: ExercisesViewModel = get().get(),
 ) {
     Scaffold(
         floatingActionButton = {

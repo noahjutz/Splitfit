@@ -34,11 +34,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import org.koin.core.context.GlobalContext.get
 
 @ExperimentalAnimationApi
 @Composable
 fun PickExerciseScreen(
-    viewModel: PickExerciseViewModel,
+    viewModel: PickExerciseViewModel = get().get(),
     sharedExerciseViewModel: SharedExerciseViewModel,
     popBackStack: () -> Unit,
 ) {

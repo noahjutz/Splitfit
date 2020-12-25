@@ -37,13 +37,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
+import org.koin.core.context.GlobalContext.get
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun RoutinesScreen(
     addEditRoutine: (Int) -> Unit,
-    viewModel: RoutinesViewModel,
+    viewModel: RoutinesViewModel = get().get(),
 ) {
     Scaffold(
         floatingActionButton = {

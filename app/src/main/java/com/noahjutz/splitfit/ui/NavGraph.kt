@@ -30,15 +30,12 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.ui.exercises.ExercisesScreen
-import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.RoutinesScreen
-import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
-import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import org.koin.java.KoinJavaComponent
 
@@ -54,10 +51,7 @@ fun NavGraph(
         val sharedExerciseViewModel = KoinJavaComponent.get(SharedExerciseViewModel::class.java)
         composable("routines") {
             RoutinesScreen(
-                addEditRoutine = { routineId ->
-                    navController.navigate("createRoutine/$routineId")
-                },
-                viewModel = KoinJavaComponent.get(RoutinesViewModel::class.java),
+                addEditRoutine = { routineId -> navController.navigate("createRoutine/$routineId") }
             )
         }
         composable(
@@ -77,17 +71,13 @@ fun NavGraph(
         }
         composable("pickExercise") {
             PickExerciseScreen(
-                viewModel = KoinJavaComponent.get(PickExerciseViewModel::class.java),
                 sharedExerciseViewModel = sharedExerciseViewModel,
                 popBackStack = { navController.popBackStack() }
             )
         }
         composable("exercises") {
             ExercisesScreen(
-                addEditExercise = { exerciseId ->
-                    navController.navigate("createExercise/$exerciseId")
-                },
-                viewModel = KoinJavaComponent.get(ExercisesViewModel::class.java)
+                addEditExercise = { exerciseId -> navController.navigate("createExercise/$exerciseId") }
             )
         }
         composable(
@@ -95,13 +85,12 @@ fun NavGraph(
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) { backStackEntry ->
             val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
-            val createExerciseVM = CreateExerciseViewModel(
-                KoinJavaComponent.get(Repository::class.java),
-                exerciseId
-            )
             CreateExerciseScreen(
                 popBackStack = { navController.popBackStack() },
-                viewModel = createExerciseVM
+                viewModel = CreateExerciseViewModel(
+                    KoinJavaComponent.get(Repository::class.java),
+                    exerciseId
+                )
             )
         }
     }
