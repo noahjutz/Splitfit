@@ -36,12 +36,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.noahjutz.splitfit.R
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @ExperimentalMaterialApi
 @Composable
 fun CreateExerciseScreen(
     popBackStack: () -> Unit,
-    viewModel: CreateExerciseViewModel,
+    exerciseId: Int,
+    viewModel: CreateExerciseViewModel = getViewModel { parametersOf(exerciseId) },
 ) {
     val editor = viewModel.Editor()
     val presenter = viewModel.Presenter()

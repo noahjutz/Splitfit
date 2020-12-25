@@ -83,7 +83,7 @@ fun NavGraph(
             val exerciseId = backStackEntry.arguments?.getInt("exerciseId") ?: -1
             CreateExerciseScreen(
                 popBackStack = { navController.popBackStack() },
-                viewModel = getViewModel { parametersOf(exerciseId) }
+                exerciseId = exerciseId,
             )
         }
     }
