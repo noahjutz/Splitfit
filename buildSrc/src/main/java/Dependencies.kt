@@ -52,24 +52,30 @@ object Libs {
 
     const val material = "com.google.android.material:material:${Versions.material}"
 
-    const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
+    const val serializationJson =
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
 
-    const val room = "androidx.room:room-ktx:${Versions.room}"
-    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
-    const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
+    object Room {
+        private const val version = "2.2.6"
+        const val room = "androidx.room:room-ktx:$version"
+        const val roomCompiler = "androidx.room:room-compiler:$version"
+        const val roomRuntime = "androidx.room:room-runtime:$version"
+    }
 
     const val lifecycle = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
     const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
 
     const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-    const val composeNavigation = "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
+    const val composeNavigation =
+        "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
 
     const val compose = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val composeFoundation = "androidx.compose.foundation:foundation:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeIconsCore = "androidx.compose.material:material-icons-core:${Versions.compose}"
-    const val composeIconsExt = "androidx.compose.material:material-icons-extended:${Versions.compose}"
+    const val composeIconsExt =
+        "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
 
     const val koin = "org.koin:koin-android:${Versions.koin}"
