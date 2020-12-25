@@ -28,12 +28,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
-import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.ui.exercises.ExercisesScreen
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import org.koin.androidx.compose.getViewModel
@@ -63,10 +61,7 @@ fun NavGraph(
             CreateRoutineScreen(
                 onAddExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
-                viewModel = CreateRoutineViewModel(
-                    KoinJavaComponent.get(Repository::class.java),
-                    routineId
-                ),
+                viewModel = getViewModel { parametersOf(routineId) },
                 sharedExerciseVM = sharedExerciseViewModel,
             )
         }
