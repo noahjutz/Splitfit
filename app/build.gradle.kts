@@ -120,6 +120,8 @@ dependencies {
 
     implementation(Libs.koin)
     implementation(Libs.koinViewModel)
+    implementation(Libs.koinViewModelAndroidx)
+    implementation(Libs.koinCompose)
     testImplementation(TestLibs.koinTest)
 }
 

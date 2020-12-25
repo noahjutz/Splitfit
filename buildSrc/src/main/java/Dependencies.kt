@@ -74,6 +74,8 @@ object Libs {
 
     const val koin = "org.koin:koin-android:${Versions.koin}"
     const val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"
+    const val koinViewModelAndroidx = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+    const val koinCompose = "org.koin:koin-androidx-compose:${Versions.koin}"
 }
 
 object TestLibs {
