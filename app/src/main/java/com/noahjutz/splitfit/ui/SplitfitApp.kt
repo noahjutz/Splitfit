@@ -21,9 +21,9 @@ package com.noahjutz.splitfit.ui
 import androidx.annotation.StringRes
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -33,9 +33,21 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.ui.workout.WorkoutBottomSheet
-import kotlinx.coroutines.launch
 
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@Composable
+fun SplitfitApp() {
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = {
+            MainScreenTopBar(navController)
+        },
+    ) {
+        NavGraph(navController = navController)
+    }
+}
 
 sealed class HomeTabs(val route: String, @StringRes val name: Int) {
     object Routines : HomeTabs("routines", R.string.tab_routines)
@@ -46,47 +58,6 @@ val homeTabs = listOf(
     HomeTabs.Routines,
     HomeTabs.Exercises
 )
-
-@ExperimentalFoundationApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@Composable
-fun SplitfitApp() {
-    val navController = rememberNavController()
-    val scope = rememberCoroutineScope()
-    var workoutInProgress by remember { mutableStateOf(false) }
-    val scaffoldState = rememberBottomSheetScaffoldState()
-
-    onCommit(workoutInProgress) {
-        scope.launch {
-            if (workoutInProgress) scaffoldState.bottomSheetState.expand()
-            else scaffoldState.bottomSheetState.collapse()
-        }
-    }
-
-    BottomSheetScaffold(
-        topBar = {
-            MainScreenTopBar(navController)
-        },
-        sheetContent = {
-            WorkoutBottomSheet(
-                bottomSheetState = scaffoldState.bottomSheetState,
-                stopWorkout = { workoutInProgress = false }
-            )
-        },
-        sheetPeekHeight = if (workoutInProgress) BottomSheetScaffoldDefaults.SheetPeekHeight else 0.dp,
-        scaffoldState = scaffoldState,
-        sheetElevation = 0.dp,
-    ) { padding ->
-        Box(Modifier.padding(padding)) {
-            NavGraph(
-                navController = navController,
-                startWorkout = { workoutInProgress = true }
-            )
-        }
-    }
-}
-
 
 @Composable
 fun MainScreenTopBar(

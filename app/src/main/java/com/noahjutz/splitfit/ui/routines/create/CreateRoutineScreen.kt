@@ -68,7 +68,6 @@ import kotlin.math.floor
 @Composable
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
-    startWorkout: () -> Unit,
     popBackStack: () -> Unit,
     viewModel: CreateRoutineViewModel,
     sharedExerciseVM: SharedExerciseViewModel,
@@ -147,12 +146,7 @@ fun CreateRoutineScreen(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false }
                     ) {
-                        DropdownMenuItem(
-                            onClick = {
-                                showMenu = false
-                                startWorkout()
-                            }
-                        ) {
+                        DropdownMenuItem(onClick = { /*TODO*/ }) {
                             Text("Start workout")
                         }
                     }
