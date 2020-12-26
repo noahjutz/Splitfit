@@ -36,7 +36,6 @@ object Versions {
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.1"
     const val composeNavigation = "1.0.0-alpha04"
-    const val koin = "2.2.2"
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
