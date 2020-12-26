@@ -39,7 +39,6 @@ object Versions {
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
-    const val mockK = "1.10.2"
 }
 
 object Libs {
@@ -92,8 +91,11 @@ object TestLibs {
     const val junit4 = "junit:junit:${Versions.junit}"
     const val assertJ = "org.assertj:assertj-core:${Versions.assertJ}"
 
-    const val mockkUnit = "io.mockk:mockk:${Versions.mockK}"
-    const val mockkInstrumented = "io.mockk:mockk-android:${Versions.mockK}"
+    object Mockk {
+        private const val version = "1.10.2"
+        const val unit = "io.mockk:mockk:$version"
+        const val instrumented = "io.mockk:mockk-android:$version"
+    }
 
 }
 

@@ -102,8 +102,9 @@ dependencies {
 
     testImplementation(TestLibs.junit4)
     testImplementation(TestLibs.assertJ)
-    testImplementation(TestLibs.mockkUnit)
-    androidTestImplementation(TestLibs.mockkInstrumented)
+
+    testImplementation(TestLibs.Mockk.unit)
+    androidTestImplementation(TestLibs.Mockk.instrumented)
 
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.foundation)
