@@ -118,7 +118,7 @@ dependencies {
     implementation(Libs.Koin.android)
     implementation(Libs.Koin.viewModel)
     implementation(Libs.Koin.compose)
-    testImplementation(TestLibs.koinTest)
+    testImplementation(Libs.Koin.test)
 }
 
 ktlint {

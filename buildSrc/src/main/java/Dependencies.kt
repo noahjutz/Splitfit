@@ -85,6 +85,7 @@ object Libs {
         const val android = "org.koin:koin-android:$version"
         const val viewModel = "org.koin:koin-android-viewmodel:$version"
         const val compose = "org.koin:koin-androidx-compose:$version"
+        const val test = "org.koin:koin-test:$version"
     }
 }
 
@@ -95,7 +96,6 @@ object TestLibs {
     const val mockkUnit = "io.mockk:mockk:${Versions.mockK}"
     const val mockkInstrumented = "io.mockk:mockk-android:${Versions.mockK}"
 
-    const val koinTest = "org.koin:koin-test:${Versions.koin}"
 }
 
 object GradlePlugins {
