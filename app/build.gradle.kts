@@ -91,8 +91,8 @@ dependencies {
     implementation(Libs.serializationJson)
 
     implementation(Libs.Room.room)
-    kapt(Libs.Room.roomCompiler)
-    implementation(Libs.Room.roomRuntime)
+    kapt(Libs.Room.compiler)
+    implementation(Libs.Room.runtime)
 
     implementation(Libs.lifecycle)
     implementation(Libs.livedata)

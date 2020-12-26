@@ -56,8 +56,8 @@ object Libs {
     object Room {
         private const val version = "2.2.6"
         const val room = "androidx.room:room-ktx:$version"
-        const val roomCompiler = "androidx.room:room-compiler:$version"
-        const val roomRuntime = "androidx.room:room-runtime:$version"
+        const val compiler = "androidx.room:room-compiler:$version"
+        const val runtime = "androidx.room:room-runtime:$version"
     }
 
     const val lifecycle = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
