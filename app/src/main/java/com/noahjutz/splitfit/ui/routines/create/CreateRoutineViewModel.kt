@@ -18,14 +18,16 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class CreateRoutineViewModel(
     private val repository: Repository,
@@ -34,6 +36,14 @@ class CreateRoutineViewModel(
     private val _routine = MutableStateFlow(repository.getRoutine(routineId)!!)
     val editor = Editor()
     val presenter = Presenter()
+
+    init {
+        viewModelScope.launch {
+            _routine.collectLatest {
+                repository.insert(it)
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
