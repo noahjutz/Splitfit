@@ -26,12 +26,10 @@ object App {
 }
 
 object Versions {
-    const val serialization = "1.0.1"
     const val ktlintPlugin = "9.4.1"
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha03"
     const val kotlin = "1.4.21"
-    const val coroutines = "1.4.1"
     const val material = "1.2.1"
 
     const val junit = "4.13.1"
