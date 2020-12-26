@@ -70,6 +70,7 @@ import kotlin.math.floor
 @Composable
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
+    startWorkout: () -> Unit,
     popBackStack: () -> Unit,
     routineId: Int,
     viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
@@ -149,7 +150,7 @@ fun CreateRoutineScreen(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false }
                     ) {
-                        DropdownMenuItem(onClick = { /*TODO*/ }) {
+                        DropdownMenuItem(onClick = { startWorkout() }) {
                             Text("Start workout")
                         }
                     }

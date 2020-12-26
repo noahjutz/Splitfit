@@ -34,8 +34,7 @@ import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
-import org.koin.androidx.compose.getViewModel
-import org.koin.core.parameter.parametersOf
+import com.noahjutz.splitfit.ui.workout.WorkoutScreen
 import org.koin.java.KoinJavaComponent
 
 
@@ -60,6 +59,7 @@ fun NavGraph(
             CreateRoutineScreen(
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
                 onAddExercise = { navController.navigate("pickExercise") },
+                startWorkout = { navController.navigate("createWorkout") },
                 popBackStack = { navController.popBackStack() },
                 sharedExerciseVM = sharedExerciseViewModel,
             )
@@ -82,6 +82,17 @@ fun NavGraph(
             CreateExerciseScreen(
                 exerciseId = backStackEntry.arguments!!.getInt("exerciseId"),
                 popBackStack = { navController.popBackStack() },
+            )
+        }
+        composable(
+            "createWorkout?workoutId={workoutId}",
+            arguments = listOf(navArgument("workoutId") {
+                defaultValue = -1
+                type = NavType.IntType
+            })
+        ) { backStackEntry ->
+            WorkoutScreen(
+                workoutId = backStackEntry.arguments!!.getInt("workoutId")
             )
         }
     }
