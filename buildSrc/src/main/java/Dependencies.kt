@@ -84,7 +84,6 @@ object Libs {
         private const val version = "2.2.2"
         const val android = "org.koin:koin-android:$version"
         const val viewModel = "org.koin:koin-android-viewmodel:$version"
-        const val viewModelAndroidx = "org.koin:koin-androidx-viewmodel:$version"
         const val compose = "org.koin:koin-androidx-compose:$version"
     }
 }
