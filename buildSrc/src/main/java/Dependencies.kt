@@ -36,7 +36,10 @@ object Versions {
 }
 
 object Libs {
-    const val core = "androidx.core:core-ktx:1.3.1"
+    object Core {
+        private const val version = "1.3.2"
+        const val core = "androidx.core:core-ktx:$version"
+    }
 
     object Coroutines {
         private const val version = "1.4.1"
