@@ -45,8 +45,10 @@ object Libs {
 
     const val material = "com.google.android.material:material:${Versions.material}"
 
-    const val serializationJson =
-        "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
+    object Serialization {
+        private const val version = "1.0.1"
+        const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$version"
+    }
 
     object Room {
         private const val version = "2.2.6"

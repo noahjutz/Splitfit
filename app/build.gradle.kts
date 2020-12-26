@@ -88,7 +88,7 @@ dependencies {
 
     implementation(Libs.material)
 
-    implementation(Libs.serializationJson)
+    implementation(Libs.Serialization.json)
 
     implementation(Libs.Room.room)
     kapt(Libs.Room.compiler)
