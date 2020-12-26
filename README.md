@@ -10,7 +10,7 @@ Save workout routines and track your progress.
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/screenshots/dark/CreateExerciseScreen.png" width="250px" /> <img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/screenshots/dark/CreateRoutineScreen.png" width="250px" /> <img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/screenshots/dark/PickExerciseScreen.png" width="250px" />
+<p><img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/screenshots/dark/CreateExerciseScreen.png" width="32%" /> <img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/screenshots/dark/CreateRoutineScreen.png" width="32%" /> <img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/screenshots/dark/PickExerciseScreen.png" width="32%" /></p>
 
 ## Install
 
