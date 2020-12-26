@@ -56,7 +56,7 @@ object Libs {
         const val runtime = "androidx.room:room-runtime:$version"
     }
 
-    const val lifecycle = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
+    const val lifecycle = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
     const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
 
     object Navigation {
