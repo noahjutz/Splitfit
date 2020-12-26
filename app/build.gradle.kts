@@ -115,10 +115,10 @@ dependencies {
     androidTestImplementation(Libs.Compose.test)
     androidTestImplementation(Libs.Compose.testJunit4)
 
-    implementation(Libs.koin)
-    implementation(Libs.koinViewModel)
-    implementation(Libs.koinViewModelAndroidx)
-    implementation(Libs.koinCompose)
+    implementation(Libs.Koin.android)
+    implementation(Libs.Koin.viewModel)
+    implementation(Libs.Koin.viewModelAndroidx)
+    implementation(Libs.Koin.compose)
     testImplementation(TestLibs.koinTest)
 }
 
