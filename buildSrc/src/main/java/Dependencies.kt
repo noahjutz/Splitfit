@@ -34,8 +34,6 @@ object Versions {
     const val coroutines = "1.4.1"
     const val material = "1.2.1"
     const val lifecycle = "2.2.0"
-    const val navigation = "2.3.1"
-    const val composeNavigation = "1.0.0-alpha04"
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
@@ -61,9 +59,12 @@ object Libs {
     const val lifecycle = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
     const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
 
-    const val navigation = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-    const val composeNavigation =
-        "androidx.navigation:navigation-compose:${Versions.composeNavigation}"
+    object Navigation {
+        private const val version = "2.3.1"
+        private const val versionCompose = "1.0.0-alpha04"
+        const val navigation = "androidx.navigation:navigation-fragment-ktx:$version"
+        const val compose = "androidx.navigation:navigation-compose:$versionCompose"
+    }
 
     object Compose {
         const val version = "1.0.0-alpha09"

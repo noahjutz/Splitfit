@@ -97,8 +97,8 @@ dependencies {
     implementation(Libs.lifecycle)
     implementation(Libs.livedata)
 
-    implementation(Libs.navigation)
-    implementation(Libs.composeNavigation)
+    implementation(Libs.Navigation.navigation)
+    implementation(Libs.Navigation.compose)
 
     testImplementation(TestLibs.junit4)
     testImplementation(TestLibs.assertJ)
