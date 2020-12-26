@@ -35,6 +35,11 @@ class CreateRoutineViewModel(
     val editor = Editor()
     val presenter = Presenter()
 
+    override fun onCleared() {
+        super.onCleared()
+        editor.close()
+    }
+
     inner class Editor {
         fun setName(name: String) {
             _routine.value = _routine.value.copy(name = name)

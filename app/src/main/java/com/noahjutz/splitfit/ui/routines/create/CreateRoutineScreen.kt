@@ -84,10 +84,6 @@ fun CreateRoutineScreen(
         sharedExerciseVM.clear()
     }
 
-    onDispose {
-        viewModel.editor.close()
-    }
-
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
