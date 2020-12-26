@@ -30,7 +30,6 @@ object Versions {
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha03"
     const val kotlin = "1.4.21"
-    const val material = "1.2.1"
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
@@ -44,7 +43,10 @@ object Libs {
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
     }
 
-    const val material = "com.google.android.material:material:${Versions.material}"
+    object Material {
+        private const val version = "1.2.1"
+        const val material = "com.google.android.material:material:$version"
+    }
 
     object Serialization {
         private const val version = "1.0.1"

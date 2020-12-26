@@ -86,7 +86,7 @@ dependencies {
 
     implementation(Libs.Coroutines.android)
 
-    implementation(Libs.material)
+    implementation(Libs.Material.material)
 
     implementation(Libs.Serialization.json)
 
