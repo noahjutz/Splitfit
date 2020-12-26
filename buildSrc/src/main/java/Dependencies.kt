@@ -33,7 +33,6 @@ object Versions {
     const val kotlin = "1.4.21"
     const val coroutines = "1.4.1"
     const val material = "1.2.1"
-    const val lifecycle = "2.2.0"
 
     const val junit = "4.13.1"
     const val assertJ = "3.18.1"
@@ -56,8 +55,11 @@ object Libs {
         const val runtime = "androidx.room:room-runtime:$version"
     }
 
-    const val lifecycle = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
-    const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    object Lifecycle {
+        private const val version = "2.2.0"
+        const val lifecycle = "androidx.lifecycle:lifecycle-compiler:$version"
+        const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+    }
 
     object Navigation {
         private const val version = "2.3.1"

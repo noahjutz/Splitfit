@@ -94,8 +94,8 @@ dependencies {
     kapt(Libs.Room.compiler)
     implementation(Libs.Room.runtime)
 
-    kapt(Libs.lifecycle)
-    implementation(Libs.livedata)
+    kapt(Libs.Lifecycle.lifecycle)
+    implementation(Libs.Lifecycle.livedata)
 
     implementation(Libs.Navigation.navigation)
     implementation(Libs.Navigation.compose)
