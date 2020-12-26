@@ -84,7 +84,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 dependencies {
     implementation(Libs.core)
 
-    implementation(Libs.coroutines)
+    implementation(Libs.Coroutines.android)
 
     implementation(Libs.material)
 

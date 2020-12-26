@@ -41,7 +41,10 @@ object Versions {
 object Libs {
     const val core = "androidx.core:core-ktx:1.3.1"
 
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    object Coroutines {
+        private const val version = "1.4.1"
+        const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
+    }
 
     const val material = "com.google.android.material:material:${Versions.material}"
 
