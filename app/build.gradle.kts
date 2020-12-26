@@ -100,8 +100,8 @@ dependencies {
     implementation(Libs.Navigation.navigation)
     implementation(Libs.Navigation.compose)
 
-    testImplementation(TestLibs.junit4)
-    testImplementation(TestLibs.assertJ)
+    testImplementation(TestLibs.Junit4.junit4)
+    testImplementation(TestLibs.AssertJ.assertJ)
 
     testImplementation(TestLibs.Mockk.unit)
     androidTestImplementation(TestLibs.Mockk.instrumented)

@@ -30,9 +30,6 @@ object Versions {
     const val ktlint = "0.39.0"
     const val gradle = "7.0.0-alpha03"
     const val kotlin = "1.4.21"
-
-    const val junit = "4.13.1"
-    const val assertJ = "3.18.1"
 }
 
 object Libs {
@@ -99,8 +96,15 @@ object Libs {
 }
 
 object TestLibs {
-    const val junit4 = "junit:junit:${Versions.junit}"
-    const val assertJ = "org.assertj:assertj-core:${Versions.assertJ}"
+    object Junit4 {
+        private const val version = "4.13.1"
+        const val junit4 = "junit:junit:$version"
+    }
+
+    object AssertJ {
+        private const val version = "3.18.1"
+        const val assertJ = "org.assertj:assertj-core:$version"
+    }
 
     object Mockk {
         private const val version = "1.10.2"
