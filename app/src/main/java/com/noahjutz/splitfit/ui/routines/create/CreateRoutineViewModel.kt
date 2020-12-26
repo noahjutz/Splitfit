@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Exercise
@@ -31,6 +32,8 @@ class CreateRoutineViewModel(
     routineId: Int,
 ) : ViewModel() {
     private val _routine = MutableStateFlow(repository.getRoutine(routineId)!!)
+    val editor = Editor()
+    val presenter = Presenter()
 
     inner class Editor {
         fun setName(name: String) {
@@ -83,7 +86,7 @@ class CreateRoutineViewModel(
             reps: Int? = _routine.value.setGroups[setGroupIndex].sets[setIndex].reps,
             weight: Double? = _routine.value.setGroups[setGroupIndex].sets[setIndex].weight,
             time: Int? = _routine.value.setGroups[setGroupIndex].sets[setIndex].time,
-            distance: Double? = _routine.value.setGroups[setGroupIndex].sets[setIndex].distance
+            distance: Double? = _routine.value.setGroups[setGroupIndex].sets[setIndex].distance,
         ) {
             val setGroups = _routine.value.setGroups.toMutableList().apply {
                 this[setGroupIndex] = this[setGroupIndex].copy(

@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -76,17 +77,15 @@ fun CreateRoutineScreen(
     viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
     sharedExerciseVM: SharedExerciseViewModel,
 ) {
-    val editor = viewModel.Editor()
-    val presenter = viewModel.Presenter()
     val scope = rememberCoroutineScope()
 
     scope.launch {
-        editor.addExercises(sharedExerciseVM.exercises.value)
+        viewModel.editor.addExercises(sharedExerciseVM.exercises.value)
         sharedExerciseVM.clear()
     }
 
     onDispose {
-        editor.close()
+        viewModel.editor.close()
     }
 
     Scaffold(
@@ -110,7 +109,7 @@ fun CreateRoutineScreen(
                     Box {
                         var nameFieldValue by remember {
                             mutableStateOf(
-                                TextFieldValue(presenter.routine.value.name)
+                                TextFieldValue(viewModel.presenter.routine.value.name)
                             )
                         }
                         var focusState by remember { mutableStateOf(false) }
@@ -118,7 +117,7 @@ fun CreateRoutineScreen(
                             value = nameFieldValue,
                             onValueChange = {
                                 nameFieldValue = it
-                                editor.setName(it.text)
+                                viewModel.editor.setName(it.text)
                             },
                             modifier = Modifier
                                 .onFocusChanged {
@@ -158,14 +157,13 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        val setGroups by presenter.routine.mapLatest { it.setGroups }.collectAsState(emptyList())
+        val setGroups by viewModel.presenter.routine.mapLatest { it.setGroups }.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
             itemsIndexed(setGroups) { i, setGroup ->
                 SetGroupCard(
                     setGroupIndex = i,
                     setGroup = setGroup,
-                    editor = editor,
-                    presenter = presenter
+                    viewModel = viewModel
                 )
             }
             item {
@@ -183,10 +181,9 @@ fun CreateRoutineScreen(
 fun SetGroupCard(
     setGroupIndex: Int,
     setGroup: SetGroup,
-    editor: CreateRoutineViewModel.Editor,
-    presenter: CreateRoutineViewModel.Presenter,
+    viewModel: CreateRoutineViewModel,
 ) {
-    val exercise = presenter.getExercise(setGroup.exerciseId)
+    val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)
 
     // Temporary rearranging solution
     var offsetPosition by remember { mutableStateOf(0f) }
@@ -203,7 +200,7 @@ fun SetGroupCard(
         } else {
             if (toSwap != Pair(0, 0)) {
                 focusManager.clearFocus()
-                editor.swapSetGroups(toSwap.first, toSwap.second)
+                viewModel.editor.swapSetGroups(toSwap.first, toSwap.second)
                 toSwap = Pair(0, 0)
             }
         }
@@ -254,7 +251,7 @@ fun SetGroupCard(
                 onCommit(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
                         focusManager.clearFocus()
-                        editor.deleteSetFrom(setGroup, setIndex)
+                        viewModel.editor.deleteSetFrom(setGroup, setIndex)
                         dismissState.snapTo(DismissValue.Default)
                     }
                 }
@@ -282,7 +279,7 @@ fun SetGroupCard(
                                     onValueChange = {
                                         reps = it
                                         val repsValue = it.takeIf { it.isNotEmpty() }?.toInt()
-                                        editor.updateSet(
+                                        viewModel.editor.updateSet(
                                             setGroupIndex,
                                             setIndex,
                                             reps = repsValue
@@ -299,7 +296,7 @@ fun SetGroupCard(
                                     onValueChange = {
                                         weight = it
                                         val weightValue = it.takeIf { it.isNotEmpty() }?.toDouble()
-                                        editor.updateSet(
+                                        viewModel.editor.updateSet(
                                             setGroupIndex,
                                             setIndex,
                                             weight = weightValue
@@ -316,7 +313,7 @@ fun SetGroupCard(
                                     onValueChange = {
                                         time = it
                                         val timeValue = it.takeIf { it.isNotEmpty() }?.toInt()
-                                        editor.updateSet(
+                                        viewModel.editor.updateSet(
                                             setGroupIndex,
                                             setIndex,
                                             time = timeValue
@@ -335,7 +332,7 @@ fun SetGroupCard(
                                         distance = it
                                         val distanceValue =
                                             it.takeIf { it.isNotEmpty() }?.toDouble()
-                                        editor.updateSet(
+                                        viewModel.editor.updateSet(
                                             setGroupIndex,
                                             setIndex,
                                             distance = distanceValue
@@ -348,7 +345,7 @@ fun SetGroupCard(
                 }
             }
             TextButton(
-                onClick = { editor.addSetTo(setGroup) },
+                onClick = { viewModel.editor.addSetTo(setGroup) },
                 content = {
                     Icon(Icons.Default.Add)
                     Text(stringResource(R.string.add_set))
