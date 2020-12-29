@@ -20,7 +20,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-    kotlin("plugin.serialization") version Versions.kotlin
+    kotlin("plugin.serialization") version GradlePlugins.Kotlin.version
     id("org.jlleitschuh.gradle.ktlint") version Versions.ktlintPlugin
 }
 
@@ -68,7 +68,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = Versions.kotlin
+        kotlinCompilerVersion = GradlePlugins.Kotlin.version
         kotlinCompilerExtensionVersion = Libs.Compose.version
     }
 }

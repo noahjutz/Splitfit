@@ -24,8 +24,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
+        classpath(GradlePlugins.Android.classpath)
+        classpath(GradlePlugins.Kotlin.classpath)
     }
 }
 

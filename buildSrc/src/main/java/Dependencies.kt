@@ -28,8 +28,6 @@ object App {
 object Versions {
     const val ktlintPlugin = "9.4.1"
     const val ktlint = "0.39.0"
-    const val gradle = "7.0.0-alpha03"
-    const val kotlin = "1.4.21"
 }
 
 object Libs {
@@ -115,6 +113,12 @@ object TestLibs {
 }
 
 object GradlePlugins {
-    const val android = "com.android.tools.build:gradle:${Versions.gradle}"
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    object Android {
+        private const val version = "7.0.0-alpha03"
+        const val classpath = "com.android.tools.build:gradle:$version"
+    }
+    object Kotlin {
+        const val version = "1.4.21"
+        const val classpath = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
+    }
 }
