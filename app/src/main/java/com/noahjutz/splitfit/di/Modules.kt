@@ -29,6 +29,7 @@ import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
+import com.noahjutz.splitfit.ui.workout.WorkoutViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -79,5 +80,9 @@ val koinModule = module {
 
     viewModel { (id: Int) ->
         CreateRoutineViewModel(repository = get(), routineId = id)
+    }
+
+    viewModel { (id: Int) ->
+        WorkoutViewModel(repository = get(), workoutId = id)
     }
 }
