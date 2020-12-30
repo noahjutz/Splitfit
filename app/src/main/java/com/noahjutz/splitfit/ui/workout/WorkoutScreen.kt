@@ -43,13 +43,6 @@ fun WorkoutScreen(
     workoutId: Int,
     viewModel: WorkoutViewModel = getViewModel { parametersOf(workoutId) },
 ) {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Column {
-            Text("WorkoutScreen")
-            Spacer(Modifier.preferredHeight(50.dp))
-            Text("workoutId: $workoutId")
-        }
-    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -92,6 +85,12 @@ fun WorkoutScreen(
             )
         }
     ) {
-
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column {
+                Text("WorkoutScreen")
+                Spacer(Modifier.preferredHeight(50.dp))
+                Text("workoutId: $workoutId")
+            }
+        }
     }
 }
