@@ -20,11 +20,12 @@ package com.noahjutz.splitfit.ui.routines
 
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.domain.Routine
 import kotlinx.coroutines.flow.Flow
 
 class RoutinesViewModel(
-    private val repository: Repository,
+    private val repository: RoutineRepository,
 ) : ViewModel() {
     val routines: Flow<List<Routine>>
         get() = repository.routines
