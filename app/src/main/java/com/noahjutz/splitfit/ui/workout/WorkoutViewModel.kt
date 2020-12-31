@@ -20,12 +20,13 @@ package com.noahjutz.splitfit.ui.workout
 
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.Workout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class WorkoutViewModel(
-    private val repository: Repository,
+    private val repository: WorkoutRepository,
     workoutId: Int
 ) : ViewModel() {
     private val _workout = MutableStateFlow(Workout("TODO retrieve from db"))
