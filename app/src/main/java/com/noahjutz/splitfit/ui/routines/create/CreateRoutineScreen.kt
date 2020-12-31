@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi

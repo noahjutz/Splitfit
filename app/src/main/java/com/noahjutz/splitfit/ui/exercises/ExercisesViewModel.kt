@@ -22,7 +22,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.ExerciseRepository
-import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.domain.Exercise
 import kotlinx.coroutines.launch
 

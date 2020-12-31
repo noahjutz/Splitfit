@@ -50,7 +50,7 @@ fun SplitfitApp() {
     val currentRouteNotCreateWorkout = navController.currentBackStackEntryAsState()
         .value?.arguments?.getString(KEY_ROUTE)?.contains("createWorkout") == false
     val showWorkoutBottomSheet = workoutInProgress && currentRouteNotCreateWorkout
-    val navToWorkoutScreen = {navController.navigate("createWorkout")}
+    val navToWorkoutScreen = { navController.navigate("createWorkout") }
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
@@ -61,8 +61,10 @@ fun SplitfitApp() {
                     Modifier.clickable(onClick = navToWorkoutScreen)
                 ) {
                     ProvideTextStyle(value = MaterialTheme.typography.h6) {
-                        Text(modifier = Modifier.padding(horizontal = 12.dp),
-                            text = "Workout in progress") // TODO show name instead
+                        Text(
+                            modifier = Modifier.padding(horizontal = 12.dp),
+                            text = "Workout in progress"
+                        ) // TODO show name instead
                     }
                     Spacer(Modifier.weight(1f))
                     IconButton(onClick = navToWorkoutScreen) {

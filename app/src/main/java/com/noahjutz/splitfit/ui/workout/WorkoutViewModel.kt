@@ -19,7 +19,6 @@
 package com.noahjutz.splitfit.ui.workout
 
 import androidx.lifecycle.ViewModel
-import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.Workout
 import kotlinx.coroutines.flow.MutableStateFlow

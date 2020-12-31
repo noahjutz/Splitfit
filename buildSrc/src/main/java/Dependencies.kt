@@ -109,7 +109,6 @@ object TestLibs {
         const val unit = "io.mockk:mockk:$version"
         const val instrumented = "io.mockk:mockk-android:$version"
     }
-
 }
 
 object GradlePlugins {

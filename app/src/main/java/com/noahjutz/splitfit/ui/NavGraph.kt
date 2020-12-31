@@ -37,7 +37,6 @@ import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.ui.workout.WorkoutScreen
 import org.koin.java.KoinJavaComponent
 
-
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -86,10 +85,12 @@ fun NavGraph(
         }
         composable(
             "createWorkout?workoutId={workoutId}",
-            arguments = listOf(navArgument("workoutId") {
-                defaultValue = -1
-                type = NavType.IntType
-            })
+            arguments = listOf(
+                navArgument("workoutId") {
+                    defaultValue = -1
+                    type = NavType.IntType
+                }
+            )
         ) { backStackEntry ->
             WorkoutScreen(
                 popBackStack = { navController.popBackStack() },
