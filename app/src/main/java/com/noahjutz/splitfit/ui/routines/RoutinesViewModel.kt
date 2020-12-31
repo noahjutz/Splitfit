@@ -19,9 +19,11 @@
 package com.noahjutz.splitfit.ui.routines
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.domain.Routine
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class RoutinesViewModel(
     private val repository: RoutineRepository,
@@ -29,7 +31,7 @@ class RoutinesViewModel(
     val routines: Flow<List<Routine>>
         get() = repository.routines
 
-    fun deleteRoutine(routineId: Int) {
+    fun deleteRoutine(routineId: Int) = viewModelScope.launch {
         repository.getRoutine(routineId)?.let { repository.delete(it) }
     }
 

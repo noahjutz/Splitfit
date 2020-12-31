@@ -49,11 +49,7 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
 class RoutineRepository(private val routineDao: RoutineDao) {
     val routines = routineDao.getRoutines()
 
-    fun getRoutine(routineId: Int): Routine? = runBlocking {
-        withContext(IO) {
-            routineDao.getRoutine(routineId)
-        }
-    }
+    suspend fun getRoutine(routineId: Int): Routine? = routineDao.getRoutine(routineId)
 
     fun insert(routine: Routine): Long = runBlocking {
         routineDao.insert(routine)

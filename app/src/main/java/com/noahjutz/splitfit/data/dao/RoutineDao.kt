@@ -34,5 +34,5 @@ interface RoutineDao {
     fun getRoutines(): Flow<List<Routine>>
 
     @Query("SELECT * FROM routine_table WHERE routineId == :routineId")
-    fun getRoutine(routineId: Int): Routine?
+    suspend fun getRoutine(routineId: Int): Routine?
 }

@@ -29,13 +29,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class CreateRoutineViewModel(
     private val routineRepository: RoutineRepository,
     private val exerciseRepository: ExerciseRepository,
     routineId: Int,
 ) : ViewModel() {
-    private val _routine = MutableStateFlow(routineRepository.getRoutine(routineId)!!)
+    private val _routine =
+        MutableStateFlow(runBlocking { routineRepository.getRoutine(routineId)!! })
     val editor = Editor()
     val presenter = Presenter()
 
