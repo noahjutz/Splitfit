@@ -38,4 +38,5 @@ import com.noahjutz.splitfit.data.domain.Workout
 abstract class AppDatabase : RoomDatabase() {
     abstract val exerciseDao: ExerciseDao
     abstract val routineDao: RoutineDao
+    abstract val workoutDao: WorkoutDao
 }

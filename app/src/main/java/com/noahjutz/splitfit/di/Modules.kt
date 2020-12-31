@@ -23,6 +23,7 @@ import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.Repository
 import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
+import com.noahjutz.splitfit.data.dao.WorkoutDao
 import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
@@ -54,8 +55,12 @@ val koinModule = module {
         get<AppDatabase>().routineDao
     }
 
+    factory<WorkoutDao> {
+        get<AppDatabase>().workoutDao
+    }
+
     factory<Repository> {
-        Repository(get<ExerciseDao>(), get<RoutineDao>())
+        Repository(get<ExerciseDao>(), get<RoutineDao>(), get<WorkoutDao>())
     }
 
     viewModel {

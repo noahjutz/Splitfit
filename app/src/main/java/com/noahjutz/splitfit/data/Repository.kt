@@ -20,8 +20,10 @@ package com.noahjutz.splitfit.data
 
 import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
+import com.noahjutz.splitfit.data.dao.WorkoutDao
 import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Routine
+import com.noahjutz.splitfit.data.domain.Workout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -31,6 +33,7 @@ import kotlinx.coroutines.withContext
 class Repository(
     private val exerciseDao: ExerciseDao,
     private val routineDao: RoutineDao,
+    private val workoutDao: WorkoutDao,
 ) {
     val routines = routineDao.getRoutines()
     val exercises = exerciseDao.getExercises()
@@ -64,4 +67,8 @@ class Repository(
             routineDao.delete(routine)
         }
     }
+
+    /** [Workout] */
+    suspend fun insert(workout: Workout) = workoutDao.insert(workout)
+    fun getWorkouts() = workoutDao.getWorkouts()
 }
