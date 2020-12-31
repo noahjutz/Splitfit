@@ -20,7 +20,8 @@ package com.noahjutz.splitfit.ui.routines.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.ExerciseRepository
+import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
@@ -30,17 +31,18 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class CreateRoutineViewModel(
-    private val repository: Repository,
+    private val routineRepository: RoutineRepository,
+    private val exerciseRepository: ExerciseRepository,
     routineId: Int,
 ) : ViewModel() {
-    private val _routine = MutableStateFlow(repository.getRoutine(routineId)!!)
+    private val _routine = MutableStateFlow(routineRepository.getRoutine(routineId)!!)
     val editor = Editor()
     val presenter = Presenter()
 
     init {
         viewModelScope.launch {
             _routine.collectLatest {
-                repository.insert(it)
+                routineRepository.insert(it)
             }
         }
     }
@@ -92,7 +94,7 @@ class CreateRoutineViewModel(
         }
 
         fun close() {
-            repository.insert(_routine.value)
+            routineRepository.insert(_routine.value)
         }
 
         fun updateSet(
@@ -122,6 +124,6 @@ class CreateRoutineViewModel(
     inner class Presenter {
         val routine = _routine.asStateFlow()
 
-        fun getExercise(exerciseId: Int) = repository.getExercise(exerciseId)
+        fun getExercise(exerciseId: Int) = exerciseRepository.getExercise(exerciseId)
     }
 }
