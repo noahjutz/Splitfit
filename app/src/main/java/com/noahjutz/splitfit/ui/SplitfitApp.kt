@@ -21,8 +21,13 @@ package com.noahjutz.splitfit.ui
 import androidx.annotation.StringRes
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,12 +45,37 @@ import com.noahjutz.splitfit.R
 @Composable
 fun SplitfitApp() {
     val navController = rememberNavController()
+    val workoutInProgress =
+        true // TODO declare whether or not workout is in progress somehow (savedStateHandle? database?)
+    val currentRouteIsHomeTab = navController.currentBackStackEntryAsState()
+        .value?.arguments?.getString(KEY_ROUTE) in homeTabs.map { it.route }
+    val showWorkoutBottomSheet = workoutInProgress && currentRouteIsHomeTab
+    val navToWorkoutScreen = {navController.navigate("createWorkout")}
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
         },
+        bottomBar = {
+            if (showWorkoutBottomSheet) {
+                BottomAppBar(
+                    Modifier.clickable(onClick = navToWorkoutScreen)
+                ) {
+                    ProvideTextStyle(value = MaterialTheme.typography.h6) {
+                        Text(modifier = Modifier.padding(horizontal = 12.dp),
+                            text = "Workout in progress") // TODO show name instead
+                    }
+                    Spacer(Modifier.weight(1f))
+                    IconButton(onClick = navToWorkoutScreen) {
+                        Icon(Icons.Default.ExpandLess)
+                    }
+                }
+            }
+        }
     ) {
-        NavGraph(navController = navController)
+        val bottomPadding = if (showWorkoutBottomSheet) 56.dp else 0.dp
+        Box(Modifier.padding(bottom = bottomPadding)) {
+            NavGraph(navController = navController)
+        }
     }
 }
 
