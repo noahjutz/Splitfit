@@ -19,7 +19,10 @@
 package com.noahjutz.splitfit.di
 
 import androidx.room.Room
-import com.noahjutz.splitfit.data.*
+import com.noahjutz.splitfit.data.AppDatabase
+import com.noahjutz.splitfit.data.ExerciseRepository
+import com.noahjutz.splitfit.data.RoutineRepository
+import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.dao.ExerciseDao
 import com.noahjutz.splitfit.data.dao.RoutineDao
 import com.noahjutz.splitfit.data.dao.WorkoutDao
@@ -58,10 +61,6 @@ val koinModule = module {
         get<AppDatabase>().workoutDao
     }
 
-    factory<Repository> {
-        Repository(get<ExerciseDao>(), get<RoutineDao>(), get<WorkoutDao>())
-    }
-
     factory {
         WorkoutRepository(workoutDao = get())
     }
@@ -95,7 +94,11 @@ val koinModule = module {
     }
 
     viewModel { (id: Int) ->
-        CreateRoutineViewModel(exerciseRepository = get(), routineRepository = get(), routineId = id)
+        CreateRoutineViewModel(
+            exerciseRepository = get(),
+            routineRepository = get(),
+            routineId = id
+        )
     }
 
     viewModel { (id: Int) ->
