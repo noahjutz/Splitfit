@@ -16,26 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.data
+package com.noahjutz.splitfit.data.domain
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.noahjutz.splitfit.data.dao.*
-import com.noahjutz.splitfit.data.domain.Exercise
-import com.noahjutz.splitfit.data.domain.Routine
-import com.noahjutz.splitfit.data.domain.Workout
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Database(
-    entities = [
-        Exercise::class,
-        Routine::class,
-        Workout::class,
-    ],
-    version = 31
+@Entity(tableName = "workout_table")
+data class Workout(
+    val name: String = "",
+    val setGroups: List<SetGroup> = emptyList(),
+
+    @PrimaryKey(autoGenerate = true)
+    var workoutId: Int = 0,
 )
-@TypeConverters(Converters::class)
-abstract class AppDatabase : RoomDatabase() {
-    abstract val exerciseDao: ExerciseDao
-    abstract val routineDao: RoutineDao
-}
