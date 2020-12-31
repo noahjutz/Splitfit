@@ -46,7 +46,7 @@ fun WorkoutScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = {
+                actions = {
                     IconButton(onClick = popBackStack) { Icon(Icons.Default.ExpandMore) }
                 },
                 title = {
