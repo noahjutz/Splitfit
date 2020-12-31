@@ -19,12 +19,13 @@
 package com.noahjutz.splitfit.ui.exercises.create
 
 import androidx.lifecycle.ViewModel
+import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class CreateExerciseViewModel(
-    private val repository: Repository,
+    private val repository: ExerciseRepository,
     exerciseId: Int,
 ) : ViewModel() {
     private val _exercise = MutableStateFlow(repository.getExercise(exerciseId)!!)
