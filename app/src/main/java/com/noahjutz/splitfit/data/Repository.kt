@@ -30,6 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
+@Deprecated("Use ExerciseRepository, RoutineRepository, WorkoutRepository")
 class Repository(
     private val exerciseDao: ExerciseDao,
     private val routineDao: RoutineDao,
@@ -69,6 +70,47 @@ class Repository(
     }
 
     /** [Workout] */
+    suspend fun insert(workout: Workout) = workoutDao.insert(workout)
+    fun getWorkouts() = workoutDao.getWorkouts()
+}
+
+class ExerciseRepository(private val exerciseDao: ExerciseDao) {
+    val exercises = exerciseDao.getExercises()
+
+    fun insert(exercise: Exercise) = runBlocking {
+        withContext(IO) {
+            exerciseDao.insert(exercise)
+        }
+    }
+
+    fun getExercise(id: Int): Exercise? = runBlocking {
+        withContext(IO) {
+            exerciseDao.getExercise(id)
+        }
+    }
+}
+
+class RoutineRepository(private val routineDao: RoutineDao) {
+    val routines = routineDao.getRoutines()
+
+    fun getRoutine(routineId: Int): Routine? = runBlocking {
+        withContext(IO) {
+            routineDao.getRoutine(routineId)
+        }
+    }
+
+    fun insert(routine: Routine): Long = runBlocking {
+        routineDao.insert(routine)
+    }
+
+    fun delete(routine: Routine) {
+        CoroutineScope(IO).launch {
+            routineDao.delete(routine)
+        }
+    }
+}
+
+class WorkoutRepository(private val workoutDao: WorkoutDao) {
     suspend fun insert(workout: Workout) = workoutDao.insert(workout)
     fun getWorkouts() = workoutDao.getWorkouts()
 }
