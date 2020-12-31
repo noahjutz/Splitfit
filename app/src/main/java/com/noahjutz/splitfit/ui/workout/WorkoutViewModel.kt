@@ -20,6 +20,7 @@ package com.noahjutz.splitfit.ui.workout
 
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.domain.Workout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -27,14 +28,13 @@ class WorkoutViewModel(
     private val repository: Repository,
     workoutId: Int
 ) : ViewModel() {
-    // TODO add a Workout data class and use it here
-    private val _workout = MutableStateFlow("TODO workout object")
+    private val _workout = MutableStateFlow(Workout("TODO retrieve from db"))
     val presenter = Presenter()
     val editor = Editor()
 
     inner class Editor {
         fun setName(name: String) {
-            _workout.value = name
+            _workout.value = _workout.value.copy(name = name)
         }
     }
 

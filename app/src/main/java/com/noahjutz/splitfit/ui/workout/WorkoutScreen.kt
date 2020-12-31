@@ -53,7 +53,7 @@ fun WorkoutScreen(
                     Box {
                         var nameFieldValue by remember {
                             mutableStateOf(
-                                TextFieldValue(viewModel.presenter.workout.value)
+                                TextFieldValue(viewModel.presenter.workout.value.name)
                             )
                         }
                         var focusState by remember { mutableStateOf(false) }
