@@ -19,10 +19,10 @@
 package com.noahjutz.splitfit.ui.routines.create.pick
 
 import androidx.lifecycle.ViewModel
-import com.noahjutz.splitfit.data.Repository
+import com.noahjutz.splitfit.data.ExerciseRepository
 
 class PickExerciseViewModel(
-    private val repository: Repository,
+    private val exerciseRepository: ExerciseRepository,
 ) : ViewModel() {
-    val exercises get() = repository.exercises
+    val exercises get() = exerciseRepository.exercises
 }

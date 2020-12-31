@@ -87,7 +87,7 @@ val koinModule = module {
     }
 
     viewModel {
-        PickExerciseViewModel(get())
+        PickExerciseViewModel(exerciseRepository = get())
     }
 
     viewModel { (id: Int) ->
