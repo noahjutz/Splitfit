@@ -29,3 +29,5 @@ data class Workout(
     @PrimaryKey(autoGenerate = true)
     var workoutId: Int = 0,
 )
+
+fun Routine.toWorkout() = Workout(name, setGroups)
