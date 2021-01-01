@@ -89,7 +89,7 @@ fun WorkoutScreen(
             Column {
                 Text("WorkoutScreen")
                 Spacer(Modifier.preferredHeight(50.dp))
-                Text("workoutId: $workoutId")
+                Text("workoutId: $workoutId (${viewModel.presenter.workout.value.workoutId})")
             }
         }
     }
