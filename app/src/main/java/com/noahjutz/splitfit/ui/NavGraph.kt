@@ -94,7 +94,8 @@ fun NavGraph(
         ) { backStackEntry ->
             WorkoutScreen(
                 popBackStack = { navController.popBackStack() },
-                workoutId = backStackEntry.arguments!!.getInt("workoutId")
+                workoutId = backStackEntry.arguments!!.getInt("workoutId"),
+                routineId = -1, // TODO nav argument for routine id
             )
         }
     }

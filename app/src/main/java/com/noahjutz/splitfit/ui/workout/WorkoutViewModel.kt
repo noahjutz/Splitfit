@@ -19,21 +19,28 @@
 package com.noahjutz.splitfit.ui.workout
 
 import androidx.lifecycle.ViewModel
+import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.Workout
+import com.noahjutz.splitfit.data.domain.toWorkout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.runBlocking
 
 class WorkoutViewModel(
-    private val repository: WorkoutRepository,
+    private val workoutRepository: WorkoutRepository,
+    private val routineRepository: RoutineRepository,
     workoutId: Int,
+    routineId: Int,
 ) : ViewModel() {
     private val _workout = MutableStateFlow(
         runBlocking {
-            repository.getWorkout(workoutId)
-                ?: repository.getWorkout(
-                    repository.insert(Workout("TODO copy routine")).toInt()
+            workoutRepository.getWorkout(workoutId)
+                ?: workoutRepository.getWorkout(
+                    workoutRepository.insert(
+                        routineRepository.getRoutine(routineId)?.toWorkout()
+                            ?: Workout("NullPointerException: Can't get existing workout or existing routine")
+                    ).toInt()
                 )!!
         }
     )

@@ -93,7 +93,12 @@ val koinModule = module {
         )
     }
 
-    viewModel { (id: Int) ->
-        WorkoutViewModel(repository = get(), workoutId = id)
+    viewModel { (workoutId: Int, routineId: Int) ->
+        WorkoutViewModel(
+            workoutRepository = get(),
+            routineRepository = get(),
+            workoutId = workoutId,
+            routineId = routineId
+        )
     }
 }

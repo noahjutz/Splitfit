@@ -41,7 +41,8 @@ import org.koin.core.parameter.parametersOf
 fun WorkoutScreen(
     popBackStack: () -> Unit,
     workoutId: Int,
-    viewModel: WorkoutViewModel = getViewModel { parametersOf(workoutId) },
+    routineId: Int,
+    viewModel: WorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
 ) {
     Scaffold(
         topBar = {
