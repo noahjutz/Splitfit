@@ -23,12 +23,20 @@ import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.Workout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.runBlocking
 
 class WorkoutViewModel(
     private val repository: WorkoutRepository,
-    workoutId: Int
+    workoutId: Int,
 ) : ViewModel() {
-    private val _workout = MutableStateFlow(Workout("TODO retrieve from db"))
+    private val _workout = MutableStateFlow(
+        runBlocking {
+            repository.getWorkout(workoutId)
+                ?: repository.getWorkout(
+                    repository.insert(Workout("TODO copy routine")).toInt()
+                )!!
+        }
+    )
     val presenter = Presenter()
     val editor = Editor()
 

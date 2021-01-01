@@ -32,4 +32,7 @@ interface WorkoutDao {
 
     @Query("SELECT * FROM workout_table")
     fun getWorkouts(): Flow<List<Workout>>
+
+    @Query("SELECT * FROM workout_table WHERE workoutId == :id")
+    suspend fun getWorkout(id: Int): Workout?
 }
