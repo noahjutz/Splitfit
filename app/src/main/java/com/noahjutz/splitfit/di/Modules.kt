@@ -23,9 +23,6 @@ import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
-import com.noahjutz.splitfit.data.dao.ExerciseDao
-import com.noahjutz.splitfit.data.dao.RoutineDao
-import com.noahjutz.splitfit.data.dao.WorkoutDao
 import com.noahjutz.splitfit.ui.exercises.ExercisesViewModel
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.RoutinesViewModel
@@ -38,26 +35,21 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val koinModule = module {
-    single<AppDatabase> {
-        Room
-            .databaseBuilder(
-                androidContext(),
-                AppDatabase::class.java,
-                "workout_routines_database"
-            )
+    single {
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "workout_routines_database")
             .fallbackToDestructiveMigration()
             .build()
     }
 
-    factory<ExerciseDao> {
+    factory {
         get<AppDatabase>().exerciseDao
     }
 
-    factory<RoutineDao> {
+    factory {
         get<AppDatabase>().routineDao
     }
 
-    factory<WorkoutDao> {
+    factory {
         get<AppDatabase>().workoutDao
     }
 
