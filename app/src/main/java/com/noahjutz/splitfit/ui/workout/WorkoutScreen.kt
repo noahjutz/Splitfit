@@ -89,8 +89,8 @@ fun WorkoutScreen(
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column {
                 Text("WorkoutScreen")
-                Spacer(Modifier.preferredHeight(50.dp))
                 Text("workoutId: $workoutId (${viewModel.presenter.workout.value.workoutId})")
+                Text("routineId: $routineId")
             }
         }
     }

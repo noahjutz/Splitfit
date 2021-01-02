@@ -84,9 +84,13 @@ fun NavGraph(
             )
         }
         composable(
-            "createWorkout?workoutId={workoutId}",
+            "createWorkout?workoutId={workoutId}?routineId={routineId}",
             arguments = listOf(
                 navArgument("workoutId") {
+                    defaultValue = -1
+                    type = NavType.IntType
+                },
+                navArgument("routineId") {
                     defaultValue = -1
                     type = NavType.IntType
                 }
