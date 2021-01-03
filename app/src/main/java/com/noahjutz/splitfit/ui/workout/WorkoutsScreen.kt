@@ -18,10 +18,31 @@
 
 package com.noahjutz.splitfit.ui.workout
 
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ListItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.style.TextOverflow
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun WorkoutsScreen() {
-    Text("WorkoutsScreen")
+fun WorkoutsScreen(
+    viewModel: WorkoutsViewModel = getViewModel(),
+) {
+    val workouts by viewModel.presenter.workouts.collectAsState(emptyList())
+    LazyColumn {
+        items(workouts) { workout ->
+            ListItem(
+                text = {
+                    Text(
+                        text = workout.name.takeIf { it.isNotBlank() } ?: "Unnamed",
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                    )
+                },
+            )
+        }
+    }
 }
