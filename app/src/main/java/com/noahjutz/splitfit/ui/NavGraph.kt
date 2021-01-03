@@ -36,6 +36,7 @@ import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.ui.workout.WorkoutScreen
 import org.koin.java.KoinJavaComponent
+import android.util.Log
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
@@ -58,7 +59,9 @@ fun NavGraph(
             CreateRoutineScreen(
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
                 onAddExercise = { navController.navigate("pickExercise") },
-                startWorkout = { navController.navigate("createWorkout") },
+                startWorkout = { routineId: Int ->
+                    navController.navigate("createWorkout?routineId=$routineId")
+                },
                 popBackStack = { navController.popBackStack() },
                 sharedExerciseVM = sharedExerciseViewModel,
             )
@@ -84,7 +87,7 @@ fun NavGraph(
             )
         }
         composable(
-            "createWorkout?workoutId={workoutId}?routineId={routineId}",
+            "createWorkout?workoutId={workoutId}&routineId={routineId}",
             arguments = listOf(
                 navArgument("workoutId") {
                     defaultValue = -1
@@ -99,7 +102,7 @@ fun NavGraph(
             WorkoutScreen(
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
-                routineId = -1, // TODO nav argument for routine id
+                routineId = backStackEntry.arguments!!.getInt("routineId"),
             )
         }
     }

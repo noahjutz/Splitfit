@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -70,7 +71,7 @@ import kotlin.math.floor
 @Composable
 fun CreateRoutineScreen(
     onAddExercise: () -> Unit,
-    startWorkout: () -> Unit,
+    startWorkout: (Int) -> Unit,
     popBackStack: () -> Unit,
     routineId: Int,
     viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
@@ -144,7 +145,8 @@ fun CreateRoutineScreen(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false }
                     ) {
-                        DropdownMenuItem(onClick = { startWorkout() }) {
+                        DropdownMenuItem(onClick = {
+                            startWorkout(viewModel.presenter.routine.value.routineId) }) {
                             Text("Start workout")
                         }
                     }
