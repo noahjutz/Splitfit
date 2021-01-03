@@ -89,8 +89,12 @@ fun WorkoutScreen(
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column {
                 Text("WorkoutScreen")
+                Divider()
                 Text("workoutId: $workoutId (${viewModel.presenter.workout.value.workoutId})")
                 Text("routineId: $routineId")
+                Divider()
+                Text("sets: ${viewModel.presenter.workout.value.setGroups}")
+                Text("name: ${viewModel.presenter.workout.value.name}")
             }
         }
     }
