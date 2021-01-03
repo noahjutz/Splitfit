@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.workout
+package com.noahjutz.splitfit.ui.workout.create
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -32,7 +32,6 @@ import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -42,7 +41,7 @@ fun WorkoutScreen(
     popBackStack: () -> Unit,
     workoutId: Int,
     routineId: Int,
-    viewModel: WorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
+    viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
 ) {
     Scaffold(
         topBar = {

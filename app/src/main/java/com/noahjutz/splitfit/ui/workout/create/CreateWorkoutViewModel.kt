@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.workout
+package com.noahjutz.splitfit.ui.workout.create
 
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.RoutineRepository
@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.runBlocking
 
-class WorkoutViewModel(
+class CreateWorkoutViewModel(
     private val workoutRepository: WorkoutRepository,
     private val routineRepository: RoutineRepository,
     workoutId: Int,
