@@ -49,7 +49,7 @@ fun SplitfitApp() {
         true // TODO declare whether or not workout is in progress somehow (savedStateHandle? database?)
     val currentRouteNotCreateWorkout = navController.currentBackStackEntryAsState()
         .value?.arguments?.getString(KEY_ROUTE)?.contains("createWorkout") == false
-    val showWorkoutBottomSheet = workoutInProgress && currentRouteNotCreateWorkout
+    val showWorkoutBottomSheet = false // workoutInProgress && currentRouteNotCreateWorkout
     val navToWorkoutScreen = { navController.navigate("createWorkout") }
     Scaffold(
         topBar = {
