@@ -52,7 +52,7 @@ fun WorkoutsScreen(
                         if (dismissState.dismissDirection != null) 4.dp else 0.dp
                     )
                 ) {
-                    ListItem(Modifier.clickable { /* TODO view workout */2 }) {
+                    ListItem(Modifier.clickable { /* TODO view workout */ }) {
                         Text(
                             text = workout.name.takeIf { it.isNotBlank() }
                                 ?: stringResource(R.string.unnamed_workout),
