@@ -30,6 +30,7 @@ import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.data.domain.toWorkout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -54,9 +55,12 @@ class CreateWorkoutViewModel(
     val presenter = Presenter()
     val editor = Editor()
 
-    override fun onCleared() {
-        super.onCleared()
-        editor.close()
+    init {
+        viewModelScope.launch {
+            _workout.collectLatest {
+                workoutRepository.insert(_workout.value)
+            }
+        }
     }
 
     inner class Editor {
@@ -97,12 +101,6 @@ class CreateWorkoutViewModel(
                     }
                 }
             _workout.value = _workout.value.copy(setGroups = setGroups)
-        }
-
-        fun close() {
-            viewModelScope.launch {
-                workoutRepository.insert(_workout.value)
-            }
         }
 
         fun updateSet(
