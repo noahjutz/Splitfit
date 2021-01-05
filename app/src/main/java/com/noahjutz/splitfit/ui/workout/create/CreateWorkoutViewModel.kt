@@ -23,11 +23,8 @@ import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
-import com.noahjutz.splitfit.data.domain.Exercise
+import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
-import com.noahjutz.splitfit.data.domain.SetGroup
-import com.noahjutz.splitfit.data.domain.Workout
-import com.noahjutz.splitfit.data.domain.toWorkout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -44,12 +41,12 @@ class CreateWorkoutViewModel(
     private val _workout = MutableStateFlow(
         runBlocking {
             workoutRepository.getWorkout(workoutId)
-                ?: workoutRepository.getWorkout(
-                    workoutRepository.insert(
-                        routineRepository.getRoutine(routineId)?.toWorkout()
-                            ?: Workout("NullPointerException: Can't get existing workout or existing routine")
-                    ).toInt()
-                )!!
+                ?: routineRepository.getRoutine(routineId)?.let {
+                    workoutRepository.getWorkout(workoutRepository.insert(it.toWorkout()).toInt())
+                }
+                ?: workoutRepository.insert(Workout()).let {
+                    workoutRepository.getWorkout(it.toInt())
+                }!!
         }
     )
     val presenter = Presenter()
@@ -67,6 +64,7 @@ class CreateWorkoutViewModel(
         fun setName(name: String) {
             _workout.value = _workout.value.copy(name = name)
         }
+
         fun addSetTo(setGroup: SetGroup) {
             val setGroups = _workout.value.setGroups.toMutableList().also {
                 val i = it.indexOf(setGroup)
