@@ -37,6 +37,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun WorkoutsScreen(
     viewModel: WorkoutsViewModel = getViewModel(),
+    navToCreateWorkoutScreen: (Int) -> Unit,
 ) {
     val workout by viewModel.presenter.workouts.collectAsState(emptyList())
     LazyColumn {
@@ -52,7 +53,7 @@ fun WorkoutsScreen(
                         if (dismissState.dismissDirection != null) 4.dp else 0.dp
                     )
                 ) {
-                    ListItem(Modifier.clickable { /* TODO view workout */ }) {
+                    ListItem(Modifier.clickable { navToCreateWorkoutScreen(workout.workoutId) }) {
                         Text(
                             text = workout.name.takeIf { it.isNotBlank() }
                                 ?: stringResource(R.string.unnamed_workout),

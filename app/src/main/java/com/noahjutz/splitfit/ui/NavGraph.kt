@@ -21,7 +21,6 @@ package com.noahjutz.splitfit.ui
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -49,7 +48,9 @@ fun NavGraph(
     NavHost(navController, startDestination = "routines") {
         val sharedExerciseViewModel = KoinJavaComponent.get(SharedExerciseViewModel::class.java)
         composable("workouts") {
-            WorkoutsScreen()
+            WorkoutsScreen(
+                navToCreateWorkoutScreen = { workoutId -> navController.navigate("createWorkout?workoutId=$workoutId") }
+            )
         }
         composable("routines") {
             RoutinesScreen(
