@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -46,8 +47,8 @@ fun WorkoutScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                actions = {
-                    IconButton(onClick = popBackStack) { Icon(Icons.Default.ExpandMore) }
+                navigationIcon = {
+                    IconButton(onClick = popBackStack) { Icon(Icons.Default.Close) }
                 },
                 title = {
                     Box {
