@@ -19,13 +19,22 @@
 package com.noahjutz.splitfit.ui.workout
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.WorkoutRepository
+import com.noahjutz.splitfit.data.domain.Workout
+import kotlinx.coroutines.launch
 
 class WorkoutsViewModel(
     private val repository: WorkoutRepository,
 ) : ViewModel() {
     val presenter = Presenter()
+    val editor = Editor()
+
     inner class Presenter {
         val workouts = repository.getWorkouts()
+    }
+
+    inner class Editor {
+        fun delete(workout: Workout) = viewModelScope.launch { repository.delete(workout) }
     }
 }

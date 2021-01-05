@@ -37,4 +37,5 @@
     <string name="tab_routines">Routines</string>
     <string name="tab_exercises">Exercises</string>
     <string name="tab_workouts">Workouts</string>
+    <string name="unnamed_workout">Unnamed</string>
 </resources>

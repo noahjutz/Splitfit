@@ -18,10 +18,7 @@
 
 package com.noahjutz.splitfit.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.noahjutz.splitfit.data.domain.Workout
 import kotlinx.coroutines.flow.Flow
 
@@ -35,4 +32,7 @@ interface WorkoutDao {
 
     @Query("SELECT * FROM workout_table WHERE workoutId == :id")
     suspend fun getWorkout(id: Int): Workout?
+
+    @Delete
+    suspend fun delete(workout: Workout)
 }
