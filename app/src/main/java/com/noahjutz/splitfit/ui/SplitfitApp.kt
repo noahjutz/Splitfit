@@ -58,7 +58,10 @@ fun SplitfitApp(
     val currentWorkoutId by preferences.data
         .map { it[DatastoreKeys.currentWorkout] }
         .collectAsState(initial = -1)
-    val showWorkoutBottomSheet = currentWorkoutId?.let { it >= 0 } ?: false
+    val isWorkoutInProgress = currentWorkoutId?.let { it >= 0 } ?: false
+    val isCurrentDestinationHomeTab = navController.currentBackStackEntryAsState()
+        .value?.arguments?.getString(KEY_ROUTE) in homeTabs.map { it.route }
+    val showWorkoutBottomSheet = isWorkoutInProgress && isCurrentDestinationHomeTab
 
     val navToWorkoutScreen = { navController.navigate("createWorkout?workoutId=$currentWorkoutId") }
     Scaffold(
