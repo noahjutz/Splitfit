@@ -84,6 +84,11 @@ object Libs {
         const val testJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
     }
 
+    object DataStore {
+        private const val version = "1.0.0-alpha05"
+        const val preferences = "androidx.datastore:datastore-preferences:$version"
+    }
+
     object Koin {
         private const val version = "2.2.2"
         const val android = "org.koin:koin-android:$version"
@@ -113,9 +118,10 @@ object TestLibs {
 
 object GradlePlugins {
     object Android {
-        private const val version = "7.0.0-alpha03"
+        private const val version = "7.0.0-alpha04"
         const val classpath = "com.android.tools.build:gradle:$version"
     }
+
     object Kotlin {
         const val version = "1.4.21"
         const val classpath = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"

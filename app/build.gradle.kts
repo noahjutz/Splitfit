@@ -120,6 +120,8 @@ dependencies {
     implementation(Libs.Koin.viewModel)
     implementation(Libs.Koin.compose)
     testImplementation(Libs.Koin.test)
+
+    implementation(Libs.DataStore.preferences)
 }
 
 ktlint {
