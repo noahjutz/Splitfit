@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.di
 
+import androidx.datastore.preferences.createDataStore
 import androidx.room.Room
 import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.ExerciseRepository
@@ -40,6 +41,10 @@ val koinModule = module {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "workout_routines_database")
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+    single {
+        androidContext().createDataStore(name = "settings")
     }
 
     factory {

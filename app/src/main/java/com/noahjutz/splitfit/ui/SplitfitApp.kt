@@ -32,25 +32,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
+import org.koin.androidx.compose.get
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun SplitfitApp() {
+fun SplitfitApp(
+    preferences: DataStore<Preferences> = get()
+) {
     val navController = rememberNavController()
-    val workoutInProgress =
-        true // TODO declare whether or not workout is in progress somehow (savedStateHandle? database?)
-    val currentRouteNotCreateWorkout = navController.currentBackStackEntryAsState()
-        .value?.arguments?.getString(KEY_ROUTE)?.contains("createWorkout") == false
-    val showWorkoutBottomSheet = false // workoutInProgress && currentRouteNotCreateWorkout
     val navToWorkoutScreen = { navController.navigate("createWorkout") }
+
+    val showWorkoutBottomSheet = false
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
@@ -64,7 +66,7 @@ fun SplitfitApp() {
                         Text(
                             modifier = Modifier.padding(horizontal = 12.dp),
                             text = "Workout in progress"
-                        ) // TODO show name instead
+                        )
                     }
                     Spacer(Modifier.weight(1f))
                     IconButton(onClick = navToWorkoutScreen) {
