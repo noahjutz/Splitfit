@@ -54,13 +54,13 @@ fun SplitfitApp(
     preferences: DataStore<Preferences> = get(),
 ) {
     val navController = rememberNavController()
-    val navToWorkoutScreen = { navController.navigate("createWorkout") }
 
-    val showWorkoutBottomSheet by preferences.data
-        .map {
-            it[DatastoreKeys.currentWorkout].let { it != null && it >= 0 }
-        }
-        .collectAsState(initial = false)
+    val currentWorkoutId by preferences.data
+        .map { it[DatastoreKeys.currentWorkout] }
+        .collectAsState(initial = -1)
+    val showWorkoutBottomSheet = currentWorkoutId?.let { it >= 0 } ?: false
+
+    val navToWorkoutScreen = { navController.navigate("createWorkout?workoutId=$currentWorkoutId") }
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
