@@ -33,6 +33,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -93,9 +94,30 @@ fun WorkoutScreen(
 
     Scaffold(
         topBar = {
+            var showMenu by remember { mutableStateOf(false) }
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = popBackStack) { Icon(Icons.Default.Close) }
+                },
+                actions = {
+                    DropdownMenu(
+                        toggle = {
+                            IconButton(onClick = {
+                                showMenu = true
+                            }) { Icon(Icons.Default.MoreVert) }
+                        },
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false }
+                    ) {
+                        DropdownMenuItem(onClick = {
+                            scope.launch {
+                                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                                popBackStack()
+                            }
+                        }) {
+                            Text("Finish workout")
+                        }
+                    }
                 },
                 title = {
                     Box {
