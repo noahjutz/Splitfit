@@ -29,6 +29,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -40,6 +42,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.util.DatastoreKeys
+import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
 
 @ExperimentalFoundationApi
@@ -47,12 +51,16 @@ import org.koin.androidx.compose.get
 @ExperimentalAnimationApi
 @Composable
 fun SplitfitApp(
-    preferences: DataStore<Preferences> = get()
+    preferences: DataStore<Preferences> = get(),
 ) {
     val navController = rememberNavController()
     val navToWorkoutScreen = { navController.navigate("createWorkout") }
 
-    val showWorkoutBottomSheet = false
+    val showWorkoutBottomSheet by preferences.data
+        .map {
+            it[DatastoreKeys.currentWorkout].let { it != null && it >= 0 }
+        }
+        .collectAsState(initial = false)
     Scaffold(
         topBar = {
             MainScreenTopBar(navController)
