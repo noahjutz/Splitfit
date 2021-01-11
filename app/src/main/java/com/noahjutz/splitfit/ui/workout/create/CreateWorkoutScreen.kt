@@ -53,12 +53,18 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
+import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.SwipeToDeleteBackground
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
@@ -73,7 +79,18 @@ fun WorkoutScreen(
     workoutId: Int,
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
+    preferences: DataStore<Preferences> = get(),
 ) {
+    val scope = rememberCoroutineScope()
+
+    onActive {
+        scope.launch {
+            preferences.edit {
+                it[DatastoreKeys.currentWorkout] = viewModel.presenter.workout.value.workoutId
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -169,12 +186,14 @@ fun SetGroupCard(
 
     Card(
         elevation = animate(if (offsetPosition == 0f) 0.dp else 4.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .offset(y = offsetPosition.dp)
     ) {
         Column {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {}
                     .longPressDragGestureFilter(
                         longPressDragObserver = object : LongPressDragObserver {
