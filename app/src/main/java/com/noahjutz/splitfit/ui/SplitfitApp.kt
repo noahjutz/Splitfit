@@ -80,22 +80,7 @@ fun SplitfitApp(
             }
         },
         bottomBar = {
-            if (showWorkoutBottomSheet) {
-                BottomAppBar(
-                    Modifier.clickable(onClick = navToWorkoutScreen)
-                ) {
-                    ProvideTextStyle(value = MaterialTheme.typography.h6) {
-                        Text(
-                            modifier = Modifier.padding(horizontal = 12.dp),
-                            text = "Workout in progress"
-                        )
-                    }
-                    Spacer(Modifier.weight(1f))
-                    IconButton(onClick = navToWorkoutScreen) {
-                        Icon(Icons.Default.ExpandLess)
-                    }
-                }
-            }
+            if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
         },
         drawerContent = {}
     ) {
@@ -144,7 +129,7 @@ private fun HomeTabRow(
 }
 
 @Composable
-fun HomeTopBar(openDrawer: () -> Unit) {
+private fun HomeTopBar(openDrawer: () -> Unit) {
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
         navigationIcon = {
@@ -153,4 +138,22 @@ fun HomeTopBar(openDrawer: () -> Unit) {
             }
         }
     )
+}
+
+@Composable
+private fun WorkoutBottomSheet(navToWorkoutScreen: () -> Unit) {
+    BottomAppBar(
+        Modifier.clickable(onClick = navToWorkoutScreen)
+    ) {
+        ProvideTextStyle(value = MaterialTheme.typography.h6) {
+            Text(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                text = "Workout in progress"
+            )
+        }
+        Spacer(Modifier.weight(1f))
+        IconButton(onClick = navToWorkoutScreen) {
+            Icon(Icons.Default.ExpandLess)
+        }
+    }
 }
