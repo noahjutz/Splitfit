@@ -19,13 +19,11 @@
 package com.noahjutz.splitfit.ui.workout
 
 import androidx.compose.animation.animate
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -53,7 +51,7 @@ fun WorkoutsScreen(
                         if (dismissState.dismissDirection != null) 4.dp else 0.dp
                     )
                 ) {
-                    ListItem(Modifier.clickable { navToCreateWorkoutScreen(workout.workoutId) }) {
+                    ListItem {
                         Text(
                             text = workout.name.takeIf { it.isNotBlank() }
                                 ?: stringResource(R.string.unnamed_workout),
