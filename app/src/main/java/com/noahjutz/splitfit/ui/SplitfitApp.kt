@@ -64,10 +64,11 @@ fun SplitfitApp(
     val showWorkoutBottomSheet = isWorkoutInProgress && isCurrentDestinationHomeTab
 
     val navToWorkoutScreen = { navController.navigate("createWorkout?workoutId=$currentWorkoutId") }
+
     Scaffold(
         topBar = {
             if (isCurrentDestinationHomeTab) {
-                MainScreenTopBar(navController)
+                HomeTabRow(navController)
             }
         },
         bottomBar = {
@@ -96,20 +97,20 @@ fun SplitfitApp(
     }
 }
 
-sealed class HomeTabs(val route: String, @StringRes val name: Int) {
+private sealed class HomeTabs(val route: String, @StringRes val name: Int) {
     object Routines : HomeTabs("routines", R.string.tab_routines)
     object Exercises : HomeTabs("exercises", R.string.tab_exercises)
     object Workouts : HomeTabs("workouts", R.string.tab_workouts)
 }
 
-val homeTabs = listOf(
+private val homeTabs = listOf(
     HomeTabs.Routines,
     HomeTabs.Exercises,
     HomeTabs.Workouts
 )
 
 @Composable
-fun MainScreenTopBar(
+private fun HomeTabRow(
     navController: NavHostController,
 ) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
