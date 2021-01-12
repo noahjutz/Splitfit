@@ -66,7 +66,9 @@ fun SplitfitApp(
     val navToWorkoutScreen = { navController.navigate("createWorkout?workoutId=$currentWorkoutId") }
     Scaffold(
         topBar = {
-            MainScreenTopBar(navController)
+            if (isCurrentDestinationHomeTab) {
+                MainScreenTopBar(navController)
+            }
         },
         bottomBar = {
             if (showWorkoutBottomSheet) {
@@ -112,24 +114,21 @@ fun MainScreenTopBar(
 ) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.arguments?.getString(KEY_ROUTE)
-    if (currentRoute in homeTabs.map { it.route }) {
-        TabRow(
-            selectedTabIndex = homeTabs.map { it.route }.indexOf(currentRoute).takeIf { it > 0 }
-                ?: 0
-        ) {
-            for (screen in homeTabs)
-                Tab(
-                    selected = screen.route == currentRoute,
-                    onClick = {
-                        navController.popBackStack(navController.graph.startDestination, false)
-                        if (currentRoute != screen.route) navController.navigate(screen.route)
-                    }
-                ) {
-                    Text(
-                        stringResource(screen.name),
-                        modifier = Modifier.padding(vertical = 16.dp)
-                    )
+    TabRow(
+        selectedTabIndex = homeTabs.map { it.route }.indexOf(currentRoute).takeIf { it > 0 } ?: 0
+    ) {
+        for (screen in homeTabs)
+            Tab(
+                selected = screen.route == currentRoute,
+                onClick = {
+                    navController.popBackStack(navController.graph.startDestination, false)
+                    if (currentRoute != screen.route) navController.navigate(screen.route)
                 }
-        }
+            ) {
+                Text(
+                    stringResource(screen.name),
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
+            }
     }
 }
