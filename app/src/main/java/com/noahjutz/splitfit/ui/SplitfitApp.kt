@@ -35,7 +35,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -68,11 +67,14 @@ fun SplitfitApp(
 
     val navToWorkoutScreen = { navController.navigate("createWorkout?workoutId=$currentWorkoutId") }
 
+    val scaffoldState = rememberScaffoldState()
+
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             if (isCurrentDestinationHomeTab) {
                 Column {
-                    HomeTopBar()
+                    HomeTopBar { scaffoldState.drawerState.open() }
                     HomeTabRow(navController)
                 }
             }
@@ -94,7 +96,8 @@ fun SplitfitApp(
                     }
                 }
             }
-        }
+        },
+        drawerContent = {}
     ) {
         val bottomPadding = if (showWorkoutBottomSheet) 56.dp else 0.dp
         Box(Modifier.padding(bottom = bottomPadding)) {
@@ -141,11 +144,11 @@ private fun HomeTabRow(
 }
 
 @Composable
-fun HomeTopBar() {
+fun HomeTopBar(openDrawer: () -> Unit) {
     TopAppBar(
         title = { Text(stringResource(R.string.app_name)) },
         navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = openDrawer) {
                 Icon(Icons.Default.Menu)
             }
         }
