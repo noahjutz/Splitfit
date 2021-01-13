@@ -36,6 +36,7 @@ import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.ui.workout.WorkoutsScreen
 import com.noahjutz.splitfit.ui.workout.create.WorkoutScreen
+import org.koin.androidx.compose.getViewModel
 import org.koin.java.KoinJavaComponent
 
 @ExperimentalFoundationApi
@@ -45,8 +46,8 @@ import org.koin.java.KoinJavaComponent
 fun NavGraph(
     navController: NavHostController,
 ) {
+    val sharedExerciseViewModel: SharedExerciseViewModel = getViewModel()
     NavHost(navController, startDestination = "routines") {
-        val sharedExerciseViewModel = KoinJavaComponent.get(SharedExerciseViewModel::class.java)
         composable("workouts") {
             WorkoutsScreen(
                 navToCreateWorkoutScreen = { workoutId -> navController.navigate("createWorkout?workoutId=$workoutId") }
