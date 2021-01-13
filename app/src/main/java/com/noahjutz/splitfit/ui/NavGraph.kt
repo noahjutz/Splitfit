@@ -35,6 +35,7 @@ import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
+import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.workout.WorkoutsScreen
 import com.noahjutz.splitfit.ui.workout.create.WorkoutScreen
 import org.koin.androidx.compose.getViewModel
@@ -116,7 +117,7 @@ fun NavGraph(
             Text("About")
         }
         composable("settings") {
-            Text("Settings")
+            AppSettings()
         }
     }
 }
