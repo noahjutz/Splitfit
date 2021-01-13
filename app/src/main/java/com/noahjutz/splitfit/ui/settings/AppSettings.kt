@@ -18,10 +18,41 @@
 
 package com.noahjutz.splitfit.ui.settings
 
-import androidx.compose.material.Text
+import androidx.compose.foundation.ScrollableColumn
+import androidx.compose.foundation.clickable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
 @Composable
-fun AppSettings() {
-    Text("AppSettings")
+fun AppSettings(
+    popBackStack: () -> Unit,
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Settings") },
+                navigationIcon = {
+                    IconButton(onClick = popBackStack) {
+                        Icon(Icons.Default.ArrowBack)
+                    }
+                }
+            )
+        }
+    ) {
+        ScrollableColumn {
+            ListItem(
+                modifier = Modifier.clickable {},
+                text = { Text("Export Database") },
+                secondaryText = { Text("Save routines, exercises and workouts in a file") },
+            )
+            ListItem(
+                modifier = Modifier.clickable {},
+                text = { Text("Import Database") },
+                secondaryText = { Text("Import a database file, overriding all data.") },
+            )
+        }
+    }
 }

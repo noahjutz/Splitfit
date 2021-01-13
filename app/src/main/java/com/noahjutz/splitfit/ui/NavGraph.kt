@@ -39,7 +39,6 @@ import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.workout.WorkoutsScreen
 import com.noahjutz.splitfit.ui.workout.create.WorkoutScreen
 import org.koin.androidx.compose.getViewModel
-import org.koin.java.KoinJavaComponent
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
@@ -117,7 +116,7 @@ fun NavGraph(
             Text("About")
         }
         composable("settings") {
-            AppSettings()
+            AppSettings(popBackStack = { navController.popBackStack() })
         }
     }
 }
