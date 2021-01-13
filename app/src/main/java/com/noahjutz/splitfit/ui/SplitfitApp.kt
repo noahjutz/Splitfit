@@ -82,7 +82,13 @@ fun SplitfitApp(
         bottomBar = {
             if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
         },
-        drawerContent = { AppDrawer() }
+        drawerContent = {
+            AppDrawer(
+                navToAbout = { navController.navigate("about") },
+                navToSettings = { navController.navigate("settings") },
+                drawerState = scaffoldState.drawerState,
+            )
+        }
     ) {
         val bottomPadding = if (showWorkoutBottomSheet) 56.dp else 0.dp
         Box(Modifier.padding(bottom = bottomPadding)) {

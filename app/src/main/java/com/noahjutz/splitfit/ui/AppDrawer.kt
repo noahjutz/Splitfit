@@ -36,7 +36,11 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 
 @Composable
-fun AppDrawer() {
+fun AppDrawer(
+    navToAbout: () -> Unit,
+    navToSettings: () -> Unit,
+    drawerState: DrawerState,
+) {
     Column(Modifier.fillMaxSize()) {
         Box(Modifier.padding(16.dp)) {
             ProvideTextStyle(value = MaterialTheme.typography.h6) {
@@ -44,20 +48,26 @@ fun AppDrawer() {
             }
         }
         DrawerButton(
-            action = { /* TODO */ },
+            action = { drawerState.close() },
             icon = Icons.Default.ViewAgenda,
             label = "Workout",
             isSelected = true
         )
         Divider(Modifier.padding(top = 8.dp))
         DrawerButton(
-            action = { /* TODO */ },
+            action = {
+                drawerState.close()
+                navToAbout()
+            },
             icon = Icons.Default.Info,
             label = "About",
             isSelected = false
         )
         DrawerButton(
-            action = { /* TODO */ },
+            action = {
+                drawerState.close()
+                navToSettings()
+            },
             icon = Icons.Default.Settings,
             label = "Settings",
             isSelected = false

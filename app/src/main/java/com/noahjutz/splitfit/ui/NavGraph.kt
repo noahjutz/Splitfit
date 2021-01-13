@@ -21,6 +21,7 @@ package com.noahjutz.splitfit.ui
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -110,6 +111,12 @@ fun NavGraph(
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
             )
+        }
+        composable("about") {
+            Text("About")
+        }
+        composable("settings") {
+            Text("Settings")
         }
     }
 }
