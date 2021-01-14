@@ -18,8 +18,8 @@
 
 package com.noahjutz.splitfit.util
 
-import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
 
 object DatastoreKeys {
-    val currentWorkout = preferencesKey<Int>("currentWorkout")
+    val currentWorkout = intPreferencesKey("currentWorkout")
 }
