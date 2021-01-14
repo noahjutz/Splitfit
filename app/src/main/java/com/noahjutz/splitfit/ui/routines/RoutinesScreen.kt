@@ -19,7 +19,6 @@
 package com.noahjutz.splitfit.ui.routines
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animate
 import androidx.compose.animation.core.animateAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

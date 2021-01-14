@@ -64,7 +64,8 @@ fun ExercisesScreen(
                         ) {
                             Card(
                                 elevation = animateAsState(
-                                    if (dismissState.dismissDirection != null) 4.dp else 0.dp).value
+                                    if (dismissState.dismissDirection != null) 4.dp else 0.dp
+                                ).value
                             ) {
                                 ListItem(
                                     Modifier.clickable { addEditExercise(exercise.exerciseId) }

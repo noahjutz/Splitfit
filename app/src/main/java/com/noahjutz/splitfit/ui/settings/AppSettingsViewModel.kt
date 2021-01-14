@@ -22,10 +22,8 @@ import androidx.lifecycle.ViewModel
 
 class AppSettingsViewModel : ViewModel() {
     fun exportDatabase() {
-
     }
 
     fun importDatabase() {
-
     }
 }

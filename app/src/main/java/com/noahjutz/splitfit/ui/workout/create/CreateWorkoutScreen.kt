@@ -102,19 +102,23 @@ fun WorkoutScreen(
                 actions = {
                     DropdownMenu(
                         toggle = {
-                            IconButton(onClick = {
-                                showMenu = true
-                            }) { Icon(Icons.Default.MoreVert) }
+                            IconButton(
+                                onClick = {
+                                    showMenu = true
+                                }
+                            ) { Icon(Icons.Default.MoreVert) }
                         },
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false }
                     ) {
-                        DropdownMenuItem(onClick = {
-                            scope.launch {
-                                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
-                                popBackStack()
+                        DropdownMenuItem(
+                            onClick = {
+                                scope.launch {
+                                    preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                                    popBackStack()
+                                }
                             }
-                        }) {
+                        ) {
                             Text("Finish workout")
                         }
                     }
@@ -172,7 +176,6 @@ fun WorkoutScreen(
         }
     }
 }
-
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi

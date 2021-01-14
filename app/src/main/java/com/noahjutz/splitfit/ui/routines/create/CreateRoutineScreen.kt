@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.ui.routines.create
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -145,8 +144,11 @@ fun CreateRoutineScreen(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false }
                     ) {
-                        DropdownMenuItem(onClick = {
-                            startWorkout(viewModel.presenter.routine.value.routineId) }) {
+                        DropdownMenuItem(
+                            onClick = {
+                                startWorkout(viewModel.presenter.routine.value.routineId)
+                            }
+                        ) {
                             Text("Start workout")
                         }
                     }

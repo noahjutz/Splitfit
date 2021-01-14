@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.ui.workout
 
-import androidx.compose.animation.animate
 import androidx.compose.animation.core.animateAsState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
