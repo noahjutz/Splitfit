@@ -19,6 +19,7 @@
 package com.noahjutz.splitfit.ui.workout
 
 import androidx.compose.animation.animate
+import androidx.compose.animation.core.animateAsState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -47,9 +48,9 @@ fun WorkoutsScreen(
                 background = { SwipeToDeleteBackground(dismissState) }
             ) {
                 Card(
-                    elevation = animate(
+                    elevation = animateAsState(
                         if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                    )
+                    ).value
                 ) {
                     ListItem {
                         Text(

@@ -20,6 +20,7 @@ package com.noahjutz.splitfit.ui.routines
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
+import androidx.compose.animation.core.animateAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -67,9 +68,9 @@ fun RoutinesScreen(
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
                     Card(
-                        elevation = animate(
+                        elevation = animateAsState(
                             if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                        )
+                        ).value
                     ) {
                         ListItem(Modifier.clickable { addEditRoutine(routine.routineId) }) {
                             Text(

@@ -424,7 +424,7 @@ fun SetTextField(
 
 /** Turns integer of 0-4 digits to MM:SS format */
 val timeVisualTransformation = object : VisualTransformation {
-    val offsetMap = object : OffsetMap {
+    val offsetMap = object : OffsetMapping {
         override fun originalToTransformed(offset: Int) = if (offset == 0) 0 else 5
         override fun transformedToOriginal(offset: Int) = 5 - offset
     }

@@ -18,7 +18,7 @@
 
 package com.noahjutz.splitfit.ui.exercises
 
-import androidx.compose.animation.animate
+import androidx.compose.animation.core.animateAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -63,9 +63,8 @@ fun ExercisesScreen(
                             background = { SwipeToDeleteBackground(dismissState) }
                         ) {
                             Card(
-                                elevation = animate(
-                                    if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                                )
+                                elevation = animateAsState(
+                                    if (dismissState.dismissDirection != null) 4.dp else 0.dp).value
                             ) {
                                 ListItem(
                                     Modifier.clickable { addEditExercise(exercise.exerciseId) }
