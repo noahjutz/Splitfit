@@ -22,7 +22,7 @@ import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.clickable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.koin.androidx.compose.getViewModel
@@ -47,13 +47,15 @@ fun AppSettings(
         ScrollableColumn {
             ListItem(
                 modifier = Modifier.clickable {},
-                text = { Text("Export Database") },
+                text = { Text("Backup") },
                 secondaryText = { Text("Save routines, exercises and workouts in a file") },
+                icon = { Icon(Icons.Default.SaveAlt) },
             )
             ListItem(
                 modifier = Modifier.clickable {},
-                text = { Text("Import Database") },
+                text = { Text("Restore") },
                 secondaryText = { Text("Import a database file, overriding all data.") },
+                icon = { Icon(Icons.Default.SettingsBackupRestore) },
             )
         }
     }
