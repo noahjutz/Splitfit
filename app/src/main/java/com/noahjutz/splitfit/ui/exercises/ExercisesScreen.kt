@@ -34,7 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.util.SwipeToDeleteBackground
+import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import org.koin.androidx.compose.getViewModel
 
 @ExperimentalMaterialApi
