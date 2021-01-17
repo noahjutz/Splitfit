@@ -18,10 +18,27 @@
 
 package com.noahjutz.splitfit.ui.settings
 
+import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 
-class AppSettingsViewModel : ViewModel() {
-    fun exportDatabase() {
+class AppSettingsViewModel(
+    private val application: Application,
+) : ViewModel() {
+    fun exportDatabase(outUri: Uri) {
+        val inStream = application.applicationContext
+            .getDatabasePath("workout_routines_database")
+            .inputStream()
+
+        val outStream = application.applicationContext
+            .contentResolver
+            .openOutputStream(outUri)
+
+        inStream.use { input ->
+            outStream?.use { output ->
+                input.copyTo(output)
+            }
+        }
     }
 
     fun importDatabase() {
