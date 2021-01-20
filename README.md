@@ -5,6 +5,7 @@
 [![CircleCI](https://img.shields.io/circleci/build/github/noahjutz/Splitfit/master?logo=circleci)](https://app.circleci.com/pipelines/github/noahjutz/Splitfit?branch=master)
 ![License](https://img.shields.io/github/license/noahjutz/Splitfit)
 [![Liberapay](https://img.shields.io/badge/donate-liberapay-yellow?logo=liberapay&logoColor=white)](https://liberapay.com/noahjutz/donate)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 Save workout routines and track your progress.
 
