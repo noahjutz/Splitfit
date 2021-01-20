@@ -53,7 +53,7 @@ fun AppSettings(
             )
         }
     ) {
-        ActivityResultLaunchers.ExportDatabase.launcher.onResult =  { result ->
+        ActivityResultLaunchers.ExportDatabase.launcher.onResult = { result ->
             scope.launch {
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
                 scaffoldState.snackbarHostState.showSnackbar("${result?.data?.data}")
