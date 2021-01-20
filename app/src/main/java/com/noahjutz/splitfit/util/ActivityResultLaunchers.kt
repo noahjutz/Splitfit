@@ -33,6 +33,14 @@ import com.noahjutz.splitfit.ui.MainActivity
  * Only use within [MainActivity]!
  */
 object ActivityResultLaunchers {
+    /**
+     * Registers all launchers in [ActivityResultLaunchers], so they don't have to be registered
+     * individually.
+     */
+    fun MainActivity.registerLaunchers() {
+        ExportDatabase.launcher.register(this)
+    }
+
     object ExportDatabase {
         private val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             type = "application/vnd.sqlite3"

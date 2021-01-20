@@ -28,7 +28,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.platform.setContent
-import com.noahjutz.splitfit.util.ActivityResultLaunchers
+import com.noahjutz.splitfit.util.ActivityResultLaunchers.registerLaunchers
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     init {
-        ActivityResultLaunchers.ExportDatabase.launcher.register(this)
+        registerLaunchers()
     }
 }
 
