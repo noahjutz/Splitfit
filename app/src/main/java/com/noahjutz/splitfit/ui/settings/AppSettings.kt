@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.settings
 
+import android.app.Activity
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.clickable
 import androidx.compose.material.*
@@ -55,22 +56,26 @@ fun AppSettings(
     ) {
         var showRestartAppDialog by remember { mutableStateOf(false) }
         ActivityResultLaunchers.ExportDatabase.launcher.onResult = { result ->
-            val uri = result?.data?.data
-            scope.launch {
-                if (uri != null) {
-                    viewModel.exportDatabase(uri)
+            if (result?.resultCode == Activity.RESULT_OK) {
+                val uri = result.data?.data
+                scope.launch {
+                    if (uri != null) {
+                        viewModel.exportDatabase(uri)
+                    }
+                    showRestartAppDialog = true
                 }
-                showRestartAppDialog = true
             }
         }
 
         ActivityResultLaunchers.ImportDatabase.launcher.onResult = { result ->
-            val uri = result?.data?.data
-            scope.launch {
-                if (uri != null) {
-                    viewModel.importDatabase(uri)
+            if (result?.resultCode == Activity.RESULT_OK) {
+                val uri = result.data?.data
+                scope.launch {
+                    if (uri != null) {
+                        viewModel.importDatabase(uri)
+                    }
+                    showRestartAppDialog = true
                 }
-                showRestartAppDialog = true
             }
         }
 
