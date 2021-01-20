@@ -60,6 +60,13 @@ fun AppSettings(
             }
         }
 
+        ActivityResultLaunchers.ImportDatabase.launcher.onResult = { result ->
+            scope.launch {
+                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                scaffoldState.snackbarHostState.showSnackbar("${result?.data?.data}")
+            }
+        }
+
         ScrollableColumn {
             ListItem(
                 modifier = Modifier.clickable { ActivityResultLaunchers.ExportDatabase.launcher.launch() },
@@ -68,7 +75,7 @@ fun AppSettings(
                 icon = { Icon(Icons.Default.SaveAlt) },
             )
             ListItem(
-                modifier = Modifier.clickable {},
+                modifier = Modifier.clickable { ActivityResultLaunchers.ImportDatabase.launcher.launch() },
                 text = { Text("Restore") },
                 secondaryText = { Text("Import a database file, overriding all data.") },
                 icon = { Icon(Icons.Default.SettingsBackupRestore) },

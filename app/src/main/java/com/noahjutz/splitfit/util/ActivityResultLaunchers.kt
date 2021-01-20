@@ -39,12 +39,20 @@ object ActivityResultLaunchers {
      */
     fun MainActivity.registerLaunchers() {
         ExportDatabase.launcher.register(this)
+        ImportDatabase.launcher.register(this)
     }
 
     object ExportDatabase {
         private val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             type = "application/vnd.sqlite3"
             putExtra(Intent.EXTRA_TITLE, "splitfit-backup.sqlite3")
+        }
+        val launcher = ActivityResultLauncherHolder(intent)
+    }
+
+    object ImportDatabase {
+        private val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            type = "application/vnd.sqlite3"
         }
         val launcher = ActivityResultLauncherHolder(intent)
     }
