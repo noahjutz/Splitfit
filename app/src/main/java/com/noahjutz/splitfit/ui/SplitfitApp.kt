@@ -71,6 +71,7 @@ fun SplitfitApp(
 
     Scaffold(
         scaffoldState = scaffoldState,
+        drawerGesturesEnabled = isCurrentDestinationHomeTab,
         topBar = {
             if (isCurrentDestinationHomeTab) {
                 Column {
