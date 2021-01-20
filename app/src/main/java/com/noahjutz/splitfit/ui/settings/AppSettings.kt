@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.noahjutz.splitfit.util.ActivityControl
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -61,6 +62,7 @@ fun AppSettings(
                 }
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
                 scaffoldState.snackbarHostState.showSnackbar("$uri")
+                ActivityControl.restartApp()
             }
         }
 
@@ -72,6 +74,7 @@ fun AppSettings(
                 }
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
                 scaffoldState.snackbarHostState.showSnackbar("$uri")
+                ActivityControl.restartApp()
             }
         }
 
