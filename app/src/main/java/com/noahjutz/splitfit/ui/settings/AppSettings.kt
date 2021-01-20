@@ -25,8 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.noahjutz.splitfit.util.ActivityControl
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
@@ -54,15 +53,14 @@ fun AppSettings(
             )
         }
     ) {
+        var showRestartAppDialog by remember { mutableStateOf(false) }
         ActivityResultLaunchers.ExportDatabase.launcher.onResult = { result ->
             val uri = result?.data?.data
             scope.launch {
                 if (uri != null) {
                     viewModel.exportDatabase(uri)
                 }
-                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                scaffoldState.snackbarHostState.showSnackbar("$uri")
-                ActivityControl.restartApp()
+                showRestartAppDialog = true
             }
         }
 
@@ -72,9 +70,7 @@ fun AppSettings(
                 if (uri != null) {
                     viewModel.importDatabase(uri)
                 }
-                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                scaffoldState.snackbarHostState.showSnackbar("$uri")
-                ActivityControl.restartApp()
+                showRestartAppDialog = true
             }
         }
 
@@ -92,5 +88,18 @@ fun AppSettings(
                 icon = { Icon(Icons.Default.SettingsBackupRestore) },
             )
         }
+
+        if (showRestartAppDialog) RestartAppDialog()
     }
+}
+
+@Composable
+fun RestartAppDialog() {
+    AlertDialog(
+        onDismissRequest = {},
+        dismissButton = {},
+        confirmButton = { Button(onClick = { ActivityControl.restartApp() }) { Text("Restart") } },
+        title = { Text("Restart App") },
+        text = { Text("App must be restarted after backup or restore.") }
+    )
 }
