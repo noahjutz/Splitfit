@@ -22,17 +22,26 @@ import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.clickable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.SaveAlt
+import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.noahjutz.splitfit.util.ActivityResultLaunchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@ExperimentalMaterialApi
 @Composable
 fun AppSettings(
     viewModel: AppSettingsViewModel = getViewModel(),
     popBackStack: () -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 title = { Text("Settings") },
@@ -44,9 +53,16 @@ fun AppSettings(
             )
         }
     ) {
+        ActivityResultLaunchers.ExportDatabase.launcher.onResult =  { result ->
+            scope.launch {
+                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                scaffoldState.snackbarHostState.showSnackbar("${result?.data?.data}")
+            }
+        }
+
         ScrollableColumn {
             ListItem(
-                modifier = Modifier.clickable {},
+                modifier = Modifier.clickable { ActivityResultLaunchers.ExportDatabase.launcher.launch() },
                 text = { Text("Backup") },
                 secondaryText = { Text("Save routines, exercises and workouts in a file") },
                 icon = { Icon(Icons.Default.SaveAlt) },
