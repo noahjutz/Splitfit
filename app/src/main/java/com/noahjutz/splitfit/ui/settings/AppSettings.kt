@@ -56,22 +56,22 @@ fun AppSettings(
         ActivityResultLaunchers.ExportDatabase.launcher.onResult = { result ->
             val uri = result?.data?.data
             scope.launch {
-                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                scaffoldState.snackbarHostState.showSnackbar("$uri")
                 if (uri != null) {
                     viewModel.exportDatabase(uri)
                 }
+                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                scaffoldState.snackbarHostState.showSnackbar("$uri")
             }
         }
 
         ActivityResultLaunchers.ImportDatabase.launcher.onResult = { result ->
             val uri = result?.data?.data
             scope.launch {
-                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                scaffoldState.snackbarHostState.showSnackbar("$uri")
                 if (uri != null) {
                     viewModel.importDatabase(uri)
                 }
+                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                scaffoldState.snackbarHostState.showSnackbar("$uri")
             }
         }
 

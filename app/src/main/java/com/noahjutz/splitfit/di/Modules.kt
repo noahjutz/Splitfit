@@ -116,6 +116,9 @@ val koinModule = module {
     }
 
     viewModel {
-        AppSettingsViewModel(application = androidApplication())
+        AppSettingsViewModel(
+            application = androidApplication(),
+            database = get()
+        )
     }
 }
