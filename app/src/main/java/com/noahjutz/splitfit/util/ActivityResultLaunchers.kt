@@ -52,7 +52,7 @@ object ActivityResultLaunchers {
 
     object ImportDatabase {
         private val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            type = "application/vnd.sqlite3"
+            type = "*/*"
         }
         val launcher = ActivityResultLauncherHolder(intent)
     }

@@ -41,6 +41,20 @@ class AppSettingsViewModel(
         }
     }
 
-    fun importDatabase() {
+    fun importDatabase(inUri: Uri) {
+        val inStream = application.applicationContext
+            .contentResolver
+            .openInputStream(inUri)
+
+        val outStream = application.applicationContext
+            .getDatabasePath("workout_routines_database")
+            .outputStream()
+
+
+        inStream.use { input ->
+            outStream.use { output ->
+                input?.copyTo(output)
+            }
+        }
     }
 }
