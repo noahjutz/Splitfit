@@ -94,16 +94,18 @@ fun AppSettings(
             )
         }
 
-        if (showRestartAppDialog) RestartAppDialog()
+        if (showRestartAppDialog) RestartAppDialog {viewModel.restartApp() }
     }
 }
 
 @Composable
-fun RestartAppDialog() {
+fun RestartAppDialog(
+    restartApp: () -> Unit
+) {
     AlertDialog(
         onDismissRequest = {},
         dismissButton = {},
-        confirmButton = { Button(onClick = { ActivityControl.restartApp() }) { Text("Restart") } },
+        confirmButton = { Button(onClick = restartApp) { Text("Restart") } },
         title = { Text("Restart App") },
         text = { Text("App must be restarted after backup or restore.") }
     )

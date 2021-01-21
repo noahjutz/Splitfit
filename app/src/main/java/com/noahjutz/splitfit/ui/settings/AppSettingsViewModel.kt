@@ -21,6 +21,7 @@ package com.noahjutz.splitfit.ui.settings
 import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.noahjutz.splitfit.data.AppDatabase
 
 class AppSettingsViewModel(
@@ -61,4 +62,6 @@ class AppSettingsViewModel(
             }
         }
     }
+
+    fun restartApp() = ProcessPhoenix.triggerRebirth(application.applicationContext)
 }
