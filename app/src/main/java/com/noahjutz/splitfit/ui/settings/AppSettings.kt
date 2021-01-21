@@ -28,7 +28,6 @@ import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.noahjutz.splitfit.util.ActivityControl
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
