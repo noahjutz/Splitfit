@@ -122,6 +122,8 @@ dependencies {
     testImplementation(Libs.Koin.test)
 
     implementation(Libs.DataStore.preferences)
+
+    implementation(Libs.ProcessPhoenix.processPhoenix)
 }
 
 ktlint {

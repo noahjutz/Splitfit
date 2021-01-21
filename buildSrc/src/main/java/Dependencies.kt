@@ -96,6 +96,11 @@ object Libs {
         const val compose = "org.koin:koin-androidx-compose:$version"
         const val test = "org.koin:koin-test:$version"
     }
+
+    object ProcessPhoenix {
+        private const val version = "2.0.0"
+        const val processPhoenix = "com.jakewharton:process-phoenix:$version"
+    }
 }
 
 object TestLibs {
