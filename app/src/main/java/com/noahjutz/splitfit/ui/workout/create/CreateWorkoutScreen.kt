@@ -256,7 +256,7 @@ fun SetGroupCard(
                     fontSize = 20.sp,
                 )
             }
-            Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)) {
+            Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = (16 + 48).dp)) {
                 if (exercise?.logReps == true) SetHeader(stringResource(R.string.reps))
                 if (exercise?.logWeight == true) SetHeader(stringResource(R.string.weight))
                 if (exercise?.logTime == true) SetHeader(stringResource(R.string.time))
@@ -284,9 +284,9 @@ fun SetGroupCard(
                     ) {
                         Row(
                             modifier = Modifier.padding(
-                                vertical = 8.dp,
                                 horizontal = 16.dp
-                            )
+                            ),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             var reps = set.reps?.toString() ?: ""
                             if (exercise?.logReps == true)
@@ -357,6 +357,13 @@ fun SetGroupCard(
                                     },
                                     regexPattern = RegexPatterns.float,
                                 )
+
+                            var checked by remember { mutableStateOf(false) }
+                            Checkbox(
+                                modifier = Modifier.preferredSize(48.dp),
+                                checked = checked,
+                                onCheckedChange = { checked = it },
+                            )
                         }
                     }
                 }
