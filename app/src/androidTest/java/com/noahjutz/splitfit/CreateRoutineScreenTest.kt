@@ -30,7 +30,7 @@ import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.ui.MainActivity
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
+import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -50,7 +50,7 @@ class CreateRoutineScreenTest {
         every { initialName } returns "Test Routine Name"
         every { getExerciseName(-1) } returns "Test Exercise Name"
     }
-    private val sharedViewModel = mockk<SharedExerciseViewModel>(relaxed = true).apply {
+    private val sharedViewModel = mockk<SharedPickExerciseViewModel>(relaxed = true).apply {
         every { exercises } returns MutableStateFlow<MutableList<Exercise>>(mutableListOf()).asStateFlow()
     }
     private val onAddExercise: () -> Unit = mockk(relaxed = true)
@@ -67,7 +67,7 @@ class CreateRoutineScreenTest {
                         onAddExercise = onAddExercise,
                         popBackStack = popBackStack,
                         viewModel = viewModel,
-                        sharedExerciseVM = sharedViewModel
+                        sharedPickExerciseViewModel = sharedViewModel
                     )
                 }
             }

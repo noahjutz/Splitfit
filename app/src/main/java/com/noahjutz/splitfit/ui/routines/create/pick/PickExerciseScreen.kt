@@ -35,18 +35,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import org.koin.androidx.compose.getViewModel
-import org.koin.core.context.GlobalContext.get
 
 @ExperimentalAnimationApi
 @Composable
 fun PickExerciseScreen(
     viewModel: PickExerciseViewModel = getViewModel(),
-    sharedExerciseViewModel: SharedExerciseViewModel,
+    sharedPickExerciseViewModel: SharedPickExerciseViewModel,
     popBackStack: () -> Unit,
 ) {
     var save = false
     onDispose {
-        if (!save) sharedExerciseViewModel.clear()
+        if (!save) sharedPickExerciseViewModel.clear()
     }
 
     Scaffold(
@@ -64,7 +63,7 @@ fun PickExerciseScreen(
             )
         },
         floatingActionButton = {
-            val selectedExercises by sharedExerciseViewModel.exercises.collectAsState()
+            val selectedExercises by sharedPickExerciseViewModel.exercises.collectAsState()
             AnimatedVisibility(
                 visible = selectedExercises.isNotEmpty(),
                 enter = slideInHorizontally({ it * 2 }),
@@ -81,8 +80,8 @@ fun PickExerciseScreen(
             items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
                 var checked by remember { mutableStateOf(false) }
                 onCommit(checked) {
-                    if (checked) sharedExerciseViewModel.add(exercise)
-                    else sharedExerciseViewModel.remove(exercise)
+                    if (checked) sharedPickExerciseViewModel.add(exercise)
+                    else sharedPickExerciseViewModel.remove(exercise)
                 }
                 ListItem(
                     trailing = {

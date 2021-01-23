@@ -55,7 +55,7 @@ import androidx.compose.ui.unit.sp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
+import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.util.RegexPatterns
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
@@ -74,13 +74,13 @@ fun CreateRoutineScreen(
     popBackStack: () -> Unit,
     routineId: Int,
     viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
-    sharedExerciseVM: SharedExerciseViewModel,
+    sharedPickExerciseViewModel: SharedPickExerciseViewModel,
 ) {
     val scope = rememberCoroutineScope()
 
     scope.launch {
-        viewModel.editor.addExercises(sharedExerciseVM.exercises.value)
-        sharedExerciseVM.clear()
+        viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value)
+        sharedPickExerciseViewModel.clear()
     }
 
     Scaffold(

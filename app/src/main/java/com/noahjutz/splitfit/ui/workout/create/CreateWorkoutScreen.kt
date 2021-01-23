@@ -60,7 +60,7 @@ import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
+import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
 import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
@@ -82,7 +82,7 @@ fun WorkoutScreen(
     workoutId: Int,
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
-    sharedExerciseVM: SharedExerciseViewModel = getViewModel(),
+    sharedPickExerciseViewModel: SharedPickExerciseViewModel = getViewModel(),
     preferences: DataStore<Preferences> = get(),
 ) {
     val scope = rememberCoroutineScope()
@@ -92,8 +92,8 @@ fun WorkoutScreen(
             preferences.edit {
                 it[DatastoreKeys.currentWorkout] = viewModel.presenter.workout.value.workoutId
             }
-            viewModel.editor.addExercises(sharedExerciseVM.exercises.value) // TODO fix: nothing gets added
-            sharedExerciseVM.clear()
+            viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value) // TODO fix: nothing gets added
+            sharedPickExerciseViewModel.clear()
         }
     }
 
