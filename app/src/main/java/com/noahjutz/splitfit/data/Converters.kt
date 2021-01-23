@@ -25,6 +25,7 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.*
 
 class Converters {
     @TypeConverter
@@ -32,4 +33,10 @@ class Converters {
 
     @TypeConverter
     fun toSetGroups(json: String): MutableList<SetGroup> = Json.decodeFromString(json)
+
+    @TypeConverter
+    fun fromDate(date: Date): Long = date.time
+
+    @TypeConverter
+    fun toDate(time: Long): Date = Date(time)
 }

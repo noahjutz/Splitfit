@@ -20,11 +20,13 @@ package com.noahjutz.splitfit.data.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "workout_table")
 data class Workout(
     val name: String = "",
     val setGroups: List<SetGroup> = emptyList(),
+    val startTime: Date = Calendar.getInstance().time,
 
     @PrimaryKey(autoGenerate = true)
     var workoutId: Int = 0,
