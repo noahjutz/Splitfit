@@ -107,6 +107,7 @@ fun NavGraph(
             )
         ) { backStackEntry ->
             WorkoutScreen(
+                navToPickExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),

@@ -60,6 +60,7 @@ import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
+import com.noahjutz.splitfit.ui.routines.create.pick.SharedExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
 import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
@@ -76,10 +77,12 @@ import kotlin.math.floor
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutScreen(
+    navToPickExercise: () -> Unit,
     popBackStack: () -> Unit,
     workoutId: Int,
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
+    sharedExerciseVM: SharedExerciseViewModel = getViewModel(),
     preferences: DataStore<Preferences> = get(),
 ) {
     val scope = rememberCoroutineScope()
@@ -89,6 +92,8 @@ fun WorkoutScreen(
             preferences.edit {
                 it[DatastoreKeys.currentWorkout] = viewModel.presenter.workout.value.workoutId
             }
+            viewModel.editor.addExercises(sharedExerciseVM.exercises.value) // TODO fix: nothing gets added
+            sharedExerciseVM.clear()
         }
     }
 
@@ -156,6 +161,13 @@ fun WorkoutScreen(
                         }
                     }
                 }
+            )
+        },
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                text = { Text("Add Exercise") },
+                icon = { Icon(Icons.Default.Add) },
+                onClick = navToPickExercise,
             )
         }
     ) {
