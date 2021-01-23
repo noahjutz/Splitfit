@@ -32,7 +32,7 @@ import com.noahjutz.splitfit.data.domain.Workout
         Routine::class,
         Workout::class,
     ],
-    version = 34
+    version = 35
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

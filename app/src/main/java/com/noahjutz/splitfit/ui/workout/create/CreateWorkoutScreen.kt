@@ -119,6 +119,7 @@ fun WorkoutScreen(
                         DropdownMenuItem(
                             onClick = {
                                 scope.launch {
+                                    viewModel.editor.setEndTime(Calendar.getInstance().time)
                                     preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
                                     popBackStack()
                                 }

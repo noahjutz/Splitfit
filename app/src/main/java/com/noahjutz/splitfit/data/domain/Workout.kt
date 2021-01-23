@@ -27,9 +27,10 @@ data class Workout(
     val name: String = "",
     val setGroups: List<SetGroup> = emptyList(),
     val startTime: Date = Calendar.getInstance().time,
+    val endTime: Date = startTime,
 
     @PrimaryKey(autoGenerate = true)
-    var workoutId: Int = 0,
+    val workoutId: Int = 0,
 )
 
 fun Routine.toWorkout() = Workout(name, setGroups)

@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class CreateWorkoutViewModel(
     private val workoutRepository: WorkoutRepository,
@@ -63,6 +64,10 @@ class CreateWorkoutViewModel(
     inner class Editor {
         fun setName(name: String) {
             _workout.value = _workout.value.copy(name = name)
+        }
+
+        fun setEndTime(endTime: Date) {
+            _workout.value = _workout.value.copy(endTime = endTime)
         }
 
         fun addSetTo(setGroup: SetGroup) {
