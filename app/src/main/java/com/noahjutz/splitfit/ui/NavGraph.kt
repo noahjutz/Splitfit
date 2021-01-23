@@ -111,6 +111,7 @@ fun NavGraph(
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
+                sharedPickExerciseViewModel = sharedPickExerciseViewModel,
             )
         }
         composable("about") {

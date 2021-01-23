@@ -82,7 +82,7 @@ fun WorkoutScreen(
     workoutId: Int,
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
-    sharedPickExerciseViewModel: SharedPickExerciseViewModel = getViewModel(),
+    sharedPickExerciseViewModel: SharedPickExerciseViewModel,
     preferences: DataStore<Preferences> = get(),
 ) {
     val scope = rememberCoroutineScope()
@@ -92,7 +92,7 @@ fun WorkoutScreen(
             preferences.edit {
                 it[DatastoreKeys.currentWorkout] = viewModel.presenter.workout.value.workoutId
             }
-            viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value) // TODO fix: nothing gets added
+            viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value)
             sharedPickExerciseViewModel.clear()
         }
     }
