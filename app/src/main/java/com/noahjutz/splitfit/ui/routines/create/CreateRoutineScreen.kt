@@ -52,13 +52,18 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
@@ -75,8 +80,11 @@ fun CreateRoutineScreen(
     routineId: Int,
     viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
     sharedPickExerciseViewModel: SharedPickExerciseViewModel,
+    preferences: DataStore<Preferences> = get(),
 ) {
+    val preferencesData by preferences.data.collectAsState(null)
     val scope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
 
     scope.launch {
         viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value)
@@ -84,6 +92,7 @@ fun CreateRoutineScreen(
     }
 
     Scaffold(
+        scaffoldState = scaffoldState,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddExercise,
@@ -146,7 +155,26 @@ fun CreateRoutineScreen(
                     ) {
                         DropdownMenuItem(
                             onClick = {
-                                startWorkout(viewModel.presenter.routine.value.routineId)
+                                val currentWorkout =
+                                    preferencesData?.get(DatastoreKeys.currentWorkout)
+                                if (currentWorkout == null || currentWorkout < 0) {
+                                    startWorkout(viewModel.presenter.routine.value.routineId)
+                                } else {
+                                    scope.launch {
+                                        scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                                        val snackbarResult =
+                                            scaffoldState.snackbarHostState.showSnackbar(
+                                                "A workout is already in progress.",
+                                                "Stop current"
+                                            )
+                                        if (snackbarResult == SnackbarResult.ActionPerformed) {
+                                            preferences.edit {
+                                                it[DatastoreKeys.currentWorkout] = -1
+                                            }
+                                            scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
+                                        }
+                                    }
+                                }
                             }
                         ) {
                             Text("Start workout")
@@ -156,7 +184,8 @@ fun CreateRoutineScreen(
             )
         }
     ) {
-        val setGroups by viewModel.presenter.routine.mapLatest { it.setGroups }.collectAsState(emptyList())
+        val setGroups by viewModel.presenter.routine.mapLatest { it.setGroups }
+            .collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
             itemsIndexed(setGroups) { i, setGroup ->
                 SetGroupCard(
@@ -207,12 +236,14 @@ fun SetGroupCard(
 
     Card(
         elevation = animate(if (offsetPosition == 0f) 0.dp else 4.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .offset(y = offsetPosition.dp)
     ) {
         Column {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {}
                     .longPressDragGestureFilter(
                         longPressDragObserver = object : LongPressDragObserver {
