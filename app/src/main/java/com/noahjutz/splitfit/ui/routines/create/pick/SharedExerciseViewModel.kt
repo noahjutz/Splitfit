@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.asStateFlow
  * Used to pass back exercises from PickExercise to CreateRoutine
  */
 class SharedExerciseViewModel : ViewModel() {
-    private val _exercises = MutableStateFlow<MutableList<Exercise>>(mutableListOf())
+    private val _exercises = MutableStateFlow<List<Exercise>>(mutableListOf())
     val exercises = _exercises.asStateFlow()
 
     fun add(exercise: Exercise) {
@@ -39,6 +39,6 @@ class SharedExerciseViewModel : ViewModel() {
     }
 
     fun clear() {
-        _exercises.value = mutableListOf()
+        _exercises.value = emptyList()
     }
 }
