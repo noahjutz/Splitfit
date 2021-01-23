@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/banner/v2/ReadmeBanner.png" />
+<img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/banner/v3/ReadmeBanner.png" />
 <br><br>
 <img src="https://img.shields.io/circleci/build/github/noahjutz/Splitfit/master?logo=circleci" />
 <img src="https://img.shields.io/github/license/noahjutz/Splitfit" />
