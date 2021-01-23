@@ -16,8 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:Suppress("ObjectPropertyName")
-
 package com.noahjutz.splitfit.util
 
 import android.content.Intent
