@@ -358,11 +358,16 @@ fun SetGroupCard(
                                     regexPattern = RegexPatterns.float,
                                 )
 
-                            var checked by remember { mutableStateOf(false) }
+                            val checked = set.complete
                             Checkbox(
                                 modifier = Modifier.preferredSize(48.dp),
                                 checked = checked,
-                                onCheckedChange = { checked = it },
+                                onCheckedChange = {
+                                    viewModel.editor.updateSet(
+                                        setGroupIndex, setIndex,
+                                        complete = it
+                                    )
+                                },
                             )
                         }
                     }

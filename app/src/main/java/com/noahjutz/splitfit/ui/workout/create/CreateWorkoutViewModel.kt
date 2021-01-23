@@ -108,6 +108,7 @@ class CreateWorkoutViewModel(
             weight: Double? = _workout.value.setGroups[setGroupIndex].sets[setIndex].weight,
             time: Int? = _workout.value.setGroups[setGroupIndex].sets[setIndex].time,
             distance: Double? = _workout.value.setGroups[setGroupIndex].sets[setIndex].distance,
+            complete: Boolean = _workout.value.setGroups[setGroupIndex].sets[setIndex].complete,
         ) {
             val setGroups = _workout.value.setGroups.toMutableList().apply {
                 this[setGroupIndex] = this[setGroupIndex].copy(
@@ -117,6 +118,7 @@ class CreateWorkoutViewModel(
                             weight = weight,
                             time = time,
                             distance = distance,
+                            complete = complete,
                         )
                     }
                 )

@@ -26,4 +26,5 @@ data class Set(
     val weight: Double? = null,
     val time: Int? = null,
     val distance: Double? = null,
+    val complete: Boolean = false,
 )
