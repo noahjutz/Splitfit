@@ -100,31 +100,6 @@ fun WorkoutScreen(
                 navigationIcon = {
                     IconButton(onClick = popEntireBackStack) { Icon(Icons.Default.Close) }
                 },
-                actions = {
-                    DropdownMenu(
-                        toggle = {
-                            IconButton(
-                                onClick = {
-                                    showMenu = true
-                                }
-                            ) { Icon(Icons.Default.MoreVert) }
-                        },
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
-                        DropdownMenuItem(
-                            onClick = {
-                                scope.launch {
-                                    viewModel.editor.setEndTime(Calendar.getInstance().time)
-                                    preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
-                                    popEntireBackStack()
-                                }
-                            }
-                        ) {
-                            Text("Finish workout")
-                        }
-                    }
-                },
                 title = {
                     Box {
                         var nameFieldValue by remember {
