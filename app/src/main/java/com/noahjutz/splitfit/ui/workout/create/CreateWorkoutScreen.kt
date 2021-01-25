@@ -194,8 +194,33 @@ fun WorkoutScreen(
             }
 
             item {
+                Divider(Modifier.padding(vertical = 16.dp))
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    TextButton(
+                        modifier = Modifier.weight(1f),
+                        onClick = { /*TODO*/ },
+                    ) {
+                        Icon(Icons.Default.Cancel)
+                        Spacer(Modifier.preferredWidth(8.dp))
+                        Text("Cancel Workout")
+                    }
+                    Spacer(Modifier.preferredWidth(16.dp))
+                    Button(
+                        modifier = Modifier.weight(1f),
+                        onClick = { /*TODO*/ },
+                    ) {
+                        Icon(Icons.Default.Done)
+                        Spacer(Modifier.preferredWidth(8.dp))
+                        Text("Finish Workout")
+                    }
+                }
                 // Fix FAB overlap
-                Box(Modifier.height(72.dp))
+                Box(Modifier.height(80.dp))
             }
         }
     }
