@@ -27,8 +27,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
+import com.noahjutz.splitfit.util.DatastoreKeys
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
 @ExperimentalMaterialApi
@@ -36,8 +41,10 @@ import org.koin.androidx.compose.getViewModel
 fun WorkoutsScreen(
     viewModel: WorkoutsViewModel = getViewModel(),
     navToCreateWorkoutScreen: (Int) -> Unit,
+    preferences: DataStore<Preferences> = get(),
 ) {
     val workout by viewModel.presenter.workouts.collectAsState(emptyList())
+    val preferencesData by preferences.data.collectAsState(null)
     LazyColumn {
         items(workout) { workout ->
             val dismissState = rememberDismissState()
@@ -63,38 +70,66 @@ fun WorkoutsScreen(
             }
 
             if (dismissState.value != DismissValue.Default) {
-                AlertDialog(
-                    title = {
-                        Text(
-                            stringResource(
-                                R.string.confirm_delete,
-                                workout.name.takeIf { it.isNotBlank() }
-                                    ?: stringResource(R.string.unnamed_workout)
-                            )
-                        )
-                    },
-                    confirmButton = {
-                        Button(
-                            onClick = {
-                                viewModel.editor.delete(workout)
-                                dismissState.snapTo(DismissValue.Default)
-                            },
-                            content = { Text(stringResource(R.string.yes)) }
-                        )
-                    },
-                    dismissButton = {
-                        TextButton(
-                            onClick = {
-                                dismissState.snapTo(DismissValue.Default)
-                            },
-                            content = { Text(stringResource(R.string.cancel)) }
-                        )
-                    },
-                    onDismissRequest = {
-                        dismissState.snapTo(DismissValue.Default)
-                    }
-                )
+                if (preferencesData?.get(DatastoreKeys.currentWorkout) == workout.workoutId) {
+                    CannotDeleteAlert(
+                        resetDismissState = { dismissState.snapTo(DismissValue.Default) }
+                    )
+                } else {
+                    DeleteConfirmation(
+                        workout = workout,
+                        deleteWorkout = { viewModel.editor.delete(workout) },
+                        resetDismissState = { dismissState.snapTo(DismissValue.Default) }
+                    )
+                }
             }
         }
     }
+}
+
+@Composable
+private fun CannotDeleteAlert(
+    resetDismissState: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = resetDismissState,
+        title = { Text("Cannot delete workout") },
+        text = { Text("This workout is currently in progress. Please finish it before deleting it.") },
+        confirmButton = {},
+        dismissButton = { TextButton(onClick = resetDismissState) { Text("Close") } },
+    )
+}
+
+@Composable
+private fun DeleteConfirmation(
+    workout: Workout,
+    deleteWorkout: () -> Unit,
+    resetDismissState: () -> Unit,
+) {
+    AlertDialog(
+        title = {
+            Text(
+                stringResource(
+                    R.string.confirm_delete,
+                    workout.name.takeIf { it.isNotBlank() }
+                        ?: stringResource(R.string.unnamed_workout)
+                )
+            )
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    deleteWorkout()
+                    resetDismissState()
+                },
+                content = { Text(stringResource(R.string.yes)) }
+            )
+        },
+        dismissButton = {
+            TextButton(
+                onClick = resetDismissState,
+                content = { Text(stringResource(R.string.cancel)) }
+            )
+        },
+        onDismissRequest = resetDismissState
+    )
 }
