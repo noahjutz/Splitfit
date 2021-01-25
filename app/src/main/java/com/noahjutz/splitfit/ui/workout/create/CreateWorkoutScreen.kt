@@ -208,9 +208,9 @@ fun WorkoutScreen(
                         modifier = Modifier.weight(1f),
                         onClick = { showCancelWorkoutDialog = true },
                     ) {
-                        Icon(Icons.Default.Cancel)
+                        Icon(Icons.Default.Delete)
                         Spacer(Modifier.preferredWidth(8.dp))
-                        Text("Cancel Workout")
+                        Text("Delete Workout")
                     }
                     Spacer(Modifier.preferredWidth(16.dp))
                     Button(
@@ -502,7 +502,7 @@ private fun CancelWorkoutDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Delete Workout?") },
-        text = { Text("Do you really want to cancel this workout?") },
+        text = { Text("Do you really want to delete this workout?") },
         confirmButton = { Button(onClick = cancelWorkout) { Text("Delete") } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
