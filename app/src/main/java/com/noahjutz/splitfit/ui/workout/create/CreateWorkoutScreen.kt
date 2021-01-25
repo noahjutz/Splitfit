@@ -143,6 +143,33 @@ fun WorkoutScreen(
             )
         }
     ) {
+        var showFinishWorkoutDialog by remember { mutableStateOf(false) }
+        if (showFinishWorkoutDialog) FinishWorkoutDialog(
+            onDismiss = {
+                showFinishWorkoutDialog = false
+            },
+            finishWorkout = {
+                scope.launch { // TODO delegate to viewModel
+                    viewModel.editor.setEndTime(Calendar.getInstance().time)
+                    preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                    popEntireBackStack()
+                }
+            }
+        )
+        var showCancelWorkoutDialog by remember { mutableStateOf(false) }
+        if (showCancelWorkoutDialog) CancelWorkoutDialog(
+            onDismiss = {
+                showCancelWorkoutDialog = false
+            },
+            cancelWorkout = {
+                scope.launch { // TODO delegate to viewModel
+                    viewModel.editor.deleteWorkout()
+                    preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                    popEntireBackStack()
+                }
+            }
+        )
+
         val workout by viewModel.presenter.workout.collectAsState()
         val setGroups = workout.setGroups
         LazyColumn(Modifier.fillMaxHeight()) {
@@ -178,13 +205,7 @@ fun WorkoutScreen(
                 ) {
                     TextButton(
                         modifier = Modifier.weight(1f),
-                        onClick = { // TODO delegate to viewModel
-                            scope.launch {
-                                viewModel.editor.deleteWorkout()
-                                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
-                                popEntireBackStack()
-                            }
-                        },
+                        onClick = { showCancelWorkoutDialog = true },
                     ) {
                         Icon(Icons.Default.Cancel)
                         Spacer(Modifier.preferredWidth(8.dp))
@@ -193,13 +214,7 @@ fun WorkoutScreen(
                     Spacer(Modifier.preferredWidth(16.dp))
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { // TODO delegate to viewModel
-                            scope.launch {
-                                viewModel.editor.setEndTime(Calendar.getInstance().time)
-                                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
-                                popEntireBackStack()
-                            }
-                        }
+                        onClick = { showFinishWorkoutDialog = true }
                     ) {
                         Icon(Icons.Default.Done)
                         Spacer(Modifier.preferredWidth(8.dp))
@@ -475,5 +490,33 @@ fun SetTextField(
         ),
         cursorColor = MaterialTheme.colors.onSurface,
         maxLines = 1
+    )
+}
+
+@Composable
+private fun CancelWorkoutDialog(
+    onDismiss: () -> Unit,
+    cancelWorkout: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Delete Workout?") },
+        text = { Text("Do you really want to cancel this workout?") },
+        confirmButton = { Button(onClick = cancelWorkout) { Text("Delete") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+    )
+}
+
+@Composable
+private fun FinishWorkoutDialog(
+    onDismiss: () -> Unit,
+    finishWorkout: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Finish Workout?") },
+        text = { Text("Do you want to finish the workout?") },
+        confirmButton = { Button(onClick = finishWorkout) { Text("Finish") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
