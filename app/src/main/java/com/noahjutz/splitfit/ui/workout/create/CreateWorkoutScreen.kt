@@ -203,7 +203,13 @@ fun WorkoutScreen(
                 ) {
                     TextButton(
                         modifier = Modifier.weight(1f),
-                        onClick = { /*TODO*/ },
+                        onClick = { // TODO delegate to viewModel
+                            scope.launch {
+                                viewModel.editor.deleteWorkout()
+                                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                                popEntireBackStack()
+                            }
+                        },
                     ) {
                         Icon(Icons.Default.Cancel)
                         Spacer(Modifier.preferredWidth(8.dp))
@@ -212,7 +218,13 @@ fun WorkoutScreen(
                     Spacer(Modifier.preferredWidth(16.dp))
                     Button(
                         modifier = Modifier.weight(1f),
-                        onClick = { /*TODO*/ },
+                        onClick = { // TODO delegate to viewModel
+                            scope.launch {
+                                viewModel.editor.setEndTime(Calendar.getInstance().time)
+                                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                                popEntireBackStack()
+                            }
+                        }
                     ) {
                         Icon(Icons.Default.Done)
                         Spacer(Modifier.preferredWidth(8.dp))

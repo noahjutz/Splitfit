@@ -133,6 +133,12 @@ class CreateWorkoutViewModel(
             }
             _workout.value = _workout.value.copy(setGroups = setGroups)
         }
+
+        fun deleteWorkout() {
+            viewModelScope.launch {
+                workoutRepository.delete(_workout.value)
+            }
+        }
     }
 
     inner class Presenter {
