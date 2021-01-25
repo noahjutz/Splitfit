@@ -184,7 +184,7 @@ fun WorkoutScreen(
                     )
                 }
 
-                Divider()
+                if (setGroups.isNotEmpty()) Divider()
             }
 
             itemsIndexed(setGroups) { i, setGroup ->
@@ -193,10 +193,11 @@ fun WorkoutScreen(
                     setGroup = setGroup,
                     viewModel = viewModel
                 )
+                Spacer(Modifier.preferredHeight(16.dp))
             }
 
             item {
-                Divider(Modifier.padding(vertical = 16.dp))
+                Divider(Modifier.padding(bottom = 16.dp))
                 Row(
                     Modifier
                         .fillMaxWidth()
