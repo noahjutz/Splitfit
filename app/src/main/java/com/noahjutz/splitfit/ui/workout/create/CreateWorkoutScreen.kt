@@ -31,9 +31,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,8 +50,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -64,7 +61,6 @@ import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
 import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -172,9 +168,23 @@ fun WorkoutScreen(
             )
         }
     ) {
-        val setGroups by viewModel.presenter.workout.mapLatest { it.setGroups }
-            .collectAsState(emptyList())
+        val workout by viewModel.presenter.workout.collectAsState()
+        val setGroups = workout.setGroups
         LazyColumn(Modifier.fillMaxHeight()) {
+            item {
+                Column {
+                    val duration by viewModel.presenter.durationString.collectAsState("00:00:00")
+                    ListItem(
+                        modifier = Modifier.clickable {},
+                        text = { Text(duration) },
+                        secondaryText = { Text("Duration") },
+                        icon = { Icon(Icons.Default.AccessTime) },
+                    )
+                }
+
+                Divider()
+            }
+
             itemsIndexed(setGroups) { i, setGroup ->
                 SetGroupCard(
                     setGroupIndex = i,
@@ -182,9 +192,10 @@ fun WorkoutScreen(
                     viewModel = viewModel
                 )
             }
+
             item {
                 // Fix FAB overlap
-                Box(Modifier.height(72.dp)) {}
+                Box(Modifier.height(72.dp))
             }
         }
     }

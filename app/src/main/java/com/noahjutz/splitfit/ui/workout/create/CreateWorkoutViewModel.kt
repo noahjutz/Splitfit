@@ -25,12 +25,15 @@ import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
+import kotlin.time.seconds
 
 class CreateWorkoutViewModel(
     private val workoutRepository: WorkoutRepository,
@@ -134,7 +137,29 @@ class CreateWorkoutViewModel(
 
     inner class Presenter {
         val workout = _workout.asStateFlow()
+        val currentTime = flow {
+            while (true) {
+                emit(Calendar.getInstance().time)
+                delay(1000)
+            }
+        }
+
+        @OptIn(ExperimentalTime::class)
+        val duration = currentTime.map { (it - workout.value.startTime).inSeconds.seconds }
+
+        @OptIn(ExperimentalTime::class)
+        val durationString = duration.map {
+            it.toComponents { hours, minutes, seconds, _ ->
+                val hoursString = if (hours > 9) hours.toString() else "0$hours"
+                val minutesString = if (minutes > 9) minutes.toString() else "0$minutes"
+                val secondsString = if (seconds > 9) seconds.toString() else "0$seconds"
+                "$hoursString:$minutesString:$secondsString"
+            }
+        }
 
         fun getExercise(exerciseId: Int) = exerciseRepository.getExercise(exerciseId)
     }
 }
+
+@OptIn(ExperimentalTime::class)
+private infix operator fun Date.minus(date: Date): Duration = (this.time - date.time).milliseconds
