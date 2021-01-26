@@ -46,9 +46,10 @@ fun ExercisesScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_exercises)) }) },
         floatingActionButton = {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 onClick = { addEditExercise(viewModel.addExercise().toInt()) },
-                content = { Icon(Icons.Default.Add) }
+                icon = { Icon(Icons.Default.Add) },
+                text = { Text("New Exercise") },
             )
         },
         bodyContent = {

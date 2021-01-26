@@ -49,9 +49,10 @@ fun RoutinesScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_routines)) }) },
         floatingActionButton = {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 onClick = { addEditRoutine(viewModel.addRoutine().toInt()) },
-                content = { Icon(Icons.Default.Add) }
+                icon = { Icon(Icons.Default.Add) },
+                text = { Text("New Routine") },
             )
         },
     ) {
