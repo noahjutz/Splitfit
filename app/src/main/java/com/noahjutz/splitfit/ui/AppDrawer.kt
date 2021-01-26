@@ -38,7 +38,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import com.noahjutz.splitfit.R
 
-private sealed class TopLevelScreens(
+sealed class TopLevelScreens(
     val route: String,
     @StringRes val name: Int,
     val icon: ImageVector,
@@ -48,7 +48,7 @@ private sealed class TopLevelScreens(
     object Workouts : TopLevelScreens("workouts", R.string.tab_workouts, Icons.Default.History)
 }
 
-private val topLevelScreens = listOf(
+val topLevelScreens = listOf(
     TopLevelScreens.Routines,
     TopLevelScreens.Exercises,
     TopLevelScreens.Workouts
