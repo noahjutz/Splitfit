@@ -120,7 +120,7 @@ fun NavGraph(
             Text("About")
         }
         composable("settings") {
-            AppSettings(popBackStack = { navController.popBackStack() })
+            AppSettings()
         }
     }
 }

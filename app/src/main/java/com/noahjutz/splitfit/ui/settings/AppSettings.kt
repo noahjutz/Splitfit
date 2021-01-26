@@ -23,7 +23,6 @@ import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.clickable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
@@ -36,23 +35,9 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AppSettings(
     viewModel: AppSettingsViewModel = getViewModel(),
-    popBackStack: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text("Settings") },
-                navigationIcon = {
-                    IconButton(onClick = popBackStack) {
-                        Icon(Icons.Default.ArrowBack)
-                    }
-                }
-            )
-        }
-    ) {
+    Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) {
         var showRestartAppDialog by remember { mutableStateOf(false) }
         ActivityResultLaunchers.ExportDatabase.launcher.onResult = { result ->
             if (result?.resultCode == Activity.RESULT_OK) {
@@ -93,13 +78,13 @@ fun AppSettings(
             )
         }
 
-        if (showRestartAppDialog) RestartAppDialog {viewModel.restartApp() }
+        if (showRestartAppDialog) RestartAppDialog { viewModel.restartApp() }
     }
 }
 
 @Composable
 fun RestartAppDialog(
-    restartApp: () -> Unit
+    restartApp: () -> Unit,
 ) {
     AlertDialog(
         onDismissRequest = {},
