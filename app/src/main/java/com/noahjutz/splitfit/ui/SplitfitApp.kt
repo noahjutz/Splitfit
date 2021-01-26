@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -27,12 +28,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
@@ -46,6 +47,24 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.util.DatastoreKeys
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
+
+sealed class TopLevelScreens(
+    val route: String,
+    @StringRes val name: Int,
+    val icon: ImageVector,
+) {
+    object Routines : TopLevelScreens("routines", R.string.tab_routines, Icons.Default.ViewAgenda)
+    object Exercises : TopLevelScreens("exercises", R.string.tab_exercises, Icons.Default.SportsMma)
+    object Workouts : TopLevelScreens("workouts", R.string.tab_workouts, Icons.Default.History)
+    object Settings : TopLevelScreens("settings", R.string.tab_settings, Icons.Default.Settings)
+}
+
+val topLevelScreens = listOf(
+    TopLevelScreens.Routines,
+    TopLevelScreens.Exercises,
+    TopLevelScreens.Workouts,
+    TopLevelScreens.Settings,
+)
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -66,43 +85,18 @@ fun SplitfitApp(
 
     val navToWorkoutScreen = { navController.navigate("createWorkout?workoutId=$currentWorkoutId") }
 
-    val scaffoldState = rememberScaffoldState()
-
     Scaffold(
-        scaffoldState = scaffoldState,
-        drawerGesturesEnabled = isCurrentDestinationHomeTab,
-        topBar = {
-            if (isCurrentDestinationHomeTab) HomeTopBar { scaffoldState.drawerState.open() }
-        },
         bottomBar = {
             Column {
                 if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
                 if (isCurrentDestinationHomeTab) HomeBottomBar(navController = navController)
             }
-        },
-        drawerContent = {
-            AppDrawer(
-                navController = navController,
-                drawerState = scaffoldState.drawerState,
-            )
         }
     ) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
             NavGraph(navController = navController)
         }
     }
-}
-
-@Composable
-private fun HomeTopBar(openDrawer: () -> Unit) {
-    TopAppBar(
-        title = { Text(stringResource(R.string.app_name)) },
-        navigationIcon = {
-            IconButton(onClick = openDrawer) {
-                Icon(Icons.Default.Menu)
-            }
-        }
-    )
 }
 
 @Composable
