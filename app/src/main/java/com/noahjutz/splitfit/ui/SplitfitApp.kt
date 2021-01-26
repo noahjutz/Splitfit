@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -37,6 +38,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -53,10 +55,11 @@ import org.koin.androidx.compose.get
 sealed class TopLevelScreens(
     val route: String,
     @StringRes val name: Int,
-    val icon: ImageVector,
+    val icon: ImageVector? = null,
+    @DrawableRes val iconRes: Int? = null,
 ) {
     object Routines : TopLevelScreens("routines", R.string.tab_routines, Icons.Default.ViewAgenda)
-    object Exercises : TopLevelScreens("exercises", R.string.tab_exercises, Icons.Default.SportsMma)
+    object Exercises : TopLevelScreens("exercises", R.string.tab_exercises, iconRes = R.drawable.ic_dumbbell)
     object Workouts : TopLevelScreens("workouts", R.string.tab_workouts, Icons.Default.History)
     object Settings : TopLevelScreens("settings", R.string.tab_settings, Icons.Default.Settings)
 }
@@ -110,7 +113,7 @@ private fun HomeBottomBar(
     BottomNavigation {
         for (screen in topLevelScreens) {
             BottomNavigationItem(
-                icon = { Icon(screen.icon) },
+                icon = { Icon(screen.icon ?: vectorResource(screen.iconRes!!)) },
                 onClick = {
                     navController.popBackStack(navController.graph.startDestination, false)
                     if (screen.route != currentRoute) navController.navigate(screen.route)
