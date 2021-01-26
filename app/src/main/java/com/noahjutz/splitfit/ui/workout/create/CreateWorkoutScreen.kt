@@ -96,7 +96,6 @@ fun WorkoutScreen(
 
     Scaffold(
         topBar = {
-            var showMenu by remember { mutableStateOf(false) }
             TopAppBar(
                 navigationIcon = {
                     IconButton(onClick = popEntireBackStack) { Icon(Icons.Default.Close) }
