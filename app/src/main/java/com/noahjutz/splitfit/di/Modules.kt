@@ -112,7 +112,10 @@ val koinModule = module {
     }
 
     viewModel {
-        WorkoutsViewModel(repository = get())
+        WorkoutsViewModel(
+            repository = get(),
+            preferences = get(),
+        )
     }
 
     viewModel {

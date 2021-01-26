@@ -32,7 +32,6 @@ import androidx.datastore.preferences.core.Preferences
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.util.DatastoreKeys
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
@@ -41,13 +40,11 @@ import org.koin.androidx.compose.getViewModel
 fun WorkoutsScreen(
     viewModel: WorkoutsViewModel = getViewModel(),
     navToCreateWorkoutScreen: (Int) -> Unit,
-    preferences: DataStore<Preferences> = get(),
 ) {
-    val workout by viewModel.presenter.workouts.collectAsState(emptyList())
-    val preferencesData by preferences.data.collectAsState(null)
+    val workouts by viewModel.presenter.workouts.collectAsState(emptyList())
     Scaffold(topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_workouts)) }) }) {
         LazyColumn {
-            items(workout) { workout ->
+            items(workouts) { workout ->
                 val dismissState = rememberDismissState()
 
                 SwipeToDismiss(
@@ -71,34 +68,15 @@ fun WorkoutsScreen(
                 }
 
                 if (dismissState.value != DismissValue.Default) {
-                    if (preferencesData?.get(DatastoreKeys.currentWorkout) == workout.workoutId) {
-                        CannotDeleteAlert(
-                            resetDismissState = { dismissState.snapTo(DismissValue.Default) }
-                        )
-                    } else {
-                        DeleteConfirmation(
-                            workout = workout,
-                            deleteWorkout = { viewModel.editor.delete(workout) },
-                            resetDismissState = { dismissState.snapTo(DismissValue.Default) }
-                        )
-                    }
+                    DeleteConfirmation(
+                        workout = workout,
+                        deleteWorkout = { viewModel.editor.delete(workout) },
+                        resetDismissState = { dismissState.snapTo(DismissValue.Default) }
+                    )
                 }
             }
         }
     }
-}
-
-@Composable
-private fun CannotDeleteAlert(
-    resetDismissState: () -> Unit,
-) {
-    AlertDialog(
-        onDismissRequest = resetDismissState,
-        title = { Text("Cannot delete workout") },
-        text = { Text("This workout is currently in progress. Please finish it before deleting it.") },
-        confirmButton = {},
-        dismissButton = { TextButton(onClick = resetDismissState) { Text("Close") } },
-    )
 }
 
 @Composable
