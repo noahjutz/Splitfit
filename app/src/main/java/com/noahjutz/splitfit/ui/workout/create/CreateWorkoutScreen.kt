@@ -75,7 +75,7 @@ import kotlin.math.floor
 @Composable
 fun WorkoutScreen(
     navToPickExercise: () -> Unit,
-    popEntireBackStack: () -> Unit,
+    popBackStack: () -> Unit,
     workoutId: Int,
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
@@ -98,7 +98,7 @@ fun WorkoutScreen(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = popEntireBackStack) { Icon(Icons.Default.Close) }
+                    IconButton(onClick = popBackStack) { Icon(Icons.Default.Close) }
                 },
                 title = {
                     Box {
@@ -171,7 +171,7 @@ fun WorkoutScreen(
                 scope.launch { // TODO delegate to viewModel
                     viewModel.editor.setEndTime(Calendar.getInstance().time)
                     preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
-                    popEntireBackStack()
+                    popBackStack()
                 }
             }
         )
@@ -184,7 +184,7 @@ fun WorkoutScreen(
                 scope.launch { // TODO delegate to viewModel
                     viewModel.editor.deleteWorkout()
                     preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
-                    popEntireBackStack()
+                    popBackStack()
                 }
             }
         )
