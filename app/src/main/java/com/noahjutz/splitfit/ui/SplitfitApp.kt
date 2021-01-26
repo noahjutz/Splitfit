@@ -22,6 +22,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -36,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.navigation.NavController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
@@ -73,7 +75,10 @@ fun SplitfitApp(
             if (isCurrentDestinationHomeTab) HomeTopBar { scaffoldState.drawerState.open() }
         },
         bottomBar = {
-            if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
+            Column {
+                if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
+                if (isCurrentDestinationHomeTab) HomeBottomBar(navController = navController)
+            }
         },
         drawerContent = {
             AppDrawer(
@@ -98,6 +103,27 @@ private fun HomeTopBar(openDrawer: () -> Unit) {
             }
         }
     )
+}
+
+@Composable
+private fun HomeBottomBar(
+    navController: NavController,
+) {
+    val backStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry.value?.arguments?.getString(KEY_ROUTE)
+    BottomNavigation {
+        for (screen in topLevelScreens) {
+            BottomNavigationItem(
+                icon = { Icon(screen.icon) },
+                onClick = {
+                    navController.popBackStack(navController.graph.startDestination, false)
+                    if (screen.route != currentRoute) navController.navigate(screen.route)
+                },
+                label = { Text(stringResource(screen.name)) },
+                selected = screen.route == currentRoute,
+            )
+        }
+    }
 }
 
 @Composable
