@@ -45,41 +45,43 @@ fun WorkoutsScreen(
 ) {
     val workout by viewModel.presenter.workouts.collectAsState(emptyList())
     val preferencesData by preferences.data.collectAsState(null)
-    LazyColumn {
-        items(workout) { workout ->
-            val dismissState = rememberDismissState()
+    Scaffold(topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_workouts)) }) }) {
+        LazyColumn {
+            items(workout) { workout ->
+                val dismissState = rememberDismissState()
 
-            SwipeToDismiss(
-                state = dismissState,
-                background = { SwipeToDeleteBackground(dismissState) }
-            ) {
-                Card(
-                    elevation = animateAsState(
-                        if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                    ).value
+                SwipeToDismiss(
+                    state = dismissState,
+                    background = { SwipeToDeleteBackground(dismissState) }
                 ) {
-                    ListItem {
-                        Text(
-                            text = workout.name.takeIf { it.isNotBlank() }
-                                ?: stringResource(R.string.unnamed_workout),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+                    Card(
+                        elevation = animateAsState(
+                            if (dismissState.dismissDirection != null) 4.dp else 0.dp
+                        ).value
+                    ) {
+                        ListItem {
+                            Text(
+                                text = workout.name.takeIf { it.isNotBlank() }
+                                    ?: stringResource(R.string.unnamed_workout),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
                     }
                 }
-            }
 
-            if (dismissState.value != DismissValue.Default) {
-                if (preferencesData?.get(DatastoreKeys.currentWorkout) == workout.workoutId) {
-                    CannotDeleteAlert(
-                        resetDismissState = { dismissState.snapTo(DismissValue.Default) }
-                    )
-                } else {
-                    DeleteConfirmation(
-                        workout = workout,
-                        deleteWorkout = { viewModel.editor.delete(workout) },
-                        resetDismissState = { dismissState.snapTo(DismissValue.Default) }
-                    )
+                if (dismissState.value != DismissValue.Default) {
+                    if (preferencesData?.get(DatastoreKeys.currentWorkout) == workout.workoutId) {
+                        CannotDeleteAlert(
+                            resetDismissState = { dismissState.snapTo(DismissValue.Default) }
+                        )
+                    } else {
+                        DeleteConfirmation(
+                            workout = workout,
+                            deleteWorkout = { viewModel.editor.delete(workout) },
+                            resetDismissState = { dismissState.snapTo(DismissValue.Default) }
+                        )
+                    }
                 }
             }
         }
