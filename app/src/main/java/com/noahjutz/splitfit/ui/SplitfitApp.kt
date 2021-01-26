@@ -26,7 +26,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
@@ -123,7 +125,9 @@ private fun HomeBottomBar(
 @Composable
 private fun WorkoutBottomSheet(navToWorkoutScreen: () -> Unit) {
     BottomAppBar(
-        Modifier.clickable(onClick = navToWorkoutScreen)
+        Modifier.clickable(onClick = navToWorkoutScreen),
+        elevation = 4.dp,
+        backgroundColor = colors.surface,
     ) {
         ProvideTextStyle(value = MaterialTheme.typography.h6) {
             Text(
