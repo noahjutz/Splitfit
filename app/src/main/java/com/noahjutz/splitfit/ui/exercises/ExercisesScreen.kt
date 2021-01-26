@@ -44,6 +44,7 @@ fun ExercisesScreen(
     viewModel: ExercisesViewModel = getViewModel(),
 ) {
     Scaffold(
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_exercises)) }) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { addEditExercise(viewModel.addExercise().toInt()) },
