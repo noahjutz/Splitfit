@@ -85,8 +85,7 @@ fun SplitfitApp(
         },
         drawerContent = {
             AppDrawer(
-                navToAbout = { navController.navigate("about") },
-                navToSettings = { navController.navigate("settings") },
+                navController = navController,
                 drawerState = scaffoldState.drawerState,
             )
         }
