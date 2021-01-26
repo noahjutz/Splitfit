@@ -47,6 +47,7 @@ fun RoutinesScreen(
     viewModel: RoutinesViewModel = getViewModel(),
 ) {
     Scaffold(
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_routines)) }) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { addEditRoutine(viewModel.addRoutine().toInt()) },
