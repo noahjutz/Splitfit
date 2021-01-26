@@ -199,7 +199,6 @@ fun WorkoutScreen(
                     ListItem(
                         modifier = Modifier.clickable {},
                         text = { Text(duration) },
-                        secondaryText = { Text("Duration") },
                         icon = { Icon(Icons.Default.AccessTime) },
                     )
                 }
