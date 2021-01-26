@@ -61,7 +61,6 @@ import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
 import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
-import com.noahjutz.splitfit.util.RestTimer
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -130,25 +129,6 @@ fun WorkoutScreen(
                                 stringResource(R.string.unnamed_routine),
                                 modifier = Modifier.alpha(0.5f)
                             )
-                        }
-                    }
-                },
-                actions = {
-                    val remainingMillis by RestTimer.remainingMillis.collectAsState()
-                    IconButton(onClick = {
-                        if (remainingMillis > 0) {
-                            RestTimer.cancel()
-                        } else {
-                            RestTimer.start(90000)
-                        }
-                    }) {
-                        if (remainingMillis > 0) {
-                            Box(contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(remainingMillis / 90000f)
-                                Icon(Icons.Default.Stop)
-                            }
-                        } else {
-                            Icon(Icons.Default.Timer)
                         }
                     }
                 }
