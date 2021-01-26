@@ -36,6 +36,7 @@
     <string name="log_distance">Log Distance</string>
     <string name="tab_routines">Routines</string>
     <string name="tab_exercises">Exercises</string>
-    <string name="tab_workouts">Workouts</string>
+    <string name="tab_workouts">History</string>
     <string name="unnamed_workout">Unnamed</string>
+    <string name="tab_settings">Settings</string>
 </resources>

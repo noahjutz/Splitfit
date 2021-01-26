@@ -46,12 +46,14 @@ sealed class TopLevelScreens(
     object Routines : TopLevelScreens("routines", R.string.tab_routines, Icons.Default.ViewAgenda)
     object Exercises : TopLevelScreens("exercises", R.string.tab_exercises, Icons.Default.SportsMma)
     object Workouts : TopLevelScreens("workouts", R.string.tab_workouts, Icons.Default.History)
+    object Settings : TopLevelScreens("settings", R.string.tab_settings, Icons.Default.Settings)
 }
 
 val topLevelScreens = listOf(
     TopLevelScreens.Routines,
     TopLevelScreens.Exercises,
-    TopLevelScreens.Workouts
+    TopLevelScreens.Workouts,
+    TopLevelScreens.Settings,
 )
 
 @Composable
