@@ -1,0 +1,3 @@
+v0.1.0-alpha3
+
+* Fix fastlane changelog files: Use versionCode instead of versionName.
