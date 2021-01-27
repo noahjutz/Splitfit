@@ -1,0 +1,1 @@
+Splitfit is an open-source gym tracker. It allows for easy creation of workout routines and custom exercises. Perform workouts and track your progress.
