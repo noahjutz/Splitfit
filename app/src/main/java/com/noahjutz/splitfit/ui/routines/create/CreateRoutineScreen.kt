@@ -148,7 +148,7 @@ fun CreateRoutineScreen(
                     DropdownMenu(
                         toggle = {
                             IconButton(onClick = { showMenu = true }) {
-                                Icon(Icons.Default.MoreVert,null)
+                                Icon(Icons.Default.MoreVert, null)
                             }
                         },
                         expanded = showMenu,
