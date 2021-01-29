@@ -21,7 +21,6 @@ package com.noahjutz.splitfit.ui
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -36,6 +35,7 @@ import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettings
+import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.WorkoutsScreen
 import com.noahjutz.splitfit.ui.workout.create.WorkoutScreen
 import org.koin.androidx.compose.getViewModel
@@ -117,6 +117,8 @@ fun NavGraph(
         composable("settings") {
             AppSettings(navToAbout = { navController.navigate("about") })
         }
-        composable("about") { Text("About") }
+        composable("about") {
+            AboutSplitfit(popBackStack = { navController.popBackStack() })
+        }
     }
 }
