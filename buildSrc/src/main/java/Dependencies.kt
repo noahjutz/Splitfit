@@ -66,7 +66,7 @@ object Libs {
 
     object Navigation {
         private const val version = "2.3.1"
-        private const val versionCompose = "1.0.0-alpha04"
+        private const val versionCompose = "1.0.0-alpha06"
         const val navigation = "androidx.navigation:navigation-fragment-ktx:$version"
         const val compose = "androidx.navigation:navigation-compose:$versionCompose"
     }
