@@ -1,0 +1,3 @@
+* Upgrade compose, compose-navigation, android gradle plugin and gradle
+* Move versionCode and versionName to build.gradle for F-Droid
+* Upgrade gradle wrapper
