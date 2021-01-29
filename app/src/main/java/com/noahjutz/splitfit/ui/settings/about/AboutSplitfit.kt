@@ -91,6 +91,7 @@ fun AboutSplitfit(
                 ListItem(
                     modifier = Modifier.clickable {},
                     text = { Text("Source Code") },
+                    secondaryText = { Text("On GitHub") },
                     icon = { Icon(Icons.Default.Code, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
@@ -101,17 +102,22 @@ fun AboutSplitfit(
                     modifier = Modifier.clickable {},
                     text = { Text("Contributing") },
                     icon = { Icon(Icons.Default.Forum, null) },
-                    trailing = { Icon(Icons.Default.Launch, null) },
                 )
                 ListItem(
                     modifier = Modifier.clickable {},
                     text = { Text("Rate App") },
+                    secondaryText = { Text("On Google Play") },
                     icon = { Icon(Icons.Default.RateReview, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
 
                 Divider()
 
+                ListItem(
+                    text = { Text("Author") },
+                    secondaryText = { Text("Noah Jutz") },
+                    icon = { Icon(Icons.Default.Face, null) }
+                )
                 ListItem(
                     modifier = Modifier.clickable {},
                     text = { Text("Contact") },
