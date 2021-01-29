@@ -113,7 +113,7 @@ private fun HomeBottomBar(
     BottomNavigation {
         for (screen in topLevelScreens) {
             BottomNavigationItem(
-                icon = { Icon(screen.icon ?: vectorResource(screen.iconRes!!)) },
+                icon = { Icon(screen.icon ?: vectorResource(screen.iconRes!!), null) },
                 onClick = {
                     navController.popBackStack(navController.graph.startDestination, false)
                     if (screen.route != currentRoute) navController.navigate(screen.route)
@@ -140,7 +140,7 @@ private fun WorkoutBottomSheet(navToWorkoutScreen: () -> Unit) {
         }
         Spacer(Modifier.weight(1f))
         IconButton(onClick = navToWorkoutScreen) {
-            Icon(Icons.Default.ExpandLess)
+            Icon(Icons.Default.ExpandLess, null)
         }
     }
 }

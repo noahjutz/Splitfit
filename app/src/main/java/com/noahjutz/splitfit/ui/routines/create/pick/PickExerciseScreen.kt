@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -54,7 +55,7 @@ fun PickExerciseScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        content = { Icon(Icons.Default.Close) }
+                        content = { Icon(Icons.Default.Close, null) }
                     )
                 },
                 title = {
@@ -70,7 +71,7 @@ fun PickExerciseScreen(
                 exit = fadeOut()
             ) {
                 FloatingActionButton(onClick = { save = true; popBackStack() }) {
-                    Icon(Icons.Default.Done)
+                    Icon(Icons.Default.Done, null)
                 }
             }
         }

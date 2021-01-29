@@ -26,6 +26,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -97,7 +98,7 @@ fun WorkoutScreen(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = popBackStack) { Icon(Icons.Default.Close) }
+                    IconButton(onClick = popBackStack) { Icon(Icons.Default.Close, null) }
                 },
                 title = {
                     Box {
@@ -137,7 +138,7 @@ fun WorkoutScreen(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 text = { Text("Add Exercise") },
-                icon = { Icon(Icons.Default.Add) },
+                icon = { Icon(Icons.Default.Add, null) },
                 onClick = navToPickExercise,
             )
         }
@@ -178,7 +179,7 @@ fun WorkoutScreen(
                     ListItem(
                         modifier = Modifier.clickable {},
                         text = { Text(duration) },
-                        icon = { Icon(Icons.Default.AccessTime) },
+                        icon = { Icon(Icons.Default.AccessTime, null) },
                     )
                 }
 
@@ -206,7 +207,7 @@ fun WorkoutScreen(
                         modifier = Modifier.weight(1f),
                         onClick = { showCancelWorkoutDialog = true },
                     ) {
-                        Icon(Icons.Default.Delete)
+                        Icon(Icons.Default.Delete, null)
                         Spacer(Modifier.preferredWidth(8.dp))
                         Text("Delete Workout")
                     }
@@ -215,7 +216,7 @@ fun WorkoutScreen(
                         modifier = Modifier.weight(1f),
                         onClick = { showFinishWorkoutDialog = true }
                     ) {
-                        Icon(Icons.Default.Done)
+                        Icon(Icons.Default.Done, null)
                         Spacer(Modifier.preferredWidth(8.dp))
                         Text("Finish Workout")
                     }
@@ -414,7 +415,7 @@ fun SetGroupCard(
             TextButton(
                 onClick = { viewModel.editor.addSetTo(setGroup) },
                 content = {
-                    Icon(Icons.Default.Add)
+                    Icon(Icons.Default.Add, null)
                     Text(stringResource(R.string.add_set))
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)

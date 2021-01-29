@@ -68,13 +68,13 @@ fun AppSettings(
                 modifier = Modifier.clickable { ActivityResultLaunchers.ExportDatabase.launcher.launch() },
                 text = { Text("Backup") },
                 secondaryText = { Text("Save routines, exercises and workouts in a file") },
-                icon = { Icon(Icons.Default.SaveAlt) },
+                icon = { Icon(Icons.Default.SaveAlt, null) },
             )
             ListItem(
                 modifier = Modifier.clickable { ActivityResultLaunchers.ImportDatabase.launcher.launch() },
                 text = { Text("Restore") },
                 secondaryText = { Text("Import a database file, overriding all data.") },
-                icon = { Icon(Icons.Default.SettingsBackupRestore) },
+                icon = { Icon(Icons.Default.SettingsBackupRestore, null) },
             )
         }
 

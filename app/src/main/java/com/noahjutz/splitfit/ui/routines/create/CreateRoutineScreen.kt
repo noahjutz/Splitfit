@@ -26,6 +26,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -96,7 +97,7 @@ fun CreateRoutineScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onAddExercise,
-                content = { Icon(Icons.Default.Add) },
+                content = { Icon(Icons.Default.Add, null) },
                 modifier = Modifier.testTag("addExerciseFab")
             )
         },
@@ -105,7 +106,7 @@ fun CreateRoutineScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
-                        content = { Icon(Icons.Default.ArrowBack) },
+                        content = { Icon(Icons.Default.ArrowBack, null) },
                         modifier = Modifier.testTag("backButton")
                     )
                 },
@@ -147,7 +148,7 @@ fun CreateRoutineScreen(
                     DropdownMenu(
                         toggle = {
                             IconButton(onClick = { showMenu = true }) {
-                                Icon(Icons.Default.MoreVert)
+                                Icon(Icons.Default.MoreVert,null)
                             }
                         },
                         expanded = showMenu,
@@ -377,7 +378,7 @@ fun SetGroupCard(
             TextButton(
                 onClick = { viewModel.editor.addSetTo(setGroup) },
                 content = {
-                    Icon(Icons.Default.Add)
+                    Icon(Icons.Default.Add, null)
                     Text(stringResource(R.string.add_set))
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)

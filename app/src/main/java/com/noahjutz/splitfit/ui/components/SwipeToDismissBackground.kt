@@ -48,6 +48,6 @@ fun SwipeToDeleteBackground(dismissState: DismissState) {
             .padding(horizontal = 20.dp),
         contentAlignment = alignment
     ) {
-        Icon(Icons.Default.Delete)
+        Icon(Icons.Default.Delete, null)
     }
 }

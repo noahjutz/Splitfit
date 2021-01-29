@@ -72,7 +72,7 @@ object Libs {
     }
 
     object Compose {
-        const val version = "1.0.0-alpha10"
+        const val version = "1.0.0-alpha11"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -128,7 +128,7 @@ object GradlePlugins {
     }
 
     object Kotlin {
-        const val version = "1.4.21"
+        const val version = "1.4.21-2"
         const val classpath = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     }
 }
