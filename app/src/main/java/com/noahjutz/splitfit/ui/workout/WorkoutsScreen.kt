@@ -18,7 +18,7 @@
 
 package com.noahjutz.splitfit.ui.workout
 
-import androidx.compose.animation.core.animateAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
 @ExperimentalMaterialApi
@@ -51,7 +50,7 @@ fun WorkoutsScreen(
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
                     Card(
-                        elevation = animateAsState(
+                        elevation = animateDpAsState(
                             if (dismissState.dismissDirection != null) 4.dp else 0.dp
                         ).value
                     ) {

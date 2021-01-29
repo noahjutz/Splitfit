@@ -19,7 +19,7 @@
 package com.noahjutz.splitfit.ui.routines.create
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animate
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -219,7 +219,7 @@ fun SetGroupCard(
     var dragging by remember { mutableStateOf(false) }
     var toSwap by remember { mutableStateOf(Pair(0, 0)) }
     val focusManager = AmbientFocusManager.current
-    onCommit(offsetPosition) {
+    DisposableEffect(offsetPosition) {
         if (dragging) {
             toSwap = when {
                 offsetPosition < -150 -> Pair(setGroupIndex, setGroupIndex - 1)
@@ -233,10 +233,11 @@ fun SetGroupCard(
                 toSwap = Pair(0, 0)
             }
         }
+        onDispose {}
     }
 
     Card(
-        elevation = animate(if (offsetPosition == 0f) 0.dp else 4.dp),
+        elevation = animateDpAsState(if (offsetPosition == 0f) 0.dp else 4.dp).value,
         modifier = Modifier
             .fillMaxWidth()
             .offset(y = offsetPosition.dp)
@@ -279,12 +280,13 @@ fun SetGroupCard(
             setGroup.sets.forEachIndexed { setIndex, set ->
                 val dismissState = rememberDismissState()
 
-                onCommit(dismissState.value) {
+                DisposableEffect(dismissState.value) {
                     if (dismissState.value != DismissValue.Default) {
                         focusManager.clearFocus()
                         viewModel.editor.deleteSetFrom(setGroup, setIndex)
                         dismissState.snapTo(DismissValue.Default)
                     }
+                    onDispose {}
                 }
 
                 SwipeToDismiss(
@@ -292,9 +294,9 @@ fun SetGroupCard(
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
                     Card(
-                        elevation = animate(
+                        elevation = animateDpAsState(
                             if (dismissState.dismissDirection == null) 0.dp else 4.dp
-                        )
+                        ).value
                     ) {
                         Row(
                             modifier = Modifier.padding(
@@ -410,13 +412,14 @@ fun SetTextField(
     regexPattern: Regex = Regex(""),
 ) {
     var tfValue by remember { mutableStateOf(TextFieldValue(value)) }
-    onCommit(value) {
+    DisposableEffect(value) {
         val v = when {
             value.isEmpty() -> value
             value.toDouble() == floor(value.toDouble()) -> value.toDouble().toInt().toString()
             else -> value
         }
         if (tfValue.text != value) tfValue = TextFieldValue(v, TextRange(value.length))
+        onDispose {}
     }
 
     // onValueChange is called after onFocusChanged, overriding the selection in onFocusChanged.

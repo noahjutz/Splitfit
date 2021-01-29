@@ -19,7 +19,7 @@
 package com.noahjutz.splitfit.ui.routines
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.animateAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -69,7 +69,7 @@ fun RoutinesScreen(
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
                     Card(
-                        elevation = animateAsState(
+                        elevation = animateDpAsState(
                             if (dismissState.dismissDirection != null) 4.dp else 0.dp
                         ).value
                     ) {

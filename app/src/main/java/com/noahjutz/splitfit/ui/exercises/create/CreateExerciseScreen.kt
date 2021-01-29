@@ -18,10 +18,10 @@
 
 package com.noahjutz.splitfit.ui.exercises.create
 
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -49,8 +49,10 @@ fun CreateExerciseScreen(
     val editor = viewModel.Editor()
     val presenter = viewModel.Presenter()
 
-    onDispose {
-        editor.close()
+    DisposableEffect(Unit) {
+        onDispose {
+            editor.close()
+        }
     }
 
     val exercise by presenter.exercise.collectAsState()
@@ -103,80 +105,88 @@ fun CreateExerciseScreen(
             )
         },
         bodyContent = {
-            ScrollableColumn {
-                var repsChecked by remember { mutableStateOf(exercise.logReps) }
-                var weightChecked by remember { mutableStateOf(exercise.logWeight) }
-                var timeChecked by remember { mutableStateOf(exercise.logTime) }
-                var distanceChecked by remember { mutableStateOf(exercise.logDistance) }
+            var repsChecked by remember { mutableStateOf(exercise.logReps) }
+            var weightChecked by remember { mutableStateOf(exercise.logWeight) }
+            var timeChecked by remember { mutableStateOf(exercise.logTime) }
+            var distanceChecked by remember { mutableStateOf(exercise.logDistance) }
 
-                val alertNoLogValueSelected = stringResource(R.string.alert_no_log_value_selected)
-                val onAnyCheckedChange = {
-                    presenter.exercise.value.let {
-                        if (!it.logReps && !it.logWeight && !it.logTime && !it.logDistance) {
-                            repsChecked = true
-                            editor.updateExercise(logReps = true)
-                            MainScope().launch {
-                                scaffoldState.snackbarHostState.let {
-                                    it.currentSnackbarData?.dismiss()
-                                    it.showSnackbar(alertNoLogValueSelected)
-                                }
+            val alertNoLogValueSelected =
+                stringResource(R.string.alert_no_log_value_selected)
+            val onAnyCheckedChange = {
+                presenter.exercise.value.let {
+                    if (!it.logReps && !it.logWeight && !it.logTime && !it.logDistance) {
+                        repsChecked = true
+                        editor.updateExercise(logReps = true)
+                        MainScope().launch {
+                            scaffoldState.snackbarHostState.let {
+                                it.currentSnackbarData?.dismiss()
+                                it.showSnackbar(alertNoLogValueSelected)
                             }
                         }
                     }
                 }
-
-                ListItem(
-                    text = { Text(stringResource(R.string.log_reps)) },
-                    icon = {
-                        Checkbox(
-                            checked = repsChecked,
-                            onCheckedChange = {
-                                repsChecked = it
-                                editor.updateExercise(logReps = repsChecked)
-                                onAnyCheckedChange()
-                            }
-                        )
-                    },
-                )
-                ListItem(
-                    text = { Text(stringResource(R.string.log_weight)) },
-                    icon = {
-                        Checkbox(
-                            checked = weightChecked,
-                            onCheckedChange = {
-                                weightChecked = it
-                                editor.updateExercise(logWeight = weightChecked)
-                                onAnyCheckedChange()
-                            }
-                        )
-                    },
-                )
-                ListItem(
-                    text = { Text(stringResource(R.string.log_time)) },
-                    icon = {
-                        Checkbox(
-                            checked = timeChecked,
-                            onCheckedChange = {
-                                timeChecked = it
-                                editor.updateExercise(logTime = timeChecked)
-                                onAnyCheckedChange()
-                            }
-                        )
-                    },
-                )
-                ListItem(
-                    text = { Text(stringResource(R.string.log_distance)) },
-                    icon = {
-                        Checkbox(
-                            checked = distanceChecked,
-                            onCheckedChange = {
-                                distanceChecked = it
-                                editor.updateExercise(logDistance = distanceChecked)
-                                onAnyCheckedChange()
-                            }
-                        )
-                    },
-                )
+            }
+            LazyColumn {
+                item {
+                    ListItem(
+                        text = { Text(stringResource(R.string.log_reps)) },
+                        icon = {
+                            Checkbox(
+                                checked = repsChecked,
+                                onCheckedChange = {
+                                    repsChecked = it
+                                    editor.updateExercise(logReps = repsChecked)
+                                    onAnyCheckedChange()
+                                }
+                            )
+                        },
+                    )
+                }
+                item {
+                    ListItem(
+                        text = { Text(stringResource(R.string.log_weight)) },
+                        icon = {
+                            Checkbox(
+                                checked = weightChecked,
+                                onCheckedChange = {
+                                    weightChecked = it
+                                    editor.updateExercise(logWeight = weightChecked)
+                                    onAnyCheckedChange()
+                                }
+                            )
+                        },
+                    )
+                }
+                item {
+                    ListItem(
+                        text = { Text(stringResource(R.string.log_time)) },
+                        icon = {
+                            Checkbox(
+                                checked = timeChecked,
+                                onCheckedChange = {
+                                    timeChecked = it
+                                    editor.updateExercise(logTime = timeChecked)
+                                    onAnyCheckedChange()
+                                }
+                            )
+                        },
+                    )
+                }
+                item {
+                    ListItem(
+                        text = { Text(stringResource(R.string.log_distance)) },
+                        icon = {
+                            Checkbox(
+                                checked = distanceChecked,
+                                onCheckedChange = {
+                                    distanceChecked = it
+                                    editor.updateExercise(logDistance = distanceChecked)
+                                    onAnyCheckedChange()
+                                }
+                            )
+                        },
+                    )
+                }
             }
         }
     )

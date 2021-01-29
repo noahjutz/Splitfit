@@ -19,14 +19,17 @@
 package com.noahjutz.splitfit.ui.settings
 
 import android.app.Activity
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.rememberScrollableController
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -63,7 +66,11 @@ fun AppSettings(
             }
         }
 
-        ScrollableColumn {
+        Column(
+            Modifier.scrollable(
+                Orientation.Vertical, rememberScrollableController { it }
+            )
+        ) {
             ListItem(
                 modifier = Modifier.clickable { ActivityResultLaunchers.ExportDatabase.launcher.launch() },
                 text = { Text("Backup") },

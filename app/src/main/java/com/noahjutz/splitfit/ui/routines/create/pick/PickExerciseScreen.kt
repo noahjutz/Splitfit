@@ -18,7 +18,10 @@
 
 package com.noahjutz.splitfit.ui.routines.create.pick
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -45,8 +48,10 @@ fun PickExerciseScreen(
     popBackStack: () -> Unit,
 ) {
     var save = false
-    onDispose {
-        if (!save) sharedPickExerciseViewModel.clear()
+    DisposableEffect(null) {
+        onDispose {
+            if (!save) sharedPickExerciseViewModel.clear()
+        }
     }
 
     Scaffold(
@@ -80,9 +85,10 @@ fun PickExerciseScreen(
         LazyColumn(Modifier.fillMaxHeight()) {
             items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
                 var checked by remember { mutableStateOf(false) }
-                onCommit(checked) {
+                DisposableEffect(checked) {
                     if (checked) sharedPickExerciseViewModel.add(exercise)
                     else sharedPickExerciseViewModel.remove(exercise)
+                    onDispose {}
                 }
                 ListItem(
                     trailing = {
