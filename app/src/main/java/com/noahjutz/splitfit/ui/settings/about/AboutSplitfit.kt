@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import com.noahjutz.splitfit.BuildConfig
 import com.noahjutz.splitfit.R
 
 @Composable
@@ -103,11 +104,18 @@ fun AboutSplitfit(
                     text = { Text("Contributing") },
                     icon = { Icon(Icons.Default.Forum, null) },
                 )
-                ListItem(
+                if (BuildConfig.FLAVOR == "googleplay") ListItem(
                     modifier = Modifier.clickable {},
                     text = { Text("Rate App") },
                     secondaryText = { Text("On Google Play") },
                     icon = { Icon(Icons.Default.RateReview, null) },
+                    trailing = { Icon(Icons.Default.Launch, null) },
+                )
+                if (BuildConfig.FLAVOR != "googleplay") ListItem(
+                    modifier = Modifier.clickable {},
+                    text = { Text("Donate") },
+                    secondaryText = { Text("On Liberapay") },
+                    icon = { Icon(Icons.Default.CardGiftcard, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
 

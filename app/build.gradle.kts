@@ -63,6 +63,19 @@ android {
         }
     }
 
+    flavorDimensions("dimension")
+    productFlavors {
+
+        create("fdroid") {
+            dimension = "dimension"
+            applicationIdSuffix = ".fdroid"
+        }
+        create("googleplay") {
+            dimension = "dimension"
+            applicationIdSuffix = ".googleplay"
+        }
+    }
+
     buildFeatures {
         compose = true
     }
