@@ -40,6 +40,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AppSettings(
     viewModel: AppSettingsViewModel = getViewModel(),
+    navToAbout: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) {
@@ -85,7 +86,7 @@ fun AppSettings(
             ListItem(
                 modifier = Modifier
                     .alpha(0.5f)
-                    .clickable {},
+                    .clickable(onClick = navToAbout),
                 text = { Text("About Splitfit") },
                 icon = { Icon(Icons.Default.Help, null) }
             )

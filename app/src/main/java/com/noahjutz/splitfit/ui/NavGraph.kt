@@ -21,6 +21,7 @@ package com.noahjutz.splitfit.ui
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -114,7 +115,8 @@ fun NavGraph(
             )
         }
         composable("settings") {
-            AppSettings()
+            AppSettings(navToAbout = { navController.navigate("about") })
         }
+        composable("about") { Text("About") }
     }
 }
