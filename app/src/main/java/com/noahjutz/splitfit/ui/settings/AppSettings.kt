@@ -25,10 +25,12 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
 import kotlinx.coroutines.launch
@@ -66,11 +68,7 @@ fun AppSettings(
             }
         }
 
-        Column(
-            Modifier.scrollable(
-                Orientation.Vertical, rememberScrollableController { it }
-            )
-        ) {
+        Column(Modifier.scrollable(Orientation.Vertical, rememberScrollableController { it })) {
             ListItem(
                 modifier = Modifier.clickable { ActivityResultLaunchers.ExportDatabase.launcher.launch() },
                 text = { Text("Backup") },
@@ -82,6 +80,14 @@ fun AppSettings(
                 text = { Text("Restore") },
                 secondaryText = { Text("Import a database file, overriding all data.") },
                 icon = { Icon(Icons.Default.SettingsBackupRestore, null) },
+            )
+            Divider()
+            ListItem(
+                modifier = Modifier
+                    .alpha(0.5f)
+                    .clickable {},
+                text = { Text("About Splitfit") },
+                icon = { Icon(Icons.Default.Help, null) }
             )
         }
 
