@@ -102,9 +102,11 @@ fun AboutSplitfit(
                 Divider()
 
                 ListItem(
-                    modifier = Modifier.clickable {},
+                    modifier = Modifier.clickable { openUrl(Urls.contributing) },
                     text = { Text("Contributing") },
+                    secondaryText = { Text("Find out how to contribute to Splitfit.") },
                     icon = { Icon(Icons.Default.Forum, null) },
+                    trailing = { Icon(Icons.Default.Launch, null) },
                 )
                 if (BuildConfig.FLAVOR == "googleplay") ListItem(
                     modifier = Modifier.clickable { openUrl(Urls.googlePlay) },
