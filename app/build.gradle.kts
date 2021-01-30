@@ -29,7 +29,7 @@ android {
     buildToolsVersion = "30.0.2"
 
     defaultConfig {
-        applicationId = App.applicationId
+        applicationId = "com.noahjutz.splitfit"
         minSdkVersion(App.minSdk)
         targetSdkVersion(App.targetSdk)
         versionCode = 16
