@@ -1,0 +1,2 @@
+* Remove version from AboutSplitfit
+* Declare applicationId in build.gradle directly
