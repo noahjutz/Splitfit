@@ -1,0 +1,5 @@
+* Add about splitfit screen
+* Add build flavors in order to comply with app store policies:
+  * fdroid for F-Droid
+  * googleplay for Google Play
+* Update README
