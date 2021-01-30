@@ -85,11 +85,6 @@ fun AboutSplitfit(
                 }
 
                 ListItem(
-                    text = { Text("Version") },
-                    secondaryText = { Text("0.1.0-alpha4") },
-                    icon = { Icon(Icons.Default.History, null) },
-                )
-                ListItem(
                     modifier = Modifier.clickable { showLicenses = true },
                     text = { Text("Licenses") },
                     icon = { Icon(Icons.Default.ListAlt, null) },
