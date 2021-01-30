@@ -35,6 +35,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.BuildConfig
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.util.IntentsForCompose.openUrl
+import com.noahjutz.splitfit.util.Urls
 
 @Composable
 fun AboutSplitfit(
@@ -90,7 +92,7 @@ fun AboutSplitfit(
                     icon = { Icon(Icons.Default.ListAlt, null) },
                 )
                 ListItem(
-                    modifier = Modifier.clickable {},
+                    modifier = Modifier.clickable {openUrl(Urls.sourceCode)},
                     text = { Text("Source Code") },
                     secondaryText = { Text("On GitHub") },
                     icon = { Icon(Icons.Default.Code, null) },
@@ -105,14 +107,14 @@ fun AboutSplitfit(
                     icon = { Icon(Icons.Default.Forum, null) },
                 )
                 if (BuildConfig.FLAVOR == "googleplay") ListItem(
-                    modifier = Modifier.clickable {},
+                    modifier = Modifier.clickable { openUrl(Urls.googlePlay) },
                     text = { Text("Rate App") },
                     secondaryText = { Text("On Google Play") },
                     icon = { Icon(Icons.Default.RateReview, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
                 if (BuildConfig.FLAVOR != "googleplay") ListItem(
-                    modifier = Modifier.clickable {},
+                    modifier = Modifier.clickable { openUrl(Urls.donateLiberapay) },
                     text = { Text("Donate") },
                     secondaryText = { Text("On Liberapay") },
                     icon = { Icon(Icons.Default.CardGiftcard, null) },
@@ -127,11 +129,9 @@ fun AboutSplitfit(
                     icon = { Icon(Icons.Default.Face, null) }
                 )
                 ListItem(
-                    modifier = Modifier.clickable {},
                     text = { Text("Contact") },
                     secondaryText = { Text("noahjutz@tutanota.de") },
                     icon = { Icon(Icons.Default.ContactMail, null) },
-                    trailing = { Icon(Icons.Default.Launch, null) },
                 )
             }
         }

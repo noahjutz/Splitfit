@@ -29,6 +29,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.platform.setContent
 import com.noahjutz.splitfit.util.ActivityResultLaunchers.registerLaunchers
+import com.noahjutz.splitfit.util.IntentsForCompose.registerIntentsForCompose
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,5 +47,6 @@ class MainActivity : AppCompatActivity() {
 
     init {
         registerLaunchers()
+        registerIntentsForCompose()
     }
 }
