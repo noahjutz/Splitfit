@@ -22,12 +22,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -54,6 +55,8 @@ fun AboutSplitfit(
             )
         }
     ) {
+        var showLicenses by remember { mutableStateOf(false) }
+        if (showLicenses) LicensesDialog(onDismiss = { showLicenses = false })
         LazyColumn {
             item {
                 Row(
@@ -87,12 +90,12 @@ fun AboutSplitfit(
                     icon = { Icon(Icons.Default.History, null) },
                 )
                 ListItem(
-                    modifier = Modifier.clickable {},
+                    modifier = Modifier.clickable { showLicenses = true },
                     text = { Text("Licenses") },
                     icon = { Icon(Icons.Default.ListAlt, null) },
                 )
                 ListItem(
-                    modifier = Modifier.clickable {openUrl(Urls.sourceCode)},
+                    modifier = Modifier.clickable { openUrl(Urls.sourceCode) },
                     text = { Text("Source Code") },
                     secondaryText = { Text("On GitHub") },
                     icon = { Icon(Icons.Default.Code, null) },
@@ -138,4 +141,81 @@ fun AboutSplitfit(
             }
         }
     }
+}
+
+enum class Licenses(val fullName: String) {
+    APACHE2("Apache License 2.0"),
+    EPL1("Eclipse Public License 1.0")
+}
+
+data class Dependency(
+    val name: String,
+    val license: Licenses,
+    val url: String,
+)
+
+private val dependencies = listOf(
+    Dependency(
+        "Koin",
+        Licenses.APACHE2,
+        "https://github.com/InsertKoinIO/koin"
+    ),
+    Dependency(
+        "Android Jetpack",
+        Licenses.APACHE2,
+        "https://developer.android.com/jetpack"
+    ),
+    Dependency(
+        "kotlinx.coroutines",
+        Licenses.APACHE2,
+        "https://github.com/Kotlin/kotlinx.coroutines"
+    ),
+    Dependency(
+        "kotlinx.serialization",
+        Licenses.APACHE2,
+        "https://github.com/Kotlin/kotlinx.serialization"
+    ),
+    Dependency(
+        "ProcessPhoenix",
+        Licenses.APACHE2,
+        "https://github.com/JakeWharton/ProcessPhoenix"
+    ),
+    Dependency(
+        "Junit 4",
+        Licenses.EPL1,
+        "https://github.com/junit-team/junit4"
+    ),
+    Dependency(
+        "AssertJ",
+        Licenses.APACHE2,
+        "https://github.com/assertj/assertj-core"
+    ),
+    Dependency(
+        "MockK",
+        Licenses.APACHE2,
+        "https://github.com/mockk/mockk"
+    )
+)
+
+@Composable
+private fun LicensesDialog(
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {},
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Close") } },
+        title = { Text("Licenses") },
+        text = {
+            LazyColumn {
+                items(dependencies) { dependency ->
+                    ListItem(
+                        modifier = Modifier.clickable { openUrl(dependency.url) },
+                        text = { Text(dependency.name) },
+                        secondaryText = { Text(dependency.license.fullName) },
+                    )
+                }
+            }
+        },
+    )
 }
