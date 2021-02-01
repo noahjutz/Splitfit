@@ -18,6 +18,8 @@
 
 package com.noahjutz.splitfit.ui.settings.about
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -36,12 +38,22 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.BuildConfig
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.util.IntentsForCompose.openUrl
-import com.noahjutz.splitfit.util.Urls
+import com.noahjutz.splitfit.ui.AmbientActivity
+import com.noahjutz.splitfit.ui.MainActivity
+import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.contributing
+import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.donateLiberapay
+import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.googlePlay
+import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.sourceCode
+import org.koin.androidx.compose.getViewModel
+
+private fun MainActivity.openUrl(url: String) {
+    startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) })
+}
 
 @Composable
 fun AboutSplitfit(
     popBackStack: () -> Unit,
+    viewModel: AboutSplitfitViewModel = getViewModel(),
 ) {
     Scaffold(
         topBar = {
@@ -56,7 +68,11 @@ fun AboutSplitfit(
         }
     ) {
         var showLicenses by remember { mutableStateOf(false) }
-        if (showLicenses) LicensesDialog(onDismiss = { showLicenses = false })
+        if (showLicenses) LicensesDialog(
+            onDismiss = { showLicenses = false },
+            dependencies = viewModel.dependencies
+        )
+        val mainActivity = AmbientActivity.current
         LazyColumn {
             item {
                 Row(
@@ -90,7 +106,7 @@ fun AboutSplitfit(
                     icon = { Icon(Icons.Default.ListAlt, null) },
                 )
                 ListItem(
-                    modifier = Modifier.clickable { openUrl(Urls.sourceCode) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(sourceCode) },
                     text = { Text("Source Code") },
                     secondaryText = { Text("On GitHub") },
                     icon = { Icon(Icons.Default.Code, null) },
@@ -100,21 +116,21 @@ fun AboutSplitfit(
                 Divider()
 
                 ListItem(
-                    modifier = Modifier.clickable { openUrl(Urls.contributing) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(contributing) },
                     text = { Text("Contributing") },
                     secondaryText = { Text("Find out how to contribute to Splitfit.") },
                     icon = { Icon(Icons.Default.Forum, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
                 if (BuildConfig.FLAVOR == "googleplay") ListItem(
-                    modifier = Modifier.clickable { openUrl(Urls.googlePlay) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(googlePlay) },
                     text = { Text("Rate App") },
                     secondaryText = { Text("On Google Play") },
                     icon = { Icon(Icons.Default.RateReview, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
                 if (BuildConfig.FLAVOR != "googleplay") ListItem(
-                    modifier = Modifier.clickable { openUrl(Urls.donateLiberapay) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(donateLiberapay) },
                     text = { Text("Donate") },
                     secondaryText = { Text("On Liberapay") },
                     icon = { Icon(Icons.Default.CardGiftcard, null) },
@@ -138,63 +154,10 @@ fun AboutSplitfit(
     }
 }
 
-enum class Licenses(val fullName: String) {
-    APACHE2("Apache License 2.0"),
-    EPL1("Eclipse Public License 1.0")
-}
-
-data class Dependency(
-    val name: String,
-    val license: Licenses,
-    val url: String,
-)
-
-private val dependencies = listOf(
-    Dependency(
-        "Koin",
-        Licenses.APACHE2,
-        "https://github.com/InsertKoinIO/koin"
-    ),
-    Dependency(
-        "Android Jetpack",
-        Licenses.APACHE2,
-        "https://developer.android.com/jetpack"
-    ),
-    Dependency(
-        "kotlinx.coroutines",
-        Licenses.APACHE2,
-        "https://github.com/Kotlin/kotlinx.coroutines"
-    ),
-    Dependency(
-        "kotlinx.serialization",
-        Licenses.APACHE2,
-        "https://github.com/Kotlin/kotlinx.serialization"
-    ),
-    Dependency(
-        "ProcessPhoenix",
-        Licenses.APACHE2,
-        "https://github.com/JakeWharton/ProcessPhoenix"
-    ),
-    Dependency(
-        "Junit 4",
-        Licenses.EPL1,
-        "https://github.com/junit-team/junit4"
-    ),
-    Dependency(
-        "AssertJ",
-        Licenses.APACHE2,
-        "https://github.com/assertj/assertj-core"
-    ),
-    Dependency(
-        "MockK",
-        Licenses.APACHE2,
-        "https://github.com/mockk/mockk"
-    )
-)
-
 @Composable
 private fun LicensesDialog(
     onDismiss: () -> Unit,
+    dependencies: List<Dependency>,
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -204,8 +167,9 @@ private fun LicensesDialog(
         text = {
             LazyColumn {
                 items(dependencies) { dependency ->
+                    val mainActivity = AmbientActivity.current
                     ListItem(
-                        modifier = Modifier.clickable { openUrl(dependency.url) },
+                        modifier = Modifier.clickable { mainActivity.openUrl(dependency.url) },
                         text = { Text(dependency.name) },
                         secondaryText = { Text(dependency.license.fullName) },
                     )

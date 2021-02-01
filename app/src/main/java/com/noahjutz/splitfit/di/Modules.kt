@@ -31,6 +31,7 @@ import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
+import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel
 import com.noahjutz.splitfit.ui.workout.WorkoutsViewModel
 import com.noahjutz.splitfit.ui.workout.create.CreateWorkoutViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -123,5 +124,9 @@ val koinModule = module {
             application = androidApplication(),
             database = get()
         )
+    }
+
+    viewModel {
+        AboutSplitfitViewModel()
     }
 }

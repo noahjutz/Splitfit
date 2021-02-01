@@ -31,7 +31,6 @@ import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
 import androidx.compose.ui.platform.setContent
 import com.noahjutz.splitfit.util.ActivityResultLaunchers.registerLaunchers
-import com.noahjutz.splitfit.util.IntentsForCompose.registerIntentsForCompose
 
 val AmbientActivity = ambientOf<MainActivity> { error("MainActivity not found") }
 
@@ -53,6 +52,5 @@ class MainActivity : AppCompatActivity() {
 
     init {
         registerLaunchers()
-        registerIntentsForCompose()
     }
 }
