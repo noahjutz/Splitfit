@@ -85,37 +85,14 @@ fun ExercisesScreen(
                     }
 
                     if (dismissState.value != DismissValue.Default) {
-                        AlertDialog(
-                            title = {
-                                Text(
-                                    stringResource(
-                                        R.string.confirm_delete,
-                                        exercise.name.takeIf { it.isNotBlank() }
-                                            ?: stringResource(R.string.unnamed_exercise)
-                                    )
-                                )
-                            },
-                            confirmButton = {
-                                Button(
-                                    onClick = {
-                                        viewModel.hide(exercise, true)
-                                        hidden = true
-                                        dismissState.snapTo(DismissValue.Default)
-                                    },
-                                    content = { Text(stringResource(R.string.yes)) }
-                                )
-                            },
-                            dismissButton = {
-                                TextButton(
-                                    onClick = {
-                                        dismissState.snapTo(DismissValue.Default)
-                                    },
-                                    content = { Text(stringResource(R.string.cancel)) }
-                                )
-                            },
-                            onDismissRequest = {
+                        ConfirmDeleteExerciseDialog(
+                            onDismiss = { dismissState.snapTo(DismissValue.Default) },
+                            exerciseName = exercise.name,
+                            onConfirm = {
+                                viewModel.hide(exercise, true)
+                                hidden = true
                                 dismissState.snapTo(DismissValue.Default)
-                            }
+                            },
                         )
                     }
                 }
@@ -125,5 +102,39 @@ fun ExercisesScreen(
                 }
             }
         }
+    )
+}
+
+@Composable
+private
+fun ConfirmDeleteExerciseDialog(
+    exerciseName: String,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+
+    ) {
+    AlertDialog(
+        title = {
+            Text(
+                stringResource(
+                    R.string.confirm_delete,
+                    exerciseName.takeIf { it.isNotBlank() }
+                        ?: stringResource(R.string.unnamed_exercise)
+                )
+            )
+        },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                content = { Text(stringResource(R.string.yes)) }
+            )
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss,
+                content = { Text(stringResource(R.string.cancel)) }
+            )
+        },
+        onDismissRequest = onDismiss,
     )
 }
