@@ -147,11 +147,8 @@ fun WorkoutScreen(
                 showFinishWorkoutDialog = false
             },
             finishWorkout = {
-                scope.launch { // TODO delegate to viewModel
-                    viewModel.editor.setEndTime(Calendar.getInstance().time)
-                    preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
-                    popBackStack()
-                }
+                viewModel.editor.finishWorkout()
+                popBackStack()
             }
         )
         var showCancelWorkoutDialog by remember { mutableStateOf(false) }
@@ -160,9 +157,8 @@ fun WorkoutScreen(
                 showCancelWorkoutDialog = false
             },
             cancelWorkout = {
-                scope.launch { // TODO delegate to viewModel
-                    viewModel.editor.deleteWorkout()
-                    preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                scope.launch {
+                    viewModel.editor.cancelWorkout()
                     popBackStack()
                 }
             }

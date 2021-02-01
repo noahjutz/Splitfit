@@ -147,6 +147,20 @@ class CreateWorkoutViewModel(
                 workoutRepository.delete(_workout.value)
             }
         }
+
+        fun finishWorkout() {
+            setEndTime(Calendar.getInstance().time)
+            viewModelScope.launch {
+                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+            }
+        }
+
+        fun cancelWorkout() {
+            deleteWorkout()
+            viewModelScope.launch {
+                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+            }
+        }
     }
 
     inner class Presenter {
