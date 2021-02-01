@@ -80,7 +80,6 @@ fun WorkoutScreen(
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
     sharedPickExerciseViewModel: SharedPickExerciseViewModel,
-    preferences: DataStore<Preferences> = get(),
 ) {
     val scope = rememberCoroutineScope()
 
