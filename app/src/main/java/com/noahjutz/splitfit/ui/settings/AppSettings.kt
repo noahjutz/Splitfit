@@ -30,7 +30,6 @@ import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
 import kotlinx.coroutines.launch
@@ -40,7 +39,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AppSettings(
     viewModel: AppSettingsViewModel = getViewModel(),
-    navToAbout: () -> Unit
+    navToAbout: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) {
