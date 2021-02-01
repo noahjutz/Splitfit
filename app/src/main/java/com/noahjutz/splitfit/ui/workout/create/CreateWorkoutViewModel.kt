@@ -143,7 +143,7 @@ class CreateWorkoutViewModel(
 
     inner class Presenter {
         val workout = _workout.asStateFlow()
-        val currentTime = flow {
+        private val currentTime = flow {
             while (true) {
                 emit(Calendar.getInstance().time)
                 delay(1000)
