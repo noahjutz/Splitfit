@@ -30,11 +30,13 @@ import com.noahjutz.splitfit.ui.MainActivity
  *
  * Only use within [MainActivity]!
  */
+@Deprecated("Use AmbientActivity.current.activityResultRegistry.register(...) manually in composables.")
 object ActivityResultLaunchers {
     /**
      * Registers all launchers in [ActivityResultLaunchers], so they don't have to be registered
      * individually.
      */
+    @Deprecated("ActivityResultLaunchers is deprecated.")
     fun MainActivity.registerLaunchers() {
         ExportDatabase.launcher.register(this)
         ImportDatabase.launcher.register(this)
@@ -56,6 +58,7 @@ object ActivityResultLaunchers {
     }
 }
 
+@Deprecated("Use AmbientActivity.current.activityResultRegistry.register(...) manually in composables.")
 class ActivityResultLauncherHolder(private val intent: Intent) {
     private lateinit var launcher: ActivityResultLauncher<Intent>
     fun launch() = launcher.launch(intent)

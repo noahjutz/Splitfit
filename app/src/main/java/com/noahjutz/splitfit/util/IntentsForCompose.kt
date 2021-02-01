@@ -22,8 +22,11 @@ import android.content.Intent
 import android.net.Uri
 import com.noahjutz.splitfit.ui.MainActivity
 
+@Deprecated("Use the AmbientActivity ambient")
 object IntentsForCompose {
     private lateinit var activity: MainActivity
+
+    @Deprecated("IntentsForCompose is deprecated.")
     fun MainActivity.registerIntentsForCompose() {
         activity = this
     }
@@ -33,6 +36,7 @@ object IntentsForCompose {
     }
 }
 
+// TODO move constants, possibly to [AboutSplitfit]
 object Urls {
     const val googlePlay = "https://play.google.com/store/apps/details?id=com.noahjutz.splitfit"
     const val sourceCode = "https://github.com/noahjutz/Splitfit"

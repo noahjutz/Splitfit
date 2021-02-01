@@ -27,9 +27,13 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.runtime.Providers
+import androidx.compose.runtime.ambientOf
 import androidx.compose.ui.platform.setContent
 import com.noahjutz.splitfit.util.ActivityResultLaunchers.registerLaunchers
 import com.noahjutz.splitfit.util.IntentsForCompose.registerIntentsForCompose
+
+val AmbientActivity = ambientOf<MainActivity> { error("MainActivity not found") }
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                SplitfitApp()
+                Providers(AmbientActivity provides this@MainActivity) {
+                    SplitfitApp()
+                }
             }
         }
     }
