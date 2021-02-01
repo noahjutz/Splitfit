@@ -63,7 +63,7 @@ class CreateWorkoutViewModel(
 
     init {
         viewModelScope.launch {
-            preferences.edit {
+            preferences.edit { // TODO move to CreateRoutine when "start workout" is tapped
                 it[DatastoreKeys.currentWorkout] = _workout.value.workoutId
             }
             _workout.collectLatest {
