@@ -95,10 +95,11 @@ fun CreateRoutineScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(
+            ExtendedFloatingActionButton(
                 onClick = onAddExercise,
-                content = { Icon(Icons.Default.Add, null) },
-                modifier = Modifier.testTag("addExerciseFab")
+                icon = { Icon(Icons.Default.Add, null) },
+                text = { Text("Add Exercise") },
+                modifier = Modifier.testTag("addExerciseFab"),
             )
         },
         topBar = {
