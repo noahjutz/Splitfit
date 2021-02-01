@@ -104,11 +104,12 @@ val koinModule = module {
 
     viewModel { (workoutId: Int, routineId: Int) ->
         CreateWorkoutViewModel(
+            preferences = get(),
             workoutRepository = get(),
             routineRepository = get(),
             exerciseRepository = get(),
             workoutId = workoutId,
-            routineId = routineId
+            routineId = routineId,
         )
     }
 

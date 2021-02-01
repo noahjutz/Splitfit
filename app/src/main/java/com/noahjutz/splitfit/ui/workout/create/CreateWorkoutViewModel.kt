@@ -18,6 +18,9 @@
 
 package com.noahjutz.splitfit.ui.workout.create
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.ExerciseRepository
@@ -25,6 +28,7 @@ import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
+import com.noahjutz.splitfit.util.DatastoreKeys
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -36,6 +40,7 @@ import kotlin.time.milliseconds
 import kotlin.time.seconds
 
 class CreateWorkoutViewModel(
+    private val preferences: DataStore<Preferences>,
     private val workoutRepository: WorkoutRepository,
     private val routineRepository: RoutineRepository,
     private val exerciseRepository: ExerciseRepository,
@@ -58,6 +63,9 @@ class CreateWorkoutViewModel(
 
     init {
         viewModelScope.launch {
+            preferences.edit {
+                it[DatastoreKeys.currentWorkout] = _workout.value.workoutId
+            }
             _workout.collectLatest {
                 workoutRepository.insert(_workout.value)
             }

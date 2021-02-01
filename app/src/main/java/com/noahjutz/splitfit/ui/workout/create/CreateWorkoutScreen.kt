@@ -86,9 +86,6 @@ fun WorkoutScreen(
 
     DisposableEffect(null) {
         scope.launch {
-            preferences.edit {
-                it[DatastoreKeys.currentWorkout] = viewModel.presenter.workout.value.workoutId
-            }
             viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value)
             sharedPickExerciseViewModel.clear()
         }
