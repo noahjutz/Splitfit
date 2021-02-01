@@ -111,8 +111,7 @@ fun ConfirmDeleteExerciseDialog(
     exerciseName: String,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
-
-    ) {
+) {
     AlertDialog(
         title = {
             Text(
