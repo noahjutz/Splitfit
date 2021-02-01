@@ -49,12 +49,6 @@ fun CreateExerciseScreen(
     val editor = viewModel.Editor()
     val presenter = viewModel.Presenter()
 
-    DisposableEffect(Unit) {
-        onDispose {
-            editor.close()
-        }
-    }
-
     val exercise by presenter.exercise.collectAsState()
     val scaffoldState = rememberScaffoldState()
     Scaffold(
