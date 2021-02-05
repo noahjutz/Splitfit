@@ -5,9 +5,9 @@
     <string name="cancel">Abbrechen</string>
     <string name="time">Zeit</string>
     <string name="weight">Gewicht</string>
-    <string name="distance">Abstand</string>
+    <string name="distance">Strecke</string>
     <string name="alert_no_log_value_selected">Bitte wähle mindestens einen Wert aus.</string>
-    <string name="tab_settings">Einstellung</string>
+    <string name="tab_settings">Einstellungen</string>
     <string name="unnamed_routine">Nicht benannt</string>
     <string name="confirm_delete">Möchtest du %1$s löschen\?</string>
     <string name="add_set">Set hinzufügen</string>
