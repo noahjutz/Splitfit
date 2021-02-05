@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Splitfit</string>
+    <string name="yes">Ja</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="time">Zeit</string>
+    <string name="weight">Gewicht</string>
+    <string name="distance">Abstand</string>
+    <string name="alert_no_log_value_selected">Bitte wähle mindestens einen Wert aus.</string>
+    <string name="tab_settings">Einstellung</string>
 </resources>
