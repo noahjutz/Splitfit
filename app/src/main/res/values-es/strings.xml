@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="distance">Distancia</string>
+    <string name="time">Tiempo</string>
+    <string name="weight">Peso</string>
+    <string name="add_set">Añadir conjunto</string>
+    <string name="confirm_delete">Desea eliminar %1$s \?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="yes">Sí</string>
+    <string name="unnamed_routine">Sin nombre</string>
+    <string name="unnamed_exercise">Sin nombre</string>
+    <string name="pick_exercise">Pick Ejercicio</string>
+    <string name="log_distance">Registro de distancia</string>
+    <string name="log_time">Registro de tiempo</string>
+    <string name="log_weight">Registro de peso</string>
+    <string name="log_reps">Registro de repeticiones</string>
+    <string name="tab_settings">Configuración</string>
+    <string name="unnamed_workout">Sin nombre</string>
+    <string name="tab_workouts">Historia</string>
+    <string name="tab_exercises">Ejercicio</string>
+    <string name="app_name">Splitfit</string>
+    <string name="tab_routines">Rutina</string>
+    <string name="alert_no_log_value_selected">Seleccione al menos un valor.</string>
+    <string name="reps">Representante</string>
+</resources>

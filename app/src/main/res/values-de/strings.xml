@@ -13,13 +13,13 @@
     <string name="add_set">Set hinzufügen</string>
     <string name="reps">Vertreter</string>
     <string name="unnamed_exercise">Unbenannt</string>
-    <string name="log_weight">Gewicht messen</string>
-    <string name="log_reps">Vertreter messen</string>
-    <string name="log_distance">Distanz messen</string>
+    <string name="log_weight">Gewicht protokollieren</string>
+    <string name="log_reps">Wiederholungen protokollieren</string>
+    <string name="log_distance">Distanz protokollieren</string>
     <string name="tab_workouts">Historie</string>
     <string name="unnamed_workout">Unbenannt</string>
     <string name="pick_exercise">Aufgabe auswählen</string>
     <string name="tab_exercises">Aufgaben</string>
     <string name="tab_routines">Routinen</string>
-    <string name="log_time">Zeit messen</string>
+    <string name="log_time">Zeit protokollieren</string>
 </resources>

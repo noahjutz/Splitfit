@@ -32,8 +32,8 @@ android {
         applicationId = "com.noahjutz.splitfit"
         minSdkVersion(App.minSdk)
         targetSdkVersion(App.targetSdk)
-        versionCode = 17
-        versionName = "0.1.0-alpha6"
+        versionCode = 18
+        versionName = "0.1.0-alpha7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,7 +72,6 @@ android {
         }
         create("googleplay") {
             dimension = "dimension"
-            applicationIdSuffix = ".googleplay"
         }
     }
 
