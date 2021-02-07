@@ -9,7 +9,8 @@
 <a href="https://github.com/noahjutz/Splitfit/blob/master/LICENSE"><img src="https://img.shields.io/github/license/noahjutz/Splitfit" /></a>
 <a href="https://liberapay.com/noahjutz/donate"><img src="https://img.shields.io/badge/donate-liberapay-yellow?logo=liberapay&logoColor=white" /></a>
 <a href="https://opensource.guide/how-to-contribute/#how-to-submit-a-contribution"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" /></a>
-<a href="https://github.com/noahjutz/Splitfit/releases"><img src="https://img.shields.io/github/v/release/noahjutz/Splitfit?include_prereleases"> </a>
+<a href="https://github.com/noahjutz/Splitfit/releases"><img src="https://img.shields.io/github/v/release/noahjutz/Splitfit?include_prereleases&logo=github"> </a>
+<a href="https://f-droid.org/packages/com.noahjutz.splitfit.fdroid"><img src="https://img.shields.io/f-droid/v/com.noahjutz.splitfit.fdroid?include_prereleases&logo=f-droid"> </a>
 <br><br>
 <b>Save workout routines and track your progress.</b>
 <br><br>
