@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Splitfit</string>
+    <string name="unnamed_routine">Anonym</string>
+    <string name="yes">Ja</string>
+    <string name="tab_settings">Inställning</string>
+    <string name="unnamed_workout">Anonym</string>
+    <string name="tab_workouts">Historia</string>
+    <string name="tab_exercises">Övningar</string>
+    <string name="tab_routines">Rutin</string>
+    <string name="alert_no_log_value_selected">Välj minst ett värde.</string>
+    <string name="unnamed_exercise">Anonym</string>
+    <string name="pick_exercise">Plocka Motion</string>
+    <string name="distance">Avstånd</string>
+    <string name="time">Tid</string>
+    <string name="weight">Vikt</string>
+    <string name="add_set">Lägg Set</string>
+    <string name="confirm_delete">Vill du ta bort %1$s \?</string>
+    <string name="log_distance">Avstånd log</string>
+    <string name="log_time">Tidslogg</string>
+    <string name="log_weight">Vikt log</string>
+    <string name="log_reps">Repetitioner logga in</string>
+    <string name="reps">Repetitioner</string>
+    <string name="cancel">Avbryta</string>
+</resources>

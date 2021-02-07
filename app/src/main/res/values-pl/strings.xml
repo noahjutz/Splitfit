@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Splitfit</string>
+    <string name="yes">Tak</string>
+    <string name="weight">Waga</string>
+    <string name="reps">Powtarza</string>
+    <string name="unnamed_exercise">Nienazwany</string>
+    <string name="log_reps">Powtórzenia dziennika</string>
+    <string name="tab_exercises">Ćwiczenia</string>
+    <string name="tab_routines">Procedury</string>
+    <string name="log_weight">Rekordowa waga</string>
+    <string name="log_distance">Odległość dziennika</string>
+    <string name="unnamed_workout">Nienazwany</string>
+    <string name="tab_settings">Ustawienia</string>
+    <string name="unnamed_routine">Nienazwany</string>
+    <string name="tab_workouts">Historia</string>
+    <string name="alert_no_log_value_selected">Proszę wybrać co najmniej jedną wartość.</string>
+    <string name="pick_exercise">Wybierz Ćwiczenie</string>
+    <string name="distance">Odległość</string>
+    <string name="time">Czas</string>
+    <string name="add_set">Dodaj zestaw</string>
+    <string name="cancel">Anuluj</string>
+    <string name="confirm_delete">Czy chcesz usunąć %1$s \?</string>
+    <string name="log_time">Czas logowania</string>
+</resources>

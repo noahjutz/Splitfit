@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="pick_exercise">Valitse Harjoitus</string>
+    <string name="distance">Matka</string>
+    <string name="time">Aika</string>
+    <string name="weight">Paino</string>
+    <string name="add_set">Lisää Sarja</string>
+    <string name="cancel">Peruuttaa</string>
+    <string name="yes">Kyllä</string>
+    <string name="unnamed_routine">Nimetön</string>
+    <string name="app_name">Splitfit</string>
+    <string name="reps">Rep</string>
+    <string name="tab_routines">Rutiini</string>
+    <string name="log_distance">Etäisyysloki</string>
+    <string name="log_time">Aikaloki</string>
+    <string name="log_weight">Painoloki</string>
+    <string name="log_reps">Toistojen loki</string>
+    <string name="tab_settings">Asetus</string>
+    <string name="unnamed_workout">Nimetön</string>
+    <string name="tab_workouts">Historia</string>
+    <string name="tab_exercises">Harjoitus</string>
+    <string name="alert_no_log_value_selected">Valitse vähintään yksi arvo.</string>
+    <string name="unnamed_exercise">Nimetön</string>
+    <string name="confirm_delete">Haluatko poistaa %1$s \?</string>
+</resources>

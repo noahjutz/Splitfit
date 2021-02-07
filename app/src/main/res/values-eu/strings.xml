@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unnamed_routine">Izenik</string>
+    <string name="yes">Bai</string>
+    <string name="cancel">Utzi</string>
+    <string name="add_set">Gehitu Ezarri</string>
+    <string name="weight">Pisua</string>
+    <string name="time">Denbora</string>
+    <string name="distance">Distantzia</string>
+    <string name="pick_exercise">Aukeratu Ariketa</string>
+    <string name="unnamed_exercise">Izenik</string>
+    <string name="alert_no_log_value_selected">Mesedez, hautatu, gutxienez balio bat.</string>
+    <string name="tab_routines">Errutinak</string>
+    <string name="tab_exercises">Ariketak</string>
+    <string name="tab_workouts">Historia</string>
+    <string name="unnamed_workout">Izenik</string>
+    <string name="tab_settings">Ezarpenak</string>
+    <string name="log_reps">Errepikapen saioa</string>
+    <string name="log_weight">Pisu saioa</string>
+    <string name="log_time">Denbora saioa</string>
+    <string name="log_distance">Distantzia saioa</string>
+    <string name="reps">Errepikapenak</string>
+    <string name="confirm_delete">Ez ezabatu nahi duzula %1$s\?</string>
+    <string name="app_name">Splitfit</string>
+</resources>
