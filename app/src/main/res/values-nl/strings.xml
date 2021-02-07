@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unnamed_routine">Naamloos</string>
+    <string name="yes">Ja</string>
+    <string name="cancel">Annuleren</string>
+    <string name="confirm_delete">Wilt u %1$s verwijderen\?</string>
+    <string name="weight">Gewicht</string>
+    <string name="time">Tijd</string>
+    <string name="distance">Afstand</string>
+    <string name="unnamed_exercise">Naamloos</string>
+    <string name="pick_exercise">Een taak selecteren</string>
+    <string name="log_reps">Log herhalingen</string>
+    <string name="log_weight">Log Gewicht</string>
+    <string name="tab_exercises">Oefeningen</string>
+    <string name="tab_routines">Richtlijnen</string>
+    <string name="log_time">Log tijd</string>
+    <string name="log_distance">Log afstand</string>
+    <string name="tab_settings">Instelling</string>
+    <string name="app_name">Splitfit</string>
+    <string name="add_set">Instellen Toevoegen</string>
+    <string name="alert_no_log_value_selected">Selecteer minstens één waarde.</string>
+    <string name="unnamed_workout">Naamloos</string>
+    <string name="tab_workouts">Geschiedenis</string>
+    <string name="reps">Wiederholungen</string>
+</resources>
