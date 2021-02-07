@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Splitfit</string>
+    <string name="tab_settings">Beállítások</string>
+    <string name="unnamed_workout">Névtelen</string>
+    <string name="tab_workouts">Történelem</string>
+    <string name="tab_exercises">Gyakorlatok</string>
+    <string name="tab_routines">Rutinok</string>
+    <string name="alert_no_log_value_selected">Kérjük, válasszon legalább egy értéket.</string>
+    <string name="unnamed_exercise">Névtelen</string>
+    <string name="pick_exercise">Pick Gyakorlat</string>
+    <string name="distance">Távolság</string>
+    <string name="time">Idő</string>
+    <string name="weight">Tömeg</string>
+    <string name="add_set">Készlet Hozzáadása</string>
+    <string name="reps">Ismétlések</string>
+    <string name="confirm_delete">Törölni szeretné ezt: %1$s \?</string>
+    <string name="cancel">Mégsem</string>
+    <string name="yes">Igen</string>
+    <string name="log_distance">Távolság napló</string>
+    <string name="log_time">Időnapló</string>
+    <string name="log_weight">Súlynapló</string>
+    <string name="log_reps">Ismétlések naplója</string>
+    <string name="unnamed_routine">Névtelen</string>
+</resources>
