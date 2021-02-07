@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Splitfit
   ~ Copyright (C) 2020  Noah Jutz
@@ -14,14 +15,12 @@
   ~
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
-<resources>
+  --><resources>
     <string name="app_name">Splitfit</string>
     <string name="unnamed_routine">Unnamed</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
-    <string name="confirm_delete">Do you want to delete %1$s?</string>
+    <string name="confirm_delete">Do you want to delete %1$s\?</string>
     <string name="add_set">Add Set</string>
     <string name="reps">Reps</string>
     <string name="weight">Weight</string>
