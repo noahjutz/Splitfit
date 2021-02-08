@@ -1,0 +1,18 @@
+Bug fixes:
+* Fix bug where exercises wouldn't get saved (0958922d)
+
+Improvements:
+* Use extended FAB buttons for ease of use (d3fb6946)
+
+Features:
+* Add partial translations for 13 languages (WIP)
+
+Code cleanup:
+* Use MainActivity ambient instead of util classes (7000266b, 14aae8d0)
+* Add AboutSplitfitViewModel (14aae8d0)
+* Cancel / finish workout from ViewModel (dfbe9a5e)
+* Decouple composables (16fe70d6)o
+
+Misc:
+* Update README
+* Update Screenshots
