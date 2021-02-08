@@ -72,7 +72,6 @@ android {
         }
         create("googleplay") {
             dimension = "dimension"
-            applicationIdSuffix = ".googleplay"
         }
     }
 
