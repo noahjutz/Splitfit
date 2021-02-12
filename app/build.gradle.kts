@@ -80,6 +80,7 @@ android {
     }
 
     composeOptions {
+        kotlinCompilerVersion = GradlePlugins.Kotlin.version
         kotlinCompilerExtensionVersion = Libs.Compose.version
     }
 }
@@ -89,7 +90,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
         jvmTarget = "1.8"
         freeCompilerArgs += "-Xallow-jvm-ir-dependencies"
         freeCompilerArgs += "-Xskip-prerelease-check"
-        freeCompilerArgs += "-Xallow-unstable-dependencies" // TODO remove this workaround. This workaround allows for the project to build despite koin's incompatibility with compose v1.0.0-alpha12. It doesn't however prevent an immediate runtime crash.
     }
 }
 
@@ -122,7 +122,7 @@ dependencies {
     implementation(Libs.Compose.foundation)
     implementation(Libs.Compose.iconsCore)
     implementation(Libs.Compose.iconsExtended)
-    implementation(Libs.Compose.runtimeLivedata)
+    implementation(Libs.Compose.livedata)
     implementation(Libs.Compose.material)
     implementation(Libs.Compose.tooling)
     androidTestImplementation(Libs.Compose.test)

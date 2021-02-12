@@ -50,7 +50,6 @@ private fun MainActivity.openUrl(url: String) {
     startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) })
 }
 
-@ExperimentalMaterialApi
 @Composable
 fun AboutSplitfit(
     popBackStack: () -> Unit,
@@ -155,7 +154,6 @@ fun AboutSplitfit(
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun LicensesDialog(
     onDismiss: () -> Unit,
