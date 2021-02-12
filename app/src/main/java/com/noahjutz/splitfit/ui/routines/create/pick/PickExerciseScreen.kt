@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import org.koin.androidx.compose.getViewModel
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
 fun PickExerciseScreen(
