@@ -65,13 +65,16 @@ fun ExercisesScreen(
                             value = searchQuery,
                             onValueChange = {
                                 searchQuery = it
-                                viewModel.nameFilter.value = it
+                                viewModel.search(it)
                             },
                             hint = "Search"
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = { isInSearchMode = false }) {
+                        IconButton(onClick = {
+                            viewModel.clearSearch()
+                            isInSearchMode = false
+                        }) {
                             Icon(Icons.Default.ArrowBack, "Back")
                         }
                     },

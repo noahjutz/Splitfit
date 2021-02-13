@@ -30,7 +30,13 @@ import java.util.*
 class ExercisesViewModel(
     private val repository: ExerciseRepository,
 ) : ViewModel() {
-    var nameFilter = MutableStateFlow("")
+    private val nameFilter = MutableStateFlow("")
+    fun search(name: String) {
+        nameFilter.value = name
+    }
+    fun clearSearch() {
+        nameFilter.value = ""
+    }
 
     val exercises = repository.exercises.combine(nameFilter) { exercises, nameFilter ->
         exercises.filter {
