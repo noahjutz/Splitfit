@@ -18,9 +18,9 @@
 
 package com.noahjutz.splitfit.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.noahjutz.splitfit.data.domain.Exercise
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExerciseDao {
@@ -31,7 +31,7 @@ interface ExerciseDao {
     suspend fun delete(exercise: Exercise)
 
     @Query("SELECT * FROM exercise_table")
-    fun getExercises(): LiveData<List<Exercise>>
+    fun getExercises(): Flow<List<Exercise>>
 
     @Query("SELECT * FROM exercise_table WHERE exerciseId == :id")
     fun getExercise(id: Int): Exercise?

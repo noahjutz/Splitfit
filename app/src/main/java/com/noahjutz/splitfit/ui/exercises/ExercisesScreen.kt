@@ -94,9 +94,9 @@ fun ExercisesScreen(
             )
         },
         bodyContent = {
-            val exercises by viewModel.exercises.observeAsState()
+            val exercises by viewModel.exercises.collectAsState(emptyList())
             LazyColumn(Modifier.fillMaxHeight()) {
-                items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
+                items(exercises.filter { !it.hidden }) { exercise ->
                     val dismissState = rememberDismissState()
                     var hidden by remember { mutableStateOf(false) }
 

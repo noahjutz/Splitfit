@@ -81,9 +81,9 @@ fun PickExerciseScreen(
             }
         }
     ) {
-        val exercises by viewModel.exercises.observeAsState()
+        val exercises by viewModel.exercises.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
-            items(exercises?.filter { !it.hidden } ?: emptyList()) { exercise ->
+            items(exercises.filter { !it.hidden } ?: emptyList()) { exercise ->
                 var checked by remember { mutableStateOf(false) }
                 DisposableEffect(checked) {
                     if (checked) sharedPickExerciseViewModel.add(exercise)
