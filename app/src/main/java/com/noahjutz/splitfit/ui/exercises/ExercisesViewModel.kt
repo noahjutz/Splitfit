@@ -22,12 +22,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.domain.Exercise
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ExercisesViewModel(
     private val repository: ExerciseRepository,
 ) : ViewModel() {
-    val exercises = repository.exercises
+    var nameFilter = MutableStateFlow("")
+
+    val exercises = repository.exercises.combine(nameFilter) { exercises, nameFilter ->
+        exercises.filter {
+            it.name.toLowerCase(Locale.getDefault())
+                .contains(nameFilter.toLowerCase(Locale.getDefault()))
+        }
+    }
 
     fun hide(exercise: Exercise, hide: Boolean) =
         viewModelScope.launch { repository.insert(exercise.apply { hidden = hide }) }

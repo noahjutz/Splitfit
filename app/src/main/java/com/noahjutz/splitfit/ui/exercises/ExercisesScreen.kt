@@ -31,7 +31,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -60,12 +59,14 @@ fun ExercisesScreen(
             if (isInSearchMode) {
                 TopAppBar(
                     title = {
-                        val (searchQuery, setSearchQuery) = remember { mutableStateOf("") }
-                        // TODO implement search
+                        var searchQuery by remember { mutableStateOf("") }
                         AppBarTextField(
                             modifier = Modifier.focusRequester(searchFocusRequester),
                             value = searchQuery,
-                            onValueChange = setSearchQuery,
+                            onValueChange = {
+                                searchQuery = it
+                                viewModel.nameFilter.value = it
+                            },
                             hint = "Search"
                         )
                     },
