@@ -28,17 +28,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.ui.components.AppBarTextField
+import com.noahjutz.splitfit.ui.components.SearchTopBar
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import org.koin.androidx.compose.getViewModel
 
@@ -50,45 +46,15 @@ fun ExercisesScreen(
 ) {
     Scaffold(
         topBar = {
-            val searchFocusRequester = remember { FocusRequester() }
-            var isInSearchMode by remember { mutableStateOf(false) }
-            DisposableEffect(isInSearchMode) {
-                if (isInSearchMode) searchFocusRequester.requestFocus()
-                onDispose { }
-            }
-            if (isInSearchMode) {
-                TopAppBar(
-                    title = {
-                        var searchQuery by remember { mutableStateOf("") }
-                        AppBarTextField(
-                            modifier = Modifier.focusRequester(searchFocusRequester),
-                            value = searchQuery,
-                            onValueChange = {
-                                searchQuery = it
-                                viewModel.search(it)
-                            },
-                            hint = "Search"
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            viewModel.clearSearch()
-                            isInSearchMode = false
-                        }) {
-                            Icon(Icons.Default.ArrowBack, "Back")
-                        }
-                    },
-                )
-            } else {
-                TopAppBar(
-                    title = { Text("Exercises") },
-                    actions = {
-                        IconButton(onClick = { isInSearchMode = true }) {
-                            Icon(Icons.Default.Search, "Search")
-                        }
-                    },
-                )
-            }
+            var searchQuery by remember { mutableStateOf("") }
+            SearchTopBar(
+                value = searchQuery,
+                onValueChange = {
+                    searchQuery = it
+                    viewModel.search(it)
+                },
+                title = stringResource(R.string.tab_exercises),
+            )
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(

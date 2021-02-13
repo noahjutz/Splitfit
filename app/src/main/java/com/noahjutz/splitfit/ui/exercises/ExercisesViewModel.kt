@@ -34,9 +34,6 @@ class ExercisesViewModel(
     fun search(name: String) {
         nameFilter.value = name
     }
-    fun clearSearch() {
-        nameFilter.value = ""
-    }
 
     val exercises = repository.exercises.combine(nameFilter) { exercises, nameFilter ->
         exercises.filter {
