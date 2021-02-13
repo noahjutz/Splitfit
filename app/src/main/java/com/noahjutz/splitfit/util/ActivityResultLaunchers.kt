@@ -23,6 +23,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.noahjutz.splitfit.ui.MainActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Make [ActivityResultLauncher]s and their [ActivityResult]s available throughout the entire app,
@@ -45,9 +47,17 @@ object ActivityResultLaunchers {
     object ExportDatabase {
         private val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             type = "application/vnd.sqlite3"
-            putExtra(Intent.EXTRA_TITLE, "splitfit-backup.sqlite3")
         }
-        val launcher = ActivityResultLauncherHolder(intent)
+        val launcher = object : ActivityResultLauncherHolder(intent) {
+            override fun launch() = super.launcher.launch(
+                intent.apply {
+                    val now = Calendar.getInstance().time
+                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val nowFormatted = formatter.format(now)
+                    putExtra(Intent.EXTRA_TITLE, "splitfit_$nowFormatted.db")
+                }
+            )
+        }
     }
 
     object ImportDatabase {
@@ -59,9 +69,9 @@ object ActivityResultLaunchers {
 }
 
 @Deprecated("Use AmbientActivity.current.activityResultRegistry.register(...) manually in composables.")
-class ActivityResultLauncherHolder(private val intent: Intent) {
-    private lateinit var launcher: ActivityResultLauncher<Intent>
-    fun launch() = launcher.launch(intent)
+open class ActivityResultLauncherHolder(private val intent: Intent) {
+    open lateinit var launcher: ActivityResultLauncher<Intent>
+    open fun launch() = launcher.launch(intent)
 
     /**
      * This method must be called in [MainActivity] when instantiating an [ActivityResultLauncherHolder]
