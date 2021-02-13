@@ -20,9 +20,22 @@ package com.noahjutz.splitfit.ui.routines.create.pick
 
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.ExerciseRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import java.util.*
 
 class PickExerciseViewModel(
     private val exerciseRepository: ExerciseRepository,
 ) : ViewModel() {
-    val exercises get() = exerciseRepository.exercises
+    private val nameFilter = MutableStateFlow("")
+    fun search(name: String) {
+        nameFilter.value = name
+    }
+
+    val exercises = exerciseRepository.exercises.combine(nameFilter) { exercises, nameFilter ->
+        exercises.filter {
+            it.name.toLowerCase(Locale.getDefault())
+                .contains(nameFilter.toLowerCase(Locale.getDefault()))
+        }
+    }
 }

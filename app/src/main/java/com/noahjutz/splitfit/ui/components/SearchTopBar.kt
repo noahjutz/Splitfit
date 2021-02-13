@@ -35,6 +35,7 @@ fun SearchTopBar(
     value: String,
     onValueChange: (String) -> Unit,
     title: String,
+    navigationIcon: @Composable (() -> Unit)? = null,
 ) {
     val searchFocusRequester = remember { FocusRequester() }
     var isInSearchMode by remember { mutableStateOf(false) }
@@ -69,6 +70,7 @@ fun SearchTopBar(
                     Icon(Icons.Default.Search, "Search")
                 }
             },
+            navigationIcon = navigationIcon
         )
     }
 }

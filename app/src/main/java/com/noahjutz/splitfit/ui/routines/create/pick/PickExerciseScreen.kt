@@ -33,11 +33,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.ui.components.SearchTopBar
 import org.koin.androidx.compose.getViewModel
 
 @ExperimentalAnimationApi
@@ -56,16 +56,20 @@ fun PickExerciseScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            var searchQuery by remember { mutableStateOf("") }
+            SearchTopBar(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
                         content = { Icon(Icons.Default.Close, null) }
                     )
                 },
-                title = {
-                    Text(stringResource(R.string.pick_exercise))
-                }
+                title = stringResource(R.string.pick_exercise),
+                value = searchQuery,
+                onValueChange = {
+                    searchQuery = it
+                    viewModel.search(it)
+                },
             )
         },
         floatingActionButton = {
@@ -83,21 +87,19 @@ fun PickExerciseScreen(
     ) {
         val exercises by viewModel.exercises.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
-            items(exercises.filter { !it.hidden } ?: emptyList()) { exercise ->
+            items(exercises.filter { !it.hidden }) { exercise ->
                 var checked by remember { mutableStateOf(false) }
-                DisposableEffect(checked) {
-                    if (checked) sharedPickExerciseViewModel.add(exercise)
-                    else sharedPickExerciseViewModel.remove(exercise)
-                    onDispose {}
-                }
                 ListItem(
-                    trailing = {
+                    icon = {
                         Checkbox(
                             checked = checked,
-                            onCheckedChange = { checked = it }
+                            onCheckedChange = {
+                                checked = it
+                                if (it) sharedPickExerciseViewModel.add(exercise)
+                                else sharedPickExerciseViewModel.remove(exercise)
+                            }
                         )
                     },
-                    modifier = Modifier.clickable { checked = !checked }
                 ) {
                     Text(
                         exercise.name.takeIf { it.isNotBlank() } ?: stringResource(
