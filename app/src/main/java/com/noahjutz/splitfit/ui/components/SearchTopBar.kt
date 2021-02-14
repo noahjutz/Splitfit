@@ -37,6 +37,12 @@ fun SearchTopBar(
     title: String,
     navigationIcon: @Composable (() -> Unit)? = null,
 ) {
+    DisposableEffect(Unit) {
+        onDispose {
+            onValueChange("")
+        }
+    }
+
     val searchFocusRequester = remember { FocusRequester() }
     var isInSearchMode by remember { mutableStateOf(false) }
     DisposableEffect(isInSearchMode) {
