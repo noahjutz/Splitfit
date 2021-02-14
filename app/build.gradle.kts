@@ -80,7 +80,6 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = GradlePlugins.Kotlin.version
         kotlinCompilerExtensionVersion = Libs.Compose.version
     }
 }
@@ -89,7 +88,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs += "-Xallow-jvm-ir-dependencies"
-        freeCompilerArgs += "-Xskip-prerelease-check"
     }
 }
 
