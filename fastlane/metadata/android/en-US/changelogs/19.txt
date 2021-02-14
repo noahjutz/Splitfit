@@ -1,0 +1,7 @@
+Features:
+* Allow for searching exercises (#43)
+* Append current time to backup filename (#42)
+* Update translations
+
+Misc:
+* Update compose to v1.0.0-alpha12 (5fcd0645)
