@@ -40,6 +40,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.SearchTopBar
 import com.noahjutz.splitfit.util.getViewModel
 
+@ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
 fun PickExerciseScreen(

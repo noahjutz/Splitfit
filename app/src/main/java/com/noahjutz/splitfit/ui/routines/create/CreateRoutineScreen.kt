@@ -146,40 +146,40 @@ fun CreateRoutineScreen(
                 },
                 actions = {
                     var showMenu by remember { mutableStateOf(false) }
-                    DropdownMenu(
-                        toggle = {
-                            IconButton(onClick = { showMenu = true }) {
-                                Icon(Icons.Default.MoreVert, null)
-                            }
-                        },
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
-                        DropdownMenuItem(
-                            onClick = {
-                                val currentWorkout =
-                                    preferencesData?.get(DatastoreKeys.currentWorkout)
-                                if (currentWorkout == null || currentWorkout < 0) {
-                                    startWorkout(viewModel.presenter.routine.value.routineId)
-                                } else {
-                                    scope.launch {
-                                        scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                                        val snackbarResult =
-                                            scaffoldState.snackbarHostState.showSnackbar(
-                                                "A workout is already in progress.",
-                                                "Stop current"
-                                            )
-                                        if (snackbarResult == SnackbarResult.ActionPerformed) {
-                                            preferences.edit {
-                                                it[DatastoreKeys.currentWorkout] = -1
+                    Box {
+                        IconButton(onClick = { showMenu = true }) {
+                            Icon(Icons.Default.MoreVert, null)
+                        }
+                        DropdownMenu(
+                            expanded = showMenu,
+                            onDismissRequest = { showMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                onClick = {
+                                    val currentWorkout =
+                                        preferencesData?.get(DatastoreKeys.currentWorkout)
+                                    if (currentWorkout == null || currentWorkout < 0) {
+                                        startWorkout(viewModel.presenter.routine.value.routineId)
+                                    } else {
+                                        scope.launch {
+                                            scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                                            val snackbarResult =
+                                                scaffoldState.snackbarHostState.showSnackbar(
+                                                    "A workout is already in progress.",
+                                                    "Stop current"
+                                                )
+                                            if (snackbarResult == SnackbarResult.ActionPerformed) {
+                                                preferences.edit {
+                                                    it[DatastoreKeys.currentWorkout] = -1
+                                                }
+                                                scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
                                             }
-                                            scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
                                         }
                                     }
                                 }
+                            ) {
+                                Text("Start workout")
                             }
-                        ) {
-                            Text("Start workout")
                         }
                     }
                 }
