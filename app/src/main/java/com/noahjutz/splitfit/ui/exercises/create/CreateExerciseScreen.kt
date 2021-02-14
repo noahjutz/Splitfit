@@ -36,7 +36,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.noahjutz.splitfit.R
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
+import com.noahjutz.splitfit.util.getViewModel
 import org.koin.core.parameter.parametersOf
 
 @ExperimentalMaterialApi

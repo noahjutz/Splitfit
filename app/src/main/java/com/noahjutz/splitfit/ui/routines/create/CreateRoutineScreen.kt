@@ -64,8 +64,8 @@ import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.get
-import org.koin.androidx.compose.getViewModel
+import com.noahjutz.splitfit.util.get
+import com.noahjutz.splitfit.util.getViewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
 import kotlin.math.floor

@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.SearchTopBar
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import org.koin.androidx.compose.getViewModel
+import com.noahjutz.splitfit.util.getViewModel
 
 @ExperimentalMaterialApi
 @Composable

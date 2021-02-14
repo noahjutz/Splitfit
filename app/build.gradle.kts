@@ -130,7 +130,7 @@ dependencies {
 
     implementation(Libs.Koin.android)
     implementation(Libs.Koin.viewModel)
-    implementation(Libs.Koin.compose)
+    implementation(Libs.Koin.compose) // (replaced by workaround due to incompatibility with compose alpha12)
     testImplementation(Libs.Koin.test)
 
     implementation(Libs.DataStore.preferences)

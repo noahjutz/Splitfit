@@ -38,7 +38,7 @@ import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.WorkoutsScreen
 import com.noahjutz.splitfit.ui.workout.create.WorkoutScreen
-import org.koin.androidx.compose.getViewModel
+import com.noahjutz.splitfit.util.getViewModel
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi

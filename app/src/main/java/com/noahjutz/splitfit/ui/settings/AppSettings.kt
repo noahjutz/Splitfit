@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
+import com.noahjutz.splitfit.util.getViewModel
 
 @ExperimentalMaterialApi
 @Composable

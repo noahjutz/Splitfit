@@ -59,8 +59,8 @@ import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
 import com.noahjutz.splitfit.util.RegexPatterns
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.get
-import org.koin.androidx.compose.getViewModel
+import com.noahjutz.splitfit.util.get
+import com.noahjutz.splitfit.util.getViewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
 import kotlin.math.floor
