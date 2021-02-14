@@ -69,6 +69,7 @@ object Libs {
     }
 
     object Compose {
+        private const val versionActivity = "1.3.0-alpha02"
         const val version = "1.0.0-alpha12"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
@@ -79,6 +80,7 @@ object Libs {
         const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
         const val test = "androidx.compose.ui:ui-test:$version"
         const val testJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
+        const val activityCompose = "androidx.activity:activity-compose:$versionActivity"
     }
 
     object DataStore {
@@ -120,7 +122,7 @@ object TestLibs {
 
 object GradlePlugins {
     object Android {
-        private const val version = "7.0.0-alpha05"
+        private const val version = "7.0.0-alpha06"
         const val classpath = "com.android.tools.build:gradle:$version"
     }
 
