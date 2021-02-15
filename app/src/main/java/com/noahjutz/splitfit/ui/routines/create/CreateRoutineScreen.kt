@@ -58,14 +58,15 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
+import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.launch
 import com.noahjutz.splitfit.util.get
 import com.noahjutz.splitfit.util.getViewModel
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.launch
 import org.koin.core.parameter.parametersOf
 import java.util.*
 import kotlin.math.floor
@@ -112,37 +113,15 @@ fun CreateRoutineScreen(
                     )
                 },
                 title = {
-                    Box {
-                        var nameFieldValue by remember {
-                            mutableStateOf(
-                                TextFieldValue(viewModel.presenter.routine.value.name)
-                            )
-                        }
-                        var focusState by remember { mutableStateOf(false) }
-                        BasicTextField(
-                            value = nameFieldValue,
-                            onValueChange = {
-                                nameFieldValue = it
-                                viewModel.editor.setName(it.text)
-                            },
-                            modifier = Modifier
-                                .onFocusChanged {
-                                    focusState = it.isFocused
-                                }
-                                .fillMaxWidth(),
-                            textStyle = AmbientTextStyle.current.copy(
-                                color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
-                            ),
-                            singleLine = true,
-                            cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
-                        )
-                        if (nameFieldValue.text.isEmpty() && !focusState) {
-                            Text(
-                                stringResource(R.string.unnamed_routine),
-                                modifier = Modifier.alpha(0.5f)
-                            )
-                        }
-                    }
+                    var nameFieldValue by remember { mutableStateOf(viewModel.presenter.routine.value.name) }
+                    AppBarTextField(
+                        value = nameFieldValue,
+                        onValueChange = {
+                            nameFieldValue = it
+                            viewModel.editor.setName(it)
+                        },
+                        hint = stringResource(R.string.unnamed_routine),
+                    )
                 },
                 actions = {
                     var showMenu by remember { mutableStateOf(false) }
