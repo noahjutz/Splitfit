@@ -18,25 +18,17 @@
 
 package com.noahjutz.splitfit.ui.exercises.create
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.focus.isFocused
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.ui.components.AppBarTextField
+import com.noahjutz.splitfit.util.getViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import com.noahjutz.splitfit.util.getViewModel
 import org.koin.core.parameter.parametersOf
 
 @ExperimentalMaterialApi
@@ -62,39 +54,15 @@ fun CreateExerciseScreen(
                     )
                 },
                 title = {
-                    Box {
-                        var nameFieldValue by remember {
-                            mutableStateOf(
-                                TextFieldValue(
-                                    exercise.name
-                                )
-                            )
-                        }
-                        var focusState by remember { mutableStateOf(false) }
-                        BasicTextField(
-                            value = nameFieldValue,
-                            onValueChange = {
-                                nameFieldValue = it
-                                editor.updateExercise(name = it.text)
-                            },
-                            modifier = Modifier
-                                .onFocusChanged {
-                                    focusState = it.isFocused
-                                }
-                                .fillMaxWidth(),
-                            textStyle = AmbientTextStyle.current.copy(
-                                color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
-                            ),
-                            singleLine = true,
-                            cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
-                        )
-                        if (nameFieldValue.text.isEmpty() && !focusState) {
-                            Text(
-                                stringResource(R.string.unnamed_exercise),
-                                modifier = Modifier.alpha(0.5f)
-                            )
-                        }
-                    }
+                    var nameFieldValue by remember { mutableStateOf(exercise.name) }
+                    AppBarTextField(
+                        value = nameFieldValue,
+                        onValueChange = {
+                            nameFieldValue = it
+                            editor.updateExercise(name = it)
+                        },
+                        hint = stringResource(R.string.unnamed_exercise),
+                    )
                 }
             )
         },
