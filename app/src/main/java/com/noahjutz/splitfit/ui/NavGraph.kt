@@ -36,7 +36,7 @@ import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
 import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
-import com.noahjutz.splitfit.ui.workout.WorkoutsScreen
+import com.noahjutz.splitfit.ui.workout.WorkoutHistory
 import com.noahjutz.splitfit.ui.workout.create.WorkoutScreen
 import com.noahjutz.splitfit.util.getViewModel
 
@@ -50,7 +50,7 @@ fun NavGraph(
     val sharedPickExerciseViewModel: SharedPickExerciseViewModel = getViewModel()
     NavHost(navController, startDestination = "routines") {
         composable("workouts") {
-            WorkoutsScreen(
+            WorkoutHistory(
                 navToCreateWorkoutScreen = { workoutId -> navController.navigate("createWorkout?workoutId=$workoutId") }
             )
         }

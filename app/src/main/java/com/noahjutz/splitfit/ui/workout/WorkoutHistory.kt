@@ -35,8 +35,8 @@ import com.noahjutz.splitfit.util.getViewModel
 
 @ExperimentalMaterialApi
 @Composable
-fun WorkoutsScreen(
-    viewModel: WorkoutsViewModel = getViewModel(),
+fun WorkoutHistory(
+    viewModel: WorkoutHistoryViewModel = getViewModel(),
     navToCreateWorkoutScreen: (Int) -> Unit,
 ) {
     val workouts by viewModel.presenter.workouts.collectAsState(emptyList())
