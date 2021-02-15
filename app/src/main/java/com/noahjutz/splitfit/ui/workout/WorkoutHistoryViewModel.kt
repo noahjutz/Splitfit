@@ -43,8 +43,11 @@ class WorkoutHistoryViewModel(
             viewModelScope.launch { preferences.data.collect { preferencesData = it } }
         }
 
-        val workouts = repository.getWorkouts()
-            .map { it.filter { preferencesData?.get(DatastoreKeys.currentWorkout) != it.workoutId } }
+        val workouts = repository.getWorkouts().map {
+            it.filter {
+                preferencesData?.get(DatastoreKeys.currentWorkout) != it.workoutId
+            }
+        }
     }
 
     inner class Editor {
