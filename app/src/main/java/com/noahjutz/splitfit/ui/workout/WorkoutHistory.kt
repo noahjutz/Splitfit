@@ -32,6 +32,8 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.util.getViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 @ExperimentalMaterialApi
 @Composable
@@ -54,14 +56,21 @@ fun WorkoutHistory(
                             if (dismissState.dismissDirection != null) 4.dp else 0.dp
                         ).value
                     ) {
-                        ListItem {
-                            Text(
-                                text = workout.name.takeIf { it.isNotBlank() }
-                                    ?: stringResource(R.string.unnamed_workout),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        }
+                        ListItem(
+                            text = {
+                                Text(
+                                    text = workout.name.takeIf { it.isNotBlank() }
+                                        ?: stringResource(R.string.unnamed_workout),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
+                            trailing = {
+                                val day = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                    .format(workout.startTime)
+                                Text(day)
+                            }
+                        )
                     }
                 }
 
