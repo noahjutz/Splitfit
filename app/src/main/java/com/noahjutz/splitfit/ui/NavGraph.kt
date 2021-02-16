@@ -28,7 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
-import com.noahjutz.splitfit.ui.exercises.ExercisesScreen
+import com.noahjutz.splitfit.ui.exercises.ExerciseList
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
@@ -80,7 +80,7 @@ fun NavGraph(
             )
         }
         composable("exercises") {
-            ExercisesScreen(
+            ExerciseList(
                 addEditExercise = { exerciseId -> navController.navigate("createExercise/$exerciseId") }
             )
         }

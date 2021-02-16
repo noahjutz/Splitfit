@@ -40,9 +40,9 @@ import com.noahjutz.splitfit.util.getViewModel
 
 @ExperimentalMaterialApi
 @Composable
-fun ExercisesScreen(
+fun ExerciseList(
     addEditExercise: (Int) -> Unit,
-    viewModel: ExercisesViewModel = getViewModel(),
+    viewModel: ExerciseListViewModel = getViewModel(),
 ) {
     Scaffold(
         topBar = {
