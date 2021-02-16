@@ -43,9 +43,9 @@ import com.noahjutz.splitfit.util.getViewModel
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
-fun RoutinesScreen(
+fun RoutineList(
     addEditRoutine: (Int) -> Unit,
-    viewModel: RoutinesViewModel = getViewModel(),
+    viewModel: RoutineListViewModel = getViewModel(),
 ) {
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_routines)) }) },

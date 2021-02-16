@@ -25,7 +25,7 @@ import com.noahjutz.splitfit.data.domain.Routine
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class RoutinesViewModel(
+class RoutineListViewModel(
     private val repository: RoutineRepository,
 ) : ViewModel() {
     val routines: Flow<List<Routine>>
