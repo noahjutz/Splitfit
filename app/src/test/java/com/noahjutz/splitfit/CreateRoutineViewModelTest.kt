@@ -23,7 +23,7 @@ import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.data.domain.Routine
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.data.domain.SetGroup
-import com.noahjutz.splitfit.ui.routines.create.RoutineEditorViewModel
+import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

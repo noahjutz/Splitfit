@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.routines.create
+package com.noahjutz.splitfit.ui.routines.editor
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

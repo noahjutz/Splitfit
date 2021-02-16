@@ -55,7 +55,7 @@ import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
-import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
+import com.noahjutz.splitfit.ui.routines.editor.timeVisualTransformation
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.getViewModel
 import kotlinx.coroutines.launch

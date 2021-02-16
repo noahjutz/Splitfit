@@ -31,7 +31,7 @@ import androidx.navigation.compose.navigate
 import com.noahjutz.splitfit.ui.exercises.ExerciseList
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.routines.RoutineList
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
+import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePicker
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettings
