@@ -38,9 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.gesture.LongPressDragObserver
-import androidx.compose.ui.gesture.longPressDragGestureFilter
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
@@ -204,62 +201,31 @@ fun SetGroupCard(
 ) {
     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)
 
-    // Temporary rearranging solution
-    var offsetPosition by remember { mutableStateOf(0f) }
-    var dragging by remember { mutableStateOf(false) }
-    var toSwap by remember { mutableStateOf(Pair(0, 0)) }
     val focusManager = LocalFocusManager.current
-    DisposableEffect(offsetPosition) {
-        if (dragging) {
-            toSwap = when {
-                offsetPosition < -150 -> Pair(setGroupIndex, setGroupIndex - 1)
-                offsetPosition > 150 -> Pair(setGroupIndex, setGroupIndex + 1)
-                else -> Pair(0, 0)
-            }
-        } else {
-            if (toSwap != Pair(0, 0)) {
-                focusManager.clearFocus()
-                viewModel.editor.swapSetGroups(toSwap.first, toSwap.second)
-                toSwap = Pair(0, 0)
-            }
-        }
-        onDispose {}
-    }
 
-    Card(
-        elevation = animateDpAsState(if (offsetPosition == 0f) 0.dp else 4.dp).value,
-        modifier = Modifier
-            .fillMaxWidth()
-            .offset(y = offsetPosition.dp)
-    ) {
+    Card(Modifier.fillMaxWidth(), elevation = 0.dp) {
         Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {}
-                    .longPressDragGestureFilter(
-                        longPressDragObserver = object : LongPressDragObserver {
-                            override fun onDrag(dragDistance: Offset): Offset {
-                                super.onDrag(dragDistance)
-                                dragging = true
-                                offsetPosition += dragDistance.y
-                                return dragDistance
-                            }
-
-                            override fun onStop(velocity: Offset) {
-                                super.onStop(velocity)
-                                dragging = false
-                                offsetPosition = 0f
-                            }
-                        }
-                    )
-            ) {
+            Row(Modifier.fillMaxWidth()) {
                 Text(
                     modifier = Modifier.padding(16.dp),
                     text = exercise?.name?.takeIf { it.isNotBlank() }
                         ?: stringResource(R.string.unnamed_routine),
                     fontSize = 20.sp,
                 )
+
+                // Temporary replacement for drag & drop.
+                // See https://stackoverflow.com/questions/64913067
+                Spacer(Modifier.weight(1f))
+                IconButton(onClick = {
+                    viewModel.editor.swapSetGroups(setGroupIndex, setGroupIndex - 1)
+                }) {
+                    Icon(Icons.Default.ArrowUpward, "Move up")
+                }
+                IconButton(onClick = {
+                    viewModel.editor.swapSetGroups(setGroupIndex, setGroupIndex + 1)
+                }) {
+                    Icon(Icons.Default.ArrowDownward, "Move down")
+                }
             }
             Row(modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = (16 + 48).dp)) {
                 if (exercise?.logReps == true) SetHeader(stringResource(R.string.reps))
