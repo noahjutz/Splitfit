@@ -33,7 +33,7 @@ import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel
 import com.noahjutz.splitfit.ui.workout.WorkoutHistoryViewModel
-import com.noahjutz.splitfit.ui.workout.create.CreateWorkoutViewModel
+import com.noahjutz.splitfit.ui.workout.editor.CreateWorkoutViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel

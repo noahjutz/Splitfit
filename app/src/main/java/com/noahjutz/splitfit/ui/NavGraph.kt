@@ -37,7 +37,7 @@ import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.WorkoutHistory
-import com.noahjutz.splitfit.ui.workout.create.WorkoutScreen
+import com.noahjutz.splitfit.ui.workout.editor.WorkoutScreen
 import com.noahjutz.splitfit.util.getViewModel
 
 @ExperimentalFoundationApi
