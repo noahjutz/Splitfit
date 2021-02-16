@@ -54,7 +54,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.picker.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.getViewModel

@@ -30,7 +30,7 @@ import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.ui.MainActivity
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.picker.SharedPickExerciseViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

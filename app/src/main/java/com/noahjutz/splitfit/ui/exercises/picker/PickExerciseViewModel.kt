@@ -16,29 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.routines.create.pick
+package com.noahjutz.splitfit.ui.exercises.picker
 
 import androidx.lifecycle.ViewModel
-import com.noahjutz.splitfit.data.domain.Exercise
+import com.noahjutz.splitfit.data.ExerciseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import java.util.*
 
-/**
- * Used to pass back exercises from PickExercise to CreateRoutine
- */
-class SharedPickExerciseViewModel : ViewModel() {
-    private val _exercises = MutableStateFlow<List<Exercise>>(mutableListOf())
-    val exercises = _exercises.asStateFlow()
-
-    fun add(exercise: Exercise) {
-        _exercises.value = _exercises.value.toMutableList().also { it.add(exercise) }
+class PickExerciseViewModel(
+    private val exerciseRepository: ExerciseRepository,
+) : ViewModel() {
+    private val nameFilter = MutableStateFlow("")
+    fun search(name: String) {
+        nameFilter.value = name
     }
 
-    fun remove(exercise: Exercise) {
-        _exercises.value = _exercises.value.toMutableList().also { it.remove(exercise) }
-    }
-
-    fun clear() {
-        _exercises.value = emptyList()
+    val exercises = exerciseRepository.exercises.combine(nameFilter) { exercises, nameFilter ->
+        exercises.filter {
+            it.name.toLowerCase(Locale.getDefault())
+                .contains(nameFilter.toLowerCase(Locale.getDefault()))
+        }
     }
 }

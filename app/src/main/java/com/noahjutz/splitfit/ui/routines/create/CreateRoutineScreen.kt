@@ -23,7 +23,6 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -36,7 +35,6 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
@@ -60,7 +58,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.picker.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.get

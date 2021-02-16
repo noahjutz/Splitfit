@@ -32,8 +32,8 @@ import com.noahjutz.splitfit.ui.exercises.ExercisesScreen
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
-import com.noahjutz.splitfit.ui.routines.create.pick.PickExerciseScreen
-import com.noahjutz.splitfit.ui.routines.create.pick.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.picker.PickExerciseScreen
+import com.noahjutz.splitfit.ui.exercises.picker.SharedPickExerciseViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.WorkoutHistory
