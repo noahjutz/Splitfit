@@ -54,7 +54,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.ui.exercises.picker.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.create.timeVisualTransformation
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.getViewModel
@@ -73,14 +73,14 @@ fun WorkoutScreen(
     workoutId: Int,
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
-    sharedPickExerciseViewModel: SharedPickExerciseViewModel,
+    sharedExercisePickerViewModel: SharedExercisePickerViewModel,
 ) {
     val scope = rememberCoroutineScope()
 
     DisposableEffect(null) {
         scope.launch {
-            viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value)
-            sharedPickExerciseViewModel.clear()
+            viewModel.editor.addExercises(sharedExercisePickerViewModel.exercises.value)
+            sharedExercisePickerViewModel.clear()
         }
         onDispose {}
     }

@@ -33,7 +33,7 @@ import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseScreen
 import com.noahjutz.splitfit.ui.routines.RoutinesScreen
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.exercises.picker.PickExerciseScreen
-import com.noahjutz.splitfit.ui.exercises.picker.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.WorkoutHistory
@@ -47,7 +47,7 @@ import com.noahjutz.splitfit.util.getViewModel
 fun NavGraph(
     navController: NavHostController,
 ) {
-    val sharedPickExerciseViewModel: SharedPickExerciseViewModel = getViewModel()
+    val sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel()
     NavHost(navController, startDestination = "routines") {
         composable("workouts") {
             WorkoutHistory(
@@ -70,12 +70,12 @@ fun NavGraph(
                     navController.navigate("createWorkout?routineId=$routineId")
                 },
                 popBackStack = { navController.popBackStack() },
-                sharedPickExerciseViewModel = sharedPickExerciseViewModel,
+                sharedExercisePickerViewModel = sharedExercisePickerViewModel,
             )
         }
         composable("pickExercise") {
             PickExerciseScreen(
-                sharedPickExerciseViewModel = sharedPickExerciseViewModel,
+                sharedExercisePickerViewModel = sharedExercisePickerViewModel,
                 popBackStack = { navController.popBackStack() }
             )
         }
@@ -111,7 +111,7 @@ fun NavGraph(
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
-                sharedPickExerciseViewModel = sharedPickExerciseViewModel,
+                sharedExercisePickerViewModel = sharedExercisePickerViewModel,
             )
         }
         composable("settings") {

@@ -58,7 +58,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.SetGroup
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.ui.exercises.picker.SharedPickExerciseViewModel
+import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.util.DatastoreKeys
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.get
@@ -79,7 +79,7 @@ fun CreateRoutineScreen(
     popBackStack: () -> Unit,
     routineId: Int,
     viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
-    sharedPickExerciseViewModel: SharedPickExerciseViewModel,
+    sharedExercisePickerViewModel: SharedExercisePickerViewModel,
     preferences: DataStore<Preferences> = get(),
 ) {
     val preferencesData by preferences.data.collectAsState(null)
@@ -87,8 +87,8 @@ fun CreateRoutineScreen(
     val scaffoldState = rememberScaffoldState()
 
     scope.launch {
-        viewModel.editor.addExercises(sharedPickExerciseViewModel.exercises.value)
-        sharedPickExerciseViewModel.clear()
+        viewModel.editor.addExercises(sharedExercisePickerViewModel.exercises.value)
+        sharedExercisePickerViewModel.clear()
     }
 
     Scaffold(

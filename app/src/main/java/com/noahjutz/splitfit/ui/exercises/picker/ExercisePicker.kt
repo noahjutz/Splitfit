@@ -43,14 +43,14 @@ import com.noahjutz.splitfit.util.getViewModel
 @ExperimentalAnimationApi
 @Composable
 fun PickExerciseScreen(
-    viewModel: PickExerciseViewModel = getViewModel(),
-    sharedPickExerciseViewModel: SharedPickExerciseViewModel,
+    viewModel: ExercisePickerViewModel = getViewModel(),
+    sharedExercisePickerViewModel: SharedExercisePickerViewModel,
     popBackStack: () -> Unit,
 ) {
     var save = false
     DisposableEffect(null) {
         onDispose {
-            if (!save) sharedPickExerciseViewModel.clear()
+            if (!save) sharedExercisePickerViewModel.clear()
         }
     }
 
@@ -73,7 +73,7 @@ fun PickExerciseScreen(
             )
         },
         floatingActionButton = {
-            val selectedExercises by sharedPickExerciseViewModel.exercises.collectAsState()
+            val selectedExercises by sharedExercisePickerViewModel.exercises.collectAsState()
             AnimatedVisibility(
                 visible = selectedExercises.isNotEmpty(),
                 enter = slideInHorizontally({ it * 2 }),
@@ -95,8 +95,8 @@ fun PickExerciseScreen(
                             checked = checked,
                             onCheckedChange = {
                                 checked = it
-                                if (it) sharedPickExerciseViewModel.add(exercise)
-                                else sharedPickExerciseViewModel.remove(exercise)
+                                if (it) sharedExercisePickerViewModel.add(exercise)
+                                else sharedExercisePickerViewModel.remove(exercise)
                             }
                         )
                     },
