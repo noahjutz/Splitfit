@@ -78,7 +78,7 @@ fun CreateRoutineScreen(
     startWorkout: (Int) -> Unit,
     popBackStack: () -> Unit,
     routineId: Int,
-    viewModel: CreateRoutineViewModel = getViewModel { parametersOf(routineId) },
+    viewModel: RoutineEditorViewModel = getViewModel { parametersOf(routineId) },
     sharedExercisePickerViewModel: SharedExercisePickerViewModel,
     preferences: DataStore<Preferences> = get(),
 ) {
@@ -188,7 +188,7 @@ fun CreateRoutineScreen(
 fun SetGroupCard(
     setGroupIndex: Int,
     setGroup: SetGroup,
-    viewModel: CreateRoutineViewModel,
+    viewModel: RoutineEditorViewModel,
 ) {
     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)
 

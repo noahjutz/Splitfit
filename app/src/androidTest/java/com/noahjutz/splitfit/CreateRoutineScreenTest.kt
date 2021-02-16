@@ -29,7 +29,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.ui.MainActivity
 import com.noahjutz.splitfit.ui.routines.create.CreateRoutineScreen
-import com.noahjutz.splitfit.ui.routines.create.CreateRoutineViewModel
+import com.noahjutz.splitfit.ui.routines.create.RoutineEditorViewModel
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import io.mockk.every
 import io.mockk.mockk
@@ -46,7 +46,7 @@ class CreateRoutineScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    private val viewModel = mockk<CreateRoutineViewModel>(relaxed = true).apply {
+    private val viewModel = mockk<RoutineEditorViewModel>(relaxed = true).apply {
         every { initialName } returns "Test Routine Name"
         every { getExerciseName(-1) } returns "Test Exercise Name"
     }

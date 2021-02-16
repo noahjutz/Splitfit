@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class CreateRoutineViewModel(
+class RoutineEditorViewModel(
     private val routineRepository: RoutineRepository,
     private val exerciseRepository: ExerciseRepository,
     routineId: Int,
