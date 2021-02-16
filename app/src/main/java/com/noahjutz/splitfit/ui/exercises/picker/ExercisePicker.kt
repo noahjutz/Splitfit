@@ -42,7 +42,7 @@ import com.noahjutz.splitfit.util.getViewModel
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun PickExerciseScreen(
+fun ExercisePicker(
     viewModel: ExercisePickerViewModel = getViewModel(),
     sharedExercisePickerViewModel: SharedExercisePickerViewModel,
     popBackStack: () -> Unit,
