@@ -26,10 +26,10 @@ import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.ui.exercises.ExerciseListViewModel
 import com.noahjutz.splitfit.ui.exercises.create.CreateExerciseViewModel
-import com.noahjutz.splitfit.ui.routines.RoutineListViewModel
-import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerViewModel
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
+import com.noahjutz.splitfit.ui.routines.RoutineListViewModel
+import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel
 import com.noahjutz.splitfit.ui.workout.WorkoutHistoryViewModel

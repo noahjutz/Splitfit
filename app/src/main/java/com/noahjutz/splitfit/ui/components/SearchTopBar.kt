@@ -60,10 +60,12 @@ fun SearchTopBar(
                 )
             },
             navigationIcon = {
-                IconButton(onClick = {
-                    onValueChange("")
-                    isInSearchMode = false
-                }) {
+                IconButton(
+                    onClick = {
+                        onValueChange("")
+                        isInSearchMode = false
+                    }
+                ) {
                     Icon(Icons.Default.ArrowBack, "Back")
                 }
             },

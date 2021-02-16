@@ -28,9 +28,9 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.ui.MainActivity
+import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
-import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

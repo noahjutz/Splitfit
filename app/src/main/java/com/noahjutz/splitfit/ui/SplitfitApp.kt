@@ -48,8 +48,8 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.util.DatastoreKeys
-import kotlinx.coroutines.flow.map
 import com.noahjutz.splitfit.util.get
+import kotlinx.coroutines.flow.map
 
 sealed class TopLevelScreens(
     val route: String,
