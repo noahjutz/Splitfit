@@ -41,7 +41,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.LongPressDragObserver
 import androidx.compose.ui.gesture.longPressDragGestureFilter
-import androidx.compose.ui.platform.AmbientFocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -208,7 +208,7 @@ fun SetGroupCard(
     var offsetPosition by remember { mutableStateOf(0f) }
     var dragging by remember { mutableStateOf(false) }
     var toSwap by remember { mutableStateOf(Pair(0, 0)) }
-    val focusManager = AmbientFocusManager.current
+    val focusManager = LocalFocusManager.current
     DisposableEffect(offsetPosition) {
         if (dragging) {
             toSwap = when {
@@ -452,7 +452,7 @@ fun SetTextField(
             },
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        textStyle = AmbientTextStyle.current.copy(
+        textStyle = LocalTextStyle.current.copy(
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
         ),
