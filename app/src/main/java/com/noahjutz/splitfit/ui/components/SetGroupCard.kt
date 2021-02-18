@@ -86,6 +86,8 @@ fun SetGroupCard(
             SetGroupTitle(
                 Modifier.padding(horizontal = 16.dp),
                 name = name,
+                onMoveUp = onMoveUp,
+                onMoveDown = onMoveDown,
             )
             Spacer(Modifier.preferredHeight(8.dp))
             SetTable(
@@ -97,11 +99,6 @@ fun SetGroupCard(
                 logDistance = logDistance,
                 showCheckbox = showCheckbox,
             )
-            Spacer(Modifier.preferredHeight(8.dp))
-            SetGroupCardButtons(
-                onMoveUp = onMoveUp,
-                onMoveDown = onMoveDown,
-            )
         }
     }
 }
@@ -110,10 +107,27 @@ fun SetGroupCard(
 private fun SetGroupTitle(
     modifier: Modifier = Modifier,
     name: String,
+    onMoveUp: () -> Unit,
+    onMoveDown: () -> Unit,
 ) {
     Row(modifier.preferredHeight(48.dp), verticalAlignment = Alignment.CenterVertically) {
         ProvideTextStyle(typography.h6) {
             Text(name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_routine))
+        }
+        Spacer(Modifier.weight(1f))
+        // Temporary replacement for drag & drop.
+        // See https://stackoverflow.com/questions/64913067
+        Box {
+            var showMenu by remember { mutableStateOf(false) }
+            IconButton(onClick = { showMenu = true }) { Icon(Icons.Default.MoreVert, "More") }
+            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                DropdownMenuItem(onClick = onMoveUp) {
+                    Text("Move up")
+                }
+                DropdownMenuItem(onClick = onMoveDown) {
+                    Text("Move down")
+                }
+            }
         }
     }
 }
@@ -144,7 +158,7 @@ private fun SetTable(
                 adjustForCheckbox = showCheckbox,
             )
             Divider()
-            sets.forEachIndexed { i, set ->
+            for (set in sets) {
                 SetTableSetRow(
                     set = set,
                     logReps = logReps,
@@ -153,7 +167,14 @@ private fun SetTable(
                     logDistance = logDistance,
                     showCheckbox = showCheckbox,
                 )
-                if (i < sets.lastIndex) Divider()
+                Divider()
+            }
+            SetTableRow {
+                TextButton(modifier = Modifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
+                    Icon(Icons.Default.Add, null)
+                    Spacer(Modifier.preferredWidth(8.dp))
+                    Text("Add Set")
+                }
             }
         }
     }
@@ -204,14 +225,16 @@ private fun RowScope.SetTableCell(
 @Composable
 private fun ColumnScope.SetTableRow(
     modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     content: @Composable RowScope.() -> Unit,
 ) {
     Row(
         modifier.preferredHeight(52.dp)
-            .padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically
-    ) {
-        content()
-    }
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = horizontalArrangement,
+        content = content,
+    )
 }
 
 @ExperimentalFoundationApi
@@ -297,37 +320,5 @@ private fun SetTextField(
                 innerTextField()
             }
         )
-    }
-}
-
-@Composable
-private fun SetGroupCardButtons(
-    modifier: Modifier = Modifier,
-    onMoveUp: () -> Unit,
-    onMoveDown: () -> Unit,
-) {
-    Row(
-        modifier.padding(horizontal = 8.dp),
-    ) {
-        TextButton(onClick = { /*TODO*/ }) {
-            Icon(Icons.Default.Add, null)
-            Spacer(Modifier.preferredWidth(8.dp))
-            Text("Add Set")
-        }
-        Spacer(Modifier.weight(1f))
-        // Temporary replacement for drag & drop.
-        // See https://stackoverflow.com/questions/64913067
-        Box {
-            var showMenu by remember { mutableStateOf(false) }
-            IconButton(onClick = { showMenu = true }) { Icon(Icons.Default.MoreVert, "More") }
-            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                DropdownMenuItem(onClick = onMoveUp) {
-                    Text("Move up")
-                }
-                DropdownMenuItem(onClick = onMoveDown) {
-                    Text("Move down")
-                }
-            }
-        }
     }
 }
