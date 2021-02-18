@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -35,6 +34,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.isFocused
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
@@ -290,7 +291,6 @@ private fun TableCellTextField(
     }
 }
 
-// TODO auto-select on tap
 @Composable
 private fun AutoSelectTextField(
     value: String,
@@ -304,11 +304,38 @@ private fun AutoSelectTextField(
     decorationBox: @Composable (innerTextField: @Composable () -> Unit) -> Unit = { it() },
     singleLine: Boolean = false,
 ) {
-    val textFieldValue = remember(value) { TextFieldValue(value, TextRange(value.length)) }
+    var textFieldValue by remember(value) {
+        mutableStateOf(TextFieldValue(value, TextRange(value.length)))
+    }
+
+    fun selectText() {
+        textFieldValue = textFieldValue.copy(selection = TextRange(0, textFieldValue.text.length))
+    }
+
+    fun deselectText() {
+        textFieldValue = textFieldValue.copy(selection = TextRange(textFieldValue.text.length))
+    }
+
+    // onValueChange is called after onFocusChanged, overriding the selection in onFocusChanged.
+    // see https://stackoverflow.com/questions/66262168
+    var isValueChangeLocked = false
+
     BasicTextField(
-        modifier = modifier,
+        modifier = modifier.onFocusChanged {
+            if (it.isFocused) {
+                selectText()
+                isValueChangeLocked = true
+            }
+        },
         value = textFieldValue,
-        onValueChange = { onValueChange(it.text) },
+        onValueChange = {
+            if (!isValueChangeLocked) {
+                onValueChange(it.text)
+                deselectText()
+            } else {
+                isValueChangeLocked = false
+            }
+        },
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         textStyle = textStyle,
