@@ -63,9 +63,9 @@ fun SetGroupCardPreview() {
             sets = listOf(Set(1, 2.0), Set(12, 3.0)),
             logReps = true,
             logWeight = true,
-            logTime = false,
-            logDistance = false,
-            showCheckbox = false,
+            logTime = true,
+            logDistance = true,
+            showCheckbox = true,
         )
     }
 }
@@ -286,6 +286,11 @@ private fun ColumnScope.SetTableSetRow(
         if (logDistance) SetTableCell(Modifier.weight(1f)) {
             TableCellTextField(value = "", onValueChange = {})
         }
+        if (showCheckbox) Checkbox(
+            modifier = Modifier.preferredSize(48.dp),
+            checked = false,
+            onCheckedChange = { /*TODO*/ }
+        )
     }
 }
 
