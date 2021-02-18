@@ -50,6 +50,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Set
 import java.util.*
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Preview
 @Composable
@@ -69,6 +70,7 @@ fun SetGroupCardPreview() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 fun SetGroupCard(
@@ -133,6 +135,7 @@ private fun SetGroupTitle(
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 private fun SetTable(
@@ -238,6 +241,26 @@ private fun ColumnScope.SetTableRow(
     )
 }
 
+@ExperimentalMaterialApi
+@Composable
+private fun ColumnScope.DismissableSetTableRow(
+    modifier: Modifier = Modifier,
+    dismissState: DismissState,
+    content: @Composable RowScope.() -> Unit,
+) {
+    SwipeToDismiss(
+        state = dismissState,
+        background = { SwipeToDeleteBackground(dismissState) }
+    ) {
+        Card(elevation = 0.dp) {
+            this@DismissableSetTableRow.SetTableRow(modifier) {
+                content()
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 private fun ColumnScope.SetTableSetRow(
@@ -249,7 +272,7 @@ private fun ColumnScope.SetTableSetRow(
     logDistance: Boolean,
     showCheckbox: Boolean,
 ) {
-    SetTableRow(modifier) {
+    DismissableSetTableRow(modifier, rememberDismissState()) {
         if (logReps) SetTableCell(Modifier.weight(1f)) {
             var value by remember { mutableStateOf("") }
             TableCellTextField(value = value, onValueChange = { value = it })
