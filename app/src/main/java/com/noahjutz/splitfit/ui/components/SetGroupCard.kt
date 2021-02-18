@@ -209,7 +209,7 @@ private fun RowScope.SetTableHeaderCell(
 ) {
     SetTableCell(modifier.weight(1f)) {
         Text(
-            text = text.capitalize(Locale.getDefault()),
+            text = text,
             maxLines = 1,
             fontWeight = FontWeight.Bold
         )
