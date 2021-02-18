@@ -34,20 +34,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.focus.isFocused
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Set
 import java.util.*
-import kotlin.math.floor
 
 @ExperimentalFoundationApi
 @Preview
@@ -249,8 +244,8 @@ private fun ColumnScope.SetTableSetRow(
     showCheckbox: Boolean,
 ) {
     SetTableRow(modifier) {
-        var value = ""
         if (logReps) SetTableCell(Modifier.weight(1f)) {
+            var value by remember { mutableStateOf("") }
             SetTextField(value = value, onValueChange = { value = it })
         }
         if (logWeight) SetTableCell(Modifier.weight(1f)) {
@@ -271,43 +266,12 @@ private fun SetTextField(
     value: String,
     onValueChange: (String) -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    regexPattern: Regex = Regex(""),
 ) {
-    var tfValue by remember { mutableStateOf(TextFieldValue(value)) }
-    DisposableEffect(value) {
-        val v = when {
-            value.isEmpty() -> value
-            value.toDouble() == floor(value.toDouble()) -> value.toDouble().toInt().toString()
-            else -> value
-        }
-        if (tfValue.text != value) tfValue = TextFieldValue(v, TextRange(value.length))
-        onDispose {}
-    }
-
-    // onValueChange is called after onFocusChanged, overriding the selection in onFocusChanged.
-    // Fix: Lock onValueChange when calling onFocusChanged
-    var valueChangeLock = false
     Box(Modifier.preferredHeight(48.dp), contentAlignment = Alignment.CenterStart) {
         BasicTextField(
-            value = tfValue,
-            onValueChange = {
-                if (valueChangeLock) {
-                    valueChangeLock = false
-                    return@BasicTextField
-                }
-                if (it.text.matches(regexPattern)) {
-                    tfValue = TextFieldValue(it.text, TextRange(it.text.length))
-                    onValueChange(it.text)
-                }
-            },
-            modifier = modifier
-                .fillMaxWidth()
-                .onFocusChanged {
-                    if (it.isFocused) {
-                        valueChangeLock = true
-                        tfValue = TextFieldValue(value, TextRange(0, value.length))
-                    }
-                },
+            value = value,
+            onValueChange = onValueChange,
+            modifier = modifier.fillMaxWidth(),
             visualTransformation = visualTransformation,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = LocalTextStyle.current.copy(
