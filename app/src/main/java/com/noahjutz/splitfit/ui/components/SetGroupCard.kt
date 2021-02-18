@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -34,9 +35,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -246,43 +251,70 @@ private fun ColumnScope.SetTableSetRow(
     SetTableRow(modifier) {
         if (logReps) SetTableCell(Modifier.weight(1f)) {
             var value by remember { mutableStateOf("") }
-            SetTextField(value = value, onValueChange = { value = it })
+            TableCellTextField(value = value, onValueChange = { value = it })
         }
         if (logWeight) SetTableCell(Modifier.weight(1f)) {
-            SetTextField(value = "", onValueChange = {})
+            TableCellTextField(value = "", onValueChange = {})
         }
         if (logTime) SetTableCell(Modifier.weight(1f)) {
-            SetTextField(value = "", onValueChange = {})
+            TableCellTextField(value = "", onValueChange = {})
         }
         if (logDistance) SetTableCell(Modifier.weight(1f)) {
-            SetTextField(value = "", onValueChange = {})
+            TableCellTextField(value = "", onValueChange = {})
         }
     }
 }
 
 @Composable
-private fun SetTextField(
+private fun TableCellTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit = {},
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     Box(Modifier.preferredHeight(48.dp), contentAlignment = Alignment.CenterStart) {
-        BasicTextField(
+        AutoSelectTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = modifier.fillMaxWidth(),
             visualTransformation = visualTransformation,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            textStyle = LocalTextStyle.current.copy(
-                color = colors.onSurface
-            ),
+            textStyle = LocalTextStyle.current.copy(color = colors.onSurface),
             cursorColor = colors.onSurface,
-            maxLines = 1,
+            singleLine = true,
             decorationBox = { innerTextField ->
                 if (value.isBlank()) Text("Hint", modifier = Modifier.alpha(0.5f))
                 innerTextField()
             }
         )
     }
+}
+
+// TODO auto-select on tap
+@Composable
+private fun AutoSelectTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
+    cursorColor: Color = LocalContentColor.current,
+    maxLines: Int = Int.MAX_VALUE,
+    decorationBox: @Composable (innerTextField: @Composable () -> Unit) -> Unit = { it() },
+    singleLine: Boolean = false,
+) {
+    val textFieldValue = remember(value) { TextFieldValue(value, TextRange(value.length)) }
+    BasicTextField(
+        modifier = modifier,
+        value = textFieldValue,
+        onValueChange = { onValueChange(it.text) },
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        textStyle = textStyle,
+        cursorColor = cursorColor,
+        maxLines = maxLines,
+        decorationBox = decorationBox,
+        singleLine = singleLine,
+    )
 }
