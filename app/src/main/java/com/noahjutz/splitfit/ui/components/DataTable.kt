@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -59,6 +61,23 @@ fun ColumnScope.TableRow(
     )
 }
 
+@ExperimentalMaterialApi
+@Composable
+fun ColumnScope.DismissibleTableRow(
+    modifier: Modifier = Modifier,
+    state: DismissState,
+    content: @Composable RowScope.() -> Unit,
+) {
+    SwipeToDismiss(
+        state = state,
+        background = { SwipeToDeleteBackground(state) }
+    ) {
+        Card(elevation = 0.dp) {
+            this@DismissibleTableRow.TableRow(modifier, content)
+        }
+    }
+}
+
 @Composable
 fun ColumnScope.TableHeaderRow(
     modifier: Modifier = Modifier,
@@ -79,6 +98,7 @@ fun RowScope.TableCell(
     Box(modifier, content = content)
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun TableSample() {
@@ -116,6 +136,17 @@ fun TableSample() {
                         onCheckedChange = {},
                     )
                 }
+            }
+            Divider()
+            val dismissState = rememberDismissState()
+            DismissibleTableRow(
+                Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                state = dismissState
+            ) {
+                LaunchedEffect(dismissState.value) {
+                    if (dismissState.value != DismissValue.Default) dismissState.reset()
+                }
+                Text("Swipe me.")
             }
         }
     }
