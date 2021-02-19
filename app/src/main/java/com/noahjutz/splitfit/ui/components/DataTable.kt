@@ -119,7 +119,7 @@ fun TableSample() {
                 }
             }
             Divider()
-            TableRow(Modifier.padding(start = 16.dp)) {
+            TableRow(Modifier.padding(start = 16.dp, end = 4.dp)) {
                 TableCell(Modifier.weight(1f)) {
                     Text("C1")
                 }
@@ -129,7 +129,7 @@ fun TableSample() {
                 TableCell(Modifier.weight(1f)) {
                     Text("C3")
                 }
-                TableCell(Modifier.padding(end = 4.dp)) {
+                TableCell {
                     Checkbox(
                         modifier = Modifier.preferredWidth(48.dp),
                         checked = true,
