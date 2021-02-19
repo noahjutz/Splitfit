@@ -243,6 +243,7 @@ private fun IntegerTextField(
     TableCellTextField(
         value = value,
         onValueChange = { if (it.matches(RegexPatterns.integer)) onValueChange(it) },
+        hint = "0",
     )
 }
 
@@ -254,6 +255,7 @@ private fun FloatTextField(
     TableCellTextField(
         value = value,
         onValueChange = { if (it.matches(RegexPatterns.float)) onValueChange(it) },
+        hint = "0.0",
     )
 }
 
@@ -265,6 +267,7 @@ private fun DurationTextField(
     TableCellTextField(
         value = value,
         onValueChange = { if (it.matches(RegexPatterns.duration)) onValueChange(it) },
+        hint = "00:00",
         visualTransformation = durationVisualTransformation,
     )
 }
