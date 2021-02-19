@@ -21,14 +21,23 @@ package com.noahjutz.splitfit.ui.components
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.AmbientTextStyle
-import androidx.compose.material.LocalTextStyle
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.isFocused
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun AppBarTextField(
@@ -55,4 +64,84 @@ fun AppBarTextField(
             )
         }
     }
+}
+
+@Composable
+fun TableCellTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit = {},
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+) {
+    Box(Modifier.preferredHeight(48.dp), contentAlignment = Alignment.CenterStart) {
+        AutoSelectTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = modifier.fillMaxWidth(),
+            visualTransformation = visualTransformation,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onSurface),
+            cursorColor = MaterialTheme.colors.onSurface,
+            singleLine = true,
+            decorationBox = { innerTextField ->
+                if (value.isBlank()) Text("Hint", modifier = Modifier.alpha(0.5f))
+                innerTextField()
+            }
+        )
+    }
+}
+
+@Composable
+private fun AutoSelectTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    textStyle: TextStyle = LocalTextStyle.current,
+    cursorColor: Color = LocalContentColor.current,
+    maxLines: Int = Int.MAX_VALUE,
+    decorationBox: @Composable (innerTextField: @Composable () -> Unit) -> Unit = { it() },
+    singleLine: Boolean = false,
+) {
+    var textFieldValue by remember(value) {
+        mutableStateOf(TextFieldValue(value, TextRange(value.length)))
+    }
+
+    fun selectText() {
+        textFieldValue = textFieldValue.copy(selection = TextRange(0, textFieldValue.text.length))
+    }
+
+    fun deselectText() {
+        textFieldValue = textFieldValue.copy(selection = TextRange(textFieldValue.text.length))
+    }
+
+    // onValueChange is called after onFocusChanged, overriding the selection in onFocusChanged.
+    // see https://stackoverflow.com/questions/66262168
+    var isValueChangeLocked = false
+
+    BasicTextField(
+        modifier = modifier.onFocusChanged {
+            if (it.isFocused) {
+                selectText()
+                isValueChangeLocked = true
+            }
+        },
+        value = textFieldValue,
+        onValueChange = {
+            if (!isValueChangeLocked) {
+                onValueChange(it.text)
+                deselectText()
+            } else {
+                isValueChangeLocked = false
+            }
+        },
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        textStyle = textStyle,
+        cursorColor = cursorColor,
+        maxLines = maxLines,
+        decorationBox = decorationBox,
+        singleLine = singleLine,
+    )
 }
