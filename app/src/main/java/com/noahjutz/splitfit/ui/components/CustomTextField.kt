@@ -24,7 +24,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.preferredHeight
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,11 +35,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -70,8 +72,9 @@ fun AppBarTextField(
 fun TableCellTextField(
     modifier: Modifier = Modifier,
     value: String,
-    onValueChange: (String) -> Unit = {},
+    onValueChange: (String) -> Unit,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    hint: String? = null,
 ) {
     Box(Modifier.preferredHeight(48.dp), contentAlignment = Alignment.CenterStart) {
         AutoSelectTextField(
@@ -84,7 +87,7 @@ fun TableCellTextField(
             cursorColor = MaterialTheme.colors.onSurface,
             singleLine = true,
             decorationBox = { innerTextField ->
-                if (value.isBlank()) Text("Hint", modifier = Modifier.alpha(0.5f))
+                if (value.isBlank() && hint != null) Text(hint, modifier = Modifier.alpha(0.5f))
                 innerTextField()
             }
         )
@@ -144,4 +147,21 @@ private fun AutoSelectTextField(
         decorationBox = decorationBox,
         singleLine = singleLine,
     )
+}
+
+/** Turns integer of 0-4 digits to MM:SS format */
+val durationVisualTransformation = object : VisualTransformation {
+    val offsetMap = object : OffsetMapping {
+        override fun originalToTransformed(offset: Int) = if (offset == 0) 0 else 5
+        override fun transformedToOriginal(offset: Int) = 5 - offset
+    }
+
+    override fun filter(text: AnnotatedString): TransformedText {
+        val withZeroes = "0".repeat((4 - text.text.length).takeIf { it > 0 } ?: 0) + text.text
+        val withColon = withZeroes.let { it.substring(0, 2) + ":" + it.substring(2, 4) }
+        return TransformedText(
+            AnnotatedString(if (text.text.isEmpty()) "" else withColon),
+            offsetMap
+        )
+    }
 }

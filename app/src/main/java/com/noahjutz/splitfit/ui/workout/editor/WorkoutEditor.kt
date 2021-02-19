@@ -308,7 +308,7 @@ fun SetGroupCard(
                                             time = timeValue
                                         )
                                     },
-                                    regexPattern = RegexPatterns.time,
+                                    regexPattern = RegexPatterns.duration,
                                     visualTransformation = timeVisualTransformation
                                 )
 
