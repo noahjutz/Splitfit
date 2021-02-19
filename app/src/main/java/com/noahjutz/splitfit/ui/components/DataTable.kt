@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 
 /**
  *  @sample TableSample
+ *  @param content: [TableRow], [DismissibleTableRow], or [TableHeaderRow] divided by [Divider]
  */
 @Composable
 fun Table(
@@ -49,6 +50,10 @@ fun Table(
     }
 }
 
+/**
+ * An ordinary table row, usually below [TableHeaderRow]
+ * @param content: [TableCell]
+ */
 @Composable
 fun ColumnScope.TableRow(
     modifier: Modifier = Modifier,
@@ -61,6 +66,10 @@ fun ColumnScope.TableRow(
     )
 }
 
+/**
+ * A table row that can be swiped to dismiss using [SwipeToDismiss]
+ * @param content: [TableCell]
+ */
 @ExperimentalMaterialApi
 @Composable
 fun ColumnScope.DismissibleTableRow(
@@ -78,6 +87,10 @@ fun ColumnScope.DismissibleTableRow(
     }
 }
 
+/**
+ * A table header row, to be used once above all following [TableRow]s
+ * @param content: [TableCell]
+ */
 @Composable
 fun ColumnScope.TableHeaderRow(
     modifier: Modifier = Modifier,
@@ -90,6 +103,9 @@ fun ColumnScope.TableHeaderRow(
     )
 }
 
+/**
+ * A table cell, which is horizontally arranged in [TableRow]s
+ */
 @Composable
 fun RowScope.TableCell(
     modifier: Modifier = Modifier,
