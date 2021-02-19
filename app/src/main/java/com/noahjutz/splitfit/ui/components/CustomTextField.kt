@@ -149,7 +149,7 @@ private fun AutoSelectTextField(
     )
 }
 
-/** Turns integer of 0-4 digits to MM:SS format */
+/** Turns string of 0-4 digits to MM:SS format */
 val durationVisualTransformation = object : VisualTransformation {
     val offsetMap = object : OffsetMapping {
         override fun originalToTransformed(offset: Int) = if (offset == 0) 0 else 5
