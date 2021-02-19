@@ -214,16 +214,16 @@ private fun ColumnScope.TableSetRow(
     DismissibleTableRow(modifier.padding(horizontal = 16.dp), rememberDismissState()) {
         if (logReps) TableCell(Modifier.weight(1f)) {
             var value by remember { mutableStateOf("") }
-            TableCellTextField(value = value, onValueChange = { value = it })
+            IntegerTextField(value = value, onValueChange = { value = it })
         }
         if (logWeight) TableCell(Modifier.weight(1f)) {
-            TableCellTextField(value = "", onValueChange = {})
+            FloatTextField(value = "", onValueChange = {})
         }
         if (logTime) TableCell(Modifier.weight(1f)) {
-            TableCellTextField(value = "", onValueChange = {})
+            DurationTextField(value = "", onValueChange = {})
         }
         if (logDistance) TableCell(Modifier.weight(1f)) {
-            TableCellTextField(value = "", onValueChange = {})
+            FloatTextField(value = "", onValueChange = {})
         }
         if (showCheckbox) TableCell {
             Checkbox(
