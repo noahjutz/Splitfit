@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -96,11 +95,13 @@ fun ColumnScope.TableHeaderRow(
     modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
-    Row(
-        modifier.preferredHeight(56.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        content = content,
-    )
+    ProvideTextStyle(value = LocalTextStyle.current.copy(fontWeight = FontWeight.Bold)) {
+        Row(
+            modifier.preferredHeight(56.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            content = content,
+        )
+    }
 }
 
 /**

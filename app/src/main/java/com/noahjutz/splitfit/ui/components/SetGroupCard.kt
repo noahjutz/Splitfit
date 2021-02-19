@@ -40,7 +40,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -48,7 +47,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Set
-import java.util.*
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -162,8 +160,9 @@ private fun SetTable(
                 adjustForCheckbox = showCheckbox,
             )
             Divider()
+
             for (set in sets) {
-                SetTableSetRow(
+                TableSetRow(
                     set = set,
                     logReps = logReps,
                     logWeight = logWeight,
@@ -173,7 +172,8 @@ private fun SetTable(
                 )
                 Divider()
             }
-            SetTableRow {
+
+            TableRow(Modifier.padding(horizontal = 8.dp)) {
                 TextButton(modifier = Modifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
                     Icon(Icons.Default.Add, null)
                     Spacer(Modifier.preferredWidth(8.dp))
@@ -186,84 +186,33 @@ private fun SetTable(
 
 @Composable
 private fun ColumnScope.SetTableHeader(
-    modifier: Modifier = Modifier,
     logReps: Boolean,
     logWeight: Boolean,
     logTime: Boolean,
     logDistance: Boolean,
     adjustForCheckbox: Boolean,
 ) {
-    SetTableRow(modifier.preferredHeight(56.dp)) {
-        if (logReps) SetTableHeaderCell(stringResource(R.string.reps))
-        if (logWeight) SetTableHeaderCell(stringResource(R.string.weight))
-        if (logTime) SetTableHeaderCell(stringResource(R.string.time))
-        if (logDistance) SetTableHeaderCell(stringResource(R.string.distance))
-        if (adjustForCheckbox) Spacer(Modifier.preferredWidth(48.dp))
-    }
-}
-
-@Composable
-private fun RowScope.SetTableHeaderCell(
-    text: String,
-    modifier: Modifier = Modifier,
-) {
-    SetTableCell(modifier.weight(1f)) {
-        Text(
-            text = text,
-            maxLines = 1,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
-
-@Composable
-private fun RowScope.SetTableCell(
-    modifier: Modifier = Modifier,
-    content: @Composable BoxScope.() -> Unit,
-) {
-    Box(modifier) {
-        content()
-    }
-}
-
-@Composable
-private fun ColumnScope.SetTableRow(
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    content: @Composable RowScope.() -> Unit,
-) {
-    Row(
-        modifier.preferredHeight(52.dp)
-            .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = horizontalArrangement,
-        content = content,
-    )
-}
-
-@ExperimentalMaterialApi
-@Composable
-private fun ColumnScope.DismissableSetTableRow(
-    modifier: Modifier = Modifier,
-    dismissState: DismissState,
-    content: @Composable RowScope.() -> Unit,
-) {
-    SwipeToDismiss(
-        state = dismissState,
-        background = { SwipeToDeleteBackground(dismissState) }
-    ) {
-        Card(elevation = 0.dp) {
-            this@DismissableSetTableRow.SetTableRow(modifier) {
-                content()
-            }
+    TableHeaderRow(Modifier.padding(horizontal = 16.dp)) {
+        if (logReps) TableCell(Modifier.weight(1f)) {
+            Text(stringResource(R.string.reps))
         }
+        if (logWeight) TableCell(Modifier.weight(1f)) {
+            Text(stringResource(R.string.weight))
+        }
+        if (logTime) TableCell(Modifier.weight(1f)) {
+            Text(stringResource(R.string.time))
+        }
+        if (logDistance) TableCell(Modifier.weight(1f)) {
+            Text(stringResource(R.string.distance))
+        }
+        if (adjustForCheckbox) Spacer(Modifier.preferredWidth(48.dp))
     }
 }
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-private fun ColumnScope.SetTableSetRow(
+private fun ColumnScope.TableSetRow(
     modifier: Modifier = Modifier,
     set: Set,
     logReps: Boolean,
@@ -272,25 +221,27 @@ private fun ColumnScope.SetTableSetRow(
     logDistance: Boolean,
     showCheckbox: Boolean,
 ) {
-    DismissableSetTableRow(modifier, rememberDismissState()) {
-        if (logReps) SetTableCell(Modifier.weight(1f)) {
+    DismissibleTableRow(modifier.padding(horizontal = 16.dp), rememberDismissState()) {
+        if (logReps) TableCell(Modifier.weight(1f)) {
             var value by remember { mutableStateOf("") }
             TableCellTextField(value = value, onValueChange = { value = it })
         }
-        if (logWeight) SetTableCell(Modifier.weight(1f)) {
+        if (logWeight) TableCell(Modifier.weight(1f)) {
             TableCellTextField(value = "", onValueChange = {})
         }
-        if (logTime) SetTableCell(Modifier.weight(1f)) {
+        if (logTime) TableCell(Modifier.weight(1f)) {
             TableCellTextField(value = "", onValueChange = {})
         }
-        if (logDistance) SetTableCell(Modifier.weight(1f)) {
+        if (logDistance) TableCell(Modifier.weight(1f)) {
             TableCellTextField(value = "", onValueChange = {})
         }
-        if (showCheckbox) Checkbox(
-            modifier = Modifier.preferredSize(48.dp),
-            checked = false,
-            onCheckedChange = { /*TODO*/ }
-        )
+        if (showCheckbox) TableCell {
+            Checkbox(
+                modifier = Modifier.preferredSize(48.dp),
+                checked = false,
+                onCheckedChange = { /*TODO*/ }
+            )
+        }
     }
 }
 
