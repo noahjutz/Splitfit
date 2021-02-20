@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -164,8 +165,12 @@ private fun SetTable(
             Divider()
         }
 
-        TableRow(Modifier.padding(horizontal = 8.dp)) {
-            TextButton(modifier = Modifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
+        TableRow {
+            TextButton(
+                modifier = Modifier.preferredHeight(52.dp).fillMaxWidth(),
+                shape = RectangleShape,
+                onClick = { /*TODO*/ }
+            ) {
                 Icon(Icons.Default.Add, null)
                 Spacer(Modifier.preferredWidth(8.dp))
                 Text("Add Set")
