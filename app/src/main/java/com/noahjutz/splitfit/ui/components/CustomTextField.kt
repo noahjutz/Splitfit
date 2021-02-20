@@ -85,7 +85,7 @@ fun TableCellTextField(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onSurface),
             cursorColor = MaterialTheme.colors.onSurface,
-            singleLine = true,
+            maxLines = 1,
             decorationBox = { innerTextField ->
                 if (value.isBlank() && hint != null) Text(hint, modifier = Modifier.alpha(0.5f))
                 innerTextField()
