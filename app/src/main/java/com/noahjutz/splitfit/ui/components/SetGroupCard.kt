@@ -155,10 +155,10 @@ private fun SetTable(
                 // TODO blank strings if null instead of "null"
                 // TODO callback for on[Value]Change
                 // TODO conditionally declare set[Value] to null or pass log[Value]
-                val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps.toString()) }
-                val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight.toString()) }
-                val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time.toString()) }
-                val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance.toString()) }
+                val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps) }
+                val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight) }
+                val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time) }
+                val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance) }
                 TableSetRow(
                     reps = reps,
                     onRepsChange = setReps,
@@ -214,14 +214,14 @@ private fun ColumnScope.SetTableHeader(
 @Composable
 private fun ColumnScope.TableSetRow(
     modifier: Modifier = Modifier,
-    reps: String = "",
-    onRepsChange: ((String) -> Unit)? = null,
-    weight: String = "",
-    onWeightChange: ((String) -> Unit)? = null,
-    duration: String = "",
-    onDurationChange: ((String) -> Unit)? = null,
-    distance: String = "",
-    onDistanceChange: ((String) -> Unit)? = null,
+    reps: Int? = null,
+    onRepsChange: ((Int?) -> Unit)? = null,
+    weight: Double? = null,
+    onWeightChange: ((Double?) -> Unit)? = null,
+    duration: Int? = null,
+    onDurationChange: ((Int?) -> Unit)? = null,
+    distance: Double? = null,
+    onDistanceChange: ((Double?) -> Unit)? = null,
     showCheckbox: Boolean,
 ) {
     DismissibleTableRow(modifier.padding(horizontal = 16.dp), rememberDismissState()) {
@@ -229,13 +229,13 @@ private fun ColumnScope.TableSetRow(
             IntegerTextField(value = reps, onValueChange = onRepsChange)
         }
         if (onWeightChange != null) TableCell(Modifier.weight(1f)) {
-            FloatTextField(value = weight, onValueChange = onWeightChange)
+            DoubleTextField(value = weight, onValueChange = onWeightChange)
         }
         if (onDurationChange != null) TableCell(Modifier.weight(1f)) {
             DurationTextField(value = duration, onValueChange = onDurationChange)
         }
         if (onDistanceChange != null) TableCell(Modifier.weight(1f)) {
-            FloatTextField(value = distance, onValueChange = onDistanceChange)
+            DoubleTextField(value = distance, onValueChange = onDistanceChange)
         }
         if (showCheckbox) TableCell {
             Checkbox(
@@ -249,36 +249,36 @@ private fun ColumnScope.TableSetRow(
 
 @Composable
 private fun IntegerTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: Int?,
+    onValueChange: (Int?) -> Unit,
 ) {
     TableCellTextField(
-        value = value,
-        onValueChange = { if (it.matches(RegexPatterns.integer)) onValueChange(it) },
+        value = value?.toString() ?: "",
+        onValueChange = { if (it.matches(RegexPatterns.integer)) onValueChange(it.toIntOrNull()) },
         hint = "0",
     )
 }
 
 @Composable
-private fun FloatTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
+private fun DoubleTextField(
+    value: Double?,
+    onValueChange: (Double?) -> Unit,
 ) {
     TableCellTextField(
-        value = value,
-        onValueChange = { if (it.matches(RegexPatterns.float)) onValueChange(it) },
+        value = value?.toString() ?: "",
+        onValueChange = { if (it.matches(RegexPatterns.float)) onValueChange(it.toDoubleOrNull()) },
         hint = "0.0",
     )
 }
 
 @Composable
 private fun DurationTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: Int?,
+    onValueChange: (Int?) -> Unit,
 ) {
     TableCellTextField(
-        value = value,
-        onValueChange = { if (it.matches(RegexPatterns.duration)) onValueChange(it) },
+        value = value?.toString() ?: "",
+        onValueChange = { if (it.matches(RegexPatterns.duration)) onValueChange(it.toIntOrNull()) },
         hint = "00:00",
         visualTransformation = durationVisualTransformation,
     )
