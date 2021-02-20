@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.util.RegexPatterns
+import com.noahjutz.splitfit.util.toStringOrBlank
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -152,13 +153,12 @@ private fun SetTable(
             Divider()
 
             for (set in sets) {
-                // TODO blank strings if null instead of "null"
                 // TODO callback for on[Value]Change
                 // TODO conditionally declare set[Value] to null or pass log[Value]
-                val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps.toString()) }
-                val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight.toString()) }
-                val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time.toString()) }
-                val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance.toString()) }
+                val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps.toStringOrBlank()) }
+                val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight.toStringOrBlank()) }
+                val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time.toStringOrBlank()) }
+                val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance.toStringOrBlank()) }
                 TableSetRow(
                     reps = reps,
                     onRepsChange = setReps,
