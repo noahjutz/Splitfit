@@ -146,7 +146,7 @@ private fun SetTable(
             logWeight = logWeight,
             logTime = logTime,
             logDistance = logDistance,
-            adjustForCheckbox = showCheckbox,
+            showCheckbox = showCheckbox,
         )
         Divider()
 
@@ -191,7 +191,7 @@ private fun ColumnScope.SetTableHeader(
     logWeight: Boolean,
     logTime: Boolean,
     logDistance: Boolean,
-    adjustForCheckbox: Boolean,
+    showCheckbox: Boolean,
 ) {
     TableHeaderRow(Modifier.padding(horizontal = 16.dp)) {
         if (logReps) TableCell(Modifier.weight(1f)) {
@@ -206,7 +206,7 @@ private fun ColumnScope.SetTableHeader(
         if (logDistance) TableCell(Modifier.weight(1f)) {
             Text(stringResource(R.string.distance))
         }
-        if (adjustForCheckbox) Spacer(Modifier.preferredWidth(48.dp))
+        if (showCheckbox) Spacer(Modifier.preferredWidth(40.dp))
     }
 }
 
@@ -225,7 +225,10 @@ private fun ColumnScope.TableSetRow(
     onDistanceChange: ((String) -> Unit)? = null,
     showCheckbox: Boolean,
 ) {
-    DismissibleTableRow(modifier.padding(horizontal = 16.dp), rememberDismissState()) {
+    DismissibleTableRow(
+        modifier.padding(start = 16.dp, end = if (showCheckbox) 8.dp else 16.dp),
+        rememberDismissState() // TODO
+    ) {
         if (onRepsChange != null) TableCell(Modifier.weight(1f)) {
             IntegerTextField(value = reps, onValueChange = onRepsChange)
         }
