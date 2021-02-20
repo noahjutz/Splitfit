@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
@@ -71,7 +72,7 @@ fun SetGroupCardPreview() {
                     showCheckbox = true,
                 )
                 SetGroupCard(
-                    name = "Weighted Walking Lunges",
+                    name = "Weighted Walking Lunges bla bla bla bla bla blab bla",
                     onMoveDown = {},
                     onMoveUp = {},
                     sets = listOf(Set(1, 2.0), Set(distance = 3.0), Set(), Set()),
@@ -135,7 +136,11 @@ private fun SetGroupTitle(
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProvideTextStyle(typography.h5) {
-                Text(name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_exercise))
+                Text(
+                    name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_exercise),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
             Spacer(Modifier.weight(1f))
             // Temporary replacement for drag & drop.
