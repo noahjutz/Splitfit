@@ -19,6 +19,7 @@
 package com.noahjutz.splitfit.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
@@ -72,16 +73,15 @@ fun SetGroupCard(
     showCheckbox: Boolean,
 ) {
     Card(elevation = 0.dp) {
-        Column(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+        Column(Modifier.fillMaxWidth()) {
             SetGroupTitle(
-                Modifier.padding(horizontal = 16.dp),
+                Modifier.padding(start = 16.dp, end = 8.dp),
                 name = name,
                 onMoveUp = onMoveUp,
                 onMoveDown = onMoveDown,
             )
-            Spacer(Modifier.preferredHeight(8.dp))
             SetTable(
-                Modifier.padding(horizontal = 16.dp),
+                Modifier.padding(horizontal = 8.dp),
                 sets = sets,
                 logReps = logReps,
                 logWeight = logWeight,
@@ -89,6 +89,7 @@ fun SetGroupCard(
                 logDistance = logDistance,
                 showCheckbox = showCheckbox,
             )
+            Spacer(Modifier.preferredHeight(8.dp))
         }
     }
 }
@@ -100,22 +101,27 @@ private fun SetGroupTitle(
     onMoveUp: () -> Unit,
     onMoveDown: () -> Unit,
 ) {
-    Row(modifier.preferredHeight(48.dp), verticalAlignment = Alignment.CenterVertically) {
-        ProvideTextStyle(typography.h6) {
-            Text(name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_routine))
-        }
-        Spacer(Modifier.weight(1f))
-        // Temporary replacement for drag & drop.
-        // See https://stackoverflow.com/questions/64913067
-        Box {
-            var showMenu by remember { mutableStateOf(false) }
-            IconButton(onClick = { showMenu = true }) { Icon(Icons.Default.MoreVert, "More") }
-            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                DropdownMenuItem(onClick = onMoveUp) {
-                    Text("Move up")
-                }
-                DropdownMenuItem(onClick = onMoveDown) {
-                    Text("Move down")
+    Box(Modifier.clickable {}) {
+        Row(
+            modifier.preferredHeight(70.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ProvideTextStyle(typography.h5) {
+                Text(name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_exercise))
+            }
+            Spacer(Modifier.weight(1f))
+            // Temporary replacement for drag & drop.
+            // See https://stackoverflow.com/questions/64913067
+            Box {
+                var showMenu by remember { mutableStateOf(false) }
+                IconButton(onClick = { showMenu = true }) { Icon(Icons.Default.MoreVert, "More") }
+                DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                    DropdownMenuItem(onClick = onMoveUp) {
+                        Text("Move up")
+                    }
+                    DropdownMenuItem(onClick = onMoveDown) {
+                        Text("Move down")
+                    }
                 }
             }
         }
