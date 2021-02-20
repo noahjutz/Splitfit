@@ -180,18 +180,21 @@ private fun SetTable(
 
         for (set in sets) {
             // TODO callback for on[Value]Change
-            // TODO conditionally declare set[Value] to null or pass log[Value]
             val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps.toStringOrBlank()) }
             val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight.toStringOrBlank()) }
             val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time.toStringOrBlank()) }
             val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance.toStringOrBlank()) }
             TableSetRow(
+                logReps = logReps,
                 reps = reps,
                 onRepsChange = setReps,
+                logWeight = logWeight,
                 weight = weight,
                 onWeightChange = setWeight,
+                logDuration = logTime,
                 duration = duration,
                 onDurationChange = setDuration,
+                logDistance = logDistance,
                 distance = distance,
                 onDistanceChange = setDistance,
                 showCheckbox = showCheckbox,
@@ -243,30 +246,34 @@ private fun ColumnScope.SetTableHeader(
 @Composable
 private fun ColumnScope.TableSetRow(
     modifier: Modifier = Modifier,
+    logReps: Boolean = false,
     reps: String = "",
-    onRepsChange: ((String) -> Unit)? = null,
+    onRepsChange: ((String) -> Unit) = {},
+    logWeight: Boolean = false,
     weight: String = "",
-    onWeightChange: ((String) -> Unit)? = null,
+    onWeightChange: ((String) -> Unit) = {},
+    logDuration: Boolean = false,
     duration: String = "",
-    onDurationChange: ((String) -> Unit)? = null,
+    onDurationChange: ((String) -> Unit) = {},
+    logDistance: Boolean = false,
     distance: String = "",
-    onDistanceChange: ((String) -> Unit)? = null,
+    onDistanceChange: ((String) -> Unit) = {},
     showCheckbox: Boolean,
 ) {
     DismissibleTableRow(
         modifier.padding(start = 16.dp, end = if (showCheckbox) 8.dp else 16.dp),
         rememberDismissState() // TODO
     ) {
-        if (onRepsChange != null) TableCell(Modifier.weight(1f)) {
+        if (logReps) TableCell(Modifier.weight(1f)) {
             IntegerTextField(value = reps, onValueChange = onRepsChange)
         }
-        if (onWeightChange != null) TableCell(Modifier.weight(1f)) {
+        if (logWeight) TableCell(Modifier.weight(1f)) {
             FloatTextField(value = weight, onValueChange = onWeightChange)
         }
-        if (onDurationChange != null) TableCell(Modifier.weight(1f)) {
+        if (logDuration) TableCell(Modifier.weight(1f)) {
             DurationTextField(value = duration, onValueChange = onDurationChange)
         }
-        if (onDistanceChange != null) TableCell(Modifier.weight(1f)) {
+        if (logDistance) TableCell(Modifier.weight(1f)) {
             FloatTextField(value = distance, onValueChange = onDistanceChange)
         }
         if (showCheckbox) TableCell {
