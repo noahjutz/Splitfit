@@ -18,12 +18,9 @@
 
 package com.noahjutz.splitfit.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -136,49 +133,42 @@ private fun SetTable(
     logDistance: Boolean,
     showCheckbox: Boolean,
 ) {
-    Surface(
-        modifier,
-        shape = RoundedCornerShape(4.dp),
-        elevation = 0.dp,
-        border = BorderStroke(1.dp, colors.onSurface.copy(alpha = 0.12f))
-    ) {
-        Column {
-            SetTableHeader(
-                logReps = logReps,
-                logWeight = logWeight,
-                logTime = logTime,
-                logDistance = logDistance,
-                adjustForCheckbox = showCheckbox,
+    Table(modifier) {
+        SetTableHeader(
+            logReps = logReps,
+            logWeight = logWeight,
+            logTime = logTime,
+            logDistance = logDistance,
+            adjustForCheckbox = showCheckbox,
+        )
+        Divider()
+
+        for (set in sets) {
+            // TODO callback for on[Value]Change
+            // TODO conditionally declare set[Value] to null or pass log[Value]
+            val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps.toStringOrBlank()) }
+            val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight.toStringOrBlank()) }
+            val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time.toStringOrBlank()) }
+            val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance.toStringOrBlank()) }
+            TableSetRow(
+                reps = reps,
+                onRepsChange = setReps,
+                weight = weight,
+                onWeightChange = setWeight,
+                duration = duration,
+                onDurationChange = setDuration,
+                distance = distance,
+                onDistanceChange = setDistance,
+                showCheckbox = showCheckbox,
             )
             Divider()
+        }
 
-            for (set in sets) {
-                // TODO callback for on[Value]Change
-                // TODO conditionally declare set[Value] to null or pass log[Value]
-                val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps.toStringOrBlank()) }
-                val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight.toStringOrBlank()) }
-                val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time.toStringOrBlank()) }
-                val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance.toStringOrBlank()) }
-                TableSetRow(
-                    reps = reps,
-                    onRepsChange = setReps,
-                    weight = weight,
-                    onWeightChange = setWeight,
-                    duration = duration,
-                    onDurationChange = setDuration,
-                    distance = distance,
-                    onDistanceChange = setDistance,
-                    showCheckbox = showCheckbox,
-                )
-                Divider()
-            }
-
-            TableRow(Modifier.padding(horizontal = 8.dp)) {
-                TextButton(modifier = Modifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
-                    Icon(Icons.Default.Add, null)
-                    Spacer(Modifier.preferredWidth(8.dp))
-                    Text("Add Set")
-                }
+        TableRow(Modifier.padding(horizontal = 8.dp)) {
+            TextButton(modifier = Modifier.fillMaxWidth(), onClick = { /*TODO*/ }) {
+                Icon(Icons.Default.Add, null)
+                Spacer(Modifier.preferredWidth(8.dp))
+                Text("Add Set")
             }
         }
     }
