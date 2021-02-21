@@ -40,6 +40,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.util.RegexPatterns
 import com.noahjutz.splitfit.util.toStringOrBlank
+import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -47,41 +48,55 @@ import com.noahjutz.splitfit.util.toStringOrBlank
 @Composable
 fun SetGroupCardPreview() {
     MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-        LazyColumn {
-            item {
-                SetGroupCard(
-                    name = "Push-up",
-                    onMoveDown = {},
-                    onMoveUp = {},
-                    sets = listOf(Set(1, 2.0), Set(12, 3.0)),
-                    logReps = true,
-                    logWeight = true,
-                    logTime = false,
-                    logDistance = false,
-                    showCheckbox = true,
-                )
-                SetGroupCard(
-                    name = "Jump Rope",
-                    onMoveDown = {},
-                    onMoveUp = {},
-                    sets = listOf(Set(time = 33)),
-                    logReps = false,
-                    logWeight = false,
-                    logTime = true,
-                    logDistance = false,
-                    showCheckbox = true,
-                )
-                SetGroupCard(
-                    name = "Weighted Walking Lunges bla bla bla bla bla blab bla",
-                    onMoveDown = {},
-                    onMoveUp = {},
-                    sets = listOf(Set(1, 2.0), Set(distance = 3.0), Set(), Set()),
-                    logReps = true,
-                    logWeight = true,
-                    logTime = true,
-                    logDistance = true,
-                    showCheckbox = true,
-                )
+        val scaffoldState = rememberScaffoldState()
+        val scope = rememberCoroutineScope()
+        fun showSnackbar(message: String) {
+            scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+            scope.launch {
+                scaffoldState.snackbarHostState.showSnackbar(message)
+            }
+        }
+
+        val onMoveDown = { showSnackbar("onMoveDown") }
+        val onMoveUp = { showSnackbar("onMoveUp") }
+
+        Scaffold(scaffoldState = scaffoldState) {
+            LazyColumn {
+                item {
+                    SetGroupCard(
+                        name = "Push-up",
+                        onMoveDown = onMoveDown,
+                        onMoveUp = onMoveUp,
+                        sets = listOf(Set(1, 2.0), Set(12, 3.0)),
+                        logReps = true,
+                        logWeight = true,
+                        logTime = false,
+                        logDistance = false,
+                        showCheckbox = true,
+                    )
+                    SetGroupCard(
+                        name = "Jump Rope",
+                        onMoveDown = onMoveDown,
+                        onMoveUp = onMoveUp,
+                        sets = listOf(Set(time = 33)),
+                        logReps = false,
+                        logWeight = false,
+                        logTime = true,
+                        logDistance = false,
+                        showCheckbox = true,
+                    )
+                    SetGroupCard(
+                        name = "Weighted Walking Lunges bla bla bla bla bla blab bla",
+                        onMoveDown = onMoveDown,
+                        onMoveUp = onMoveUp,
+                        sets = listOf(Set(1, 2.0), Set(distance = 3.0), Set(), Set()),
+                        logReps = true,
+                        logWeight = true,
+                        logTime = true,
+                        logDistance = true,
+                        showCheckbox = true,
+                    )
+                }
             }
         }
     }
