@@ -22,7 +22,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
@@ -59,45 +58,21 @@ fun SetGroupCardPreview() {
 
         val onMoveDown = { showSnackbar("onMoveDown") }
         val onMoveUp = { showSnackbar("onMoveUp") }
+        val onAddSet = { showSnackbar("Add Set") }
 
         Scaffold(scaffoldState = scaffoldState) {
-            LazyColumn {
-                item {
-                    SetGroupCard(
-                        name = "Push-up",
-                        onMoveDown = onMoveDown,
-                        onMoveUp = onMoveUp,
-                        sets = listOf(Set(1, 2.0), Set(12, 3.0)),
-                        logReps = true,
-                        logWeight = true,
-                        logTime = false,
-                        logDistance = false,
-                        showCheckbox = true,
-                    )
-                    SetGroupCard(
-                        name = "Jump Rope",
-                        onMoveDown = onMoveDown,
-                        onMoveUp = onMoveUp,
-                        sets = listOf(Set(time = 33)),
-                        logReps = false,
-                        logWeight = false,
-                        logTime = true,
-                        logDistance = false,
-                        showCheckbox = true,
-                    )
-                    SetGroupCard(
-                        name = "Weighted Walking Lunges bla bla bla bla bla blab bla",
-                        onMoveDown = onMoveDown,
-                        onMoveUp = onMoveUp,
-                        sets = listOf(Set(1, 2.0), Set(distance = 3.0), Set(), Set()),
-                        logReps = true,
-                        logWeight = true,
-                        logTime = true,
-                        logDistance = true,
-                        showCheckbox = true,
-                    )
-                }
-            }
+            SetGroupCard(
+                name = "Weighted Walking Lunges bla bla bla bla bla blab bla",
+                onMoveDown = onMoveDown,
+                onMoveUp = onMoveUp,
+                onAddSet = onAddSet,
+                sets = listOf(Set(1, 2.0), Set(distance = 3.0), Set(), Set()),
+                logReps = true,
+                logWeight = true,
+                logTime = true,
+                logDistance = true,
+                showCheckbox = true,
+            )
         }
     }
 }
@@ -110,6 +85,7 @@ fun SetGroupCard(
     sets: List<Set>,
     onMoveDown: () -> Unit,
     onMoveUp: () -> Unit,
+    onAddSet: () -> Unit,
     logReps: Boolean,
     logWeight: Boolean,
     logTime: Boolean,
@@ -132,6 +108,7 @@ fun SetGroupCard(
                 logTime = logTime,
                 logDistance = logDistance,
                 showCheckbox = showCheckbox,
+                onAddSet = onAddSet,
             )
             Spacer(Modifier.preferredHeight(8.dp))
         }
@@ -187,6 +164,7 @@ private fun SetTable(
     logTime: Boolean,
     logDistance: Boolean,
     showCheckbox: Boolean,
+    onAddSet: () -> Unit,
 ) {
     Table(modifier) {
         SetTableHeader(
@@ -226,7 +204,7 @@ private fun SetTable(
             TextButton(
                 modifier = Modifier.preferredHeight(52.dp).fillMaxWidth(),
                 shape = RectangleShape,
-                onClick = { /*TODO*/ }
+                onClick = onAddSet,
             ) {
                 Icon(Icons.Default.Add, null)
                 Spacer(Modifier.preferredWidth(8.dp))
