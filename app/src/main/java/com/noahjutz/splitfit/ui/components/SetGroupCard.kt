@@ -110,7 +110,7 @@ fun SetGroupCard(
                 showCheckbox = showCheckbox,
                 onAddSet = onAddSet,
             )
-            Spacer(Modifier.preferredHeight(8.dp))
+            Spacer(Modifier.height(8.dp))
         }
     }
 }
@@ -124,7 +124,7 @@ private fun SetGroupTitle(
 ) {
     Box(Modifier.clickable {}) {
         Row(
-            modifier.preferredHeight(70.dp),
+            modifier.height(70.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProvideTextStyle(typography.h5) {
@@ -202,12 +202,12 @@ private fun SetTable(
 
         TableRow {
             TextButton(
-                modifier = Modifier.preferredHeight(52.dp).fillMaxWidth(),
+                modifier = Modifier.height(52.dp).fillMaxWidth(),
                 shape = RectangleShape,
                 onClick = onAddSet,
             ) {
                 Icon(Icons.Default.Add, null)
-                Spacer(Modifier.preferredWidth(8.dp))
+                Spacer(Modifier.height(8.dp))
                 Text("Add Set")
             }
         }
@@ -235,7 +235,7 @@ private fun ColumnScope.SetTableHeader(
         if (logDistance) TableCell(Modifier.weight(1f)) {
             Text(stringResource(R.string.distance))
         }
-        if (showCheckbox) Spacer(Modifier.preferredWidth(40.dp))
+        if (showCheckbox) Spacer(Modifier.width(40.dp))
     }
 }
 
@@ -276,7 +276,7 @@ private fun ColumnScope.TableSetRow(
         }
         if (showCheckbox) TableCell {
             Checkbox(
-                modifier = Modifier.preferredSize(48.dp),
+                modifier = Modifier.size(48.dp),
                 checked = false,
                 onCheckedChange = { /*TODO*/ }
             )

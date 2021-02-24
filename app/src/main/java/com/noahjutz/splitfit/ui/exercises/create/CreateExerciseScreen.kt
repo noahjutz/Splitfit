@@ -66,7 +66,7 @@ fun CreateExerciseScreen(
                 }
             )
         },
-        bodyContent = {
+        content = {
             var repsChecked by remember { mutableStateOf(exercise.logReps) }
             var weightChecked by remember { mutableStateOf(exercise.logWeight) }
             var timeChecked by remember { mutableStateOf(exercise.logTime) }

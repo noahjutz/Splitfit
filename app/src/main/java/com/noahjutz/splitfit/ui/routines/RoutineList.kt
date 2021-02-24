@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.util.getViewModel
+import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -57,6 +59,7 @@ fun RoutineList(
             )
         },
     ) {
+        val scope = rememberCoroutineScope()
 
         val routines by viewModel.routines.collectAsState(emptyList())
 
@@ -84,7 +87,7 @@ fun RoutineList(
                     }
                 }
 
-                if (dismissState.value != DismissValue.Default) {
+                if (dismissState.currentValue != DismissValue.Default) {
                     AlertDialog(
                         title = {
                             Text(
@@ -99,7 +102,9 @@ fun RoutineList(
                             Button(
                                 onClick = {
                                     viewModel.deleteRoutine(routine.routineId)
-                                    dismissState.snapTo(DismissValue.Default)
+                                    scope.launch {
+                                        dismissState.snapTo(DismissValue.Default)
+                                    }
                                 },
                                 content = { Text(stringResource(R.string.yes)) }
                             )
@@ -107,13 +112,17 @@ fun RoutineList(
                         dismissButton = {
                             TextButton(
                                 onClick = {
-                                    dismissState.snapTo(DismissValue.Default)
+                                    scope.launch {
+                                        dismissState.snapTo(DismissValue.Default)
+                                    }
                                 },
                                 content = { Text(stringResource(R.string.cancel)) }
                             )
                         },
                         onDismissRequest = {
-                            dismissState.snapTo(DismissValue.Default)
+                            scope.launch {
+                                dismissState.snapTo(DismissValue.Default)
+                            }
                         }
                     )
                 }

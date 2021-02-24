@@ -20,8 +20,8 @@ package com.noahjutz.splitfit.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.AmbientViewModelStoreOwner
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import org.koin.androidx.viewmodel.ViewModelOwner.Companion.from
 import org.koin.androidx.viewmodel.koin.getViewModel
 import org.koin.core.Koin
@@ -47,7 +47,7 @@ inline fun <reified T : ViewModel> getViewModel(
     qualifier: Qualifier? = null,
     noinline parameters: ParametersDefinition? = null,
 ): T {
-    val owner = AmbientViewModelStoreOwner.current.viewModelStore
+    val owner = LocalViewModelStoreOwner.current.viewModelStore
     return remember {
         GlobalContext.get()
             .getViewModel(qualifier, owner = { from(owner) }, parameters = parameters)

@@ -19,6 +19,7 @@
 package com.noahjutz.splitfit.ui
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -27,12 +28,11 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
-import androidx.compose.runtime.Providers
-import androidx.compose.runtime.ambientOf
-import androidx.compose.ui.platform.setContent
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import com.noahjutz.splitfit.util.ActivityResultLaunchers.registerLaunchers
 
-val AmbientActivity = ambientOf<MainActivity> { error("MainActivity not found") }
+val LocalActivity = compositionLocalOf<MainActivity> { error("MainActivity not found") }
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,8 +43,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
-                Providers(AmbientActivity provides this@MainActivity) {
+                CompositionLocalProvider(LocalActivity provides this@MainActivity) {
                     SplitfitApp()
+
                 }
             }
         }

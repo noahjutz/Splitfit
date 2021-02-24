@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
@@ -154,7 +155,7 @@ fun WorkoutScreen(
                     setGroup = setGroup,
                     viewModel = viewModel
                 )
-                Spacer(Modifier.preferredHeight(16.dp))
+                Spacer(Modifier.height(16.dp))
             }
 
             item {
@@ -170,16 +171,16 @@ fun WorkoutScreen(
                         onClick = { showCancelWorkoutDialog = true },
                     ) {
                         Icon(Icons.Default.Delete, null)
-                        Spacer(Modifier.preferredWidth(8.dp))
+                        Spacer(Modifier.width(8.dp))
                         Text("Delete Workout")
                     }
-                    Spacer(Modifier.preferredWidth(16.dp))
+                    Spacer(Modifier.width(16.dp))
                     Button(
                         modifier = Modifier.weight(1f),
                         onClick = { showFinishWorkoutDialog = true }
                     ) {
                         Icon(Icons.Default.Done, null)
-                        Spacer(Modifier.preferredWidth(8.dp))
+                        Spacer(Modifier.width(8.dp))
                         Text("Finish Workout")
                     }
                 }
@@ -199,6 +200,7 @@ fun SetGroupCard(
     setGroup: SetGroup,
     viewModel: CreateWorkoutViewModel,
 ) {
+    val scope = rememberCoroutineScope()
     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)
 
     val focusManager = LocalFocusManager.current
@@ -236,11 +238,13 @@ fun SetGroupCard(
             setGroup.sets.forEachIndexed { setIndex, set ->
                 val dismissState = rememberDismissState()
 
-                DisposableEffect(dismissState.value) {
-                    if (dismissState.value != DismissValue.Default) {
+                DisposableEffect(dismissState.currentValue) {
+                    if (dismissState.currentValue != DismissValue.Default) {
                         focusManager.clearFocus()
                         viewModel.editor.deleteSetFrom(setGroup, setIndex)
-                        dismissState.snapTo(DismissValue.Default)
+                        scope.launch {
+                            dismissState.snapTo(DismissValue.Default)
+                        }
                     }
                     onDispose {}
                 }
@@ -332,7 +336,7 @@ fun SetGroupCard(
 
                             val checked = set.complete
                             Checkbox(
-                                modifier = Modifier.preferredSize(48.dp),
+                                modifier = Modifier.size(48.dp),
                                 checked = checked,
                                 onCheckedChange = {
                                     viewModel.editor.updateSet(
@@ -422,7 +426,7 @@ fun SetTextField(
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
         ),
-        cursorColor = MaterialTheme.colors.onSurface,
+        cursorBrush = SolidColor(MaterialTheme.colors.onSurface),
         maxLines = 1
     )
 }

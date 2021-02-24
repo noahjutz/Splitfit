@@ -59,7 +59,7 @@ fun ColumnScope.TableRow(
     content: @Composable RowScope.() -> Unit,
 ) {
     Row(
-        modifier.preferredHeight(52.dp),
+        modifier.height(52.dp),
         verticalAlignment = Alignment.CenterVertically,
         content = content,
     )
@@ -97,7 +97,7 @@ fun ColumnScope.TableHeaderRow(
 ) {
     ProvideTextStyle(value = LocalTextStyle.current.copy(fontWeight = FontWeight.Bold)) {
         Row(
-            modifier.preferredHeight(56.dp),
+            modifier.height(56.dp),
             verticalAlignment = Alignment.CenterVertically,
             content = content,
         )
@@ -132,7 +132,7 @@ fun TableSample() {
                     Text("H3", fontWeight = FontWeight.Bold)
                 }
                 TableCell {
-                    Spacer(Modifier.preferredWidth(52.dp))
+                    Spacer(Modifier.width(52.dp))
                 }
             }
             Divider()
@@ -148,7 +148,7 @@ fun TableSample() {
                 }
                 TableCell {
                     Checkbox(
-                        modifier = Modifier.preferredWidth(48.dp),
+                        modifier = Modifier.width(48.dp),
                         checked = true,
                         onCheckedChange = {},
                     )
@@ -160,8 +160,8 @@ fun TableSample() {
                 Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 state = dismissState
             ) {
-                LaunchedEffect(dismissState.value) {
-                    if (dismissState.value != DismissValue.Default) dismissState.reset()
+                LaunchedEffect(dismissState.currentValue) {
+                    if (dismissState.currentValue != DismissValue.Default) dismissState.reset()
                 }
                 Text("Swipe me.")
             }

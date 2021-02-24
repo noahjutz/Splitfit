@@ -37,6 +37,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.SearchTopBar
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.util.getViewModel
+import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
@@ -44,6 +45,7 @@ fun ExerciseList(
     addEditExercise: (Int) -> Unit,
     viewModel: ExerciseListViewModel = getViewModel(),
 ) {
+    val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             var searchQuery by remember { mutableStateOf("") }
@@ -63,7 +65,7 @@ fun ExerciseList(
                 text = { Text("New Exercise") },
             )
         },
-        bodyContent = {
+        content = {
             val exercises by viewModel.exercises.collectAsState(emptyList())
             LazyColumn(Modifier.fillMaxHeight()) {
                 items(exercises.filter { !it.hidden }) { exercise ->
@@ -94,14 +96,20 @@ fun ExerciseList(
                         }
                     }
 
-                    if (dismissState.value != DismissValue.Default) {
+                    if (dismissState.currentValue != DismissValue.Default) {
                         ConfirmDeleteExerciseDialog(
-                            onDismiss = { dismissState.snapTo(DismissValue.Default) },
+                            onDismiss = {
+                                scope.launch {
+                                    dismissState.snapTo(DismissValue.Default)
+                                }
+                            },
                             exerciseName = exercise.name,
                             onConfirm = {
                                 viewModel.hide(exercise, true)
                                 hidden = true
-                                dismissState.snapTo(DismissValue.Default)
+                                scope.launch {
+                                    dismissState.snapTo(DismissValue.Default)
+                                }
                             },
                         )
                     }

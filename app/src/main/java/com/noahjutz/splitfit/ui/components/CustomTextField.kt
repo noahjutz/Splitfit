@@ -21,7 +21,7 @@ package com.noahjutz.splitfit.ui.components
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.preferredHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.LocalContentColor
@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
@@ -54,7 +55,7 @@ fun AppBarTextField(
             value = value,
             onValueChange = onValueChange,
             singleLine = true,
-            cursorColor = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary,
+            cursorBrush = SolidColor(if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary),
             textStyle = LocalTextStyle.current.copy(
                 color = if (isSystemInDarkTheme()) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary
             ),
@@ -76,7 +77,7 @@ fun TableCellTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     hint: String? = null,
 ) {
-    Box(Modifier.preferredHeight(48.dp), contentAlignment = Alignment.CenterStart) {
+    Box(Modifier.height(48.dp), contentAlignment = Alignment.CenterStart) {
         AutoSelectTextField(
             value = value,
             onValueChange = onValueChange,
@@ -142,7 +143,7 @@ private fun AutoSelectTextField(
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         textStyle = textStyle,
-        cursorColor = cursorColor,
+        cursorBrush = SolidColor(cursorColor),
         maxLines = maxLines,
         decorationBox = decorationBox,
         singleLine = singleLine,

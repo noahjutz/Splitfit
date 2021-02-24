@@ -34,11 +34,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.BuildConfig
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.ui.AmbientActivity
+import com.noahjutz.splitfit.ui.LocalActivity
 import com.noahjutz.splitfit.ui.MainActivity
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.contributing
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.donateLiberapay
@@ -73,7 +74,7 @@ fun AboutSplitfit(
             onDismiss = { showLicenses = false },
             dependencies = viewModel.dependencies
         )
-        val mainActivity = AmbientActivity.current
+        val mainActivity = LocalActivity.current
         LazyColumn {
             item {
                 Row(
@@ -90,12 +91,12 @@ fun AboutSplitfit(
                         Image(
                             modifier = Modifier
                                 .padding(4.dp)
-                                .preferredSize(48.dp),
-                            imageVector = vectorResource(R.drawable.ic_splitfit),
+                                .size(48.dp),
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_splitfit),
                             contentDescription = null,
                         )
                     }
-                    Spacer(Modifier.preferredWidth(12.dp))
+                    Spacer(Modifier.width(12.dp))
                     ProvideTextStyle(value = typography.h4) {
                         Text("Splitfit")
                     }
@@ -169,7 +170,7 @@ private fun LicensesDialog(
         text = {
             LazyColumn {
                 items(dependencies) { dependency ->
-                    val mainActivity = AmbientActivity.current
+                    val mainActivity = LocalActivity.current
                     ListItem(
                         modifier = Modifier.clickable { mainActivity.openUrl(dependency.url) },
                         text = { Text(dependency.name) },

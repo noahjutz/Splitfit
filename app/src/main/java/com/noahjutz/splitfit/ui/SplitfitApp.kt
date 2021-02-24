@@ -30,7 +30,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ViewAgenda
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -58,7 +61,9 @@ sealed class TopLevelScreens(
     @DrawableRes val iconRes: Int? = null,
 ) {
     object Routines : TopLevelScreens("routines", R.string.tab_routines, Icons.Default.ViewAgenda)
-    object Exercises : TopLevelScreens("exercises", R.string.tab_exercises, iconRes = R.drawable.ic_dumbbell)
+    object Exercises :
+        TopLevelScreens("exercises", R.string.tab_exercises, iconRes = R.drawable.ic_dumbbell)
+
     object Workouts : TopLevelScreens("workouts", R.string.tab_workouts, Icons.Default.History)
     object Settings : TopLevelScreens("settings", R.string.tab_settings, Icons.Default.Settings)
 }
@@ -112,7 +117,7 @@ private fun HomeBottomBar(
     BottomNavigation {
         for (screen in topLevelScreens) {
             BottomNavigationItem(
-                icon = { Icon(screen.icon ?: vectorResource(screen.iconRes!!), null) },
+                icon = { Icon(screen.icon ?: ImageVector.vectorResource(screen.iconRes!!), null) },
                 onClick = {
                     navController.popBackStack(navController.graph.startDestination, false)
                     if (screen.route != currentRoute) navController.navigate(screen.route)

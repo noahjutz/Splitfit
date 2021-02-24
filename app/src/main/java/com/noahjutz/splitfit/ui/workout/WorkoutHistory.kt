@@ -25,6 +25,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -32,6 +33,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.util.getViewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,6 +43,8 @@ fun WorkoutHistory(
     viewModel: WorkoutHistoryViewModel = getViewModel(),
     navToCreateWorkoutScreen: (Int) -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
+
     val workouts by viewModel.presenter.workouts.collectAsState(emptyList())
     Scaffold(topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_workouts)) }) }) {
         LazyColumn {
@@ -74,11 +78,15 @@ fun WorkoutHistory(
                     }
                 }
 
-                if (dismissState.value != DismissValue.Default) {
+                if (dismissState.currentValue != DismissValue.Default) {
                     DeleteConfirmation(
                         workout = workout,
                         deleteWorkout = { viewModel.editor.delete(workout) },
-                        resetDismissState = { dismissState.snapTo(DismissValue.Default) }
+                        resetDismissState = {
+                            scope.launch {
+                                dismissState.snapTo(DismissValue.Default)
+                            }
+                        }
                     )
                 }
             }

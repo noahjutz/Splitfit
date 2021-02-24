@@ -22,7 +22,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -38,10 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.isFocused
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.gesture.LongPressDragObserver
-import androidx.compose.ui.gesture.longPressDragGestureFilter
-import androidx.compose.ui.platform.AmbientFocusManager
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -190,13 +187,14 @@ fun SetGroupCard(
     setGroup: SetGroup,
     viewModel: RoutineEditorViewModel,
 ) {
+    val scope = rememberCoroutineScope()
     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)
 
     // Temporary rearranging solution
     var offsetPosition by remember { mutableStateOf(0f) }
     var dragging by remember { mutableStateOf(false) }
     var toSwap by remember { mutableStateOf(Pair(0, 0)) }
-    val focusManager = AmbientFocusManager.current
+    val focusManager = LocalFocusManager.current
     DisposableEffect(offsetPosition) {
         if (dragging) {
             toSwap = when {
@@ -221,27 +219,8 @@ fun SetGroupCard(
             .offset(y = offsetPosition.dp)
     ) {
         Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {}
-                    .longPressDragGestureFilter(
-                        longPressDragObserver = object : LongPressDragObserver {
-                            override fun onDrag(dragDistance: Offset): Offset {
-                                super.onDrag(dragDistance)
-                                dragging = true
-                                offsetPosition += dragDistance.y
-                                return dragDistance
-                            }
-
-                            override fun onStop(velocity: Offset) {
-                                super.onStop(velocity)
-                                dragging = false
-                                offsetPosition = 0f
-                            }
-                        }
-                    )
-            ) {
+            Row(Modifier.fillMaxWidth()) {
+                // TODO rearranging (same as in WorkoutEditor)
                 Text(
                     modifier = Modifier.padding(16.dp),
                     text = exercise?.name?.takeIf { it.isNotBlank() }
@@ -258,11 +237,13 @@ fun SetGroupCard(
             setGroup.sets.forEachIndexed { setIndex, set ->
                 val dismissState = rememberDismissState()
 
-                DisposableEffect(dismissState.value) {
-                    if (dismissState.value != DismissValue.Default) {
+                DisposableEffect(dismissState.currentValue) {
+                    if (dismissState.currentValue != DismissValue.Default) {
                         focusManager.clearFocus()
                         viewModel.editor.deleteSetFrom(setGroup, setIndex)
-                        dismissState.snapTo(DismissValue.Default)
+                        scope.launch {
+                            dismissState.snapTo(DismissValue.Default)
+                        }
                     }
                     onDispose {}
                 }
@@ -428,11 +409,11 @@ fun SetTextField(
             },
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        textStyle = AmbientTextStyle.current.copy(
+        textStyle = LocalTextStyle.current.copy(
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.onSurface
         ),
-        cursorColor = MaterialTheme.colors.onSurface,
+        cursorBrush = SolidColor(MaterialTheme.colors.onSurface),
         maxLines = 1
     )
 }
