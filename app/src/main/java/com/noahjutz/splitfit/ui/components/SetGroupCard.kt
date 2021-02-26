@@ -157,9 +157,9 @@ private fun SetGroupTitle(
                     name.takeIf { it.isNotBlank() } ?: stringResource(R.string.unnamed_exercise),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
                 )
             }
-            Spacer(Modifier.weight(1f))
             // Temporary replacement for drag & drop.
             // See https://stackoverflow.com/questions/64913067
             Box {
