@@ -115,7 +115,6 @@ fun SetGroupCard(
     Card(elevation = 0.dp) {
         Column(Modifier.fillMaxWidth()) {
             SetGroupTitle(
-                Modifier.padding(start = 16.dp, end = 8.dp),
                 name = name,
                 onMoveUp = onMoveUp,
                 onMoveDown = onMoveDown,
@@ -150,7 +149,7 @@ private fun SetGroupTitle(
 ) {
     Box(Modifier.clickable {}) {
         Row(
-            modifier.height(70.dp),
+            modifier.height(70.dp).padding(start = 16.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProvideTextStyle(typography.h5) {
