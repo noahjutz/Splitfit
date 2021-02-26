@@ -67,6 +67,7 @@ fun SetGroupCardPreview() {
         val onRepsChange = { i: Int, r: String -> logWithSnackbar("i: $i, r: $r") }
         val onWeightChange = { i: Int, w: String -> logWithSnackbar("i: $i, w: $w") }
         val onCheckboxChange = { i: Int, b: Boolean -> logWithSnackbar("i: $i, b: $b") }
+        val onDeleteSet = {i: Int -> logWithSnackbar("i: $i")}
 
         Scaffold(scaffoldState = scaffoldState) {
             SetGroupCard(
@@ -86,6 +87,7 @@ fun SetGroupCardPreview() {
                 onWeightChange = onWeightChange,
                 checkboxChecked = true,
                 onCheckboxChange = onCheckboxChange,
+                onDeleteSet = onDeleteSet,
             )
         }
     }
@@ -100,6 +102,7 @@ fun SetGroupCard(
     onMoveDown: () -> Unit,
     onMoveUp: () -> Unit,
     onAddSet: () -> Unit,
+    onDeleteSet: (Int) -> Unit,
     logReps: Boolean,
     onRepsChange: (Int, String) -> Unit = { _, _ -> },
     logWeight: Boolean,
@@ -134,6 +137,7 @@ fun SetGroupCard(
                 checkboxChecked = checkboxChecked,
                 onCheckboxChange = onCheckboxChange,
                 onAddSet = onAddSet,
+                onDeleteSet = onDeleteSet,
             )
             Spacer(Modifier.height(8.dp))
         }
@@ -149,7 +153,9 @@ private fun SetGroupTitle(
 ) {
     Box(Modifier.clickable {}) {
         Row(
-            modifier.height(70.dp).padding(start = 16.dp, end = 8.dp),
+            modifier
+                .height(70.dp)
+                .padding(start = 16.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProvideTextStyle(typography.h5) {
@@ -196,6 +202,7 @@ private fun SetTable(
     checkboxChecked: Boolean,
     onCheckboxChange: (Int, Boolean) -> Unit,
     onAddSet: () -> Unit,
+    onDeleteSet: (Int) -> Unit,
 ) {
     Table(modifier) {
         SetTableHeader(
@@ -224,6 +231,7 @@ private fun SetTable(
                 showCheckbox = showCheckbox,
                 checkboxChecked = checkboxChecked,
                 onCheckboxChange = { onCheckboxChange(i, it) },
+                onDeleteSet = { onDeleteSet(i) }
             )
             Divider()
         }
@@ -289,10 +297,24 @@ private fun ColumnScope.TableSetRow(
     showCheckbox: Boolean,
     checkboxChecked: Boolean,
     onCheckboxChange: (Boolean) -> Unit,
+    onDeleteSet: () -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
+    val dismissState = rememberDismissState()
+
+    val showDialog = dismissState.currentValue != DismissValue.Default
+
+    if (showDialog) ConfirmDeleteSetDialog(
+        onDismiss = { scope.launch { dismissState.snapTo(DismissValue.Default) } },
+        onConfirm = {
+            scope.launch { dismissState.snapTo(DismissValue.Default) }
+            onDeleteSet()
+        }
+    )
+
     DismissibleTableRow(
         modifier.padding(start = 16.dp, end = if (showCheckbox) 8.dp else 16.dp),
-        rememberDismissState() // TODO
+        state = dismissState,
     ) {
         if (logReps) TableCell(Modifier.weight(1f)) {
             IntegerTextField(value = reps, onValueChange = onRepsChange)
@@ -350,5 +372,18 @@ private fun DurationTextField(
         onValueChange = { if (it.matches(RegexPatterns.duration)) onValueChange(it) },
         hint = "00:00",
         visualTransformation = durationVisualTransformation,
+    )
+}
+
+@Composable
+private fun ConfirmDeleteSetDialog(
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        text = { Text("Do you want to delete this set?") },
+        confirmButton = { Button(onClick = onConfirm) { Text(stringResource(R.string.yes)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
     )
 }
