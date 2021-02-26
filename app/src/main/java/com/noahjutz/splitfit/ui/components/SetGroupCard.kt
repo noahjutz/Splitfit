@@ -66,6 +66,7 @@ fun SetGroupCardPreview() {
         val onTimeChange = { i: Int, t: String -> logWithSnackbar("i: $i, t: $t") }
         val onRepsChange = { i: Int, r: String -> logWithSnackbar("i: $i, r: $r") }
         val onWeightChange = { i: Int, w: String -> logWithSnackbar("i: $i, w: $w") }
+        val onCheckboxChange = { i: Int, b: Boolean -> logWithSnackbar("i: $i, b: $b") }
 
         Scaffold(scaffoldState = scaffoldState) {
             SetGroupCard(
@@ -83,6 +84,8 @@ fun SetGroupCardPreview() {
                 onTimeChange = onTimeChange,
                 onRepsChange = onRepsChange,
                 onWeightChange = onWeightChange,
+                checkboxChecked = true,
+                onCheckboxChange = onCheckboxChange,
             )
         }
     }
@@ -98,14 +101,16 @@ fun SetGroupCard(
     onMoveUp: () -> Unit,
     onAddSet: () -> Unit,
     logReps: Boolean,
-    onRepsChange: (Int, String) -> Unit,
+    onRepsChange: (Int, String) -> Unit = { _, _ -> },
     logWeight: Boolean,
-    onWeightChange: (Int, String) -> Unit,
+    onWeightChange: (Int, String) -> Unit = { _, _ -> },
     logTime: Boolean,
-    onTimeChange: (Int, String) -> Unit,
+    onTimeChange: (Int, String) -> Unit = { _, _ -> },
     logDistance: Boolean,
-    onDistanceChange: (Int, String) -> Unit,
+    onDistanceChange: (Int, String) -> Unit = { _, _ -> },
     showCheckbox: Boolean,
+    checkboxChecked: Boolean = false,
+    onCheckboxChange: (Int, Boolean) -> Unit = { _, _ -> },
 ) {
     Card(elevation = 0.dp) {
         Column(Modifier.fillMaxWidth()) {
@@ -127,6 +132,8 @@ fun SetGroupCard(
                 logDistance = logDistance,
                 onDistanceChange = onDistanceChange,
                 showCheckbox = showCheckbox,
+                checkboxChecked = checkboxChecked,
+                onCheckboxChange = onCheckboxChange,
                 onAddSet = onAddSet,
             )
             Spacer(Modifier.height(8.dp))
@@ -187,6 +194,8 @@ private fun SetTable(
     logDistance: Boolean,
     onDistanceChange: (Int, String) -> Unit,
     showCheckbox: Boolean,
+    checkboxChecked: Boolean,
+    onCheckboxChange: (Int, Boolean) -> Unit,
     onAddSet: () -> Unit,
 ) {
     Table(modifier) {
@@ -214,6 +223,8 @@ private fun SetTable(
                 distance = set.distance.formatSimple(),
                 onDistanceChange = { onDistanceChange(i, it) },
                 showCheckbox = showCheckbox,
+                checkboxChecked = checkboxChecked,
+                onCheckboxChange = { onCheckboxChange(i, it) },
             )
             Divider()
         }
@@ -264,19 +275,21 @@ private fun ColumnScope.SetTableHeader(
 @Composable
 private fun ColumnScope.TableSetRow(
     modifier: Modifier = Modifier,
-    logReps: Boolean = false,
+    logReps: Boolean,
     reps: String = "",
     onRepsChange: ((String) -> Unit) = {},
-    logWeight: Boolean = false,
+    logWeight: Boolean,
     weight: String = "",
     onWeightChange: ((String) -> Unit) = {},
-    logDuration: Boolean = false,
+    logDuration: Boolean,
     duration: String = "",
     onDurationChange: ((String) -> Unit) = {},
-    logDistance: Boolean = false,
+    logDistance: Boolean,
     distance: String = "",
     onDistanceChange: ((String) -> Unit) = {},
     showCheckbox: Boolean,
+    checkboxChecked: Boolean,
+    onCheckboxChange: (Boolean) -> Unit,
 ) {
     DismissibleTableRow(
         modifier.padding(start = 16.dp, end = if (showCheckbox) 8.dp else 16.dp),
@@ -297,8 +310,8 @@ private fun ColumnScope.TableSetRow(
         if (showCheckbox) TableCell {
             Checkbox(
                 modifier = Modifier.size(48.dp),
-                checked = false,
-                onCheckedChange = { /*TODO*/ }
+                checked = checkboxChecked,
+                onCheckedChange = onCheckboxChange,
             )
         }
     }
