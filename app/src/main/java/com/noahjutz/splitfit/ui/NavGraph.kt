@@ -38,7 +38,7 @@ import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.WorkoutHistory
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutScreen
-import com.noahjutz.splitfit.util.getViewModel
+import com.noahjutz.splitfit.di.getViewModel
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi

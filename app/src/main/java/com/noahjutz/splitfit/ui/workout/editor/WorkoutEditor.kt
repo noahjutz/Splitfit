@@ -55,7 +55,7 @@ import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.editor.timeVisualTransformation
 import com.noahjutz.splitfit.util.RegexPatterns
-import com.noahjutz.splitfit.util.getViewModel
+import com.noahjutz.splitfit.di.getViewModel
 import kotlinx.coroutines.launch
 import org.koin.core.parameter.parametersOf
 import java.util.*

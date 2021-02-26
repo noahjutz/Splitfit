@@ -51,7 +51,7 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.util.DatastoreKeys
-import com.noahjutz.splitfit.util.get
+import com.noahjutz.splitfit.di.get
 import kotlinx.coroutines.flow.map
 
 sealed class TopLevelScreens(

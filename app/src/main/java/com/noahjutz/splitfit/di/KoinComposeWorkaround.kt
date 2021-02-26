@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.util
+package com.noahjutz.splitfit.di
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -30,8 +30,8 @@ import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.qualifier.Qualifier
 
 /**
- * Compose v1.0.0-alpha12 and koin v2.2.2 are not compatible. This file contains koin source code as
- * a temporary workaround.
+ * Compose v1.0.0-alpha12 and up are not compatible with koin v2.2.2. This file contains koin source
+ * code as a temporary workaround.
  */
 
 /**

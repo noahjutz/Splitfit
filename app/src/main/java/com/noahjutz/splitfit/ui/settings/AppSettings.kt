@@ -32,7 +32,7 @@ import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.noahjutz.splitfit.util.ActivityResultLaunchers
-import com.noahjutz.splitfit.util.getViewModel
+import com.noahjutz.splitfit.di.getViewModel
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
