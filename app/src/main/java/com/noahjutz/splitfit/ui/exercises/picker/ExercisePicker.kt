@@ -36,8 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.ui.components.SearchTopBar
 import com.noahjutz.splitfit.di.getViewModel
+import com.noahjutz.splitfit.ui.components.SearchTopBar
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
@@ -47,7 +47,7 @@ fun ExercisePicker(
     sharedExercisePickerViewModel: SharedExercisePickerViewModel,
     popBackStack: () -> Unit,
 ) {
-    var save = false
+    var save by remember { mutableStateOf(false) }
     DisposableEffect(null) {
         onDispose {
             if (!save) sharedExercisePickerViewModel.clear()
@@ -79,7 +79,10 @@ fun ExercisePicker(
                 enter = slideInHorizontally({ it * 2 }),
                 exit = fadeOut()
             ) {
-                FloatingActionButton(onClick = { save = true; popBackStack() }) {
+                FloatingActionButton(onClick = {
+                    save = true
+                    popBackStack()
+                }) {
                     Icon(Icons.Default.Done, null)
                 }
             }
