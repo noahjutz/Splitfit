@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.util.RegexPatterns
+import com.noahjutz.splitfit.util.formatSimple
 import com.noahjutz.splitfit.util.toStringOrBlank
 import kotlinx.coroutines.launch
 
@@ -49,16 +51,21 @@ fun SetGroupCardPreview() {
     MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
         val scaffoldState = rememberScaffoldState()
         val scope = rememberCoroutineScope()
-        fun showSnackbar(message: String) {
+        fun logWithSnackbar(message: String) {
+            Log.d("SetGroupCard", message)
             scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
             scope.launch {
                 scaffoldState.snackbarHostState.showSnackbar(message)
             }
         }
 
-        val onMoveDown = { showSnackbar("onMoveDown") }
-        val onMoveUp = { showSnackbar("onMoveUp") }
-        val onAddSet = { showSnackbar("Add Set") }
+        val onMoveDown = { logWithSnackbar("onMoveDown") }
+        val onMoveUp = { logWithSnackbar("onMoveUp") }
+        val onAddSet = { logWithSnackbar("onAddSet") }
+        val onDistanceChange = { i: Int, d: String -> logWithSnackbar("i: $i, d: $d") }
+        val onTimeChange = { i: Int, t: String -> logWithSnackbar("i: $i, t: $t") }
+        val onRepsChange = { i: Int, r: String -> logWithSnackbar("i: $i, r: $r") }
+        val onWeightChange = { i: Int, w: String -> logWithSnackbar("i: $i, w: $w") }
 
         Scaffold(scaffoldState = scaffoldState) {
             SetGroupCard(
@@ -72,6 +79,10 @@ fun SetGroupCardPreview() {
                 logTime = true,
                 logDistance = true,
                 showCheckbox = true,
+                onDistanceChange = onDistanceChange,
+                onTimeChange = onTimeChange,
+                onRepsChange = onRepsChange,
+                onWeightChange = onWeightChange,
             )
         }
     }
@@ -87,9 +98,13 @@ fun SetGroupCard(
     onMoveUp: () -> Unit,
     onAddSet: () -> Unit,
     logReps: Boolean,
+    onRepsChange: (Int, String) -> Unit,
     logWeight: Boolean,
+    onWeightChange: (Int, String) -> Unit,
     logTime: Boolean,
+    onTimeChange: (Int, String) -> Unit,
     logDistance: Boolean,
+    onDistanceChange: (Int, String) -> Unit,
     showCheckbox: Boolean,
 ) {
     Card(elevation = 0.dp) {
@@ -104,9 +119,13 @@ fun SetGroupCard(
                 Modifier.padding(horizontal = 8.dp),
                 sets = sets,
                 logReps = logReps,
+                onRepsChange = onRepsChange,
                 logWeight = logWeight,
+                onWeightChange = onWeightChange,
                 logTime = logTime,
+                onTimeChange = onTimeChange,
                 logDistance = logDistance,
+                onDistanceChange = onDistanceChange,
                 showCheckbox = showCheckbox,
                 onAddSet = onAddSet,
             )
@@ -160,9 +179,13 @@ private fun SetTable(
     modifier: Modifier = Modifier,
     sets: List<Set>,
     logReps: Boolean,
+    onRepsChange: (Int, String) -> Unit,
     logWeight: Boolean,
+    onWeightChange: (Int, String) -> Unit,
     logTime: Boolean,
+    onTimeChange: (Int, String) -> Unit,
     logDistance: Boolean,
+    onDistanceChange: (Int, String) -> Unit,
     showCheckbox: Boolean,
     onAddSet: () -> Unit,
 ) {
@@ -176,25 +199,20 @@ private fun SetTable(
         )
         Divider()
 
-        for (set in sets) {
-            // TODO callback for on[Value]Change
-            val (reps, setReps) = remember(set.reps) { mutableStateOf(set.reps.toStringOrBlank()) }
-            val (weight, setWeight) = remember(set.weight) { mutableStateOf(set.weight.toStringOrBlank()) }
-            val (duration, setDuration) = remember(set.time) { mutableStateOf(set.time.toStringOrBlank()) }
-            val (distance, setDistance) = remember(set.distance) { mutableStateOf(set.distance.toStringOrBlank()) }
+        sets.forEachIndexed { i, set ->
             TableSetRow(
                 logReps = logReps,
-                reps = reps,
-                onRepsChange = setReps,
+                reps = set.reps.toStringOrBlank(),
+                onRepsChange = { onRepsChange(i, it) },
                 logWeight = logWeight,
-                weight = weight,
-                onWeightChange = setWeight,
+                weight = set.weight.formatSimple(),
+                onWeightChange = { onWeightChange(i, it) },
                 logDuration = logTime,
-                duration = duration,
-                onDurationChange = setDuration,
+                duration = set.time.toStringOrBlank(),
+                onDurationChange = { onTimeChange(i, it) },
                 logDistance = logDistance,
-                distance = distance,
-                onDistanceChange = setDistance,
+                distance = set.distance.formatSimple(),
+                onDistanceChange = { onDistanceChange(i, it) },
                 showCheckbox = showCheckbox,
             )
             Divider()
@@ -202,7 +220,9 @@ private fun SetTable(
 
         TableRow {
             TextButton(
-                modifier = Modifier.height(52.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .height(52.dp)
+                    .fillMaxWidth(),
                 shape = RectangleShape,
                 onClick = onAddSet,
             ) {
