@@ -32,6 +32,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -351,6 +352,11 @@ private fun ColumnScope.TableSetRow(
         onDismiss = { scope.launch { dismissState.reset() } },
         onConfirm = onDeleteSet
     )
+
+    val focusManager = LocalFocusManager.current
+    LaunchedEffect(isDismissed) {
+        if (isDismissed) focusManager.clearFocus()
+    }
 
     DismissibleTableRow(
         modifier.padding(start = 16.dp, end = if (showCheckbox) 8.dp else 16.dp),
