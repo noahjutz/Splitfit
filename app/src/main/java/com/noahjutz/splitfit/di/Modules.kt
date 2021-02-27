@@ -18,7 +18,10 @@
 
 package com.noahjutz.splitfit.di
 
-import androidx.datastore.preferences.createDataStore
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.ExerciseRepository
@@ -34,6 +37,7 @@ import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel
 import com.noahjutz.splitfit.ui.workout.WorkoutHistoryViewModel
 import com.noahjutz.splitfit.ui.workout.editor.CreateWorkoutViewModel
+import com.noahjutz.splitfit.util.datastore
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -46,8 +50,8 @@ val koinModule = module {
             .build()
     }
 
-    single {
-        androidContext().createDataStore(name = "settings")
+    factory {
+        androidContext().datastore
     }
 
     factory {

@@ -29,6 +29,7 @@ import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.util.DatastoreKeys
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -157,7 +158,7 @@ class CreateWorkoutViewModel(
 
         fun cancelWorkout() {
             deleteWorkout()
-            viewModelScope.launch {
+            GlobalScope.launch {
                 preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
             }
         }
