@@ -132,7 +132,6 @@ fun SetGroupCardPreview() {
                 onTimeChange = onTimeChange,
                 onRepsChange = onRepsChange,
                 onWeightChange = onWeightChange,
-                checkboxChecked = true,
                 onCheckboxChange = onCheckboxChange,
                 onDeleteSet = onDeleteSet,
             )
@@ -159,7 +158,6 @@ fun SetGroupCard(
     logDistance: Boolean,
     onDistanceChange: (Int, String) -> Unit = { _, _ -> },
     showCheckbox: Boolean,
-    checkboxChecked: Boolean = false,
     onCheckboxChange: (Int, Boolean) -> Unit = { _, _ -> },
 ) {
     Card(elevation = 0.dp) {
@@ -181,7 +179,6 @@ fun SetGroupCard(
                 logDistance = logDistance,
                 onDistanceChange = onDistanceChange,
                 showCheckbox = showCheckbox,
-                checkboxChecked = checkboxChecked,
                 onCheckboxChange = onCheckboxChange,
                 onAddSet = onAddSet,
                 onDeleteSet = onDeleteSet,
@@ -246,7 +243,6 @@ private fun SetTable(
     logDistance: Boolean,
     onDistanceChange: (Int, String) -> Unit,
     showCheckbox: Boolean,
-    checkboxChecked: Boolean,
     onCheckboxChange: (Int, Boolean) -> Unit,
     onAddSet: () -> Unit,
     onDeleteSet: (Int) -> Unit,
@@ -276,7 +272,7 @@ private fun SetTable(
                 distance = set.distance.formatSimple(),
                 onDistanceChange = { onDistanceChange(i, it) },
                 showCheckbox = showCheckbox,
-                checkboxChecked = checkboxChecked,
+                checkboxChecked = set.complete,
                 onCheckboxChange = { onCheckboxChange(i, it) },
                 onDeleteSet = { onDeleteSet(i) }
             )
