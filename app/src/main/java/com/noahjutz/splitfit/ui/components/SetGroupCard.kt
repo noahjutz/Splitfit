@@ -345,14 +345,11 @@ private fun ColumnScope.TableSetRow(
     val scope = rememberCoroutineScope()
     val dismissState = rememberDismissState()
 
-    val showDialog = dismissState.currentValue != DismissValue.Default
+    val isDismissed = dismissState.targetValue != DismissValue.Default
 
-    if (showDialog) ConfirmDeleteSetDialog(
-        onDismiss = { scope.launch { dismissState.snapTo(DismissValue.Default) } },
-        onConfirm = {
-            scope.launch { dismissState.snapTo(DismissValue.Default) }
-            onDeleteSet()
-        }
+    if (isDismissed) ConfirmDeleteSetDialog(
+        onDismiss = { scope.launch { dismissState.reset() } },
+        onConfirm = onDeleteSet
     )
 
     DismissibleTableRow(
