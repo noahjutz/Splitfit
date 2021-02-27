@@ -34,10 +34,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -194,23 +190,5 @@ fun CreateRoutineScreen(
                 )
             }
         }
-    }
-}
-
-// TODO delete timeVisualTransformation (no need for it when using SetGroupCard in components)
-/** Turns integer of 0-4 digits to MM:SS format */
-val timeVisualTransformation = object : VisualTransformation {
-    val offsetMap = object : OffsetMapping {
-        override fun originalToTransformed(offset: Int) = if (offset == 0) 0 else 5
-        override fun transformedToOriginal(offset: Int) = 5 - offset
-    }
-
-    override fun filter(text: AnnotatedString): TransformedText {
-        val withZeroes = "0".repeat((4 - text.text.length).takeIf { it > 0 } ?: 0) + text.text
-        val withColon = withZeroes.let { it.substring(0, 2) + ":" + it.substring(2, 4) }
-        return TransformedText(
-            AnnotatedString(if (text.text.isEmpty()) "" else withColon),
-            offsetMap
-        )
     }
 }
