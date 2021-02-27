@@ -151,7 +151,7 @@ class CreateWorkoutViewModel(
 
         fun finishWorkout() {
             setEndTime(Calendar.getInstance().time)
-            viewModelScope.launch {
+            GlobalScope.launch {
                 preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
             }
         }
