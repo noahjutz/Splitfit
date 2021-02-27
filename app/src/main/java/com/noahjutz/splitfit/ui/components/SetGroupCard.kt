@@ -43,6 +43,9 @@ import com.noahjutz.splitfit.util.formatSimple
 import com.noahjutz.splitfit.util.toStringOrBlank
 import kotlinx.coroutines.launch
 
+// FIXME text input is far too slow because every time a value changes, a list is instantiated and
+//  a set is copied
+
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Preview
@@ -59,15 +62,57 @@ fun SetGroupCardPreview() {
             }
         }
 
-        val onMoveDown = { logWithSnackbar("onMoveDown") }
-        val onMoveUp = { logWithSnackbar("onMoveUp") }
-        val onAddSet = { logWithSnackbar("onAddSet") }
-        val onDistanceChange = { i: Int, d: String -> logWithSnackbar("i: $i, d: $d") }
-        val onTimeChange = { i: Int, t: String -> logWithSnackbar("i: $i, t: $t") }
-        val onRepsChange = { i: Int, r: String -> logWithSnackbar("i: $i, r: $r") }
-        val onWeightChange = { i: Int, w: String -> logWithSnackbar("i: $i, w: $w") }
-        val onCheckboxChange = { i: Int, b: Boolean -> logWithSnackbar("i: $i, b: $b") }
-        val onDeleteSet = {i: Int -> logWithSnackbar("i: $i")}
+        var sets by remember {
+            mutableStateOf(listOf(Set(1, 2.0),
+                Set(distance = 3.0),
+                Set(),
+                Set()))
+        }
+
+        val onMoveDown = {
+            logWithSnackbar("onMoveDown")
+        }
+        val onMoveUp = {
+            logWithSnackbar("onMoveUp")
+        }
+        val onAddSet = {
+            logWithSnackbar("onAddSet")
+            sets = sets + sets.last().copy()
+        }
+        val onDistanceChange = { i: Int, d: String ->
+            logWithSnackbar("i: $i, d: $d")
+            sets = sets.toMutableList().apply {
+                this[i] = this[i].copy(distance = d.toDoubleOrNull())
+            }
+        }
+        val onTimeChange = { i: Int, t: String ->
+            logWithSnackbar("i: $i, t: $t")
+            sets = sets.toMutableList().apply {
+                this[i] = this[i].copy(time = t.toIntOrNull())
+            }
+        }
+        val onRepsChange = { i: Int, r: String ->
+            logWithSnackbar("i: $i, r: $r")
+            sets = sets.toMutableList().apply {
+                this[i] = this[i].copy(reps = r.toIntOrNull())
+            }
+        }
+        val onWeightChange = { i: Int, w: String ->
+            logWithSnackbar("i: $i, w: $w")
+            sets = sets.toMutableList().apply {
+                this[i] = this[i].copy(weight = w.toDoubleOrNull())
+            }
+        }
+        val onCheckboxChange = { i: Int, b: Boolean ->
+            logWithSnackbar("i: $i, b: $b")
+            sets = sets.toMutableList().apply {
+                this[i] = this[i].copy(complete = b)
+            }
+        }
+        val onDeleteSet = { i: Int ->
+            logWithSnackbar("i: $i")
+            sets = sets.toMutableList().apply { removeAt(i) }
+        }
 
         Scaffold(scaffoldState = scaffoldState) {
             SetGroupCard(
@@ -75,7 +120,7 @@ fun SetGroupCardPreview() {
                 onMoveDown = onMoveDown,
                 onMoveUp = onMoveUp,
                 onAddSet = onAddSet,
-                sets = listOf(Set(1, 2.0), Set(distance = 3.0), Set(), Set()),
+                sets = sets,
                 logReps = true,
                 logWeight = true,
                 logTime = true,
