@@ -1,0 +1,28 @@
+Features:
+* Show date in history list (73e15e2)
+* Show alert before deleting set in routine/workout
+* Improve German translations (bf5e19e)
+
+Bug fixes:
+* Fix bug where ExercisePicker is always cleared (344d49f)
+
+Code cleanup:
+* Rename and move files
+  * Rename WorkoutsScreen to WorkoutHistory (075aaec)
+  * Rename PickExerciseScreen to ExercisePicker (f099ff9)
+  * Rename ExercisesScreen to ExerciseList (ebe209d)
+  * Rename RoutinesScreen to RoutineList (4b93ccc)
+  * Rename CreateRoutineScreen to RoutineEditor (1590457)
+  * Rename CreateWorkoutScreen to WorkoutEditor (531c7fd)
+  * Move ExercisePicker to exercises.picker (d570958)
+* Decouple generic composable components
+  * AppBarTextField (e4d00ed)
+  * SetGroupCard (645af30, 166c0fc, 7845a98)
+  * DataTable for SetGroupCard (c031198, etc.)
+* Remove references to deprecated code (41ed6e9, 23f55ae)
+* Add NumFormatUtil again (84ad68e)
+
+Misc:
+* Upgrade compose to v1.0.0-beta01 (23f55ae)
+  * Add temporary workaround for koin (ab304a3)
+* Upgrade other dependencies (0e440c0)
