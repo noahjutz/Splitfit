@@ -46,6 +46,8 @@ import kotlinx.coroutines.launch
 // FIXME text input is far too slow because every time a value changes, a list is instantiated and
 //  a set is copied
 
+// FIXME Double numbers: Can't input dot (.) because it's removed in NumFormatUtil.formatString()
+
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Preview
