@@ -79,7 +79,7 @@ fun SetGroupCardPreview() {
         }
         val onAddSet = {
             logWithSnackbar("onAddSet")
-            sets = sets + sets.last().copy()
+            sets = sets + sets.last().copy(complete = false)
         }
         val onDistanceChange = { i: Int, d: String ->
             logWithSnackbar("i: $i, d: $d")
