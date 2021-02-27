@@ -21,8 +21,8 @@ package com.noahjutz.splitfit.ui.routines.editor
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
@@ -38,6 +38,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -144,55 +145,53 @@ fun CreateRoutineScreen(
                 }
             )
         }
-    ) { paddingValues ->
-        Box(Modifier.padding(paddingValues)) {
-            val setGroups by viewModel.presenter.routine
-                .mapLatest { it.setGroups }
-                .collectAsState(emptyList())
-            LazyColumn(Modifier.fillMaxHeight()) {
-                itemsIndexed(setGroups) { setGroupIndex, setGroup ->
-                    val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
-                    com.noahjutz.splitfit.ui.components.SetGroupCard(
-                        name = exercise.name.takeIf { it.isNotBlank() }
-                            ?: stringResource(R.string.unnamed_exercise),
-                        sets = setGroup.sets,
-                        onMoveDown = {
-                            viewModel.editor.swapSetGroups(setGroupIndex,
-                                setGroupIndex + 1)
-                        },
-                        onMoveUp = {
-                            viewModel.editor.swapSetGroups(setGroupIndex,
-                                setGroupIndex - 1)
-                        },
-                        onAddSet = { viewModel.editor.addSetTo(setGroup) },
-                        onDeleteSet = { viewModel.editor.deleteSetFrom(setGroup, it) },
-                        logReps = exercise.logReps,
-                        logWeight = exercise.logWeight,
-                        logTime = exercise.logTime,
-                        logDistance = exercise.logDistance,
-                        showCheckbox = false,
-                        onDistanceChange = { setIndex, distance ->
-                            viewModel.editor.updateSet(setGroupIndex, setIndex,
-                                distance = distance.toDoubleOrNull()
-                            )
-                        },
-                        onRepsChange = { setIndex, reps ->
-                            viewModel.editor.updateSet(setGroupIndex, setIndex,
-                                reps = reps.toIntOrNull()
-                            )
-                        },
-                        onTimeChange = { setIndex, time ->
-                            viewModel.editor.updateSet(setGroupIndex, setIndex,
-                                time = time.toIntOrNull()
-                            )
-                        },
-                        onWeightChange = { setIndex, weight ->
-                            viewModel.editor.updateSet(setGroupIndex, setIndex,
-                                weight = weight.toDoubleOrNull()
-                            )
-                        }
-                    )
-                }
+    ) {
+        val setGroups by viewModel.presenter.routine
+            .mapLatest { it.setGroups }
+            .collectAsState(emptyList())
+        LazyColumn(Modifier.fillMaxHeight(), contentPadding = PaddingValues(bottom = 70.dp)) {
+            itemsIndexed(setGroups) { setGroupIndex, setGroup ->
+                val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
+                com.noahjutz.splitfit.ui.components.SetGroupCard(
+                    name = exercise.name.takeIf { it.isNotBlank() }
+                        ?: stringResource(R.string.unnamed_exercise),
+                    sets = setGroup.sets,
+                    onMoveDown = {
+                        viewModel.editor.swapSetGroups(setGroupIndex,
+                            setGroupIndex + 1)
+                    },
+                    onMoveUp = {
+                        viewModel.editor.swapSetGroups(setGroupIndex,
+                            setGroupIndex - 1)
+                    },
+                    onAddSet = { viewModel.editor.addSetTo(setGroup) },
+                    onDeleteSet = { viewModel.editor.deleteSetFrom(setGroup, it) },
+                    logReps = exercise.logReps,
+                    logWeight = exercise.logWeight,
+                    logTime = exercise.logTime,
+                    logDistance = exercise.logDistance,
+                    showCheckbox = false,
+                    onDistanceChange = { setIndex, distance ->
+                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                            distance = distance.toDoubleOrNull()
+                        )
+                    },
+                    onRepsChange = { setIndex, reps ->
+                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                            reps = reps.toIntOrNull()
+                        )
+                    },
+                    onTimeChange = { setIndex, time ->
+                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                            time = time.toIntOrNull()
+                        )
+                    },
+                    onWeightChange = { setIndex, weight ->
+                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                            weight = weight.toDoubleOrNull()
+                        )
+                    }
+                )
             }
         }
     }
