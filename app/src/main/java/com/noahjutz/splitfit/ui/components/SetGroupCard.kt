@@ -44,11 +44,6 @@ import com.noahjutz.splitfit.util.formatSimple
 import com.noahjutz.splitfit.util.toStringOrBlank
 import kotlinx.coroutines.launch
 
-// FIXME text input is far too slow because every time a value changes, a list is instantiated and
-//  a set is copied
-
-// FIXME Double numbers: Can't input dot (.) because it's removed in NumFormatUtil.formatString()
-
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Preview
@@ -259,19 +254,36 @@ private fun SetTable(
         Divider()
 
         sets.forEachIndexed { i, set ->
+            var reps by remember { mutableStateOf(set.reps.toStringOrBlank()) }
+            var weight by remember { mutableStateOf(set.weight.formatSimple()) }
+            var time by remember { mutableStateOf(set.time.toStringOrBlank()) }
+            var distance by remember { mutableStateOf(set.distance.formatSimple()) }
+
             TableSetRow(
                 logReps = logReps,
-                reps = set.reps.toStringOrBlank(),
-                onRepsChange = { onRepsChange(i, it) },
+                reps = reps,
+                onRepsChange = {
+                    reps = it
+                    onRepsChange(i, it)
+                },
                 logWeight = logWeight,
-                weight = set.weight.formatSimple(),
-                onWeightChange = { onWeightChange(i, it) },
+                weight = weight,
+                onWeightChange = {
+                    weight = it
+                    onWeightChange(i, it)
+                },
                 logDuration = logTime,
-                duration = set.time.toStringOrBlank(),
-                onDurationChange = { onTimeChange(i, it) },
+                duration = time,
+                onDurationChange = {
+                    time = it
+                    onTimeChange(i, it)
+                },
                 logDistance = logDistance,
-                distance = set.distance.formatSimple(),
-                onDistanceChange = { onDistanceChange(i, it) },
+                distance = distance,
+                onDistanceChange = {
+                    distance = it
+                    onDistanceChange(i, it)
+                },
                 showCheckbox = showCheckbox,
                 checkboxChecked = set.complete,
                 onCheckboxChange = { onCheckboxChange(i, it) },
