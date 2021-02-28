@@ -18,7 +18,8 @@
 
 package com.noahjutz.splitfit.ui.settings
 
-import android.app.Activity
+import androidx.activity.compose.registerForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -31,9 +32,10 @@ import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.noahjutz.splitfit.util.ActivityResultLaunchers
 import com.noahjutz.splitfit.di.getViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 @ExperimentalMaterialApi
 @Composable
@@ -44,39 +46,40 @@ fun AppSettings(
     val scope = rememberCoroutineScope()
     Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) {
         var showRestartAppDialog by remember { mutableStateOf(false) }
-        ActivityResultLaunchers.ExportDatabase.launcher.onResult = { result ->
-            if (result?.resultCode == Activity.RESULT_OK) {
-                val uri = result.data?.data
+
+        val exportDatabaseLauncher =
+            registerForActivityResult(contract = ActivityResultContracts.CreateDocument()) { uri ->
                 scope.launch {
                     if (uri != null) {
                         viewModel.exportDatabase(uri)
+                        showRestartAppDialog = true
                     }
+                }
+            }
+
+        val importDatabaseLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                if (uri != null) {
+                    viewModel.importDatabase(uri)
                     showRestartAppDialog = true
                 }
             }
-        }
 
-        ActivityResultLaunchers.ImportDatabase.launcher.onResult = { result ->
-            if (result?.resultCode == Activity.RESULT_OK) {
-                val uri = result.data?.data
-                scope.launch {
-                    if (uri != null) {
-                        viewModel.importDatabase(uri)
-                    }
-                    showRestartAppDialog = true
-                }
-            }
-        }
-
-        Column(Modifier.scrollable(orientation = Orientation.Vertical, state = rememberScrollState())) {
+        Column(Modifier.scrollable(orientation = Orientation.Vertical,
+            state = rememberScrollState())) {
             ListItem(
-                modifier = Modifier.clickable { ActivityResultLaunchers.ExportDatabase.launcher.launch() },
+                modifier = Modifier.clickable {
+                    val now = Calendar.getInstance().time
+                    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val nowFormatted = formatter.format(now)
+                    exportDatabaseLauncher.launch("splitfit_$nowFormatted.db")
+                },
                 text = { Text("Backup") },
                 secondaryText = { Text("Save routines, exercises and workouts in a file") },
                 icon = { Icon(Icons.Default.SaveAlt, null) },
             )
             ListItem(
-                modifier = Modifier.clickable { ActivityResultLaunchers.ImportDatabase.launcher.launch() },
+                modifier = Modifier.clickable { importDatabaseLauncher.launch(null) },
                 text = { Text("Restore") },
                 secondaryText = { Text("Import a database file, overriding all data.") },
                 icon = { Icon(Icons.Default.SettingsBackupRestore, null) },

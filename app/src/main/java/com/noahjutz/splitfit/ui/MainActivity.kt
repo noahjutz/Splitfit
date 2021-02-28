@@ -30,7 +30,6 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import com.noahjutz.splitfit.util.ActivityResultLaunchers.registerLaunchers
 
 val LocalActivity = compositionLocalOf<MainActivity> { error("MainActivity not found") }
 
@@ -49,9 +48,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    init {
-        registerLaunchers()
     }
 }
