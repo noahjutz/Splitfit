@@ -1,0 +1,7 @@
+Bug fixes:
+* Fix bug where workout can't be finished (#67)
+* Fix bug where checkbox selection changes in exercise picker screen (#49)
+* Fix bug where set is dismissed in routine/workout editor (c883804f)
+
+Code cleanup:
+* Use activity-compose registerActivityForResult (aa871845)
