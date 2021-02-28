@@ -362,7 +362,10 @@ private fun ColumnScope.TableSetRow(
 
     if (isDismissed) ConfirmDeleteSetDialog(
         onDismiss = { scope.launch { dismissState.reset() } },
-        onConfirm = onDeleteSet // TODO reset dismissState
+        onConfirm = {
+            scope.launch { dismissState.snapTo(DismissValue.Default) }
+            onDeleteSet()
+        }
     )
 
     val focusManager = LocalFocusManager.current
