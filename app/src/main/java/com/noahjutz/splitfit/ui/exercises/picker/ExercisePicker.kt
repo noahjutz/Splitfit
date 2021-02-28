@@ -91,13 +91,13 @@ fun ExercisePicker(
         val exercises by viewModel.exercises.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
             items(exercises.filter { !it.hidden }) { exercise ->
-                var checked by remember { mutableStateOf(false) }
+                val checked by sharedExercisePickerViewModel.contains(exercise)
+                    .collectAsState(initial = false)
                 ListItem(
                     icon = {
                         Checkbox(
                             checked = checked,
                             onCheckedChange = {
-                                checked = it
                                 if (it) sharedExercisePickerViewModel.add(exercise)
                                 else sharedExercisePickerViewModel.remove(exercise)
                             }
