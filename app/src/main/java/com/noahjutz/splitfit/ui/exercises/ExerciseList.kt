@@ -62,7 +62,7 @@ fun ExerciseList(
             ExtendedFloatingActionButton(
                 onClick = { addEditExercise(viewModel.addExercise().toInt()) },
                 icon = { Icon(Icons.Default.Add, null) },
-                text = { Text("New Exercise") },
+                text = { Text(stringResource(R.string.new_exercise)) },
             )
         },
         content = {
