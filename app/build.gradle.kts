@@ -48,7 +48,7 @@ android {
         useIR = true
     }
 
-    lintOptions {
+    lint {
         textReport = true
         isAbortOnError = false
     }
@@ -129,7 +129,7 @@ dependencies {
 
     implementation(Libs.Koin.android)
     implementation(Libs.Koin.viewModel)
-    implementation(Libs.Koin.compose) // (replaced by workaround due to incompatibility with compose alpha12)
+    implementation(Libs.Koin.compose)
     testImplementation(Libs.Koin.test)
 
     implementation(Libs.DataStore.preferences)
