@@ -83,7 +83,7 @@ fun ExercisePicker(
                     save = true
                     popBackStack()
                 }) {
-                    Icon(Icons.Default.Done, null)
+                    Icon(Icons.Default.Done, stringResource(R.string.pick_exercise))
                 }
             }
         }
@@ -113,7 +113,7 @@ fun ExercisePicker(
             }
             item {
                 // Fix FAB overlap
-                Box(Modifier.height(72.dp)) {}
+                Box(Modifier.height(72.dp))
             }
         }
     }
