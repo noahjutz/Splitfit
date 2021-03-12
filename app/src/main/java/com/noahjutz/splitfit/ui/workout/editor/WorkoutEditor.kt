@@ -32,10 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.di.getViewModel
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
 @ExperimentalFoundationApi
@@ -133,8 +133,10 @@ fun WorkoutScreen(
                         ?: stringResource(R.string.unnamed_exercise),
                     sets = setGroup.sets,
                     onMoveDown = {
-                        viewModel.editor.swapSetGroups(setGroupIndex,
-                            setGroupIndex + 1)
+                        viewModel.editor.swapSetGroups(
+                            setGroupIndex,
+                            setGroupIndex + 1
+                        )
                     },
                     onMoveUp = { viewModel.editor.swapSetGroups(setGroupIndex, setGroupIndex - 1) },
                     onAddSet = { viewModel.editor.addSetTo(setGroup) },
@@ -145,24 +147,32 @@ fun WorkoutScreen(
                     logDistance = exercise.logDistance,
                     showCheckbox = true,
                     onWeightChange = { setIndex, weight ->
-                        viewModel.editor.updateSet(setGroupIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex,
                             setIndex,
-                            weight = weight.toDoubleOrNull())
+                            weight = weight.toDoubleOrNull()
+                        )
                     },
                     onTimeChange = { setIndex, time ->
-                        viewModel.editor.updateSet(setGroupIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex,
                             setIndex,
-                            time = time.toIntOrNull())
+                            time = time.toIntOrNull()
+                        )
                     },
                     onRepsChange = { setIndex, reps ->
-                        viewModel.editor.updateSet(setGroupIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex,
                             setIndex,
-                            reps = reps.toIntOrNull())
+                            reps = reps.toIntOrNull()
+                        )
                     },
                     onDistanceChange = { setIndex, distance ->
-                        viewModel.editor.updateSet(setGroupIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex,
                             setIndex,
-                            distance = distance.toDoubleOrNull())
+                            distance = distance.toDoubleOrNull()
+                        )
                     },
                     onCheckboxChange = { setIndex, checked ->
                         viewModel.editor.updateSet(setGroupIndex, setIndex, complete = checked)

@@ -45,7 +45,7 @@ import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.contr
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.donateLiberapay
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.googlePlay
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.sourceCode
-import com.noahjutz.splitfit.di.getViewModel
+import org.koin.androidx.compose.getViewModel
 
 private fun MainActivity.openUrl(url: String) {
     startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) })

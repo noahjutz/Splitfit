@@ -26,9 +26,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.AppBarTextField
-import com.noahjutz.splitfit.di.getViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
 @ExperimentalMaterialApi

@@ -36,8 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.di.getViewModel
 import com.noahjutz.splitfit.ui.components.SearchTopBar
+import org.koin.androidx.compose.getViewModel
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi

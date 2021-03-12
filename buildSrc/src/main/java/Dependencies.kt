@@ -63,14 +63,14 @@ object Libs {
 
     object Navigation {
         private const val version = "2.3.1"
-        private const val versionCompose = "1.0.0-alpha08"
+        private const val versionCompose = "1.0.0-alpha09"
         const val navigation = "androidx.navigation:navigation-fragment-ktx:$version"
         const val compose = "androidx.navigation:navigation-compose:$versionCompose"
     }
 
     object Compose {
-        private const val versionActivity = "1.3.0-alpha03"
-        const val version = "1.0.0-beta01"
+        private const val versionActivity = "1.3.0-alpha04"
+        const val version = "1.0.0-beta02"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -89,11 +89,10 @@ object Libs {
     }
 
     object Koin {
-        private const val version = "2.2.2"
-        const val android = "org.koin:koin-android:$version"
-        const val viewModel = "org.koin:koin-android-viewmodel:$version"
-        const val compose = "org.koin:koin-androidx-compose:$version"
-        const val test = "org.koin:koin-test:$version"
+        private const val version = "3.0.1-beta-1"
+        const val android = "io.insert-koin:koin-android:$version"
+        const val compose = "io.insert-koin:koin-androidx-compose:$version"
+        const val test = "io.insert-koin:koin-test:$version"
     }
 
     object ProcessPhoenix {
@@ -127,7 +126,7 @@ object GradlePlugins {
     }
 
     object Kotlin {
-        const val version = "1.4.30"
+        const val version = "1.4.31"
         const val classpath = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     }
 }

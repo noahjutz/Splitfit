@@ -32,8 +32,8 @@ import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.noahjutz.splitfit.di.getViewModel
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,8 +65,12 @@ fun AppSettings(
                 }
             }
 
-        Column(Modifier.scrollable(orientation = Orientation.Vertical,
-            state = rememberScrollState())) {
+        Column(
+            Modifier.scrollable(
+                orientation = Orientation.Vertical,
+                state = rememberScrollState()
+            )
+        ) {
             ListItem(
                 modifier = Modifier.clickable {
                     val now = Calendar.getInstance().time

@@ -128,7 +128,6 @@ dependencies {
     androidTestImplementation(Libs.Compose.testJunit4)
 
     implementation(Libs.Koin.android)
-    implementation(Libs.Koin.viewModel)
     implementation(Libs.Koin.compose)
     testImplementation(Libs.Koin.test)
 

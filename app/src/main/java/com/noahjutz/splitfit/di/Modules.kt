@@ -40,7 +40,7 @@ import com.noahjutz.splitfit.ui.workout.editor.CreateWorkoutViewModel
 import com.noahjutz.splitfit.util.datastore
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val koinModule = module {

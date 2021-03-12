@@ -39,13 +39,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.di.get
-import com.noahjutz.splitfit.di.getViewModel
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.util.DatastoreKeys
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
 @ExperimentalMaterialApi
@@ -153,12 +153,16 @@ fun CreateRoutineScreen(
                         ?: stringResource(R.string.unnamed_exercise),
                     sets = setGroup.sets,
                     onMoveDown = {
-                        viewModel.editor.swapSetGroups(setGroupIndex,
-                            setGroupIndex + 1)
+                        viewModel.editor.swapSetGroups(
+                            setGroupIndex,
+                            setGroupIndex + 1
+                        )
                     },
                     onMoveUp = {
-                        viewModel.editor.swapSetGroups(setGroupIndex,
-                            setGroupIndex - 1)
+                        viewModel.editor.swapSetGroups(
+                            setGroupIndex,
+                            setGroupIndex - 1
+                        )
                     },
                     onAddSet = { viewModel.editor.addSetTo(setGroup) },
                     onDeleteSet = { viewModel.editor.deleteSetFrom(setGroup, it) },
@@ -168,22 +172,26 @@ fun CreateRoutineScreen(
                     logDistance = exercise.logDistance,
                     showCheckbox = false,
                     onDistanceChange = { setIndex, distance ->
-                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex, setIndex,
                             distance = distance.toDoubleOrNull()
                         )
                     },
                     onRepsChange = { setIndex, reps ->
-                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex, setIndex,
                             reps = reps.toIntOrNull()
                         )
                     },
                     onTimeChange = { setIndex, time ->
-                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex, setIndex,
                             time = time.toIntOrNull()
                         )
                     },
                     onWeightChange = { setIndex, weight ->
-                        viewModel.editor.updateSet(setGroupIndex, setIndex,
+                        viewModel.editor.updateSet(
+                            setGroupIndex, setIndex,
                             weight = weight.toDoubleOrNull()
                         )
                     }
