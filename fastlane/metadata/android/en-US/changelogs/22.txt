@@ -1,0 +1,11 @@
+Development:
+* Remove .idea/ folder
+* Upgrade dependencies
+  * AGP to v1.0.0-alpha09
+  * compose to v1.0.0-beta02
+  * compose-navigation to v1.0.0-alpha09
+  * activity-compose to v1.0.0-alpha04
+  * kotlin to v1.4.31
+  * koin to v3.0.1-beta-1
+  * datastore to v1.0.0-alpha08
+  * navigation to v2.3.4
