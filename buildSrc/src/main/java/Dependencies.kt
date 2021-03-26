@@ -121,7 +121,7 @@ object TestLibs {
 
 object GradlePlugins {
     object Android {
-        private const val version = "7.0.0-alpha09"
+        private const val version = "7.0.0-alpha10"
         const val classpath = "com.android.tools.build:gradle:$version"
     }
 
