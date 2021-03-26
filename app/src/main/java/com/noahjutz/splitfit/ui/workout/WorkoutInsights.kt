@@ -19,13 +19,17 @@
 package com.noahjutz.splitfit.ui.workout
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -46,8 +50,15 @@ fun WorkoutInsights(
     val scope = rememberCoroutineScope()
 
     val workouts by viewModel.presenter.workouts.collectAsState(emptyList())
-    Scaffold(topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_workouts)) }) }) {
+    Scaffold(topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_insights)) }) }) {
         LazyColumn {
+            item {
+                ProvideTextStyle(typography.h4) {
+                    Box(Modifier.padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp)) {
+                        Text("History")
+                    }
+                }
+            }
             items(workouts) { workout ->
                 val dismissState = rememberDismissState()
 
