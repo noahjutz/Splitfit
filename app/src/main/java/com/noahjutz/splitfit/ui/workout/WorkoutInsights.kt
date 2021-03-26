@@ -39,7 +39,7 @@ import java.util.*
 
 @ExperimentalMaterialApi
 @Composable
-fun WorkoutHistory(
+fun WorkoutInsights(
     viewModel: WorkoutInsightsViewModel = getViewModel(),
     navToCreateWorkoutScreen: (Int) -> Unit,
 ) {

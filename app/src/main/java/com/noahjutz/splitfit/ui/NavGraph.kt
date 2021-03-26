@@ -36,7 +36,7 @@ import com.noahjutz.splitfit.ui.routines.RoutineList
 import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
-import com.noahjutz.splitfit.ui.workout.WorkoutHistory
+import com.noahjutz.splitfit.ui.workout.WorkoutInsights
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutScreen
 import org.koin.androidx.compose.getViewModel
 
@@ -50,7 +50,7 @@ fun NavGraph(
     val sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel()
     NavHost(navController, startDestination = "routines") {
         composable("workouts") {
-            WorkoutHistory(
+            WorkoutInsights(
                 navToCreateWorkoutScreen = { workoutId -> navController.navigate("createWorkout?workoutId=$workoutId") }
             )
         }
