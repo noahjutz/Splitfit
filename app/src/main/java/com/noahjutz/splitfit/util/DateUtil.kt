@@ -23,21 +23,22 @@ val List<Duration>.total: Duration
     }
 
 @ExperimentalTime
-val List<Duration>.average: Duration get() = total / size
+val List<Duration>.average: Duration
+    get() = total / size
 
 /**
  * Number of consecutive daily workouts including today
  */
 val List<Date>.longestDailyStreak: Int
     get() {
-        if (isEmpty()) return 0
-
-        val today = Calendar.getInstance().time
-
-        var streak = 0
-        forEachIndexed { i, d ->
-            if (i == 0 && d.day != today.day) return 0 else streak = 1
-            if (get(i - 1).day == d.day - 1) streak++
+        val days = map { it.day }
+        val today = Calendar.getInstance().time.day
+        if (days.isEmpty()) return 0
+        if (days[0] != today) return 0
+        var streak = 1
+        days.forEachIndexed { i, d ->
+            if (i == 0) return@forEachIndexed
+            if (days[i-1] == d - 1) streak++
         }
         return streak
     }
