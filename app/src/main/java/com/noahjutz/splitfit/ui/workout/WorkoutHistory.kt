@@ -65,11 +65,11 @@ fun WorkoutHistory(
                                 Text(
                                     text = workout.name.takeIf { it.isNotBlank() }
                                         ?: stringResource(R.string.unnamed_workout),
-                                    maxLines = 1,
+                                    maxLines = 2,
                                     overflow = TextOverflow.Ellipsis,
                                 )
                             },
-                            trailing = {
+                            secondaryText = {
                                 val day = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                                     .format(workout.startTime)
                                 Text(day)
