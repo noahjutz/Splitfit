@@ -19,8 +19,7 @@
 package com.noahjutz.splitfit.ui.workout
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -36,11 +35,17 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
+import com.noahjutz.splitfit.util.minus
+import com.noahjutz.splitfit.util.longestDailyStreak
+import com.noahjutz.splitfit.util.total
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.time.ExperimentalTime
+import kotlin.time.seconds
 
+@ExperimentalTime
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutInsights(
@@ -53,9 +58,19 @@ fun WorkoutInsights(
     Scaffold(topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_insights)) }) }) {
         LazyColumn {
             item {
-                ProvideTextStyle(typography.h4) {
-                    Box(Modifier.padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp)) {
-                        Text("History")
+                Column {
+                    InfoTiles(workouts)
+
+                    ProvideTextStyle(typography.h4) {
+                        Box(
+                            Modifier.padding(
+                                bottom = 8.dp,
+                                start = 16.dp,
+                                end = 16.dp
+                            )
+                        ) {
+                            Text("History")
+                        }
                     }
                 }
             }
@@ -138,4 +153,73 @@ private fun DeleteConfirmation(
         },
         onDismissRequest = resetDismissState
     )
+}
+
+@ExperimentalTime
+@Composable
+private fun InfoTiles(
+    workouts: List<Workout>
+) {
+    Column(Modifier.padding(16.dp)) {
+        Row {
+            Card(Modifier.weight(1f)) {
+                Column(Modifier.padding(16.dp)) {
+                    ProvideTextStyle(typography.h6) {
+                        Text(workouts.map {it.startTime}.longestDailyStreak.toString())
+                    }
+                    ProvideTextStyle(typography.body2) {
+                        Text("Streak")
+                    }
+                }
+            }
+            Spacer(Modifier.width(16.dp))
+            Card(Modifier.weight(1f)) {
+                Column(Modifier.padding(16.dp)) {
+                    ProvideTextStyle(typography.h6) {
+                        Text(
+                            (workouts.map { it.endTime - it.startTime }
+                                .total
+                                .inSeconds
+                                    / workouts.size.toDouble())
+                                .seconds
+                                .toString()
+                        )
+                    }
+                    ProvideTextStyle(typography.body2) {
+                        Text("Average duration")
+                    }
+                }
+            }
+        }
+        Spacer(Modifier.height(16.dp))
+        Row {
+            Card(Modifier.weight(1f)) {
+                Box {
+                    Column(Modifier.padding(16.dp)) {
+                        ProvideTextStyle(typography.h6) {
+                            Text(workouts.size.toString())
+                        }
+                        ProvideTextStyle(typography.body2) {
+                            Text("Total workouts")
+                        }
+                    }
+                }
+            }
+            Spacer(Modifier.width(16.dp))
+            Card(Modifier.weight(1f)) {
+                Column(Modifier.padding(16.dp)) {
+                    ProvideTextStyle(typography.h6) {
+                        Text(
+                            workouts.map { it.endTime - it.startTime }
+                                .total
+                                .toString()
+                        )
+                    }
+                    ProvideTextStyle(typography.body2) {
+                        Text("Total duration")
+                    }
+                }
+            }
+        }
+    }
 }

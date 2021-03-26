@@ -29,6 +29,7 @@ import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.util.DatastoreKeys
+import com.noahjutz.splitfit.util.minus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -189,6 +190,3 @@ class CreateWorkoutViewModel(
         fun getExercise(exerciseId: Int) = exerciseRepository.getExercise(exerciseId)
     }
 }
-
-@OptIn(ExperimentalTime::class)
-private infix operator fun Date.minus(date: Date): Duration = (this.time - date.time).milliseconds
