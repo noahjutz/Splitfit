@@ -57,7 +57,7 @@ sealed class TopLevelScreens(
 ) {
     object Routines : TopLevelScreens("routines", R.string.tab_routines, Icons.Default.ViewAgenda)
     object Exercises : TopLevelScreens("exercises", R.string.tab_exercises, Icons.Default.FitnessCenter)
-    object Workouts : TopLevelScreens("workouts", R.string.tab_workouts, Icons.Default.History)
+    object Workouts : TopLevelScreens("workouts", R.string.tab_insights, Icons.Default.Insights)
     object Settings : TopLevelScreens("settings", R.string.tab_settings, Icons.Default.Settings)
 }
 
