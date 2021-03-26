@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class WorkoutHistoryViewModel(
+class WorkoutInsightsViewModel(
     private val repository: WorkoutRepository,
     private val preferences: DataStore<Preferences>,
 ) : ViewModel() {

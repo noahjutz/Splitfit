@@ -40,7 +40,7 @@ import java.util.*
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutHistory(
-    viewModel: WorkoutHistoryViewModel = getViewModel(),
+    viewModel: WorkoutInsightsViewModel = getViewModel(),
     navToCreateWorkoutScreen: (Int) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
