@@ -30,11 +30,13 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import kotlin.time.ExperimentalTime
 
 val LocalActivity = compositionLocalOf<MainActivity> { error("MainActivity not found") }
 
 class MainActivity : AppCompatActivity() {
 
+    @ExperimentalTime
     @ExperimentalFoundationApi
     @ExperimentalMaterialApi
     @ExperimentalAnimationApi

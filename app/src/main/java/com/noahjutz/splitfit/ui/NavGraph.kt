@@ -39,7 +39,9 @@ import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.WorkoutInsights
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutScreen
 import org.koin.androidx.compose.getViewModel
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi

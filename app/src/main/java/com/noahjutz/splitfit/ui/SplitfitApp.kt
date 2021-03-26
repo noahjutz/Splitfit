@@ -49,6 +49,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.util.DatastoreKeys
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
+import kotlin.time.ExperimentalTime
 
 sealed class TopLevelScreens(
     val route: String,
@@ -68,6 +69,7 @@ val topLevelScreens = listOf(
     TopLevelScreens.Settings,
 )
 
+@ExperimentalTime
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi

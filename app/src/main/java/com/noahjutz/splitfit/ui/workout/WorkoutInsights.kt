@@ -35,15 +35,15 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
-import com.noahjutz.splitfit.util.minus
+import com.noahjutz.splitfit.util.average
 import com.noahjutz.splitfit.util.longestDailyStreak
+import com.noahjutz.splitfit.util.minus
 import com.noahjutz.splitfit.util.total
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
 
 @ExperimentalTime
 @ExperimentalMaterialApi
@@ -165,7 +165,7 @@ private fun InfoTiles(
             Card(Modifier.weight(1f)) {
                 Column(Modifier.padding(16.dp)) {
                     ProvideTextStyle(typography.h6) {
-                        Text(workouts.map {it.startTime}.longestDailyStreak.toString())
+                        Text(workouts.map { it.startTime }.longestDailyStreak.toString())
                     }
                     ProvideTextStyle(typography.body2) {
                         Text("Streak")
@@ -176,14 +176,7 @@ private fun InfoTiles(
             Card(Modifier.weight(1f)) {
                 Column(Modifier.padding(16.dp)) {
                     ProvideTextStyle(typography.h6) {
-                        Text(
-                            (workouts.map { it.endTime - it.startTime }
-                                .total
-                                .inSeconds
-                                    / workouts.size.toDouble())
-                                .seconds
-                                .toString()
-                        )
+                        Text(workouts.map { it.endTime - it.startTime }.average.toString())
                     }
                     ProvideTextStyle(typography.body2) {
                         Text("Average duration")
@@ -209,11 +202,7 @@ private fun InfoTiles(
             Card(Modifier.weight(1f)) {
                 Column(Modifier.padding(16.dp)) {
                     ProvideTextStyle(typography.h6) {
-                        Text(
-                            workouts.map { it.endTime - it.startTime }
-                                .total
-                                .toString()
-                        )
+                        Text(workouts.map { it.endTime - it.startTime }.total.toString())
                     }
                     ProvideTextStyle(typography.body2) {
                         Text("Total duration")

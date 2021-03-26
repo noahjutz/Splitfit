@@ -22,6 +22,9 @@ val List<Duration>.total: Duration
         return total
     }
 
+@ExperimentalTime
+val List<Duration>.average: Duration get() = total / size
+
 /**
  * Number of consecutive daily workouts including today
  */
