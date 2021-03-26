@@ -64,10 +64,14 @@ fun SetGroupCardPreview() {
         }
 
         var sets by remember {
-            mutableStateOf(listOf(Set(1, 2.0),
-                Set(distance = 3.0),
-                Set(),
-                Set()))
+            mutableStateOf(
+                listOf(
+                    Set(1, 2.0),
+                    Set(distance = 3.0),
+                    Set(),
+                    Set()
+                )
+            )
         }
 
         val onMoveDown = {

@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
                 CompositionLocalProvider(LocalActivity provides this@MainActivity) {
                     SplitfitApp()
-
                 }
             }
         }

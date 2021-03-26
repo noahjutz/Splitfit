@@ -79,10 +79,12 @@ fun ExercisePicker(
                 enter = slideInHorizontally({ it * 2 }),
                 exit = fadeOut()
             ) {
-                FloatingActionButton(onClick = {
-                    save = true
-                    popBackStack()
-                }) {
+                FloatingActionButton(
+                    onClick = {
+                        save = true
+                        popBackStack()
+                    }
+                ) {
                     Icon(Icons.Default.Done, stringResource(R.string.pick_exercise))
                 }
             }
