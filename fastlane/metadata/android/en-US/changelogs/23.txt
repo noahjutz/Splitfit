@@ -1,0 +1,7 @@
+Features:
+* Add "Insights" tab for workout history and statistics
+* Move date in history list to accomodate longer names (#64)
+
+Development:
+* Update jetpack compose to v1.0.0-beta03
+
