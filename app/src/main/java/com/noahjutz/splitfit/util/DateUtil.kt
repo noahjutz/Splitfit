@@ -34,6 +34,7 @@ val List<Date>.longestDailyStreak: Int
         val today = Calendar.getInstance().time.day
         var streak = 0
         map { it.day }.sortedDescending().forEach { day ->
+            println("$day == $today - $streak")
             if (day == today - streak) streak++
         }
         return streak
