@@ -47,6 +47,14 @@ class DateUtilTest {
         Date((now.time - 96.hours.absoluteValue.inMilliseconds).toLong()),
     )
 
+    private val datesNoStreak2 = listOf(
+        Date((now.time - 48.hours.absoluteValue.inMilliseconds).toLong()),
+        Date((now.time - 72.hours.absoluteValue.inMilliseconds).toLong()),
+        Date((now.time - 96.hours.absoluteValue.inMilliseconds).toLong()),
+        Date((now.time - 110.hours.absoluteValue.inMilliseconds).toLong()),
+        Date((now.time - 134.hours.absoluteValue.inMilliseconds).toLong()),
+    )
+
     @Test
     fun `5 Day streak`() {
         val streak = dates5Streak.longestDailyStreak
@@ -75,6 +83,22 @@ class DateUtilTest {
     fun `No workout today, no streak`() {
         val streak = datesNoStreak.longestDailyStreak
         assertEquals(0, streak)
+    }
+
+    @Test
+    fun `No streak 2`() {
+        val streak = datesNoStreak2.longestDailyStreak
+        assertEquals(0, streak)
+    }
+
+    @Test
+    fun `1 Day streak 2`() {
+        val streak = listOf(
+            Date(1616713200000),
+            Date(0),
+            Date(1616841912690)
+        ).longestDailyStreak
+        assertEquals(1, streak)
     }
 
     @Test
