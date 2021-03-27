@@ -36,6 +36,7 @@ val List<Date>.longestDailyStreak: Int
         map { it.roundToDay() }.sortedDescending().forEach { day ->
             println("$day == $today - $streak")
             if (day == today - streak) streak++
+            else if (day < today - streak) return streak
         }
         return streak
     }
