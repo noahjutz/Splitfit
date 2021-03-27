@@ -20,6 +20,13 @@ class DateUtilTest {
         Date((now.time - 96.hours.absoluteValue.inMilliseconds).toLong()),
     )
 
+    private val dates3StreakInterrupted = listOf(
+        now,
+        Date((now.time - 24.hours.absoluteValue.inMilliseconds).toLong()),
+        Date((now.time - 48.hours.absoluteValue.inMilliseconds).toLong()),
+        Date((now.time - 96.hours.absoluteValue.inMilliseconds).toLong()),
+    )
+
     private val datesNoStreak = listOf(
         Date((now.time - 24.hours.absoluteValue.inMilliseconds).toLong()),
         Date((now.time - 48.hours.absoluteValue.inMilliseconds).toLong()),
@@ -49,6 +56,12 @@ class DateUtilTest {
     @Test
     fun `3 Day streak`() {
         val streak = dates5Streak.subList(0, 3).longestDailyStreak
+        assertEquals(3, streak)
+    }
+
+    @Test
+    fun `3 Day streak with fourth day seperated by gap`() {
+        val streak = dates3StreakInterrupted.longestDailyStreak
         assertEquals(3, streak)
     }
 
