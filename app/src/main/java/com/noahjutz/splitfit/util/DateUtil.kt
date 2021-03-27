@@ -31,8 +31,6 @@ val List<Duration>.average: Duration
  */
 val List<Date>.longestDailyStreak: Int
     get() {
-        forEach {
-
-        }
+        if (isEmpty()) return 0
         return -1 // TODO
     }
