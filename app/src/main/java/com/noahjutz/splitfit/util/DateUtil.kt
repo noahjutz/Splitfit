@@ -31,12 +31,9 @@ val List<Duration>.average: Duration
  */
 val List<Date>.longestDailyStreak: Int
     get() {
-        if (isEmpty()) return 0
-
         val today = Calendar.getInstance().time.day
         var streak = 0
         map { it.day }.sortedDescending().forEach { day ->
-            println("$day == $today - $streak :: ${day == today - streak}")
             if (day == today - streak) streak++
         }
         return streak
