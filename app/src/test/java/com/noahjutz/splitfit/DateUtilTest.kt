@@ -34,8 +34,26 @@ class DateUtilTest {
     }
 
     @Test
-    fun `No Streak`() {
+    fun `3 Day streak`() {
+        val streak = dates5Streak.subList(0, 2).longestDailyStreak
+        assertEquals(3, streak)
+    }
+
+    @Test
+    fun `1 Day streak`() {
+        val streak = dates5Streak.subList(0, 0).longestDailyStreak
+        assertEquals(1, streak)
+    }
+
+    @Test
+    fun `No workout today, no streak`() {
         val streak = datesNoStreak.longestDailyStreak
+        assertEquals(0, streak)
+    }
+
+    @Test
+    fun `Empty workout list, no streak`() {
+        val streak = emptyList<Date>().longestDailyStreak
         assertEquals(0, streak)
     }
 }
