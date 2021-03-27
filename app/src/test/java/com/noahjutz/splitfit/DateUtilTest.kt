@@ -35,13 +35,13 @@ class DateUtilTest {
 
     @Test
     fun `3 Day streak`() {
-        val streak = dates5Streak.subList(0, 2).longestDailyStreak
+        val streak = dates5Streak.subList(0, 3).longestDailyStreak
         assertEquals(3, streak)
     }
 
     @Test
     fun `1 Day streak`() {
-        val streak = dates5Streak.subList(0, 0).longestDailyStreak
+        val streak = dates5Streak.subList(0, 1).longestDailyStreak
         assertEquals(1, streak)
     }
 
