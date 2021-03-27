@@ -31,11 +31,16 @@ val List<Duration>.average: Duration
  */
 val List<Date>.longestDailyStreak: Int
     get() {
-        val today = (Calendar.getInstance().time.time * 0.00000001157407).toInt()
+        val today = (Calendar.getInstance().time.roundToDay()).toInt()
         var streak = 0
-        map { (it.time * 0.00000001157407).toInt() }.sortedDescending().forEach { day ->
+        map { it.roundToDay() }.sortedDescending().forEach { day ->
             println("$day == $today - $streak")
             if (day == today - streak) streak++
         }
         return streak
     }
+
+/**
+ * Returns number of days starting from 1970-01-01
+ */
+fun Date.roundToDay(): Int = (time * 0.00000001157407).toInt()
