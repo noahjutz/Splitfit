@@ -29,7 +29,7 @@ val List<Duration>.average: Duration
 /**
  * Number of consecutive daily workouts including today
  */
-val List<Date>.longestDailyStreak: Int
+val List<Date>.currentDailyStreak: Int
     get() {
         val today = (Calendar.getInstance().time.roundToDay()).toInt()
         var streak = 0

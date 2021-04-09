@@ -36,7 +36,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.util.average
-import com.noahjutz.splitfit.util.longestDailyStreak
+import com.noahjutz.splitfit.util.currentDailyStreak
 import com.noahjutz.splitfit.util.minus
 import com.noahjutz.splitfit.util.total
 import kotlinx.coroutines.launch
@@ -165,7 +165,7 @@ private fun InfoTiles(
             Card(Modifier.weight(1f)) {
                 Column(Modifier.padding(16.dp)) {
                     ProvideTextStyle(typography.h6) {
-                        Text(workouts.map { it.startTime }.longestDailyStreak.toString())
+                        Text(workouts.map { it.startTime }.currentDailyStreak.toString())
                     }
                     ProvideTextStyle(typography.body2) {
                         Text("Streak")

@@ -1,6 +1,6 @@
 package com.noahjutz.splitfit
 
-import com.noahjutz.splitfit.util.longestDailyStreak
+import com.noahjutz.splitfit.util.currentDailyStreak
 import org.junit.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -57,37 +57,37 @@ class DateUtilTest {
 
     @Test
     fun `5 Day streak`() {
-        val streak = dates5Streak.longestDailyStreak
+        val streak = dates5Streak.currentDailyStreak
         assertEquals(5, streak)
     }
 
     @Test
     fun `3 Day streak`() {
-        val streak = dates5Streak.subList(0, 3).longestDailyStreak
+        val streak = dates5Streak.subList(0, 3).currentDailyStreak
         assertEquals(3, streak)
     }
 
     @Test
     fun `3 Day streak with fourth day seperated by gap`() {
-        val streak = dates3StreakInterrupted.longestDailyStreak
+        val streak = dates3StreakInterrupted.currentDailyStreak
         assertEquals(3, streak)
     }
 
     @Test
     fun `1 Day streak`() {
-        val streak = dates5Streak.subList(0, 1).longestDailyStreak
+        val streak = dates5Streak.subList(0, 1).currentDailyStreak
         assertEquals(1, streak)
     }
 
     @Test
     fun `No workout today, no streak`() {
-        val streak = datesNoStreak.longestDailyStreak
+        val streak = datesNoStreak.currentDailyStreak
         assertEquals(0, streak)
     }
 
     @Test
     fun `No streak 2`() {
-        val streak = datesNoStreak2.longestDailyStreak
+        val streak = datesNoStreak2.currentDailyStreak
         assertEquals(0, streak)
     }
 
@@ -97,19 +97,19 @@ class DateUtilTest {
             Date(1616713200000),
             Date(0),
             Date(1616841912690)
-        ).longestDailyStreak
+        ).currentDailyStreak
         assertEquals(1, streak)
     }
 
     @Test
     fun `Empty workout list, no streak`() {
-        val streak = emptyList<Date>().longestDailyStreak
+        val streak = emptyList<Date>().currentDailyStreak
         assertEquals(0, streak)
     }
 
     @Test
     fun `5 Day streak with multiple dates per day`() {
-        val streak = dates5StreakMultipleADay.longestDailyStreak
+        val streak = dates5StreakMultipleADay.currentDailyStreak
         assertEquals(5, streak)
     }
 }
