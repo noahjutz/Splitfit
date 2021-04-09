@@ -1,0 +1,8 @@
+Features:
+* Add Workout editor (work in progress) (#64)
+
+Development:
+* Upgrade jetpack compsose to v1.0.0-beta04 (16f30cf9)
+* Update package structure in ui.workout (bb8540df, 2f42fd54)
+* Simplify insights layout (7992fce3)
+* Other minor changes (8ec5c36f, 840835ac, 256c4495)
