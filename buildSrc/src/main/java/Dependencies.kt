@@ -63,14 +63,14 @@ object Libs {
 
     object Navigation {
         private const val version = "2.3.4"
-        private const val versionCompose = "1.0.0-alpha09"
+        private const val versionCompose = "1.0.0-alpha10"
         const val navigation = "androidx.navigation:navigation-fragment-ktx:$version"
         const val compose = "androidx.navigation:navigation-compose:$versionCompose"
     }
 
     object Compose {
-        private const val versionActivity = "1.3.0-alpha05"
-        const val version = "1.0.0-beta03"
+        private const val versionActivity = "1.3.0-alpha06"
+        const val version = "1.0.0-beta04"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
