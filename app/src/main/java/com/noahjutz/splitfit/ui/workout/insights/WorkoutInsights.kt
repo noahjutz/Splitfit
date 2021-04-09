@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.workout
+package com.noahjutz.splitfit.ui.workout.insights
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
