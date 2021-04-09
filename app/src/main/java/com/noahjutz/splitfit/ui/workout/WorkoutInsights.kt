@@ -164,23 +164,21 @@ private fun InfoTiles(
         Row {
             Card(Modifier.weight(1f)) {
                 Column(Modifier.padding(16.dp)) {
-                    ProvideTextStyle(typography.h6) {
-                        Text(workouts.map { it.startTime }.currentDailyStreak.toString())
-                    }
-                    ProvideTextStyle(typography.body2) {
-                        Text("Streak")
-                    }
+                    Text(
+                        workouts.map { it.startTime }.currentDailyStreak.toString(),
+                        style = typography.h6
+                    )
+                    Text("Streak", style = typography.body2)
                 }
             }
             Spacer(Modifier.width(16.dp))
             Card(Modifier.weight(1f)) {
                 Column(Modifier.padding(16.dp)) {
-                    ProvideTextStyle(typography.h6) {
-                        Text(workouts.map { it.endTime - it.startTime }.average.toString())
-                    }
-                    ProvideTextStyle(typography.body2) {
-                        Text("Average duration")
-                    }
+                    Text(
+                        workouts.map { it.endTime - it.startTime }.average.toString(),
+                        style = typography.h6
+                    )
+                    Text("Average duration", style = typography.body2)
                 }
             }
         }
@@ -189,24 +187,19 @@ private fun InfoTiles(
             Card(Modifier.weight(1f)) {
                 Box {
                     Column(Modifier.padding(16.dp)) {
-                        ProvideTextStyle(typography.h6) {
-                            Text(workouts.size.toString())
-                        }
-                        ProvideTextStyle(typography.body2) {
-                            Text("Total workouts")
-                        }
+                        Text(workouts.size.toString(), style = typography.h6)
+                        Text("Total workouts", style = typography.body2)
                     }
                 }
             }
             Spacer(Modifier.width(16.dp))
             Card(Modifier.weight(1f)) {
                 Column(Modifier.padding(16.dp)) {
-                    ProvideTextStyle(typography.h6) {
-                        Text(workouts.map { it.endTime - it.startTime }.total.toString())
-                    }
-                    ProvideTextStyle(typography.body2) {
-                        Text("Total duration")
-                    }
+                    Text(
+                        workouts.map { it.endTime - it.startTime }.total.toString(),
+                        style = typography.h6
+                    )
+                    Text("Total duration", style = typography.body2)
                 }
             }
         }
