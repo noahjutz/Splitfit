@@ -37,7 +37,7 @@ class WorkoutInsightsViewModel(
     val editor = Editor()
 
     inner class Presenter {
-        private var preferencesData: Preferences? = null
+        private lateinit var preferencesData: Preferences
 
         init {
             viewModelScope.launch { preferences.data.collect { preferencesData = it } }
@@ -45,7 +45,7 @@ class WorkoutInsightsViewModel(
 
         val workouts = repository.getWorkouts().map {
             it.filter {
-                preferencesData?.get(DatastoreKeys.currentWorkout) != it.workoutId
+                preferencesData[DatastoreKeys.currentWorkout] != it.workoutId
             }
         }
     }
