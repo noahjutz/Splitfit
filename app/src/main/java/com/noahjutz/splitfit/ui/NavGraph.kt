@@ -36,8 +36,9 @@ import com.noahjutz.splitfit.ui.routines.RoutineList
 import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
-import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
+import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditor
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgress
+import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
 import org.koin.androidx.compose.getViewModel
 import kotlin.time.ExperimentalTime
 
@@ -53,7 +54,17 @@ fun NavGraph(
     NavHost(navController, startDestination = "routines") {
         composable("workouts") {
             WorkoutInsights(
-                navToCreateWorkoutScreen = { workoutId -> navController.navigate("createWorkout?workoutId=$workoutId") }
+                navToWorkoutEditor = { workoutId -> navController.navigate("workoutEditor/$workoutId") }
+            )
+        }
+        composable(
+            route = "workoutEditor/{workoutId}",
+            arguments = listOf(navArgument("workoutId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val workoutId = backStackEntry.arguments!!.getInt("workoutId")
+            WorkoutEditor(
+                workoutId = workoutId,
+                popBackStack = { navController.popBackStack() },
             )
         }
         composable("routines") {

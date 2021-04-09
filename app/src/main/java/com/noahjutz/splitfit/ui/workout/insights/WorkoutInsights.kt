@@ -19,6 +19,7 @@
 package com.noahjutz.splitfit.ui.workout.insights
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -50,7 +51,7 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun WorkoutInsights(
     viewModel: WorkoutInsightsViewModel = getViewModel(),
-    navToCreateWorkoutScreen: (Int) -> Unit,
+    navToWorkoutEditor: (Int) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
 
@@ -82,9 +83,10 @@ fun WorkoutInsights(
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
                     Card(
+                        Modifier.clickable { navToWorkoutEditor(workout.workoutId) },
                         elevation = animateDpAsState(
                             if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                        ).value
+                        ).value,
                     ) {
                         ListItem(
                             text = {
