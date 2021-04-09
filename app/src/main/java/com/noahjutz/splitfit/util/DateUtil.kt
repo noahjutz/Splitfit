@@ -34,7 +34,6 @@ val List<Date>.longestDailyStreak: Int
         val today = (Calendar.getInstance().time.roundToDay()).toInt()
         var streak = 0
         map { it.roundToDay() }.sortedDescending().forEach { day ->
-            println("$day == $today - $streak")
             if (day == today - streak) streak++
             else if (day < today - streak) return streak
         }
