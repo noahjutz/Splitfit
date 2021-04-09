@@ -37,7 +37,7 @@ import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
-import com.noahjutz.splitfit.ui.workout.editor.WorkoutScreen
+import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgress
 import org.koin.androidx.compose.getViewModel
 import kotlin.time.ExperimentalTime
 
@@ -108,7 +108,7 @@ fun NavGraph(
                 }
             )
         ) { backStackEntry ->
-            WorkoutScreen(
+            WorkoutInProgress(
                 navToPickExercise = { navController.navigate("pickExercise") },
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.workout.editor
+package com.noahjutz.splitfit.ui.workout.in_progress
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -42,7 +42,7 @@ import org.koin.core.parameter.parametersOf
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
-fun WorkoutScreen(
+fun WorkoutInProgress(
     navToPickExercise: () -> Unit,
     popBackStack: () -> Unit,
     workoutId: Int,
