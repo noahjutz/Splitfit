@@ -18,7 +18,7 @@
 
 package com.noahjutz.splitfit.ui.settings
 
-import androidx.activity.compose.registerForActivityResult
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -48,7 +48,7 @@ fun AppSettings(
         var showRestartAppDialog by remember { mutableStateOf(false) }
 
         val exportDatabaseLauncher =
-            registerForActivityResult(contract = ActivityResultContracts.CreateDocument()) { uri ->
+            rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
                 scope.launch {
                     if (uri != null) {
                         viewModel.exportDatabase(uri)
@@ -58,7 +58,7 @@ fun AppSettings(
             }
 
         val importDatabaseLauncher =
-            registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
                 if (uri != null) {
                     viewModel.importDatabase(uri)
                     showRestartAppDialog = true
