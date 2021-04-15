@@ -51,8 +51,8 @@ fun NavGraph(
     navController: NavHostController,
 ) {
     val sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel()
-    NavHost(navController, startDestination = "routines") {
-        composable("workouts") {
+    NavHost(navController, startDestination = "routineList") {
+        composable("insights") {
             WorkoutInsights(
                 navToWorkoutEditor = { workoutId -> navController.navigate("workoutEditor/$workoutId") }
             )
@@ -67,32 +67,32 @@ fun NavGraph(
                 popBackStack = { navController.popBackStack() },
             )
         }
-        composable("routines") {
+        composable("routineList") {
             RoutineList(
-                addEditRoutine = { routineId -> navController.navigate("createRoutine/$routineId") }
+                addEditRoutine = { routineId -> navController.navigate("routineEditor/$routineId") }
             )
         }
         composable(
-            route = "createRoutine/{routineId}",
+            route = "routineEditor/{routineId}",
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) { backStackEntry ->
             CreateRoutineScreen(
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
-                onAddExercise = { navController.navigate("pickExercise") },
+                onAddExercise = { navController.navigate("exercisePicker") },
                 startWorkout = { routineId: Int ->
-                    navController.navigate("createWorkout?routineId=$routineId")
+                    navController.navigate("workoutInProgress?routineId=$routineId")
                 },
                 popBackStack = { navController.popBackStack() },
                 sharedExercisePickerViewModel = sharedExercisePickerViewModel,
             )
         }
-        composable("pickExercise") {
+        composable("exercisePicker") {
             ExercisePicker(
                 sharedExercisePickerViewModel = sharedExercisePickerViewModel,
                 popBackStack = { navController.popBackStack() }
             )
         }
-        composable("exercises") {
+        composable("exerciseList") {
             ExerciseList(
                 addEditExercise = { exerciseId -> navController.navigate("createExercise/$exerciseId") }
             )
@@ -107,7 +107,7 @@ fun NavGraph(
             )
         }
         composable(
-            "createWorkout?workoutId={workoutId}&routineId={routineId}",
+            "workoutInProgress?workoutId={workoutId}&routineId={routineId}",
             arguments = listOf(
                 navArgument("workoutId") {
                     defaultValue = -1
@@ -120,7 +120,7 @@ fun NavGraph(
             )
         ) { backStackEntry ->
             WorkoutInProgress(
-                navToPickExercise = { navController.navigate("pickExercise") },
+                navToPickExercise = { navController.navigate("exercisePicker") },
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
