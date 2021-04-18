@@ -94,11 +94,11 @@ fun NavGraph(
         }
         composable("exerciseList") {
             ExerciseList(
-                addEditExercise = { exerciseId -> navController.navigate("createExercise/$exerciseId") }
+                addEditExercise = { exerciseId -> navController.navigate("exerciseEditor/$exerciseId") }
             )
         }
         composable(
-            route = "createExercise/{exerciseId}",
+            route = "exerciseEditor/{exerciseId}",
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) { backStackEntry ->
             CreateExerciseScreen(

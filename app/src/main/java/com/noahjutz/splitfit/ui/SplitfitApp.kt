@@ -86,7 +86,7 @@ fun SplitfitApp(
         .value?.arguments?.getString(KEY_ROUTE) in topLevelScreens.map { it.route }
     val showWorkoutBottomSheet = isWorkoutInProgress && isCurrentDestinationHomeTab
 
-    val navToWorkoutScreen = { navController.navigate("createWorkout?workoutId=$currentWorkoutId") }
+    val navToWorkoutScreen = { navController.navigate("workoutInProgress?workoutId=$currentWorkoutId") }
 
     Scaffold(
         bottomBar = {
