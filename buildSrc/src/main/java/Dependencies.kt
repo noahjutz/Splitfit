@@ -56,7 +56,7 @@ object Libs {
     }
 
     object Lifecycle {
-        private const val version = "2.2.0"
+        private const val version = "2.3.1"
         const val lifecycle = "androidx.lifecycle:lifecycle-compiler:$version"
         const val livedata = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
     }
