@@ -97,11 +97,14 @@ fun AboutSplitfit(
                         )
                     }
                     Spacer(Modifier.width(12.dp))
-                    ProvideTextStyle(value = typography.h4) {
-                        Text("Splitfit")
-                    }
+                    Text("Splitfit", style = typography.h4)
                 }
 
+                ListItem(
+                    text = { Text("Version") },
+                    secondaryText = { Text(BuildConfig.VERSION_NAME) },
+                    icon = { Icon(Icons.Default.Update, null) },
+                )
                 ListItem(
                     modifier = Modifier.clickable { showLicenses = true },
                     text = { Text("Licenses") },
