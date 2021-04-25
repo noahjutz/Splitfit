@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.exercises.create
+package com.noahjutz.splitfit.ui.exercises.editor
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class CreateExerciseViewModel(
+class ExerciseEditorViewModel(
     private val repository: ExerciseRepository,
     exerciseId: Int,
 ) : ViewModel() {

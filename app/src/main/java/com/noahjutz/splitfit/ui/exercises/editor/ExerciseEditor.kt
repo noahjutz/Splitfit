@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.ui.exercises.create
+package com.noahjutz.splitfit.ui.exercises.editor
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -33,10 +33,10 @@ import org.koin.core.parameter.parametersOf
 
 @ExperimentalMaterialApi
 @Composable
-fun CreateExerciseScreen(
+fun ExerciseEditor(
     popBackStack: () -> Unit,
     exerciseId: Int,
-    viewModel: CreateExerciseViewModel = getViewModel { parametersOf(exerciseId) },
+    viewModel: ExerciseEditorViewModel = getViewModel { parametersOf(exerciseId) },
 ) {
     val editor = viewModel.Editor()
     val presenter = viewModel.Presenter()
