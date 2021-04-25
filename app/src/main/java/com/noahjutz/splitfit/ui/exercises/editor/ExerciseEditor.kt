@@ -19,14 +19,15 @@
 package com.noahjutz.splitfit.ui.exercises.editor
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.AppBarTextField
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -38,6 +39,7 @@ fun ExerciseEditor(
     exerciseId: Int,
     viewModel: ExerciseEditorViewModel = getViewModel { parametersOf(exerciseId) },
 ) {
+    val scope = rememberCoroutineScope()
     val editor = viewModel.Editor()
     val presenter = viewModel.Presenter()
 
@@ -67,19 +69,12 @@ fun ExerciseEditor(
             )
         },
         content = {
-            var repsChecked by remember { mutableStateOf(exercise.logReps) }
-            var weightChecked by remember { mutableStateOf(exercise.logWeight) }
-            var timeChecked by remember { mutableStateOf(exercise.logTime) }
-            var distanceChecked by remember { mutableStateOf(exercise.logDistance) }
-
-            val alertNoLogValueSelected =
-                stringResource(R.string.alert_no_log_value_selected)
+            val alertNoLogValueSelected = stringResource(R.string.alert_no_log_value_selected)
             val onAnyCheckedChange = {
                 presenter.exercise.value.let {
                     if (!it.logReps && !it.logWeight && !it.logTime && !it.logDistance) {
-                        repsChecked = true
                         editor.updateExercise(logReps = true)
-                        MainScope().launch {
+                        scope.launch {
                             scaffoldState.snackbarHostState.let {
                                 it.currentSnackbarData?.dismiss()
                                 it.showSnackbar(alertNoLogValueSelected)
@@ -91,60 +86,72 @@ fun ExerciseEditor(
             LazyColumn {
                 item {
                     ListItem(
+                        Modifier.toggleable(
+                            value = exercise.logReps,
+                            onValueChange = {
+                                editor.updateExercise(logReps = it)
+                                onAnyCheckedChange()
+                            }
+                        ),
                         text = { Text(stringResource(R.string.log_reps)) },
                         icon = {
                             Checkbox(
-                                checked = repsChecked,
-                                onCheckedChange = {
-                                    repsChecked = it
-                                    editor.updateExercise(logReps = repsChecked)
-                                    onAnyCheckedChange()
-                                }
+                                checked = exercise.logReps,
+                                onCheckedChange = null,
                             )
                         },
                     )
                 }
                 item {
                     ListItem(
+                        Modifier.toggleable(
+                            value = exercise.logWeight,
+                            onValueChange = {
+                                editor.updateExercise(logWeight = it)
+                                onAnyCheckedChange()
+                            }
+                        ),
                         text = { Text(stringResource(R.string.log_weight)) },
                         icon = {
                             Checkbox(
-                                checked = weightChecked,
-                                onCheckedChange = {
-                                    weightChecked = it
-                                    editor.updateExercise(logWeight = weightChecked)
-                                    onAnyCheckedChange()
-                                }
+                                checked = exercise.logWeight,
+                                onCheckedChange = null,
                             )
                         },
                     )
                 }
                 item {
                     ListItem(
+                        Modifier.toggleable(
+                            value = exercise.logTime,
+                            onValueChange = {
+                                editor.updateExercise(logTime = it)
+                                onAnyCheckedChange()
+                            }
+                        ),
                         text = { Text(stringResource(R.string.log_time)) },
                         icon = {
                             Checkbox(
-                                checked = timeChecked,
-                                onCheckedChange = {
-                                    timeChecked = it
-                                    editor.updateExercise(logTime = timeChecked)
-                                    onAnyCheckedChange()
-                                }
+                                checked = exercise.logTime,
+                                onCheckedChange = null,
                             )
                         },
                     )
                 }
                 item {
                     ListItem(
+                        Modifier.toggleable(
+                            value = exercise.logDistance,
+                            onValueChange = {
+                                editor.updateExercise(logDistance = it)
+                                onAnyCheckedChange()
+                            }
+                        ),
                         text = { Text(stringResource(R.string.log_distance)) },
                         icon = {
                             Checkbox(
-                                checked = distanceChecked,
-                                onCheckedChange = {
-                                    distanceChecked = it
-                                    editor.updateExercise(logDistance = distanceChecked)
-                                    onAnyCheckedChange()
-                                }
+                                checked = exercise.logDistance,
+                                onCheckedChange = null,
                             )
                         },
                     )
