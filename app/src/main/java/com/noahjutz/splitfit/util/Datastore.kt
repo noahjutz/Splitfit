@@ -21,6 +21,7 @@ package com.noahjutz.splitfit.util
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 
@@ -28,4 +29,5 @@ val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "se
 
 object DatastoreKeys {
     val currentWorkout = intPreferencesKey("currentWorkout")
+    val showBottomNavLabels = booleanPreferencesKey("showBottomNavLabels")
 }

@@ -20,14 +20,42 @@ package com.noahjutz.splitfit.ui.settings
 
 import android.app.Application
 import android.net.Uri
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.noahjutz.splitfit.data.AppDatabase
+import com.noahjutz.splitfit.util.DatastoreKeys
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class AppSettingsViewModel(
     private val application: Application,
     private val database: AppDatabase,
+    private val preferences: DataStore<androidx.datastore.preferences.core.Preferences>,
 ) : ViewModel() {
+    private val _showBottomNavLabels = MutableStateFlow(false)
+    val showBottomNavLabels = _showBottomNavLabels.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            preferences.data.collectLatest {
+                _showBottomNavLabels.value = it[DatastoreKeys.showBottomNavLabels] == true
+            }
+        }
+    }
+
+    fun setShowBottomNavLabels(value: Boolean) {
+        viewModelScope.launch {
+            preferences.edit {
+                it[DatastoreKeys.showBottomNavLabels] = value
+            }
+        }
+    }
+
     fun exportDatabase(outUri: Uri) {
         database.close()
         val inStream = application.applicationContext

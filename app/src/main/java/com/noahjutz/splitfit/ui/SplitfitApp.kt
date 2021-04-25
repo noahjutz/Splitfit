@@ -55,8 +55,12 @@ sealed class TopLevelScreens(
     @StringRes val name: Int,
     val icon: ImageVector,
 ) {
-    object Routines : TopLevelScreens("routineList", R.string.tab_routines, Icons.Default.ViewAgenda)
-    object Exercises : TopLevelScreens("exerciseList", R.string.tab_exercises, Icons.Default.FitnessCenter)
+    object Routines :
+        TopLevelScreens("routineList", R.string.tab_routines, Icons.Default.ViewAgenda)
+
+    object Exercises :
+        TopLevelScreens("exerciseList", R.string.tab_exercises, Icons.Default.FitnessCenter)
+
     object Workouts : TopLevelScreens("insights", R.string.tab_insights, Icons.Default.Insights)
     object Settings : TopLevelScreens("settings", R.string.tab_settings, Icons.Default.Settings)
 }
@@ -86,13 +90,15 @@ fun SplitfitApp(
         .value?.arguments?.getString(KEY_ROUTE) in topLevelScreens.map { it.route }
     val showWorkoutBottomSheet = isWorkoutInProgress && isCurrentDestinationHomeTab
 
-    val navToWorkoutScreen = { navController.navigate("workoutInProgress?workoutId=$currentWorkoutId") }
+    val navToWorkoutScreen =
+        { navController.navigate("workoutInProgress?workoutId=$currentWorkoutId") }
 
     Scaffold(
         bottomBar = {
+            val showBottomNavLabels by preferences.data.map { it[DatastoreKeys.showBottomNavLabels] == true }.collectAsState( initial = true )
             Column {
                 if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
-                if (isCurrentDestinationHomeTab) HomeBottomBar(navController = navController)
+                if (isCurrentDestinationHomeTab) HomeBottomBar(navController = navController, showLabels = showBottomNavLabels)
             }
         }
     ) { paddingValues ->
@@ -105,6 +111,7 @@ fun SplitfitApp(
 @Composable
 private fun HomeBottomBar(
     navController: NavController,
+    showLabels: Boolean,
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry.value?.arguments?.getString(KEY_ROUTE)
@@ -116,7 +123,7 @@ private fun HomeBottomBar(
                     navController.popBackStack(navController.graph.startDestination, false)
                     if (screen.route != currentRoute) navController.navigate(screen.route)
                 },
-                label = { Text(stringResource(screen.name)) },
+                label = (@Composable { Text(stringResource(screen.name)) }).takeIf { showLabels },
                 selected = screen.route == currentRoute,
             )
         }

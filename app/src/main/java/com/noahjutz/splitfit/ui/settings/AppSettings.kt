@@ -25,6 +25,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Help
@@ -87,6 +88,22 @@ fun AppSettings(
                 text = { Text("Restore") },
                 secondaryText = { Text("Import a database file, overriding all data.") },
                 icon = { Icon(Icons.Default.SettingsBackupRestore, null) },
+            )
+            Divider()
+            val settingShowBottomNavLabels by viewModel.showBottomNavLabels.collectAsState()
+            ListItem(
+                modifier = Modifier.toggleable(
+                    value = settingShowBottomNavLabels,
+                    onValueChange = { viewModel.setShowBottomNavLabels(it) }
+                ),
+                text = { Text("Show bottom navigation labels") },
+                trailing = {
+                    Checkbox(
+                        checked = settingShowBottomNavLabels,
+                        onCheckedChange = null
+                    )
+                },
+                icon = {}
             )
             Divider()
             ListItem(
