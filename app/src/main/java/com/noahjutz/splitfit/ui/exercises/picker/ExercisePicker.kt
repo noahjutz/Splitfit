@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -96,20 +97,18 @@ fun ExercisePicker(
                 val checked by sharedExercisePickerViewModel.contains(exercise)
                     .collectAsState(initial = false)
                 ListItem(
-                    icon = {
-                        Checkbox(
-                            checked = checked,
-                            onCheckedChange = {
-                                if (it) sharedExercisePickerViewModel.add(exercise)
-                                else sharedExercisePickerViewModel.remove(exercise)
-                            }
-                        )
-                    },
+                    Modifier.toggleable(
+                        value = checked,
+                        onValueChange = {
+                            if (it) sharedExercisePickerViewModel.add(exercise)
+                            else sharedExercisePickerViewModel.remove(exercise)
+                        }
+                    ),
+                    icon = { Checkbox(checked = checked, onCheckedChange = null) },
                 ) {
                     Text(
-                        exercise.name.takeIf { it.isNotBlank() } ?: stringResource(
-                            R.string.unnamed_exercise
-                        )
+                        exercise.name.takeIf { it.isNotBlank() }
+                            ?: stringResource(R.string.unnamed_exercise)
                     )
                 }
             }
