@@ -28,6 +28,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
@@ -105,6 +106,11 @@ fun AppSettings(
                 },
                 icon = {}
             )
+            ListItem(
+                modifier = Modifier.clickable(onClick = viewModel::resetSettings),
+                text = { Text("Reset all settings") },
+                icon = {},
+            )
             Divider()
             ListItem(
                 modifier = Modifier.clickable(onClick = navToAbout),
@@ -113,7 +119,7 @@ fun AppSettings(
             )
         }
 
-        if (showRestartAppDialog) RestartAppDialog { viewModel.restartApp() }
+        if (showRestartAppDialog) RestartAppDialog(restartApp = viewModel::restartApp)
     }
 }
 
