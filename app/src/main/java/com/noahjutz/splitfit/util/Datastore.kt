@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 
@@ -30,4 +31,10 @@ val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "se
 sealed class AppPrefs<T>(val key: Preferences.Key<T>, val defaultValue: T) {
     object CurrentWorkout : AppPrefs<Int>(intPreferencesKey("currentWorkout"), -1)
     object ShowBottomNavLabels : AppPrefs<Boolean>(booleanPreferencesKey("showBottomNavLabels"), true)
+}
+
+suspend fun DataStore<Preferences>.resetAppSettings() {
+    edit {
+        it[AppPrefs.ShowBottomNavLabels.key] = AppPrefs.ShowBottomNavLabels.defaultValue
+    }
 }
