@@ -1,9 +1,10 @@
 Features:
 * Added a setting to hide bottom navigation labels (#76)
-* Show version in about screen (209a76f9)
+* Added version in about screen (209a76f9)
 
 Bug Fixes:
 * You can now tap anywhere on a checkbox list item to select it (#57)
 
 Development:
-* Rename CreateExercise to ExerciseEditor (f1664422)
+* Renamed CreateExercise to ExerciseEditor (f1664422)
+* Upgraded Compose, AGP, Kotlin, Gradle (a9907f30)
