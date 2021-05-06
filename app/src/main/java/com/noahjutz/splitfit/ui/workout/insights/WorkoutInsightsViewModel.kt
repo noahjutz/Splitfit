@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.Workout
-import com.noahjutz.splitfit.util.DatastoreKeys
+import com.noahjutz.splitfit.util.AppPrefs
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ class WorkoutInsightsViewModel(
 
         val workouts = repository.getWorkouts().map {
             it.filter {
-                preferencesData[DatastoreKeys.currentWorkout] != it.workoutId
+                preferencesData[AppPrefs.CurrentWorkout.key] != it.workoutId
             }
         }
     }

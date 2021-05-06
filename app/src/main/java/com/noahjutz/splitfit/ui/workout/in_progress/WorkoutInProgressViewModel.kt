@@ -28,7 +28,7 @@ import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
-import com.noahjutz.splitfit.util.DatastoreKeys
+import com.noahjutz.splitfit.util.AppPrefs
 import com.noahjutz.splitfit.util.minus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -64,7 +64,7 @@ class CreateWorkoutViewModel(
     init {
         viewModelScope.launch {
             preferences.edit { // TODO move to CreateRoutine when "start workout" is tapped
-                it[DatastoreKeys.currentWorkout] = _workout.value.workoutId
+                it[AppPrefs.CurrentWorkout.key] = _workout.value.workoutId
             }
             _workout.collectLatest {
                 workoutRepository.insert(_workout.value)
@@ -151,14 +151,14 @@ class CreateWorkoutViewModel(
         fun finishWorkout() {
             setEndTime(Calendar.getInstance().time)
             GlobalScope.launch {
-                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                preferences.edit { it[AppPrefs.CurrentWorkout.key] = -1 }
             }
         }
 
         fun cancelWorkout() {
             deleteWorkout()
             GlobalScope.launch {
-                preferences.edit { it[DatastoreKeys.currentWorkout] = -1 }
+                preferences.edit { it[AppPrefs.CurrentWorkout.key] = -1 }
             }
         }
     }

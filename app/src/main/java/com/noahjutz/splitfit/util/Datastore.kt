@@ -27,7 +27,7 @@ import androidx.datastore.preferences.preferencesDataStore
 
 val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-object DatastoreKeys {
-    val currentWorkout = intPreferencesKey("currentWorkout")
-    val showBottomNavLabels = booleanPreferencesKey("showBottomNavLabels")
+sealed class AppPrefs<T>(val key: Preferences.Key<T>, val defaultValue: T) {
+    object CurrentWorkout : AppPrefs<Int>(intPreferencesKey("currentWorkout"), -1)
+    object ShowBottomNavLabels : AppPrefs<Boolean>(booleanPreferencesKey("showBottomNavLabels"), true)
 }

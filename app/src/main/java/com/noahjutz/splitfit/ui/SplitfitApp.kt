@@ -45,7 +45,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.util.DatastoreKeys
+import com.noahjutz.splitfit.util.AppPrefs
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
 import kotlin.time.ExperimentalTime
@@ -83,7 +83,7 @@ fun SplitfitApp(
     val navController = rememberNavController()
 
     val currentWorkoutId by preferences.data
-        .map { it[DatastoreKeys.currentWorkout] }
+        .map { it[AppPrefs.CurrentWorkout.key] }
         .collectAsState(initial = -1)
     val isWorkoutInProgress = currentWorkoutId?.let { it >= 0 } ?: false
     val isCurrentDestinationHomeTab = navController.currentBackStackEntryAsState()
@@ -95,7 +95,7 @@ fun SplitfitApp(
 
     Scaffold(
         bottomBar = {
-            val showBottomNavLabels by preferences.data.map { it[DatastoreKeys.showBottomNavLabels] == true }.collectAsState( initial = true )
+            val showBottomNavLabels by preferences.data.map { it[AppPrefs.ShowBottomNavLabels.key] == true }.collectAsState( initial = true )
             Column {
                 if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
                 if (isCurrentDestinationHomeTab) HomeBottomBar(navController = navController, showLabels = showBottomNavLabels)

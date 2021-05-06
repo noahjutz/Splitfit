@@ -26,7 +26,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.noahjutz.splitfit.data.AppDatabase
-import com.noahjutz.splitfit.util.DatastoreKeys
+import com.noahjutz.splitfit.util.AppPrefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -43,7 +43,7 @@ class AppSettingsViewModel(
     init {
         viewModelScope.launch {
             preferences.data.collectLatest {
-                _showBottomNavLabels.value = it[DatastoreKeys.showBottomNavLabels] == true
+                _showBottomNavLabels.value = it[AppPrefs.ShowBottomNavLabels.key] == true
             }
         }
     }
@@ -51,7 +51,7 @@ class AppSettingsViewModel(
     fun setShowBottomNavLabels(value: Boolean) {
         viewModelScope.launch {
             preferences.edit {
-                it[DatastoreKeys.showBottomNavLabels] = value
+                it[AppPrefs.ShowBottomNavLabels.key] = value
             }
         }
     }

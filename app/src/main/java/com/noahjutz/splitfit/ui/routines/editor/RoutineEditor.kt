@@ -41,7 +41,7 @@ import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
-import com.noahjutz.splitfit.util.DatastoreKeys
+import com.noahjutz.splitfit.util.AppPrefs
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
@@ -113,7 +113,7 @@ fun CreateRoutineScreen(
                             DropdownMenuItem(
                                 onClick = {
                                     val currentWorkout =
-                                        preferencesData?.get(DatastoreKeys.currentWorkout)
+                                        preferencesData?.get(AppPrefs.CurrentWorkout.key)
                                     if (currentWorkout == null || currentWorkout < 0) {
                                         startWorkout(viewModel.presenter.routine.value.routineId)
                                     } else {
@@ -126,7 +126,7 @@ fun CreateRoutineScreen(
                                                 )
                                             if (snackbarResult == SnackbarResult.ActionPerformed) {
                                                 preferences.edit {
-                                                    it[DatastoreKeys.currentWorkout] = -1
+                                                    it[AppPrefs.CurrentWorkout.key] = -1
                                                 }
                                                 scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
                                             }
