@@ -70,7 +70,7 @@ object Libs {
 
     object Compose {
         private const val versionActivity = "1.3.0-alpha07"
-        const val version = "1.0.0-beta05"
+        const val version = "1.0.0-beta06"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -121,12 +121,12 @@ object TestLibs {
 
 object GradlePlugins {
     object Android {
-        private const val version = "7.0.0-alpha14"
+        private const val version = "7.0.0-alpha15"
         const val classpath = "com.android.tools.build:gradle:$version"
     }
 
     object Kotlin {
-        const val version = "1.4.31"
+        const val version = "1.4.32"
         const val classpath = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     }
 }
