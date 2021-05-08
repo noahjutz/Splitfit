@@ -47,6 +47,7 @@ fun AppSettings(
     val scope = rememberCoroutineScope()
     Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) {
         var showRestartAppDialog by remember { mutableStateOf(false) }
+        var showResetSettingsDialog by remember { mutableStateOf(false) }
 
         val exportDatabaseLauncher =
             rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
@@ -106,7 +107,7 @@ fun AppSettings(
                 icon = {}
             )
             ListItem(
-                modifier = Modifier.clickable(onClick = viewModel::resetSettings),
+                modifier = Modifier.clickable(onClick = { showResetSettingsDialog = true }),
                 text = { Text("Reset all settings") },
                 icon = {},
             )
@@ -119,6 +120,13 @@ fun AppSettings(
         }
 
         if (showRestartAppDialog) RestartAppDialog(restartApp = viewModel::restartApp)
+        if (showResetSettingsDialog) ResetSettingsDialog(
+            onDismiss = { showResetSettingsDialog = false },
+            resetSettings = {
+                showResetSettingsDialog = false
+                viewModel.resetSettings()
+            }
+        )
     }
 }
 
@@ -132,5 +140,19 @@ fun RestartAppDialog(
         confirmButton = { Button(onClick = restartApp) { Text("Restart") } },
         title = { Text("Restart App") },
         text = { Text("App must be restarted after backup or restore.") }
+    )
+}
+
+@Composable
+fun ResetSettingsDialog(
+    onDismiss: () -> Unit,
+    resetSettings: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Dismiss") } },
+        confirmButton = { Button(onClick = resetSettings) { Text("Reset all settings") } },
+        title = { Text("Reset all settings?") },
+        text = { Text("Are you sure you want to reset all settings to their default values?") }
     )
 }
