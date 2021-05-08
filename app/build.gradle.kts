@@ -25,13 +25,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion(App.compileSdk)
+    compileSdk = App.compileSdk
     buildToolsVersion = "30.0.2"
 
     defaultConfig {
         applicationId = "com.noahjutz.splitfit"
-        minSdkVersion(App.minSdk)
-        targetSdkVersion(App.targetSdk)
+        minSdk = App.minSdk
+        targetSdk = App.targetSdk
         versionCode = 25
         versionName = "0.1.0-alpha14"
 
