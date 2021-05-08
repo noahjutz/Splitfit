@@ -2,6 +2,7 @@ Features:
 * Added a setting to hide bottom navigation labels (#76)
 * Added version in about screen (209a76f9)
 * Tweaked WorkoutInProgress layout (fca69aef)
+* Moved buttons in RoutineEditor (#53)
 
 Bug Fixes:
 * You can now tap anywhere on a checkbox list item to select it (#57)
