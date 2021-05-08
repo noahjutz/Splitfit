@@ -122,8 +122,7 @@ fun WorkoutInProgress(
                         icon = { Icon(Icons.Default.AccessTime, null) },
                     )
                 }
-
-                if (setGroups.isNotEmpty()) Divider()
+                Divider()
             }
 
             itemsIndexed(setGroups) { setGroupIndex, setGroup ->
@@ -181,7 +180,7 @@ fun WorkoutInProgress(
             }
 
             item {
-                Divider(Modifier.padding(bottom = 16.dp))
+                Spacer(Modifier.height(16.dp))
                 Row(
                     Modifier
                         .fillMaxWidth()
