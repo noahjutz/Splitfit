@@ -29,12 +29,16 @@ import androidx.datastore.preferences.preferencesDataStore
 val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 sealed class AppPrefs<T>(val key: Preferences.Key<T>, val defaultValue: T) {
+    object IsFirstRun : AppPrefs<Boolean>(booleanPreferencesKey("isFirstRun"), false)
     object CurrentWorkout : AppPrefs<Int>(intPreferencesKey("currentWorkout"), -1)
-    object ShowBottomNavLabels : AppPrefs<Boolean>(booleanPreferencesKey("showBottomNavLabels"), true)
+
+    object ShowBottomNavLabels :
+        AppPrefs<Boolean>(booleanPreferencesKey("showBottomNavLabels"), true)
 }
 
 suspend fun DataStore<Preferences>.resetAppSettings() {
     edit {
         it[AppPrefs.ShowBottomNavLabels.key] = AppPrefs.ShowBottomNavLabels.defaultValue
+        it[AppPrefs.IsFirstRun.key] = AppPrefs.IsFirstRun.defaultValue
     }
 }
