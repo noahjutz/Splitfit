@@ -19,16 +19,31 @@
 package com.noahjutz.splitfit
 
 import android.app.Application
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.noahjutz.splitfit.di.koinModule
+import com.noahjutz.splitfit.util.isFirstRun
+import com.noahjutz.splitfit.util.resetAppSettings
+import kotlinx.coroutines.*
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class SplitfitApplication : Application() {
+    private val preferences: DataStore<Preferences> by inject()
+    private val scope = CoroutineScope(Dispatchers.Default)
+
     override fun onCreate() {
         super.onCreate()
         startKoin {
             androidContext(this@SplitfitApplication)
             modules(koinModule)
+        }
+
+        scope.launch {
+            if (isFirstRun()) {
+                preferences.resetAppSettings()
+            }
         }
     }
 }
