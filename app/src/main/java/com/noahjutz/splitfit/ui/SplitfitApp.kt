@@ -45,7 +45,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.util.AppPrefs
+import com.noahjutz.splitfit.data.AppPrefs
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
 import kotlin.time.ExperimentalTime

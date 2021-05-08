@@ -41,7 +41,7 @@ import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
-import com.noahjutz.splitfit.util.AppPrefs
+import com.noahjutz.splitfit.data.AppPrefs
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get

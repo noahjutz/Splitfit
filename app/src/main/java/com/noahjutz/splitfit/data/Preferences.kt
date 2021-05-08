@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.noahjutz.splitfit.util
+package com.noahjutz.splitfit.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore

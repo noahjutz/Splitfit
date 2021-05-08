@@ -26,8 +26,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.noahjutz.splitfit.data.AppDatabase
-import com.noahjutz.splitfit.util.AppPrefs
-import com.noahjutz.splitfit.util.resetAppSettings
+import com.noahjutz.splitfit.data.AppPrefs
+import com.noahjutz.splitfit.data.resetAppSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest

@@ -34,7 +34,7 @@ import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditorViewModel
 import com.noahjutz.splitfit.ui.workout.in_progress.CreateWorkoutViewModel
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsightsViewModel
-import com.noahjutz.splitfit.util.datastore
+import com.noahjutz.splitfit.data.datastore
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

@@ -28,7 +28,7 @@ import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
-import com.noahjutz.splitfit.util.AppPrefs
+import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.util.minus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
