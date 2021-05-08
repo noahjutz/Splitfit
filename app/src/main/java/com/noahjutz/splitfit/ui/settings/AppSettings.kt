@@ -33,6 +33,8 @@ import androidx.compose.material.icons.filled.SaveAlt
 import androidx.compose.material.icons.filled.SettingsBackupRestore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.noahjutz.splitfit.R
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
@@ -150,7 +152,7 @@ fun ResetSettingsDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Dismiss") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
         confirmButton = { Button(onClick = resetSettings) { Text("Reset all settings") } },
         title = { Text("Reset all settings?") },
         text = { Text("Are you sure you want to reset all settings to their default values?") }
