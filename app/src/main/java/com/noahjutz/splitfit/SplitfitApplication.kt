@@ -35,6 +35,7 @@ class SplitfitApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         startKoin {
             androidContext(this@SplitfitApplication)
             modules(koinModule)

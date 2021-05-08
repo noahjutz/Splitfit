@@ -95,7 +95,7 @@ fun SplitfitApp(
 
     Scaffold(
         bottomBar = {
-            val showBottomNavLabels by preferences.data.map { it[AppPrefs.ShowBottomNavLabels.key] == true }.collectAsState( initial = true )
+            val showBottomNavLabels by preferences.data.map { it[AppPrefs.ShowBottomNavLabels.key] == true }.collectAsState(initial = true)
             Column {
                 if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
                 if (isCurrentDestinationHomeTab) HomeBottomBar(navController = navController, showLabels = showBottomNavLabels)
