@@ -8,3 +8,4 @@ Bug Fixes:
 Development:
 * Renamed CreateExercise to ExerciseEditor (f1664422)
 * Upgraded Compose, AGP, Kotlin, Gradle (a9907f30)
+* Moved util/Datastore.kt to data/Preferences.kt (8eb2fb2d)
