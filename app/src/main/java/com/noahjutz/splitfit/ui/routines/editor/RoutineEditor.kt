@@ -20,16 +20,14 @@ package com.noahjutz.splitfit.ui.routines.editor
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -74,10 +72,30 @@ fun CreateRoutineScreen(
         scaffoldState = scaffoldState,
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = onAddExercise,
-                icon = { Icon(Icons.Default.Add, null) },
-                text = { Text("Add Exercise") },
-                modifier = Modifier.testTag("addExerciseFab"),
+                onClick = {
+                    val currentWorkout =
+                        preferencesData?.get(AppPrefs.CurrentWorkout.key)
+                    if (currentWorkout == null || currentWorkout < 0) {
+                        startWorkout(viewModel.presenter.routine.value.routineId)
+                    } else {
+                        scope.launch {
+                            scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                            val snackbarResult =
+                                scaffoldState.snackbarHostState.showSnackbar(
+                                    "A workout is already in progress.",
+                                    "Stop current"
+                                )
+                            if (snackbarResult == SnackbarResult.ActionPerformed) {
+                                preferences.edit {
+                                    it[AppPrefs.CurrentWorkout.key] = -1
+                                }
+                                scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
+                            }
+                        }
+                    }
+                },
+                icon = { Icon(Icons.Default.PlayArrow, null) },
+                text = { Text("Start Workout") },
             )
         },
         topBar = {
@@ -100,45 +118,6 @@ fun CreateRoutineScreen(
                         hint = stringResource(R.string.unnamed_routine),
                     )
                 },
-                actions = {
-                    var showMenu by remember { mutableStateOf(false) }
-                    Box {
-                        IconButton(onClick = { showMenu = true }) {
-                            Icon(Icons.Default.MoreVert, null)
-                        }
-                        DropdownMenu(
-                            expanded = showMenu,
-                            onDismissRequest = { showMenu = false }
-                        ) {
-                            DropdownMenuItem(
-                                onClick = {
-                                    val currentWorkout =
-                                        preferencesData?.get(AppPrefs.CurrentWorkout.key)
-                                    if (currentWorkout == null || currentWorkout < 0) {
-                                        startWorkout(viewModel.presenter.routine.value.routineId)
-                                    } else {
-                                        scope.launch {
-                                            scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                                            val snackbarResult =
-                                                scaffoldState.snackbarHostState.showSnackbar(
-                                                    "A workout is already in progress.",
-                                                    "Stop current"
-                                                )
-                                            if (snackbarResult == SnackbarResult.ActionPerformed) {
-                                                preferences.edit {
-                                                    it[AppPrefs.CurrentWorkout.key] = -1
-                                                }
-                                                scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
-                                            }
-                                        }
-                                    }
-                                }
-                            ) {
-                                Text("Start workout")
-                            }
-                        }
-                    }
-                }
             )
         }
     ) {
@@ -196,6 +175,19 @@ fun CreateRoutineScreen(
                         )
                     }
                 )
+            }
+
+            item {
+                TextButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    onClick = onAddExercise
+                ) {
+                    Icon(Icons.Default.Add, null)
+                    Spacer(Modifier.width(12.dp))
+                    Text("Add Exercise")
+                }
             }
         }
     }
