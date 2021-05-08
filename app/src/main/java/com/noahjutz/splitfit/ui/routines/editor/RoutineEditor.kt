@@ -39,9 +39,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
-import com.noahjutz.splitfit.data.AppPrefs
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
@@ -65,7 +65,7 @@ fun CreateRoutineScreen(
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
 
-    scope.launch {
+    LaunchedEffect(Unit) {
         viewModel.editor.addExercises(sharedExercisePickerViewModel.exercises.value)
         sharedExercisePickerViewModel.clear()
     }
