@@ -42,20 +42,18 @@ import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
 import org.koin.androidx.compose.getViewModel
 import kotlin.time.ExperimentalTime
 
-sealed class Screen(val route: String) {
+sealed class Screen(val name: String) {
     object Insights : Screen("insights")
 
     object RoutineList : Screen("routineList")
-    object RoutineEditor : Screen("routineEditor/{routineId}")
+    object RoutineEditor : Screen("routineEditor")
 
     object ExerciseList : Screen("exerciseList")
-    object ExerciseEditor : Screen("exerciseEditor/{exerciseId}")
+    object ExerciseEditor : Screen("exerciseEditor")
     object ExercisePicker : Screen("exercisePicker")
 
-    object WorkoutInProgress :
-        Screen("workoutInProgress?workoutId={workoutId}&routineId={routineId}")
-
-    object WorkoutEditor : Screen("workoutEditor/{workoutId}")
+    object WorkoutInProgress : Screen("workoutInProgress")
+    object WorkoutEditor : Screen("workoutEditor")
 
     object Settings : Screen("settings")
     object About : Screen("about")
@@ -70,14 +68,14 @@ fun NavGraph(
     navController: NavHostController,
 ) {
     val sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel()
-    NavHost(navController, startDestination = "routineList") {
-        composable(Screen.Insights.route) {
+    NavHost(navController, startDestination = Screen.RoutineList.name) {
+        composable(Screen.Insights.name) {
             WorkoutInsights(
-                navToWorkoutEditor = { workoutId -> navController.navigate("workoutEditor/$workoutId") }
+                navToWorkoutEditor = { workoutId -> navController.navigate("${Screen.WorkoutEditor.name}/$workoutId") }
             )
         }
         composable(
-            route = Screen.WorkoutEditor.route,
+            route = "${Screen.WorkoutEditor.name}/{workoutId}",
             arguments = listOf(navArgument("workoutId") { type = NavType.IntType })
         ) { backStackEntry ->
             val workoutId = backStackEntry.arguments!!.getInt("workoutId")
@@ -86,38 +84,38 @@ fun NavGraph(
                 popBackStack = { navController.popBackStack() },
             )
         }
-        composable(Screen.RoutineList.route) {
+        composable(Screen.RoutineList.name) {
             RoutineList(
-                addEditRoutine = { routineId -> navController.navigate("routineEditor/$routineId") }
+                addEditRoutine = { routineId -> navController.navigate("${Screen.RoutineEditor.name}/$routineId") }
             )
         }
         composable(
-            route = Screen.RoutineEditor.route,
+            route = "${Screen.RoutineEditor.name}/{routineId}",
             arguments = listOf(navArgument("routineId") { type = NavType.IntType })
         ) { backStackEntry ->
             CreateRoutineScreen(
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
                 onAddExercise = { navController.navigate("exercisePicker") },
                 startWorkout = { routineId: Int ->
-                    navController.navigate("workoutInProgress?routineId=$routineId")
+                    navController.navigate("${Screen.WorkoutInProgress.name}?routineId=$routineId")
                 },
                 popBackStack = { navController.popBackStack() },
                 sharedExercisePickerViewModel = sharedExercisePickerViewModel,
             )
         }
-        composable(Screen.ExercisePicker.route) {
+        composable(Screen.ExercisePicker.name) {
             ExercisePicker(
                 sharedExercisePickerViewModel = sharedExercisePickerViewModel,
                 popBackStack = { navController.popBackStack() }
             )
         }
-        composable(Screen.ExerciseList.route) {
+        composable(Screen.ExerciseList.name) {
             ExerciseList(
-                addEditExercise = { exerciseId -> navController.navigate("exerciseEditor/$exerciseId") }
+                addEditExercise = { exerciseId -> navController.navigate("${Screen.ExerciseEditor.name}/$exerciseId") }
             )
         }
         composable(
-            route = Screen.ExerciseEditor.route,
+            route = "${Screen.ExerciseEditor.name}/{exerciseId}",
             arguments = listOf(navArgument("exerciseId") { type = NavType.IntType })
         ) { backStackEntry ->
             ExerciseEditor(
@@ -126,7 +124,7 @@ fun NavGraph(
             )
         }
         composable(
-            Screen.WorkoutInProgress.route,
+            "${Screen.WorkoutInProgress.name}?workoutId={workoutId}&routineId={routineId}",
             arguments = listOf(
                 navArgument("workoutId") {
                     defaultValue = -1
@@ -139,17 +137,17 @@ fun NavGraph(
             )
         ) { backStackEntry ->
             WorkoutInProgress(
-                navToPickExercise = { navController.navigate("exercisePicker") },
+                navToPickExercise = { navController.navigate(Screen.ExercisePicker.name) },
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
                 sharedExercisePickerViewModel = sharedExercisePickerViewModel,
             )
         }
-        composable(Screen.Settings.route) {
-            AppSettings(navToAbout = { navController.navigate("about") })
+        composable(Screen.Settings.name) {
+            AppSettings(navToAbout = { navController.navigate(Screen.About.name) })
         }
-        composable(Screen.About.route) {
+        composable(Screen.About.name) {
             AboutSplitfit(popBackStack = { navController.popBackStack() })
         }
     }
