@@ -56,13 +56,13 @@ sealed class TopLevelScreens(
     val icon: ImageVector,
 ) {
     object Routines :
-        TopLevelScreens("routineList", R.string.tab_routines, Icons.Default.ViewAgenda)
+        TopLevelScreens(Screen.routineList.name, R.string.tab_routines, Icons.Default.ViewAgenda)
 
     object Exercises :
-        TopLevelScreens("exerciseList", R.string.tab_exercises, Icons.Default.FitnessCenter)
+        TopLevelScreens(Screen.exerciseList.name, R.string.tab_exercises, Icons.Default.FitnessCenter)
 
-    object Workouts : TopLevelScreens("insights", R.string.tab_insights, Icons.Default.Insights)
-    object Settings : TopLevelScreens("settings", R.string.tab_settings, Icons.Default.Settings)
+    object Workouts : TopLevelScreens(Screen.insights.name, R.string.tab_insights, Icons.Default.Insights)
+    object Settings : TopLevelScreens(Screen.settings.name, R.string.tab_settings, Icons.Default.Settings)
 }
 
 val topLevelScreens = listOf(
@@ -91,7 +91,7 @@ fun SplitfitApp(
     val showWorkoutBottomSheet = isWorkoutInProgress && isCurrentDestinationHomeTab
 
     val navToWorkoutScreen =
-        { navController.navigate("workoutInProgress?workoutId=$currentWorkoutId") }
+        { navController.navigate("${Screen.workoutInProgress}?workoutId=$currentWorkoutId") }
 
     Scaffold(
         bottomBar = {
