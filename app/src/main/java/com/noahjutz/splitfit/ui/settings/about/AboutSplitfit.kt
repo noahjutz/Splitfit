@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.BuildConfig
@@ -172,6 +173,25 @@ private fun LicensesDialog(
         title = { Text("Licenses") },
         text = {
             LazyColumn {
+                item {
+                    var expanded by remember { mutableStateOf(false) }
+                    Card {
+                        ListItem(
+                            modifier = Modifier.clickable { expanded = !expanded },
+                            text = { Text("Splitfit is licensed under the GNU GPLv3.") },
+                            secondaryText = (@Composable {
+                                Text(stringResource(R.string.license_notice))
+                            }).takeIf { expanded },
+                            trailing = {
+                                Icon(
+                                    if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                    null
+                                )
+                            }
+                        )
+                    }
+                }
+
                 items(dependencies) { dependency ->
                     val mainActivity = LocalActivity.current
                     ListItem(
