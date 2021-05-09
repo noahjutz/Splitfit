@@ -50,26 +50,29 @@ import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.get
 import kotlin.time.ExperimentalTime
 
-sealed class TopLevelScreens(
+sealed class BottomNavItem(
     val route: String,
     @StringRes val name: Int,
     val icon: ImageVector,
 ) {
     object Routines :
-        TopLevelScreens(Screen.routineList.name, R.string.tab_routines, Icons.Default.ViewAgenda)
+        BottomNavItem(Screen.routineList.name, R.string.tab_routines, Icons.Default.ViewAgenda)
 
     object Exercises :
-        TopLevelScreens(Screen.exerciseList.name, R.string.tab_exercises, Icons.Default.FitnessCenter)
+        BottomNavItem(Screen.exerciseList.name, R.string.tab_exercises, Icons.Default.FitnessCenter)
 
-    object Workouts : TopLevelScreens(Screen.insights.name, R.string.tab_insights, Icons.Default.Insights)
-    object Settings : TopLevelScreens(Screen.settings.name, R.string.tab_settings, Icons.Default.Settings)
+    object Workouts :
+        BottomNavItem(Screen.insights.name, R.string.tab_insights, Icons.Default.Insights)
+
+    object Settings :
+        BottomNavItem(Screen.settings.name, R.string.tab_settings, Icons.Default.Settings)
 }
 
-val topLevelScreens = listOf(
-    TopLevelScreens.Routines,
-    TopLevelScreens.Exercises,
-    TopLevelScreens.Workouts,
-    TopLevelScreens.Settings,
+val bottomNavItems = listOf(
+    BottomNavItem.Routines,
+    BottomNavItem.Exercises,
+    BottomNavItem.Workouts,
+    BottomNavItem.Settings,
 )
 
 @ExperimentalTime
@@ -87,7 +90,7 @@ fun SplitfitApp(
         .collectAsState(initial = -1)
     val isWorkoutInProgress = currentWorkoutId?.let { it >= 0 } ?: false
     val isCurrentDestinationHomeTab = navController.currentBackStackEntryAsState()
-        .value?.arguments?.getString(KEY_ROUTE) in topLevelScreens.map { it.route }
+        .value?.arguments?.getString(KEY_ROUTE) in bottomNavItems.map { it.route }
     val showWorkoutBottomSheet = isWorkoutInProgress && isCurrentDestinationHomeTab
 
     val navToWorkoutScreen =
@@ -95,10 +98,15 @@ fun SplitfitApp(
 
     Scaffold(
         bottomBar = {
-            val showBottomNavLabels by preferences.data.map { it[AppPrefs.ShowBottomNavLabels.key] == true }.collectAsState(initial = true)
+            val showBottomNavLabels by preferences.data
+                .map { it[AppPrefs.ShowBottomNavLabels.key] == true }
+                .collectAsState(initial = true)
             Column {
                 if (showWorkoutBottomSheet) WorkoutBottomSheet(navToWorkoutScreen)
-                if (isCurrentDestinationHomeTab) HomeBottomBar(navController = navController, showLabels = showBottomNavLabels)
+                if (isCurrentDestinationHomeTab) HomeBottomBar(
+                    navController = navController,
+                    showLabels = showBottomNavLabels
+                )
             }
         }
     ) { paddingValues ->
@@ -116,7 +124,7 @@ private fun HomeBottomBar(
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry.value?.arguments?.getString(KEY_ROUTE)
     BottomNavigation {
-        for (screen in topLevelScreens) {
+        for (screen in bottomNavItems) {
             BottomNavigationItem(
                 icon = { Icon(screen.icon, null) },
                 onClick = {

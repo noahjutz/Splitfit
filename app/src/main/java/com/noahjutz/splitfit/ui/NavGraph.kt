@@ -64,7 +64,6 @@ enum class Screen {
 fun NavGraph(
     navController: NavHostController,
 ) {
-    Screen.insights
     val sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel()
     NavHost(navController, startDestination = Screen.routineList.name) {
         composable(Screen.insights.name) {
