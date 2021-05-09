@@ -4,7 +4,7 @@
 <br><br>
 <img src="https://raw.githubusercontent.com/noahjutz/SplitfitAssets/main/v2/screenshots/banner.png" />
 <br><br>
-<a href="https://app.circleci.com/pipelines/github/noahjutz/Splitfit?branch=master"><img src="https://img.shields.io/circleci/build/github/noahjutz/Splitfit/master?logo=circleci" /></a>
+<a href="https://app.circleci.com/pipelines/github/noahjutz/Splitfit?branch=main"><img src="https://img.shields.io/circleci/build/github/noahjutz/Splitfit/main?logo=circleci" /></a>
 <a href="https://github.com/noahjutz/Splitfit/blob/master/LICENSE"><img src="https://img.shields.io/github/license/noahjutz/Splitfit" /></a>
 <a href="https://liberapay.com/noahjutz/donate"><img src="https://img.shields.io/badge/donate-liberapay-yellow?logo=liberapay&logoColor=white" /></a>
 <a href="https://opensource.guide/how-to-contribute/#how-to-submit-a-contribution"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" /></a>
