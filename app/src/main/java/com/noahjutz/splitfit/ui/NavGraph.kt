@@ -28,7 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
-import com.noahjutz.splitfit.ui.exercises.ExerciseList
+import com.noahjutz.splitfit.ui.exercises.list.ExerciseList
 import com.noahjutz.splitfit.ui.exercises.editor.ExerciseEditor
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePicker
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel

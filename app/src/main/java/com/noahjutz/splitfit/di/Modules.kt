@@ -23,7 +23,7 @@ import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
-import com.noahjutz.splitfit.ui.exercises.ExerciseListViewModel
+import com.noahjutz.splitfit.ui.exercises.list.ExerciseListViewModel
 import com.noahjutz.splitfit.ui.exercises.editor.ExerciseEditorViewModel
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerViewModel
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
