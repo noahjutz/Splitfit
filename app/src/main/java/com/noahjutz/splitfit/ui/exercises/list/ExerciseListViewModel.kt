@@ -23,6 +23,7 @@ import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.domain.Exercise
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.util.*
@@ -30,12 +31,14 @@ import java.util.*
 class ExerciseListViewModel(
     private val repository: ExerciseRepository,
 ) : ViewModel() {
-    private val nameFilter = MutableStateFlow("")
-    fun search(name: String) {
-        nameFilter.value = name
+    private val _nameFilter = MutableStateFlow("")
+    val nameFilter = _nameFilter.asStateFlow()
+
+    fun setNameFilter(filter: String) {
+        _nameFilter.value = filter
     }
 
-    val exercises = repository.exercises.combine(nameFilter) { exercises, nameFilter ->
+    val exercises = repository.exercises.combine(_nameFilter) { exercises, nameFilter ->
         exercises.filter {
             it.name.toLowerCase(Locale.getDefault())
                 .contains(nameFilter.toLowerCase(Locale.getDefault()))

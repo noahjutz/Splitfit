@@ -48,13 +48,10 @@ fun ExerciseList(
     val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            var searchQuery by remember { mutableStateOf("") }
+            val nameFilter by viewModel.nameFilter.collectAsState()
             SearchTopBar(
-                value = searchQuery,
-                onValueChange = {
-                    searchQuery = it
-                    viewModel.search(it)
-                },
+                value = nameFilter,
+                onValueChange = { viewModel.setNameFilter(it) },
                 title = stringResource(R.string.tab_exercises),
             )
         },
