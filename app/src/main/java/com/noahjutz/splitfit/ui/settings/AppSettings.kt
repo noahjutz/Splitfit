@@ -40,6 +40,8 @@ import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+enum class Theme { FollowSystem, Light, Dark, Black }
+
 @ExperimentalMaterialApi
 @Composable
 fun AppSettings(
@@ -50,6 +52,7 @@ fun AppSettings(
     Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) {
         var showRestartAppDialog by remember { mutableStateOf(false) }
         var showResetSettingsDialog by remember { mutableStateOf(false) }
+        var showThemeDialog by remember { mutableStateOf(false) }
 
         val exportDatabaseLauncher =
             rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
@@ -93,6 +96,12 @@ fun AppSettings(
                 icon = { Icon(Icons.Default.SettingsBackupRestore, null) },
             )
             Divider()
+            ListItem(
+                modifier = Modifier.clickable { showThemeDialog = true },
+                text = { Text("App Theme") },
+                secondaryText = { Text("Select light or dark color theme") },
+                icon = {},
+            )
             val settingShowBottomNavLabels by viewModel.showBottomNavLabels.collectAsState()
             ListItem(
                 modifier = Modifier.toggleable(
@@ -129,6 +138,13 @@ fun AppSettings(
                 viewModel.resetSettings()
             }
         )
+        // TODO store in datastore preferences
+        var theme by remember { mutableStateOf(Theme.FollowSystem) }
+        if (showThemeDialog) ShowThemeDialog(
+            onDismiss = { showThemeDialog = false },
+            colorTheme = theme,
+            onThemeSelected = { theme = it }
+        )
     }
 }
 
@@ -156,5 +172,33 @@ fun ResetSettingsDialog(
         confirmButton = { Button(onClick = resetSettings) { Text("Reset all settings") } },
         title = { Text("Reset all settings?") },
         text = { Text("Are you sure you want to reset all settings to their default values?") }
+    )
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun ShowThemeDialog(
+    onDismiss: () -> Unit,
+    colorTheme: Theme,
+    onThemeSelected: (Theme) -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        dismissButton = {},
+        confirmButton = { Button(onClick = onDismiss) {Text("Confirm")} },
+        text = {
+            Column {
+                for (theme in Theme.values()) {
+                    ListItem(
+                        modifier = Modifier.toggleable(
+                            value = colorTheme == theme,
+                            onValueChange = { onThemeSelected(theme) }
+                        ),
+                        text = { Text(theme.name) },
+                        trailing = { RadioButton(selected = colorTheme == theme, onClick = null) },
+                    )
+                }
+            }
+        }
     )
 }
