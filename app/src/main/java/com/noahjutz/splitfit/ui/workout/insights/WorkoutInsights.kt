@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
+import com.noahjutz.splitfit.ui.components.NothingHereYet
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.util.average
 import com.noahjutz.splitfit.util.currentDailyStreak
@@ -46,10 +47,23 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.time.ExperimentalTime
 
+@ExperimentalMaterialApi
+@ExperimentalTime
+@Composable
+fun WorkoutInsights(
+    viewModel: WorkoutInsightsViewModel = getViewModel(),
+    navToWorkoutEditor: (Int) -> Unit,
+) {
+    val workouts by viewModel.presenter.workouts.collectAsState(initial = emptyList())
+
+    if (workouts.isEmpty()) NothingHereYet("Insights will be available when you finish your first workout.")
+    else WorkoutInsightsContent(viewModel, navToWorkoutEditor)
+}
+
 @ExperimentalTime
 @ExperimentalMaterialApi
 @Composable
-fun WorkoutInsights(
+fun WorkoutInsightsContent(
     viewModel: WorkoutInsightsViewModel = getViewModel(),
     navToWorkoutEditor: (Int) -> Unit,
 ) {
