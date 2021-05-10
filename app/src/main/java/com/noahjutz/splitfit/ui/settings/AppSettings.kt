@@ -138,12 +138,11 @@ fun AppSettings(
                 viewModel.resetSettings()
             }
         )
-        // TODO store in datastore preferences
-        var theme by remember { mutableStateOf(Theme.FollowSystem) }
+        val theme by viewModel.appTheme.collectAsState()
         if (showThemeDialog) ShowThemeDialog(
             onDismiss = { showThemeDialog = false },
             colorTheme = theme,
-            onThemeSelected = { theme = it }
+            onThemeSelected = viewModel::setAppTheme
         )
     }
 }
@@ -185,7 +184,7 @@ fun ShowThemeDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         dismissButton = {},
-        confirmButton = { Button(onClick = onDismiss) {Text("Confirm")} },
+        confirmButton = { Button(onClick = onDismiss) { Text("Confirm") } },
         text = {
             Column {
                 for (theme in Theme.values()) {

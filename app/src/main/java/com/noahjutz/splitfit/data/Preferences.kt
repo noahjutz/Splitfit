@@ -20,11 +20,9 @@ package com.noahjutz.splitfit.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.noahjutz.splitfit.ui.settings.Theme
 
 val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -34,11 +32,14 @@ sealed class AppPrefs<T>(val key: Preferences.Key<T>, val defaultValue: T) {
 
     object ShowBottomNavLabels :
         AppPrefs<Boolean>(booleanPreferencesKey("showBottomNavLabels"), true)
+
+    object AppTheme : AppPrefs<String>(stringPreferencesKey("appTheme"), Theme.FollowSystem.name)
 }
 
 suspend fun DataStore<Preferences>.resetAppSettings() {
     edit {
         it[AppPrefs.ShowBottomNavLabels.key] = AppPrefs.ShowBottomNavLabels.defaultValue
         it[AppPrefs.IsFirstRun.key] = AppPrefs.IsFirstRun.defaultValue
+        it[AppPrefs.AppTheme.key] = AppPrefs.AppTheme.defaultValue
     }
 }
