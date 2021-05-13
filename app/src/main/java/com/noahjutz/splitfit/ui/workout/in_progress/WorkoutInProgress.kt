@@ -79,13 +79,6 @@ fun WorkoutInProgress(
                 }
             )
         },
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text("Add Exercise") },
-                icon = { Icon(Icons.Default.Add, null) },
-                onClick = navToPickExercise,
-            )
-        }
     ) {
         var showFinishWorkoutDialog by remember { mutableStateOf(false) }
         if (showFinishWorkoutDialog) FinishWorkoutDialog(
@@ -181,6 +174,21 @@ fun WorkoutInProgress(
 
             item {
                 Spacer(Modifier.height(16.dp))
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 8.dp)
+                        .height(120.dp),
+                    onClick = navToPickExercise
+                ) {
+                    Icon(Icons.Default.Add, null)
+                    Spacer(Modifier.width(12.dp))
+                    Text("Add Exercise")
+                }
+            }
+
+            item {
+                Spacer(Modifier.height(16.dp))
                 Row(
                     Modifier
                         .fillMaxWidth()
@@ -205,8 +213,6 @@ fun WorkoutInProgress(
                         Text("Finish Workout")
                     }
                 }
-                // Fix FAB overlap
-                Box(Modifier.height(80.dp))
             }
         }
     }
