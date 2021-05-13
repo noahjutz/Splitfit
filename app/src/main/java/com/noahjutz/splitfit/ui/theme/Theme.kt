@@ -7,16 +7,22 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import com.noahjutz.splitfit.ui.settings.Theme
 
+private val DarkColorPalette = darkColors()
+
+private val LightColorPalette = lightColors()
+
+private val BlackColorPalette = DarkColorPalette
+
 @Composable
 fun SplitfitTheme(
     colors: Theme,
     content: @Composable () -> Unit,
 ) {
     val colorTheme = when (colors) {
-        Theme.FollowSystem -> if (isSystemInDarkTheme()) darkColors() else lightColors()
-        Theme.Light -> lightColors()
-        Theme.Dark -> darkColors()
-        Theme.Black -> darkColors()
+        Theme.FollowSystem -> if (isSystemInDarkTheme()) DarkColorPalette else LightColorPalette
+        Theme.Light -> LightColorPalette
+        Theme.Dark -> DarkColorPalette
+        Theme.Black -> BlackColorPalette
     }
     MaterialTheme(
         colors = colorTheme,
