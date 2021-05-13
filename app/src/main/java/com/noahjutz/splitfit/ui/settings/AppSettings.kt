@@ -183,8 +183,7 @@ fun ThemeDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        dismissButton = {},
-        confirmButton = { Button(onClick = onDismiss) { Text("Confirm") } },
+        buttons = {},
         text = {
             Column {
                 for (theme in Theme.values()) {
