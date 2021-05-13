@@ -178,10 +178,11 @@ fun CreateRoutineScreen(
             }
 
             item {
-                TextButton(
+                OutlinedButton(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .height(120.dp),
                     onClick = onAddExercise
                 ) {
                     Icon(Icons.Default.Add, null)
