@@ -29,8 +29,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import com.noahjutz.splitfit.data.AppPrefs
+import com.noahjutz.splitfit.data.ColorTheme
 import com.noahjutz.splitfit.data.datastore
-import com.noahjutz.splitfit.ui.settings.Theme
 import com.noahjutz.splitfit.ui.theme.SplitfitTheme
 import kotlinx.coroutines.flow.map
 import kotlin.time.ExperimentalTime
@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val appTheme: Theme by applicationContext.datastore.data
-                .map { Theme.valueOf(it[AppPrefs.AppTheme.key] ?: Theme.FollowSystem.name) }
-                .collectAsState(initial = Theme.FollowSystem)
+            val appTheme: ColorTheme by applicationContext.datastore.data
+                .map { ColorTheme.valueOf(it[AppPrefs.AppTheme.key] ?: ColorTheme.FollowSystem.name) }
+                .collectAsState(initial = ColorTheme.FollowSystem)
             SplitfitTheme(colors = appTheme) {
                 CompositionLocalProvider(LocalActivity provides this@MainActivity) {
                     SplitfitApp()

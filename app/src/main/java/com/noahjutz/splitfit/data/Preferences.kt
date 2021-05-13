@@ -19,12 +19,22 @@
 package com.noahjutz.splitfit.data
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
-import com.noahjutz.splitfit.ui.settings.Theme
+import com.noahjutz.splitfit.R
 
 val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+enum class ColorTheme(
+    @StringRes val themeName: Int
+) {
+    FollowSystem(R.string.theme_follow_system),
+    Light(R.string.theme_light),
+    Dark(R.string.theme_dark),
+    Black(R.string.theme_black)
+}
 
 sealed class AppPrefs<T>(val key: Preferences.Key<T>, val defaultValue: T) {
     object IsFirstRun : AppPrefs<Boolean>(booleanPreferencesKey("isFirstRun"), false)
@@ -33,7 +43,7 @@ sealed class AppPrefs<T>(val key: Preferences.Key<T>, val defaultValue: T) {
     object ShowBottomNavLabels :
         AppPrefs<Boolean>(booleanPreferencesKey("showBottomNavLabels"), true)
 
-    object AppTheme : AppPrefs<String>(stringPreferencesKey("appTheme"), Theme.FollowSystem.name)
+    object AppTheme : AppPrefs<String>(stringPreferencesKey("appTheme"), ColorTheme.FollowSystem.name)
 }
 
 suspend fun DataStore<Preferences>.resetAppSettings() {

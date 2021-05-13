@@ -27,6 +27,7 @@ import androidx.lifecycle.viewModelScope
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.AppPrefs
+import com.noahjutz.splitfit.data.ColorTheme
 import com.noahjutz.splitfit.data.resetAppSettings
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -39,14 +40,15 @@ class AppSettingsViewModel(
     private val _showBottomNavLabels = MutableStateFlow(false)
     val showBottomNavLabels = _showBottomNavLabels.asStateFlow()
 
-    private val _appTheme = MutableStateFlow(Theme.FollowSystem)
+    private val _appTheme = MutableStateFlow(ColorTheme.FollowSystem)
     val appTheme = _appTheme.asStateFlow()
 
     init {
         viewModelScope.launch {
             preferences.data.collectLatest {
                 _showBottomNavLabels.value = it[AppPrefs.ShowBottomNavLabels.key] == true
-                _appTheme.value = Theme.valueOf(it[AppPrefs.AppTheme.key] ?: Theme.FollowSystem.name)
+                _appTheme.value =
+                    ColorTheme.valueOf(it[AppPrefs.AppTheme.key] ?: ColorTheme.FollowSystem.name)
             }
         }
     }
@@ -59,7 +61,7 @@ class AppSettingsViewModel(
         }
     }
 
-    fun setAppTheme(value: Theme) {
+    fun setAppTheme(value: ColorTheme) {
         viewModelScope.launch {
             preferences.edit {
                 it[AppPrefs.AppTheme.key] = value.name

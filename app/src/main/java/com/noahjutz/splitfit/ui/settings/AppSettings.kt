@@ -35,12 +35,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.data.ColorTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-
-enum class Theme { FollowSystem, Light, Dark, Black }
 
 @ExperimentalMaterialApi
 @Composable
@@ -178,21 +177,21 @@ fun ResetSettingsDialog(
 @Composable
 fun ThemeDialog(
     onDismiss: () -> Unit,
-    colorTheme: Theme,
-    onThemeSelected: (Theme) -> Unit
+    colorTheme: ColorTheme,
+    onThemeSelected: (ColorTheme) -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         buttons = {},
         text = {
             Column {
-                for (theme in Theme.values()) {
+                for (theme in ColorTheme.values()) {
                     ListItem(
                         modifier = Modifier.toggleable(
                             value = colorTheme == theme,
                             onValueChange = { onThemeSelected(theme) }
                         ),
-                        text = { Text(theme.name) },
+                        text = { Text(stringResource(theme.themeName)) },
                         trailing = { RadioButton(selected = colorTheme == theme, onClick = null) },
                     )
                 }
