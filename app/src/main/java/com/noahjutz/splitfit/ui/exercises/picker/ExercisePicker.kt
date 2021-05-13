@@ -22,6 +22,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
@@ -29,7 +30,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
@@ -112,6 +115,15 @@ fun ExercisePicker(
                     )
                 }
             }
+
+            item {
+                ListItem(
+                    modifier = Modifier.clickable {},
+                    icon = { Icon(Icons.Default.Add, null, tint = colors.primary) },
+                    text = { Text(stringResource(R.string.new_exercise), color = colors.primary) },
+                )
+            }
+
             item {
                 // Fix FAB overlap
                 Box(Modifier.height(72.dp))
