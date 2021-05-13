@@ -23,11 +23,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
@@ -35,6 +31,7 @@ import androidx.compose.runtime.getValue
 import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.data.datastore
 import com.noahjutz.splitfit.ui.settings.Theme
+import com.noahjutz.splitfit.ui.theme.SplitfitTheme
 import kotlinx.coroutines.flow.map
 import kotlin.time.ExperimentalTime
 
@@ -52,14 +49,7 @@ class MainActivity : AppCompatActivity() {
             val appTheme: Theme by applicationContext.datastore.data
                 .map { Theme.valueOf(it[AppPrefs.AppTheme.key] ?: Theme.FollowSystem.name) }
                 .collectAsState(initial = Theme.FollowSystem)
-            MaterialTheme(
-                colors = when (appTheme) {
-                    Theme.FollowSystem -> if (isSystemInDarkTheme()) darkColors() else lightColors()
-                    Theme.Light -> lightColors()
-                    Theme.Dark -> darkColors()
-                    Theme.Black -> darkColors()
-                }
-            ) {
+            SplitfitTheme(colors = appTheme) {
                 CompositionLocalProvider(LocalActivity provides this@MainActivity) {
                     SplitfitApp()
                 }
