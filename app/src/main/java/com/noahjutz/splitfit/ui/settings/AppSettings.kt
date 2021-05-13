@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.ColorTheme
+import com.noahjutz.splitfit.util.OpenDocument
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import java.text.SimpleDateFormat
@@ -64,7 +65,7 @@ fun AppSettings(
             }
 
         val importDatabaseLauncher =
-            rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            rememberLauncherForActivityResult(OpenDocument()) { uri ->
                 if (uri != null) {
                     viewModel.importDatabase(uri)
                     showRestartAppDialog = true
