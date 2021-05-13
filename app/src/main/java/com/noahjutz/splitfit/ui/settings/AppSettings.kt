@@ -139,7 +139,7 @@ fun AppSettings(
             }
         )
         val theme by viewModel.appTheme.collectAsState()
-        if (showThemeDialog) ShowThemeDialog(
+        if (showThemeDialog) ThemeDialog(
             onDismiss = { showThemeDialog = false },
             colorTheme = theme,
             onThemeSelected = viewModel::setAppTheme
@@ -176,7 +176,7 @@ fun ResetSettingsDialog(
 
 @ExperimentalMaterialApi
 @Composable
-fun ShowThemeDialog(
+fun ThemeDialog(
     onDismiss: () -> Unit,
     colorTheme: Theme,
     onThemeSelected: (Theme) -> Unit
