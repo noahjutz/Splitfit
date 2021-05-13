@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.ui.routines.editor
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
@@ -40,7 +39,6 @@ import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.ui.components.AppBarTextField
-import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerSheet
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
@@ -63,22 +61,14 @@ fun CreateRoutineScreen(
 ) {
     val preferencesData by preferences.data.collectAsState(null)
     val scope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
+    val scaffoldState = rememberScaffoldState()
 
     LaunchedEffect(Unit) {
         viewModel.editor.addExercises(sharedExercisePickerViewModel.exercises.value)
         sharedExercisePickerViewModel.clear()
     }
 
-    BackHandler {
-        if (scaffoldState.bottomSheetState.isExpanded) scope.launch {
-            scaffoldState.bottomSheetState.collapse()
-        } else {
-            popBackStack()
-        }
-    }
-
-    BottomSheetScaffold(
+    Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
             ExtendedFloatingActionButton(
@@ -129,20 +119,6 @@ fun CreateRoutineScreen(
                     )
                 },
             )
-        },
-        sheetContent = {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.85f)
-            ) {
-                ExercisePickerSheet(onExercisesSelected = {
-                    scope.launch {
-                        viewModel.editor.addExercises(it)
-                        scaffoldState.bottomSheetState.collapse()
-                    }
-                })
-            }
         }
     ) {
         val setGroups by viewModel.presenter.routine
@@ -207,11 +183,7 @@ fun CreateRoutineScreen(
                         .fillMaxWidth()
                         .padding(8.dp)
                         .height(120.dp),
-                    onClick = {
-                        scope.launch {
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    }
+                    onClick = onAddExercise
                 ) {
                     Icon(Icons.Default.Add, null)
                     Spacer(Modifier.width(12.dp))

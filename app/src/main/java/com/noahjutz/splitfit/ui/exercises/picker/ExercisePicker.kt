@@ -62,10 +62,7 @@ fun ExercisePickerSheet(
                 enter = slideInHorizontally({ it * 2 }),
                 exit = fadeOut()
             ) {
-                FloatingActionButton(onClick = {
-                    onExercisesSelected(selectedExercises)
-                    sharedExercisePickerViewModel.clear()
-                }) {
+                FloatingActionButton(onClick = { onExercisesSelected(selectedExercises) }) {
                     Icon(Icons.Default.Done, stringResource(R.string.pick_exercise))
                 }
             }
