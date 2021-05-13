@@ -40,8 +40,71 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.data.domain.Exercise
 import com.noahjutz.splitfit.ui.components.SearchTopBar
 import org.koin.androidx.compose.getViewModel
+
+
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@Composable
+// Experimental
+fun ExercisePickerSheet(
+    viewModel: ExercisePickerViewModel = getViewModel(),
+    sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel(),
+    onExercisesSelected: (List<Exercise>) -> Unit,
+) {
+    Scaffold(
+        floatingActionButton = {
+            val selectedExercises by sharedExercisePickerViewModel.exercises.collectAsState()
+            AnimatedVisibility(
+                visible = selectedExercises.isNotEmpty(),
+                enter = slideInHorizontally({ it * 2 }),
+                exit = fadeOut()
+            ) {
+                FloatingActionButton(onClick = { onExercisesSelected(selectedExercises) }) {
+                    Icon(Icons.Default.Done, stringResource(R.string.pick_exercise))
+                }
+            }
+        }
+    ) {
+        val allExercises by viewModel.exercises.collectAsState(emptyList())
+        LazyColumn(Modifier.fillMaxHeight()) {
+            items(allExercises.filter { !it.hidden }) { exercise ->
+                val checked by sharedExercisePickerViewModel.contains(exercise)
+                    .collectAsState(initial = false)
+                ListItem(
+                    Modifier.toggleable(
+                        value = checked,
+                        onValueChange = {
+                            if (it) sharedExercisePickerViewModel.add(exercise)
+                            else sharedExercisePickerViewModel.remove(exercise)
+                        }
+                    ),
+                    icon = { Checkbox(checked = checked, onCheckedChange = null) },
+                ) {
+                    Text(
+                        exercise.name.takeIf { it.isNotBlank() }
+                            ?: stringResource(R.string.unnamed_exercise)
+                    )
+                }
+            }
+
+            item {
+                ListItem(
+                    modifier = Modifier.clickable {},
+                    icon = { Icon(Icons.Default.Add, null, tint = colors.primary) },
+                    text = { Text(stringResource(R.string.new_exercise), color = colors.primary) },
+                )
+            }
+
+            item {
+                // Fix FAB overlap
+                Box(Modifier.height(72.dp))
+            }
+        }
+    }
+}
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
