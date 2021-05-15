@@ -28,9 +28,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
-import com.noahjutz.splitfit.ui.exercises.list.ExerciseList
 import com.noahjutz.splitfit.ui.exercises.editor.ExerciseEditor
-import com.noahjutz.splitfit.ui.exercises.picker.ExercisePicker
+import com.noahjutz.splitfit.ui.exercises.list.ExerciseList
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.RoutineList
 import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
@@ -49,7 +48,6 @@ enum class Screen {
     routineEditor,
     exerciseList,
     exerciseEditor,
-    exercisePicker,
     workoutInProgress,
     workoutEditor,
     settings,
@@ -64,7 +62,6 @@ enum class Screen {
 fun NavGraph(
     navController: NavHostController,
 ) {
-    val sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel()
     NavHost(navController, startDestination = Screen.routineList.name) {
         composable(Screen.insights.name) {
             WorkoutInsights(
@@ -92,18 +89,10 @@ fun NavGraph(
         ) { backStackEntry ->
             CreateRoutineScreen(
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
-                onAddExercise = { navController.navigate("exercisePicker") },
                 startWorkout = { routineId: Int ->
                     navController.navigate("${Screen.workoutInProgress}?routineId=$routineId")
                 },
                 popBackStack = { navController.popBackStack() },
-                sharedExercisePickerViewModel = sharedExercisePickerViewModel,
-            )
-        }
-        composable(Screen.exercisePicker.name) {
-            ExercisePicker(
-                sharedExercisePickerViewModel = sharedExercisePickerViewModel,
-                popBackStack = { navController.popBackStack() }
             )
         }
         composable(Screen.exerciseList.name) {
@@ -134,11 +123,9 @@ fun NavGraph(
             )
         ) { backStackEntry ->
             WorkoutInProgress(
-                navToPickExercise = { navController.navigate(Screen.exercisePicker.name) },
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
-                sharedExercisePickerViewModel = sharedExercisePickerViewModel,
             )
         }
         composable(Screen.settings.name) {

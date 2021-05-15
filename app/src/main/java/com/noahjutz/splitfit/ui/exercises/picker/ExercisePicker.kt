@@ -33,15 +33,15 @@ import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Exercise
-import com.noahjutz.splitfit.ui.components.SearchTopBar
 import org.koin.androidx.compose.getViewModel
 
 
@@ -74,95 +74,6 @@ fun ExercisePickerSheet(
         val allExercises by viewModel.exercises.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
             items(allExercises.filter { !it.hidden }) { exercise ->
-                val checked by sharedExercisePickerViewModel.contains(exercise)
-                    .collectAsState(initial = false)
-                ListItem(
-                    Modifier.toggleable(
-                        value = checked,
-                        onValueChange = {
-                            if (it) sharedExercisePickerViewModel.add(exercise)
-                            else sharedExercisePickerViewModel.remove(exercise)
-                        }
-                    ),
-                    icon = { Checkbox(checked = checked, onCheckedChange = null) },
-                ) {
-                    Text(
-                        exercise.name.takeIf { it.isNotBlank() }
-                            ?: stringResource(R.string.unnamed_exercise)
-                    )
-                }
-            }
-
-            item {
-                ListItem(
-                    modifier = Modifier.clickable {},
-                    icon = { Icon(Icons.Default.Add, null, tint = colors.primary) },
-                    text = { Text(stringResource(R.string.new_exercise), color = colors.primary) },
-                )
-            }
-
-            item {
-                // Fix FAB overlap
-                Box(Modifier.height(72.dp))
-            }
-        }
-    }
-}
-
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@Composable
-fun ExercisePicker(
-    viewModel: ExercisePickerViewModel = getViewModel(),
-    sharedExercisePickerViewModel: SharedExercisePickerViewModel,
-    popBackStack: () -> Unit,
-) {
-    var save by remember { mutableStateOf(false) }
-    DisposableEffect(null) {
-        onDispose {
-            if (!save) sharedExercisePickerViewModel.clear()
-        }
-    }
-
-    Scaffold(
-        topBar = {
-            var searchQuery by remember { mutableStateOf("") }
-            SearchTopBar(
-                navigationIcon = {
-                    IconButton(
-                        onClick = popBackStack,
-                        content = { Icon(Icons.Default.Close, null) }
-                    )
-                },
-                title = stringResource(R.string.pick_exercise),
-                value = searchQuery,
-                onValueChange = {
-                    searchQuery = it
-                    viewModel.search(it)
-                },
-            )
-        },
-        floatingActionButton = {
-            val selectedExercises by sharedExercisePickerViewModel.exercises.collectAsState()
-            AnimatedVisibility(
-                visible = selectedExercises.isNotEmpty(),
-                enter = slideInHorizontally({ it * 2 }),
-                exit = fadeOut()
-            ) {
-                FloatingActionButton(
-                    onClick = {
-                        save = true
-                        popBackStack()
-                    }
-                ) {
-                    Icon(Icons.Default.Done, stringResource(R.string.pick_exercise))
-                }
-            }
-        }
-    ) {
-        val exercises by viewModel.exercises.collectAsState(emptyList())
-        LazyColumn(Modifier.fillMaxHeight()) {
-            items(exercises.filter { !it.hidden }) { exercise ->
                 val checked by sharedExercisePickerViewModel.contains(exercise)
                     .collectAsState(initial = false)
                 ListItem(

@@ -42,7 +42,6 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerSheet
-import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
@@ -54,12 +53,10 @@ import org.koin.core.parameter.parametersOf
 @ExperimentalFoundationApi
 @Composable
 fun CreateRoutineScreen(
-    onAddExercise: () -> Unit,
     startWorkout: (Int) -> Unit,
     popBackStack: () -> Unit,
     routineId: Int,
     viewModel: RoutineEditorViewModel = getViewModel { parametersOf(routineId) },
-    sharedExercisePickerViewModel: SharedExercisePickerViewModel,
     preferences: DataStore<Preferences> = get(),
 ) {
     val preferencesData by preferences.data.collectAsState(null)

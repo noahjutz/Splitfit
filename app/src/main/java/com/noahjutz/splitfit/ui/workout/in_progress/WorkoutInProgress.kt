@@ -45,12 +45,10 @@ import org.koin.core.parameter.parametersOf
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutInProgress(
-    navToPickExercise: () -> Unit,
     popBackStack: () -> Unit,
     workoutId: Int,
     routineId: Int,
     viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
-    sharedExercisePickerViewModel: SharedExercisePickerViewModel,
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
