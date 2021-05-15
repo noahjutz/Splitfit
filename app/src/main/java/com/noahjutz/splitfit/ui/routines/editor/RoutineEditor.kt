@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -63,73 +64,18 @@ fun CreateRoutineScreen(
 ) {
     val preferencesData by preferences.data.collectAsState(null)
     val scope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
+    val scaffoldState = rememberScaffoldState()
+    val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
-    LaunchedEffect(Unit) {
-        viewModel.editor.addExercises(sharedExercisePickerViewModel.exercises.value)
-        sharedExercisePickerViewModel.clear()
-    }
-
-    BackHandler {
-        if (scaffoldState.bottomSheetState.isExpanded) scope.launch {
-            scaffoldState.bottomSheetState.collapse()
-        } else {
-            popBackStack()
+    BackHandler(enabled = sheetState.isVisible) {
+        scope.launch {
+            sheetState.hide()
         }
     }
 
-    BottomSheetScaffold(
-        scaffoldState = scaffoldState,
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = {
-                    val currentWorkout =
-                        preferencesData?.get(AppPrefs.CurrentWorkout.key)
-                    if (currentWorkout == null || currentWorkout < 0) {
-                        startWorkout(viewModel.presenter.routine.value.routineId)
-                    } else {
-                        scope.launch {
-                            scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                            val snackbarResult =
-                                scaffoldState.snackbarHostState.showSnackbar(
-                                    "A workout is already in progress.",
-                                    "Stop current"
-                                )
-                            if (snackbarResult == SnackbarResult.ActionPerformed) {
-                                preferences.edit {
-                                    it[AppPrefs.CurrentWorkout.key] = -1
-                                }
-                                scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
-                            }
-                        }
-                    }
-                },
-                icon = { Icon(Icons.Default.PlayArrow, null) },
-                text = { Text("Start Workout") },
-            )
-        },
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(
-                        onClick = popBackStack,
-                        content = { Icon(Icons.Default.ArrowBack, null) },
-                        modifier = Modifier.testTag("backButton")
-                    )
-                },
-                title = {
-                    var nameFieldValue by remember { mutableStateOf(viewModel.presenter.routine.value.name) }
-                    AppBarTextField(
-                        value = nameFieldValue,
-                        onValueChange = {
-                            nameFieldValue = it
-                            viewModel.editor.setName(it)
-                        },
-                        hint = stringResource(R.string.unnamed_routine),
-                    )
-                },
-            )
-        },
+    ModalBottomSheetLayout(
+        sheetState = sheetState,
+        scrimColor = Color.Black.copy(alpha = 0.32f),
         sheetContent = {
             Box(
                 Modifier
@@ -139,83 +85,137 @@ fun CreateRoutineScreen(
                 ExercisePickerSheet(onExercisesSelected = {
                     scope.launch {
                         viewModel.editor.addExercises(it)
-                        scaffoldState.bottomSheetState.collapse()
+                        sheetState.hide()
                     }
                 })
             }
         }
     ) {
-        val setGroups by viewModel.presenter.routine
-            .mapLatest { it.setGroups }
-            .collectAsState(emptyList())
-        LazyColumn(Modifier.fillMaxHeight(), contentPadding = PaddingValues(bottom = 70.dp)) {
-            itemsIndexed(setGroups) { setGroupIndex, setGroup ->
-                val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
-                com.noahjutz.splitfit.ui.components.SetGroupCard(
-                    name = exercise.name.takeIf { it.isNotBlank() }
-                        ?: stringResource(R.string.unnamed_exercise),
-                    sets = setGroup.sets,
-                    onMoveDown = {
-                        viewModel.editor.swapSetGroups(
-                            setGroupIndex,
-                            setGroupIndex + 1
+        Scaffold(
+            scaffoldState = scaffoldState,
+            floatingActionButton = {
+                ExtendedFloatingActionButton(
+                    onClick = {
+                        val currentWorkout =
+                            preferencesData?.get(AppPrefs.CurrentWorkout.key)
+                        if (currentWorkout == null || currentWorkout < 0) {
+                            startWorkout(viewModel.presenter.routine.value.routineId)
+                        } else {
+                            scope.launch {
+                                scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                                val snackbarResult =
+                                    scaffoldState.snackbarHostState.showSnackbar(
+                                        "A workout is already in progress.",
+                                        "Stop current"
+                                    )
+                                if (snackbarResult == SnackbarResult.ActionPerformed) {
+                                    preferences.edit {
+                                        it[AppPrefs.CurrentWorkout.key] = -1
+                                    }
+                                    scaffoldState.snackbarHostState.showSnackbar("Current workout finished.")
+                                }
+                            }
+                        }
+                    },
+                    icon = { Icon(Icons.Default.PlayArrow, null) },
+                    text = { Text("Start Workout") },
+                )
+            },
+            topBar = {
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(
+                            onClick = popBackStack,
+                            content = { Icon(Icons.Default.ArrowBack, null) },
+                            modifier = Modifier.testTag("backButton")
                         )
                     },
-                    onMoveUp = {
-                        viewModel.editor.swapSetGroups(
-                            setGroupIndex,
-                            setGroupIndex - 1
+                    title = {
+                        var nameFieldValue by remember { mutableStateOf(viewModel.presenter.routine.value.name) }
+                        AppBarTextField(
+                            value = nameFieldValue,
+                            onValueChange = {
+                                nameFieldValue = it
+                                viewModel.editor.setName(it)
+                            },
+                            hint = stringResource(R.string.unnamed_routine),
                         )
                     },
-                    onAddSet = { viewModel.editor.addSetTo(setGroup) },
-                    onDeleteSet = { viewModel.editor.deleteSetFrom(setGroup, it) },
-                    logReps = exercise.logReps,
-                    logWeight = exercise.logWeight,
-                    logTime = exercise.logTime,
-                    logDistance = exercise.logDistance,
-                    showCheckbox = false,
-                    onDistanceChange = { setIndex, distance ->
-                        viewModel.editor.updateSet(
-                            setGroupIndex, setIndex,
-                            distance = distance.toDoubleOrNull()
-                        )
-                    },
-                    onRepsChange = { setIndex, reps ->
-                        viewModel.editor.updateSet(
-                            setGroupIndex, setIndex,
-                            reps = reps.toIntOrNull()
-                        )
-                    },
-                    onTimeChange = { setIndex, time ->
-                        viewModel.editor.updateSet(
-                            setGroupIndex, setIndex,
-                            time = time.toIntOrNull()
-                        )
-                    },
-                    onWeightChange = { setIndex, weight ->
-                        viewModel.editor.updateSet(
-                            setGroupIndex, setIndex,
-                            weight = weight.toDoubleOrNull()
-                        )
-                    }
                 )
             }
-
-            item {
-                OutlinedButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .height(120.dp),
-                    onClick = {
-                        scope.launch {
-                            scaffoldState.bottomSheetState.expand()
+        ) {
+            val setGroups by viewModel.presenter.routine
+                .mapLatest { it.setGroups }
+                .collectAsState(emptyList())
+            LazyColumn(Modifier.fillMaxHeight(), contentPadding = PaddingValues(bottom = 70.dp)) {
+                itemsIndexed(setGroups) { setGroupIndex, setGroup ->
+                    val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
+                    com.noahjutz.splitfit.ui.components.SetGroupCard(
+                        name = exercise.name.takeIf { it.isNotBlank() }
+                            ?: stringResource(R.string.unnamed_exercise),
+                        sets = setGroup.sets,
+                        onMoveDown = {
+                            viewModel.editor.swapSetGroups(
+                                setGroupIndex,
+                                setGroupIndex + 1
+                            )
+                        },
+                        onMoveUp = {
+                            viewModel.editor.swapSetGroups(
+                                setGroupIndex,
+                                setGroupIndex - 1
+                            )
+                        },
+                        onAddSet = { viewModel.editor.addSetTo(setGroup) },
+                        onDeleteSet = { viewModel.editor.deleteSetFrom(setGroup, it) },
+                        logReps = exercise.logReps,
+                        logWeight = exercise.logWeight,
+                        logTime = exercise.logTime,
+                        logDistance = exercise.logDistance,
+                        showCheckbox = false,
+                        onDistanceChange = { setIndex, distance ->
+                            viewModel.editor.updateSet(
+                                setGroupIndex, setIndex,
+                                distance = distance.toDoubleOrNull()
+                            )
+                        },
+                        onRepsChange = { setIndex, reps ->
+                            viewModel.editor.updateSet(
+                                setGroupIndex, setIndex,
+                                reps = reps.toIntOrNull()
+                            )
+                        },
+                        onTimeChange = { setIndex, time ->
+                            viewModel.editor.updateSet(
+                                setGroupIndex, setIndex,
+                                time = time.toIntOrNull()
+                            )
+                        },
+                        onWeightChange = { setIndex, weight ->
+                            viewModel.editor.updateSet(
+                                setGroupIndex, setIndex,
+                                weight = weight.toDoubleOrNull()
+                            )
                         }
+                    )
+                }
+
+                item {
+                    OutlinedButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .height(120.dp),
+                        onClick = {
+                            scope.launch {
+                                sheetState.show()
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Default.Add, null)
+                        Spacer(Modifier.width(12.dp))
+                        Text("Add Exercise")
                     }
-                ) {
-                    Icon(Icons.Default.Add, null)
-                    Spacer(Modifier.width(12.dp))
-                    Text("Add Exercise")
                 }
             }
         }
