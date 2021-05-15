@@ -50,6 +50,7 @@ import org.koin.androidx.compose.getViewModel
 fun ExercisePickerSheet(
     viewModel: ExercisePickerViewModel = getViewModel(),
     onExercisesSelected: (List<Exercise>) -> Unit,
+    navToExerciseEditor: () -> Unit,
 ) {
     Scaffold(
         floatingActionButton = {
@@ -94,7 +95,7 @@ fun ExercisePickerSheet(
 
             item {
                 ListItem(
-                    modifier = Modifier.clickable {},
+                    modifier = Modifier.clickable(onClick = navToExerciseEditor),
                     icon = { Icon(Icons.Default.Add, null, tint = colors.primary) },
                     text = { Text(stringResource(R.string.new_exercise), color = colors.primary) },
                 )

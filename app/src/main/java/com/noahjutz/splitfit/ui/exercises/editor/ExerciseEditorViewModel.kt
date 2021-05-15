@@ -21,6 +21,7 @@ package com.noahjutz.splitfit.ui.exercises.editor
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.noahjutz.splitfit.data.ExerciseRepository
+import com.noahjutz.splitfit.data.domain.Exercise
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +31,11 @@ class ExerciseEditorViewModel(
     private val repository: ExerciseRepository,
     exerciseId: Int,
 ) : ViewModel() {
-    private val _exercise = MutableStateFlow(repository.getExercise(exerciseId)!!)
+    private val _exercise = MutableStateFlow(
+        repository.getExercise(exerciseId) ?: repository.getExercise(
+            repository.insert(Exercise()).toInt()
+        )!!
+    )
 
     init {
         viewModelScope.launch {

@@ -44,6 +44,7 @@ import org.koin.core.parameter.parametersOf
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutInProgress(
+    navToExerciseEditor: () -> Unit,
     popBackStack: () -> Unit,
     workoutId: Int,
     routineId: Int,
@@ -62,7 +63,8 @@ fun WorkoutInProgress(
                         viewModel.editor.addExercises(it)
                         sheetState.hide()
                     }
-                }
+                },
+                navToExerciseEditor = navToExerciseEditor
             )
         }
     ) {

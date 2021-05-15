@@ -58,6 +58,7 @@ fun CreateRoutineScreen(
     routineId: Int,
     viewModel: RoutineEditorViewModel = getViewModel { parametersOf(routineId) },
     preferences: DataStore<Preferences> = get(),
+    navToExerciseEditor: () -> Unit,
 ) {
     val preferencesData by preferences.data.collectAsState(null)
     val scope = rememberCoroutineScope()
@@ -80,7 +81,8 @@ fun CreateRoutineScreen(
                         viewModel.editor.addExercises(it)
                         sheetState.hide()
                     }
-                }
+                },
+                navToExerciseEditor = navToExerciseEditor
             )
         }
     ) {
