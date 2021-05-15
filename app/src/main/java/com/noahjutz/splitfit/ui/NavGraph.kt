@@ -96,7 +96,7 @@ fun NavGraph(
         }
         composable(Screen.exerciseList.name) {
             ExerciseList(
-                addEditExercise = { exerciseId -> navController.navigate("${Screen.exerciseEditor}/$exerciseId") }
+                navToExerciseEditor = { exerciseId -> navController.navigate("${Screen.exerciseEditor}/$exerciseId") }
             )
         }
         composable(

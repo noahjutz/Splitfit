@@ -42,7 +42,7 @@ import org.koin.androidx.compose.getViewModel
 @ExperimentalMaterialApi
 @Composable
 fun ExerciseList(
-    addEditExercise: (Int) -> Unit,
+    navToExerciseEditor: (Int) -> Unit,
     viewModel: ExerciseListViewModel = getViewModel(),
 ) {
     val scope = rememberCoroutineScope()
@@ -57,7 +57,7 @@ fun ExerciseList(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { addEditExercise(viewModel.addExercise().toInt()) },
+                onClick = { navToExerciseEditor(-1) },
                 icon = { Icon(Icons.Default.Add, null) },
                 text = { Text(stringResource(R.string.new_exercise)) },
             )
@@ -80,7 +80,7 @@ fun ExerciseList(
                                 ).value
                             ) {
                                 ListItem(
-                                    Modifier.clickable { addEditExercise(exercise.exerciseId) }
+                                    Modifier.clickable { navToExerciseEditor(exercise.exerciseId) }
                                 ) {
                                     Text(
                                         text = exercise.name.takeIf { it.isNotBlank() }

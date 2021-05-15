@@ -47,6 +47,4 @@ class ExerciseListViewModel(
 
     fun hide(exercise: Exercise, hide: Boolean) =
         viewModelScope.launch { repository.insert(exercise.apply { hidden = hide }) }
-
-    fun addExercise(): Long = repository.insert(Exercise())
 }
