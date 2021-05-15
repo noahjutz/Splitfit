@@ -49,12 +49,11 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun ExercisePickerSheet(
     viewModel: ExercisePickerViewModel = getViewModel(),
-    sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel(),
     onExercisesSelected: (List<Exercise>) -> Unit,
 ) {
     Scaffold(
         floatingActionButton = {
-            val selectedExercises by sharedExercisePickerViewModel.exercises.collectAsState()
+            val selectedExercises by viewModel.presenter.selectedExercises.collectAsState()
             AnimatedVisibility(
                 visible = selectedExercises.isNotEmpty(),
                 enter = slideInHorizontally({ it * 2 }),
@@ -63,7 +62,7 @@ fun ExercisePickerSheet(
                 FloatingActionButton(
                     onClick = {
                         onExercisesSelected(selectedExercises)
-                        sharedExercisePickerViewModel.clear()
+                        viewModel.editor.clearExercises()
                     }
                 ) {
                     Icon(Icons.Default.Done, stringResource(R.string.pick_exercise))
@@ -71,17 +70,17 @@ fun ExercisePickerSheet(
             }
         }
     ) {
-        val allExercises by viewModel.exercises.collectAsState(emptyList())
+        val allExercises by viewModel.presenter.allExercises.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
             items(allExercises.filter { !it.hidden }) { exercise ->
-                val checked by sharedExercisePickerViewModel.contains(exercise)
+                val checked by viewModel.presenter.exercisesContains(exercise)
                     .collectAsState(initial = false)
                 ListItem(
                     Modifier.toggleable(
                         value = checked,
                         onValueChange = {
-                            if (it) sharedExercisePickerViewModel.add(exercise)
-                            else sharedExercisePickerViewModel.remove(exercise)
+                            if (it) viewModel.editor.addExercise(exercise)
+                            else viewModel.editor.removeExercise(exercise)
                         }
                     ),
                     icon = { Checkbox(checked = checked, onCheckedChange = null) },

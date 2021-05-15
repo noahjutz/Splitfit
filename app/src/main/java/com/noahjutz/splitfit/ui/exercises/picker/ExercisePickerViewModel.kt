@@ -20,22 +20,53 @@ package com.noahjutz.splitfit.ui.exercises.picker
 
 import androidx.lifecycle.ViewModel
 import com.noahjutz.splitfit.data.ExerciseRepository
+import com.noahjutz.splitfit.data.domain.Exercise
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import java.util.*
 
 class ExercisePickerViewModel(
     private val exerciseRepository: ExerciseRepository,
 ) : ViewModel() {
     private val nameFilter = MutableStateFlow("")
-    fun search(name: String) {
-        nameFilter.value = name
+    private val exercises = exerciseRepository.exercises
+    private val _selectedExercises = MutableStateFlow(emptyList<Exercise>())
+
+    val presenter = Presenter()
+    val editor = Editor()
+
+    inner class Editor {
+        fun search(name: String) {
+            nameFilter.value = name
+        }
+
+        fun addExercise(exercise: Exercise) {
+            _selectedExercises.value =
+                _selectedExercises.value.toMutableList().apply { add(exercise) }
+        }
+
+        fun removeExercise(exercise: Exercise) {
+            _selectedExercises.value =
+                _selectedExercises.value.toMutableList().apply { remove(exercise) }
+        }
+
+        fun clearExercises() {
+            _selectedExercises.value = emptyList()
+        }
     }
 
-    val exercises = exerciseRepository.exercises.combine(nameFilter) { exercises, nameFilter ->
-        exercises.filter {
-            it.name.toLowerCase(Locale.getDefault())
-                .contains(nameFilter.toLowerCase(Locale.getDefault()))
+    inner class Presenter {
+        val allExercises = exercises.combine(nameFilter) { exercises, nameFilter ->
+            exercises.filter {
+                it.name.toLowerCase(Locale.getDefault())
+                    .contains(nameFilter.toLowerCase(Locale.getDefault()))
+            }
         }
+
+        val selectedExercises = _selectedExercises.asStateFlow()
+
+        fun exercisesContains(exercise: Exercise) = selectedExercises.map { it.contains(exercise) }
     }
 }
