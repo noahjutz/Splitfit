@@ -1,0 +1,24 @@
+Features:
+* Added license notice in about screen (c8461b58)
+* Sort exercises alphabetically; WIP (#74)
+* Added introductory text in Insights tab for new users (29757e5c)
+* Added a setting for app theme (27f47d21, 882d8cf3, e621b78a)
+* Added a black theme (e9783bb0)
+* Added a "new exercise" button to the exercise picker (52ae9196, e33611ba)
+* Updated "Add exercise" button appearance in routine-/workout editors (93f09660, 7b84980b)
+* Replaced the exercise picker fullscreen dialog with a modal bottom sheet (98e467d1, 26da3f01)
+
+Bug Fixes:
+* Fixed Android 11 bug where "Restore Database" setting wouldn't show .db files (#77)
+
+Development:
+* Removed obsolete "endsWithDot" regex pattern (52d52f6a)
+* Store navigation routes in enum class (63c6d792, b258c8d2)
+* Added exercises.list package (7517a39c)
+* Added ui.theme package (f5ade2ab)
+* Better state hoisting for ExerciseListViewModel (d7fbcbcd)
+* Removed styles.xml (46f55970)
+* Removed SharedExercisePickerViewModel (1d386f72)
+
+Misc:
+* Fixed CircleCI badge in README (cb1ad01a)
