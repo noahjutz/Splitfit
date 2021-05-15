@@ -44,11 +44,9 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Exercise
 import org.koin.androidx.compose.getViewModel
 
-
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-// Experimental
 fun ExercisePickerSheet(
     viewModel: ExercisePickerViewModel = getViewModel(),
     sharedExercisePickerViewModel: SharedExercisePickerViewModel = getViewModel(),
@@ -62,10 +60,12 @@ fun ExercisePickerSheet(
                 enter = slideInHorizontally({ it * 2 }),
                 exit = fadeOut()
             ) {
-                FloatingActionButton(onClick = {
-                    onExercisesSelected(selectedExercises)
-                    sharedExercisePickerViewModel.clear()
-                }) {
+                FloatingActionButton(
+                    onClick = {
+                        onExercisesSelected(selectedExercises)
+                        sharedExercisePickerViewModel.clear()
+                    }
+                ) {
                     Icon(Icons.Default.Done, stringResource(R.string.pick_exercise))
                 }
             }

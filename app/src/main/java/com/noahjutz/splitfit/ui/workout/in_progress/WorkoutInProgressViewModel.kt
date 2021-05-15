@@ -23,12 +23,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
-import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.util.minus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

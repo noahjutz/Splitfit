@@ -74,12 +74,14 @@ fun CreateRoutineScreen(
         sheetState = sheetState,
         scrimColor = Color.Black.copy(alpha = 0.32f),
         sheetContent = {
-            ExercisePickerSheet(onExercisesSelected = {
-                scope.launch {
-                    viewModel.editor.addExercises(it)
-                    sheetState.hide()
+            ExercisePickerSheet(
+                onExercisesSelected = {
+                    scope.launch {
+                        viewModel.editor.addExercises(it)
+                        sheetState.hide()
+                    }
                 }
-            })
+            )
         }
     ) {
         Scaffold(

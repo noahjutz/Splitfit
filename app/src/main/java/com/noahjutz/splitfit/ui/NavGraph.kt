@@ -30,7 +30,6 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import com.noahjutz.splitfit.ui.exercises.editor.ExerciseEditor
 import com.noahjutz.splitfit.ui.exercises.list.ExerciseList
-import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.RoutineList
 import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.settings.AppSettings
@@ -38,7 +37,6 @@ import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditor
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgress
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
-import org.koin.androidx.compose.getViewModel
 import kotlin.time.ExperimentalTime
 
 @Suppress("EnumEntryName")

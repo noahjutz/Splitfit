@@ -21,9 +21,9 @@ package com.noahjutz.splitfit
 import android.app.Application
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.noahjutz.splitfit.data.resetAppSettings
 import com.noahjutz.splitfit.di.koinModule
 import com.noahjutz.splitfit.util.isFirstRun
-import com.noahjutz.splitfit.data.resetAppSettings
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext

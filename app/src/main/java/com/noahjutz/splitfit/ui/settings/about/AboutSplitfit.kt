@@ -179,9 +179,11 @@ private fun LicensesDialog(
                         ListItem(
                             modifier = Modifier.clickable { expanded = !expanded },
                             text = { Text("Splitfit is licensed under the GNU GPLv3.") },
-                            secondaryText = (@Composable {
-                                Text(stringResource(R.string.license_notice))
-                            }).takeIf { expanded },
+                            secondaryText = (
+                                @Composable {
+                                    Text(stringResource(R.string.license_notice))
+                                }
+                                ).takeIf { expanded },
                             trailing = {
                                 Icon(
                                     if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,

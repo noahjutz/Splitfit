@@ -23,8 +23,9 @@ import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.ExerciseRepository
 import com.noahjutz.splitfit.data.RoutineRepository
 import com.noahjutz.splitfit.data.WorkoutRepository
-import com.noahjutz.splitfit.ui.exercises.list.ExerciseListViewModel
+import com.noahjutz.splitfit.data.datastore
 import com.noahjutz.splitfit.ui.exercises.editor.ExerciseEditorViewModel
+import com.noahjutz.splitfit.ui.exercises.list.ExerciseListViewModel
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerViewModel
 import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.RoutineListViewModel
@@ -34,7 +35,6 @@ import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditorViewModel
 import com.noahjutz.splitfit.ui.workout.in_progress.CreateWorkoutViewModel
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsightsViewModel
-import com.noahjutz.splitfit.data.datastore
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

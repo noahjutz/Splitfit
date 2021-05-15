@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.AppBarTextField
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerSheet
-import com.noahjutz.splitfit.ui.exercises.picker.SharedExercisePickerViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -57,12 +56,14 @@ fun WorkoutInProgress(
         sheetState = sheetState,
         scrimColor = Color.Black.copy(alpha = 0.32f),
         sheetContent = {
-            ExercisePickerSheet(onExercisesSelected = {
-                scope.launch {
-                    viewModel.editor.addExercises(it)
-                    sheetState.hide()
+            ExercisePickerSheet(
+                onExercisesSelected = {
+                    scope.launch {
+                        viewModel.editor.addExercises(it)
+                        sheetState.hide()
+                    }
                 }
-            })
+            )
         }
     ) {
         Scaffold(

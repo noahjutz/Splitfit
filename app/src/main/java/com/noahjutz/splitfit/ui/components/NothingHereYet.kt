@@ -22,7 +22,8 @@ fun NothingHereYet(
     Box(
         Modifier
             .fillMaxSize()
-            .padding(48.dp), contentAlignment = Alignment.Center
+            .padding(48.dp),
+        contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(icon, null, modifier = Modifier.size(48.dp))
