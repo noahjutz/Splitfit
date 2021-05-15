@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.workout.in_progress
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -52,6 +53,12 @@ fun WorkoutInProgress(
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
+    BackHandler(enabled = sheetState.isVisible) {
+        scope.launch {
+            sheetState.hide()
+        }
+    }
 
     ModalBottomSheetLayout(
         sheetState = sheetState,
