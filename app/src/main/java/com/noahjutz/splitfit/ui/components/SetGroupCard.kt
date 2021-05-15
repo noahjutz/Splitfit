@@ -180,7 +180,7 @@ fun SetGroupCard(
                 onMoveDown = onMoveDown,
             )
             SetTable(
-                Modifier.padding(horizontal = 8.dp),
+                Modifier.padding(horizontal = 16.dp),
                 sets = sets,
                 logReps = logReps,
                 onRepsChange = onRepsChange,
@@ -211,7 +211,7 @@ private fun SetGroupTitle(
         Row(
             modifier
                 .height(70.dp)
-                .padding(start = 16.dp, end = 8.dp),
+                .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProvideTextStyle(typography.h5) {

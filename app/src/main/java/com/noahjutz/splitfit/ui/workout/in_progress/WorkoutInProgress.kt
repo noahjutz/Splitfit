@@ -131,6 +131,7 @@ fun WorkoutInProgress(
                         )
                     }
                     Divider()
+                    Spacer(Modifier.height(8.dp))
                 }
 
                 itemsIndexed(setGroups) { setGroupIndex, setGroup ->
@@ -197,7 +198,7 @@ fun WorkoutInProgress(
                     OutlinedButton(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 8.dp)
+                            .padding(horizontal = 16.dp)
                             .height(120.dp),
                         onClick = {
                             scope.launch {
@@ -209,14 +210,11 @@ fun WorkoutInProgress(
                         Spacer(Modifier.width(12.dp))
                         Text("Add Exercise")
                     }
-                }
 
-                item {
-                    Spacer(Modifier.height(16.dp))
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
+                            .padding(16.dp),
                         horizontalArrangement = Arrangement.Center,
                     ) {
                         TextButton(

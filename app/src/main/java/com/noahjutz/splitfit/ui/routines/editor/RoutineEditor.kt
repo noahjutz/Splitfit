@@ -143,6 +143,11 @@ fun CreateRoutineScreen(
                 .mapLatest { it.setGroups }
                 .collectAsState(emptyList())
             LazyColumn(Modifier.fillMaxHeight(), contentPadding = PaddingValues(bottom = 70.dp)) {
+
+                item {
+                    Spacer(Modifier.height(8.dp))
+                }
+
                 itemsIndexed(setGroups) { setGroupIndex, setGroup ->
                     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
                     com.noahjutz.splitfit.ui.components.SetGroupCard(
@@ -199,7 +204,7 @@ fun CreateRoutineScreen(
                     OutlinedButton(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(8.dp)
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
                             .height(120.dp),
                         onClick = {
                             scope.launch {
