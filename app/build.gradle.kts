@@ -26,7 +26,7 @@ plugins {
 
 android {
     compileSdk = App.compileSdk
-    buildToolsVersion = "30.0.2"
+    buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.noahjutz.splitfit"
