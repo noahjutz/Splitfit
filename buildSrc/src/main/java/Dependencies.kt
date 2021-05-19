@@ -69,8 +69,8 @@ object Libs {
     }
 
     object Compose {
-        private const val versionActivity = "1.3.0-alpha07"
-        const val version = "1.0.0-beta06"
+        private const val versionActivity = "1.3.0-alpha08"
+        const val version = "1.0.0-beta07"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
