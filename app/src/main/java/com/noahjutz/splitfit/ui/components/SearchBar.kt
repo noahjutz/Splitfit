@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.dp
 fun SearchBar(
     value: String,
     onValueChange: (String) -> Unit,
-    onClear: () -> Unit,
     modifier: Modifier = Modifier,
     elevation: Dp = 2.dp,
     border: BorderStroke? = null,
 ) {
+    val onClear = { onValueChange("") }
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -52,7 +52,9 @@ fun SearchBar(
                     innerTextField()
                 }
                 Spacer(Modifier.width(8.dp))
-                IconButton(onClick = onClear) { Icon(Icons.Default.Clear, "Clear") }
+                if (value.isNotEmpty()) {
+                    IconButton(onClick = onClear) { Icon(Icons.Default.Clear, "Clear") }
+                }
             }
         }
     }
@@ -66,7 +68,6 @@ fun SearchBarPreview() {
         SearchBar(
             text,
             setText,
-            {setText("")},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -82,7 +83,6 @@ fun SearchBarPreviewDark() {
         SearchBar(
             text,
             setText,
-            {setText("")},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
