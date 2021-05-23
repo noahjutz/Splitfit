@@ -1,5 +1,9 @@
 package com.noahjutz.splitfit.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+@ExperimentalAnimationApi
 @Composable
 fun SearchBar(
     value: String,
@@ -52,7 +57,11 @@ fun SearchBar(
                     innerTextField()
                 }
                 Spacer(Modifier.width(8.dp))
-                if (value.isNotEmpty()) {
+                AnimatedVisibility(
+                    value.isNotEmpty(),
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
                     IconButton(onClick = onClear) { Icon(Icons.Default.Clear, "Clear") }
                 }
             }
@@ -60,6 +69,7 @@ fun SearchBar(
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 @Preview(name = "Search bar light")
 fun SearchBarPreview() {
@@ -75,6 +85,7 @@ fun SearchBarPreview() {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 @Preview(name = "Search bar dark")
 fun SearchBarPreviewDark() {
