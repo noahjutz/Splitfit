@@ -26,6 +26,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
@@ -42,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Exercise
+import com.noahjutz.splitfit.ui.components.SearchBar
 import org.koin.androidx.compose.getViewModel
 
 @ExperimentalMaterialApi
@@ -73,6 +75,15 @@ fun ExercisePickerSheet(
     ) {
         val allExercises by viewModel.presenter.allExercises.collectAsState(emptyList())
         LazyColumn(Modifier.fillMaxHeight()) {
+            item {
+                val searchQuery by viewModel.presenter.nameFilter.collectAsState()
+                SearchBar(
+                    modifier = Modifier.padding(16.dp),
+                    value = searchQuery,
+                    onValueChange = viewModel.editor::search
+                )
+            }
+
             items(allExercises.filter { !it.hidden }) { exercise ->
                 val checked by viewModel.presenter.exercisesContains(exercise)
                     .collectAsState(initial = false)

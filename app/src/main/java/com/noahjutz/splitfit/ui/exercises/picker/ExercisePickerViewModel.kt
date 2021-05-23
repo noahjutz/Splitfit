@@ -30,7 +30,7 @@ import java.util.*
 class ExercisePickerViewModel(
     private val exerciseRepository: ExerciseRepository,
 ) : ViewModel() {
-    private val nameFilter = MutableStateFlow("")
+    private val _nameFilter = MutableStateFlow("")
     private val exercises = exerciseRepository.exercises
     private val _selectedExercises = MutableStateFlow(emptyList<Exercise>())
 
@@ -39,7 +39,7 @@ class ExercisePickerViewModel(
 
     inner class Editor {
         fun search(name: String) {
-            nameFilter.value = name
+            _nameFilter.value = name
         }
 
         fun addExercise(exercise: Exercise) {
@@ -58,7 +58,9 @@ class ExercisePickerViewModel(
     }
 
     inner class Presenter {
-        val allExercises = exercises.combine(nameFilter) { exercises, nameFilter ->
+        val nameFilter = _nameFilter.asStateFlow()
+
+        val allExercises = exercises.combine(_nameFilter) { exercises, nameFilter ->
             exercises.filter {
                 it.name.toLowerCase(Locale.getDefault())
                     .contains(nameFilter.toLowerCase(Locale.getDefault()))
