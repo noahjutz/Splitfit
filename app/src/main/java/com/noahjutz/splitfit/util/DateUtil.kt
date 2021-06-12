@@ -24,7 +24,7 @@ val List<Duration>.total: Duration
 
 @ExperimentalTime
 val List<Duration>.average: Duration
-    get() = total / size
+    get() = if (size > 0) total / size else 0.seconds
 
 /**
  * Number of consecutive daily workouts including today

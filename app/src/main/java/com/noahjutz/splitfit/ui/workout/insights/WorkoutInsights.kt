@@ -97,7 +97,7 @@ fun WorkoutInsightsContent(
                     background = { SwipeToDeleteBackground(dismissState) }
                 ) {
                     Card(
-                        Modifier.clickable { navToWorkoutEditor(workout.workoutId) },
+                        onClick =  { navToWorkoutEditor(workout.workoutId) },
                         elevation = animateDpAsState(
                             if (dismissState.dismissDirection != null) 4.dp else 0.dp
                         ).value,

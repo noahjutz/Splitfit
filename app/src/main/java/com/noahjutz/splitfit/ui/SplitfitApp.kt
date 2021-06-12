@@ -40,9 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavController
-import androidx.navigation.compose.KEY_ROUTE
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.AppPrefs
@@ -89,8 +88,9 @@ fun SplitfitApp(
         .map { it[AppPrefs.CurrentWorkout.key] }
         .collectAsState(initial = -1)
     val isWorkoutInProgress = currentWorkoutId?.let { it >= 0 } ?: false
-    val isCurrentDestinationHomeTab = navController.currentBackStackEntryAsState()
-        .value?.arguments?.getString(KEY_ROUTE) in bottomNavItems.map { it.route }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val isCurrentDestinationHomeTab =
+        navBackStackEntry?.destination?.route in bottomNavItems.map { it.route }
     val showWorkoutBottomSheet = isWorkoutInProgress && isCurrentDestinationHomeTab
 
     val navToWorkoutScreen =
@@ -121,15 +121,20 @@ private fun HomeBottomBar(
     navController: NavController,
     showLabels: Boolean,
 ) {
-    val backStackEntry = navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry.value?.arguments?.getString(KEY_ROUTE)
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
     BottomNavigation {
         for (screen in bottomNavItems) {
             BottomNavigationItem(
                 icon = { Icon(screen.icon, null) },
                 onClick = {
-                    navController.popBackStack(navController.graph.startDestination, false)
-                    if (screen.route != currentRoute) navController.navigate(screen.route)
+                    navController.navigate(screen.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 label = (@Composable { Text(stringResource(screen.name)) }).takeIf { showLabels },
                 selected = screen.route == currentRoute,

@@ -62,15 +62,14 @@ object Libs {
     }
 
     object Navigation {
-        private const val version = "2.3.5"
-        private const val versionCompose = "1.0.0-alpha10"
+        private const val version = "2.4.0-alpha02"
         const val navigation = "androidx.navigation:navigation-fragment-ktx:$version"
-        const val compose = "androidx.navigation:navigation-compose:$versionCompose"
+        const val compose = "androidx.navigation:navigation-compose:$version"
     }
 
     object Compose {
-        private const val versionActivity = "1.3.0-alpha07"
-        const val version = "1.0.0-beta06"
+        private const val versionActivity = "1.3.0-beta01"
+        const val version = "1.0.0-beta08"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -89,7 +88,7 @@ object Libs {
     }
 
     object Koin {
-        private const val version = "3.0.1"
+        private const val version = "3.1.0"
         const val android = "io.insert-koin:koin-android:$version"
         const val compose = "io.insert-koin:koin-androidx-compose:$version"
         const val test = "io.insert-koin:koin-test:$version"
@@ -126,7 +125,7 @@ object GradlePlugins {
     }
 
     object Kotlin {
-        const val version = "1.4.32"
+        const val version = "1.5.10"
         const val classpath = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     }
 }
