@@ -32,7 +32,7 @@ import com.noahjutz.splitfit.ui.exercises.list.ExerciseList
 import com.noahjutz.splitfit.ui.routines.RoutineList
 import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.settings.AppSettings
-import com.noahjutz.splitfit.ui.settings.about.AboutSplitfit
+import com.noahjutz.splitfit.ui.settings.about.AboutApp
 import com.noahjutz.splitfit.ui.settings.about.LicensesList
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditor
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgress
@@ -138,7 +138,7 @@ fun NavGraph(
             AppSettings(navToAbout = { navController.navigate(Screen.about.name) })
         }
         composable(Screen.about.name) {
-            AboutSplitfit(
+            AboutApp(
                 popBackStack = { navController.popBackStack() },
                 navToLicenses = {navController.navigate(Screen.licenses.name)}
             )

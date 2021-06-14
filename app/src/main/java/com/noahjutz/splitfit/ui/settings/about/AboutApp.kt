@@ -46,7 +46,7 @@ import org.koin.androidx.compose.getViewModel
 
 @ExperimentalMaterialApi
 @Composable
-fun AboutSplitfit(
+fun AboutApp(
     popBackStack: () -> Unit,
     navToLicenses: () -> Unit,
     viewModel: AboutSplitfitViewModel = getViewModel(),
