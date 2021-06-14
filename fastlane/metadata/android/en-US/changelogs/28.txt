@@ -1,0 +1,11 @@
+Features:
+* Replaced licenses dialog with a dedicated screen (1632452d, 1ac27296)
+* Re-added a search bar to the exercise picker (a215457e)
+
+Bug Fixes:
+* Bottom navigation now only adds up to one screen to the back stack (4dbc8863)
+
+Development:
+* Upgraded dependencies (b28ea5ff, 137d805b, 4dbc8863)
+* Removed AboutSplitfitViewModel (b7988e38, c779f230)
+* Replaced deprecated destructured declaration in koin module (3e3c6b61)
