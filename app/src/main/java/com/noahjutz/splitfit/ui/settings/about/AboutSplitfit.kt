@@ -18,39 +18,31 @@
 
 package com.noahjutz.splitfit.ui.settings.about
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.BuildConfig
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.LocalActivity
-import com.noahjutz.splitfit.ui.MainActivity
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.contributing
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.donateLiberapay
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.googlePlay
 import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.sourceCode
+import com.noahjutz.splitfit.util.openUrl
 import org.koin.androidx.compose.getViewModel
-
-private fun MainActivity.openUrl(url: String) {
-    startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(url) })
-}
 
 @ExperimentalMaterialApi
 @Composable
@@ -70,11 +62,6 @@ fun AboutSplitfit(
             )
         }
     ) {
-        var showLicenses by remember { mutableStateOf(false) }
-        if (showLicenses) LicensesDialog(
-            onDismiss = { showLicenses = false },
-            dependencies = viewModel.dependencies
-        )
         val mainActivity = LocalActivity.current
         LazyColumn {
             item {
@@ -107,7 +94,7 @@ fun AboutSplitfit(
                     icon = { Icon(Icons.Default.Update, null) },
                 )
                 ListItem(
-                    modifier = Modifier.clickable { showLicenses = true },
+                    modifier = Modifier.clickable { TODO("Navigate to [LicensesList]") },
                     text = { Text("Licenses") },
                     icon = { Icon(Icons.Default.ListAlt, null) },
                 )
@@ -158,51 +145,4 @@ fun AboutSplitfit(
             }
         }
     }
-}
-
-@ExperimentalMaterialApi
-@Composable
-private fun LicensesDialog(
-    onDismiss: () -> Unit,
-    dependencies: List<Dependency>,
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {},
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Close") } },
-        title = { Text("Licenses") },
-        text = {
-            LazyColumn {
-                item {
-                    var expanded by remember { mutableStateOf(false) }
-                    Card {
-                        ListItem(
-                            modifier = Modifier.clickable { expanded = !expanded },
-                            text = { Text("Splitfit is licensed under the GNU GPLv3.") },
-                            secondaryText = (
-                                @Composable {
-                                    Text(stringResource(R.string.license_notice))
-                                }
-                                ).takeIf { expanded },
-                            trailing = {
-                                Icon(
-                                    if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                                    null
-                                )
-                            }
-                        )
-                    }
-                }
-
-                items(dependencies) { dependency ->
-                    val mainActivity = LocalActivity.current
-                    ListItem(
-                        modifier = Modifier.clickable { mainActivity.openUrl(dependency.url) },
-                        text = { Text(dependency.name) },
-                        secondaryText = { Text(dependency.license.fullName) },
-                    )
-                }
-            }
-        },
-    )
 }
