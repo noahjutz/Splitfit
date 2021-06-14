@@ -85,26 +85,26 @@ val koinModule = module {
         ExercisePickerViewModel(exerciseRepository = get())
     }
 
-    viewModel { (id: Int) ->
-        ExerciseEditorViewModel(repository = get(), exerciseId = id)
+    viewModel { params ->
+        ExerciseEditorViewModel(repository = get(), exerciseId = params.get())
     }
 
-    viewModel { (id: Int) ->
+    viewModel { params ->
         RoutineEditorViewModel(
             exerciseRepository = get(),
             routineRepository = get(),
-            routineId = id
+            routineId = params.get()
         )
     }
 
-    viewModel { (workoutId: Int, routineId: Int) ->
+    viewModel { params ->
         CreateWorkoutViewModel(
             preferences = get(),
             workoutRepository = get(),
             routineRepository = get(),
             exerciseRepository = get(),
-            workoutId = workoutId,
-            routineId = routineId,
+            workoutId = params.get(),
+            routineId = params.get(),
         )
     }
 
@@ -123,9 +123,9 @@ val koinModule = module {
         )
     }
 
-    viewModel { (id: Int) ->
+    viewModel { params ->
         WorkoutEditorViewModel(
-            workoutId = id,
+            workoutId = params.get(),
             workoutRepository = get(),
         )
     }
