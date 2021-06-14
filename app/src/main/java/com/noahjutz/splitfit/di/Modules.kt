@@ -30,7 +30,6 @@ import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.RoutineListViewModel
 import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
-import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditorViewModel
 import com.noahjutz.splitfit.ui.workout.in_progress.CreateWorkoutViewModel
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsightsViewModel
@@ -122,10 +121,6 @@ val koinModule = module {
             database = get(),
             preferences = get(),
         )
-    }
-
-    viewModel {
-        AboutSplitfitViewModel()
     }
 
     viewModel { (id: Int) ->
