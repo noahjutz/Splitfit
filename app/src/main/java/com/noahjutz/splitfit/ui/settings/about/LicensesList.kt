@@ -50,14 +50,14 @@ val dependencies = listOf(
 @ExperimentalMaterialApi
 @Composable
 fun LicensesList(
-    onBack: () -> Unit,
+    popBackStack: () -> Unit,
 ) {
     val mainActivity = LocalActivity.current
     Scaffold(
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, "Back") }
+                    IconButton(onClick = popBackStack) { Icon(Icons.Default.ArrowBack, "Back") }
                 },
                 title = { Text("Licenses") },
             )

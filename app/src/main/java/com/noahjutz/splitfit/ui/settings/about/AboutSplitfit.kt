@@ -48,6 +48,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun AboutSplitfit(
     popBackStack: () -> Unit,
+    navToLicenses: () -> Unit,
     viewModel: AboutSplitfitViewModel = getViewModel(),
 ) {
     Scaffold(
@@ -94,7 +95,7 @@ fun AboutSplitfit(
                     icon = { Icon(Icons.Default.Update, null) },
                 )
                 ListItem(
-                    modifier = Modifier.clickable { TODO("Navigate to [LicensesList]") },
+                    modifier = Modifier.clickable(onClick = navToLicenses),
                     text = { Text("Licenses") },
                     icon = { Icon(Icons.Default.ListAlt, null) },
                 )
