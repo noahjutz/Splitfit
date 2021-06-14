@@ -21,10 +21,5 @@ package com.noahjutz.splitfit.ui.settings.about
 import androidx.lifecycle.ViewModel
 
 class AboutSplitfitViewModel : ViewModel() {
-    object Urls {
-        const val googlePlay = "https://play.google.com/store/apps/details?id=com.noahjutz.splitfit"
-        const val sourceCode = "https://github.com/noahjutz/Splitfit"
-        const val donateLiberapay = "https://liberapay.com/noahjutz/donate"
-        const val contributing = "https://github.com/noahjutz/Splitfit/blob/master/CONTRIBUTING.md"
-    }
+
 }

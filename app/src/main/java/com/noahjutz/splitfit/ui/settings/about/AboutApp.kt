@@ -37,19 +37,20 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.BuildConfig
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.LocalActivity
-import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.contributing
-import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.donateLiberapay
-import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.googlePlay
-import com.noahjutz.splitfit.ui.settings.about.AboutSplitfitViewModel.Urls.sourceCode
 import com.noahjutz.splitfit.util.openUrl
-import org.koin.androidx.compose.getViewModel
+
+private object Urls {
+    const val googlePlay = "https://play.google.com/store/apps/details?id=com.noahjutz.splitfit"
+    const val sourceCode = "https://github.com/noahjutz/Splitfit"
+    const val donateLiberapay = "https://liberapay.com/noahjutz/donate"
+    const val contributing = "https://github.com/noahjutz/Splitfit/blob/master/CONTRIBUTING.md"
+}
 
 @ExperimentalMaterialApi
 @Composable
 fun AboutApp(
     popBackStack: () -> Unit,
     navToLicenses: () -> Unit,
-    viewModel: AboutSplitfitViewModel = getViewModel(),
 ) {
     Scaffold(
         topBar = {
@@ -100,7 +101,7 @@ fun AboutApp(
                     icon = { Icon(Icons.Default.ListAlt, null) },
                 )
                 ListItem(
-                    modifier = Modifier.clickable { mainActivity.openUrl(sourceCode) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(Urls.sourceCode) },
                     text = { Text("Source Code") },
                     secondaryText = { Text("On GitHub") },
                     icon = { Icon(Icons.Default.Code, null) },
@@ -110,21 +111,21 @@ fun AboutApp(
                 Divider()
 
                 ListItem(
-                    modifier = Modifier.clickable { mainActivity.openUrl(contributing) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(Urls.contributing) },
                     text = { Text("Contributing") },
                     secondaryText = { Text("Find out how to contribute to Splitfit.") },
                     icon = { Icon(Icons.Default.Forum, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
                 if (BuildConfig.FLAVOR == "googleplay") ListItem(
-                    modifier = Modifier.clickable { mainActivity.openUrl(googlePlay) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(Urls.googlePlay) },
                     text = { Text("Rate App") },
                     secondaryText = { Text("On Google Play") },
                     icon = { Icon(Icons.Default.RateReview, null) },
                     trailing = { Icon(Icons.Default.Launch, null) },
                 )
                 if (BuildConfig.FLAVOR != "googleplay") ListItem(
-                    modifier = Modifier.clickable { mainActivity.openUrl(donateLiberapay) },
+                    modifier = Modifier.clickable { mainActivity.openUrl(Urls.donateLiberapay) },
                     text = { Text("Donate") },
                     secondaryText = { Text("On Liberapay") },
                     icon = { Icon(Icons.Default.CardGiftcard, null) },
