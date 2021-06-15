@@ -1,0 +1,7 @@
+Bug Fixes:
+* Fixed: Starting a workout based on a routine starts a blank workout (426763ea)
+* Fixed: Clicking "Workout In Progress" bottom sheet doesn't navigate to workout
+
+Development:
+* Removed deprecated calls in build.gradle.kts (a5802539)
+* Renamed class (c9d88cb2)
