@@ -32,8 +32,8 @@ android {
         applicationId = "com.noahjutz.splitfit"
         minSdk = App.minSdk
         targetSdk = App.targetSdk
-        versionCode = 28
-        versionName = "0.1.0-alpha17"
+        versionCode = 29
+        versionName = "0.1.0-alpha18"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
