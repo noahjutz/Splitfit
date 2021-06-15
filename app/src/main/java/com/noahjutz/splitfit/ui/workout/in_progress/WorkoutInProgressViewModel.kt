@@ -39,7 +39,7 @@ import java.util.*
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
-class CreateWorkoutViewModel(
+class WorkoutInProgressViewModel(
     private val preferences: DataStore<Preferences>,
     private val workoutRepository: WorkoutRepository,
     private val routineRepository: RoutineRepository,

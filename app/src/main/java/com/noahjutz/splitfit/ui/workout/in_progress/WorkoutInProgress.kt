@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.ui.workout.in_progress
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -49,8 +50,12 @@ fun WorkoutInProgress(
     popBackStack: () -> Unit,
     workoutId: Int,
     routineId: Int,
-    viewModel: CreateWorkoutViewModel = getViewModel { parametersOf(workoutId, routineId) },
+    viewModel: WorkoutInProgressViewModel = getViewModel { parametersOf(workoutId, routineId) },
 ) {
+    LaunchedEffect(Unit) {
+        Log.d("WorkoutInProgress", "workoutId: $workoutId; routineId: $routineId")
+    }
+
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 

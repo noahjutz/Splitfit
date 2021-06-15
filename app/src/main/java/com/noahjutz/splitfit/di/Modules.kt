@@ -31,7 +31,7 @@ import com.noahjutz.splitfit.ui.routines.RoutineListViewModel
 import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditorViewModel
-import com.noahjutz.splitfit.ui.workout.in_progress.CreateWorkoutViewModel
+import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgressViewModel
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsightsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -98,7 +98,7 @@ val koinModule = module {
     }
 
     viewModel { params ->
-        CreateWorkoutViewModel(
+        WorkoutInProgressViewModel(
             preferences = get(),
             workoutRepository = get(),
             routineRepository = get(),
