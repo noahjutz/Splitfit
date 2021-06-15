@@ -45,7 +45,6 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        useIR = true
     }
 
     lint {
@@ -63,7 +62,7 @@ android {
         }
     }
 
-    flavorDimensions("dimension")
+    flavorDimensions.add("dimension")
     productFlavors {
 
         create("fdroid") {
