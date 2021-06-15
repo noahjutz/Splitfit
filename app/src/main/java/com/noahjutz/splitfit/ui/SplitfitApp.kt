@@ -22,21 +22,20 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavController
@@ -123,7 +122,7 @@ private fun HomeBottomBar(
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
-    BottomNavigation {
+    BottomNavigation(Modifier.zIndex(10f)) {
         for (screen in bottomNavItems) {
             BottomNavigationItem(
                 icon = { Icon(screen.icon, null) },
@@ -143,22 +142,26 @@ private fun HomeBottomBar(
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun WorkoutBottomSheet(navToWorkoutScreen: () -> Unit) {
-    BottomAppBar(
-        Modifier.clickable(onClick = navToWorkoutScreen),
-        elevation = 4.dp,
-        backgroundColor = colors.surface,
+    Column(
+        modifier = Modifier
+            .height(60.dp)
+            .clickable(onClick = navToWorkoutScreen)
     ) {
-        ProvideTextStyle(value = MaterialTheme.typography.h6) {
+        Divider()
+        Row(
+            Modifier.weight(1f).padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Text(
                 modifier = Modifier.padding(horizontal = 12.dp),
-                text = "Workout in progress"
+                text = "Workout in progress",
+                style = typography.h6
             )
-        }
-        Spacer(Modifier.weight(1f))
-        IconButton(onClick = navToWorkoutScreen) {
-            Icon(Icons.Default.ExpandLess, null)
+            Spacer(Modifier.weight(1f))
+            Icon(Icons.Default.ExpandLess, null, modifier = Modifier.padding(end = 8.dp))
         }
     }
 }
