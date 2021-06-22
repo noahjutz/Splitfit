@@ -18,10 +18,10 @@
 
 package com.noahjutz.splitfit.ui.components
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
@@ -37,19 +37,23 @@ fun SearchTopBar(
     title: String,
     navigationIcon: @Composable (() -> Unit)? = null,
 ) {
-    DisposableEffect(Unit) {
-        onDispose {
-            onValueChange("")
-        }
-    }
-
     val searchFocusRequester = remember { FocusRequester() }
     var isInSearchMode by remember { mutableStateOf(false) }
+
+    BackHandler(enabled = isInSearchMode) { isInSearchMode = false }
+
     DisposableEffect(isInSearchMode) {
         if (isInSearchMode) searchFocusRequester.requestFocus()
         onDispose { }
     }
+
     if (isInSearchMode) {
+        DisposableEffect(Unit) {
+            onDispose {
+                onValueChange("")
+            }
+        }
+
         TopBar(
             title = {
                 AppBarTextField(
