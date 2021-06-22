@@ -40,8 +40,8 @@ class ExerciseListViewModel(
 
     val exercises = repository.exercises.combine(_nameFilter) { exercises, nameFilter ->
         exercises.filter {
-            it.name.toLowerCase(Locale.getDefault())
-                .contains(nameFilter.toLowerCase(Locale.getDefault()))
+            it.name.lowercase(Locale.getDefault())
+                .contains(nameFilter.lowercase(Locale.getDefault()))
         }
     }
 

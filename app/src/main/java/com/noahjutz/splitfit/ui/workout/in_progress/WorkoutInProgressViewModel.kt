@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
@@ -173,7 +174,7 @@ class WorkoutInProgressViewModel(
         }
 
         @OptIn(ExperimentalTime::class)
-        val duration = currentTime.map { (it - workout.value.startTime).inSeconds.seconds }
+        val duration = currentTime.map { Duration.seconds((it - workout.value.startTime).inWholeSeconds) }
 
         @OptIn(ExperimentalTime::class)
         val durationString = duration.map {

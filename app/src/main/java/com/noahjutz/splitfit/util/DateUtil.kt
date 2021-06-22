@@ -7,7 +7,7 @@ import kotlin.time.milliseconds
 import kotlin.time.seconds
 
 @OptIn(ExperimentalTime::class)
-infix operator fun Date.minus(date: Date): Duration = (this.time - date.time).milliseconds
+infix operator fun Date.minus(date: Date): Duration = Duration.milliseconds(this.time - date.time)
 
 /**
  * Sum of all [Duration] items in a list
@@ -15,7 +15,7 @@ infix operator fun Date.minus(date: Date): Duration = (this.time - date.time).mi
 @ExperimentalTime
 val List<Duration>.total: Duration
     get() {
-        var total = 0.seconds
+        var total = Duration.seconds(0)
         forEach {
             total += it
         }
@@ -24,7 +24,7 @@ val List<Duration>.total: Duration
 
 @ExperimentalTime
 val List<Duration>.average: Duration
-    get() = if (size > 0) total / size else 0.seconds
+    get() = if (size > 0) total / size else Duration.seconds(0)
 
 /**
  * Number of consecutive daily workouts including today
