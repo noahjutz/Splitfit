@@ -37,6 +37,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.components.NothingHereYet
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
+import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.util.average
 import com.noahjutz.splitfit.util.currentDailyStreak
 import com.noahjutz.splitfit.util.minus
@@ -70,7 +71,7 @@ fun WorkoutInsightsContent(
     val scope = rememberCoroutineScope()
 
     val workouts by viewModel.presenter.workouts.collectAsState(emptyList())
-    Scaffold(topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_insights)) }) }) {
+    Scaffold(topBar = { TopBar(title = { Text(stringResource(R.string.tab_insights)) }) }) {
         LazyColumn {
             item {
                 Column {

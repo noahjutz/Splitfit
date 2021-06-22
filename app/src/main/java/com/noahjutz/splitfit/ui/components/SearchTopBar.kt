@@ -50,7 +50,7 @@ fun SearchTopBar(
         onDispose { }
     }
     if (isInSearchMode) {
-        TopAppBar(
+        TopBar(
             title = {
                 AppBarTextField(
                     modifier = Modifier.focusRequester(searchFocusRequester),
@@ -71,7 +71,7 @@ fun SearchTopBar(
             },
         )
     } else {
-        TopAppBar(
+        TopBar(
             title = { Text(title) },
             actions = {
                 IconButton(onClick = { isInSearchMode = true }) {

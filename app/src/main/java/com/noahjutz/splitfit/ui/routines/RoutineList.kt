@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
+import com.noahjutz.splitfit.ui.components.TopBar
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
@@ -50,7 +51,7 @@ fun RoutineList(
     viewModel: RoutineListViewModel = getViewModel(),
 ) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_routines)) }) },
+        topBar = { TopBar(title = { Text(stringResource(R.string.tab_routines)) }) },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { addEditRoutine(viewModel.addRoutine().toInt()) },

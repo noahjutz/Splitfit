@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.ColorTheme
+import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.util.OpenDocument
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -49,7 +50,7 @@ fun AppSettings(
     navToAbout: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    Scaffold(topBar = { TopAppBar(title = { Text("Settings") }) }) {
+    Scaffold(topBar = { TopBar(title = { Text("Settings") }) }) {
         var showRestartAppDialog by remember { mutableStateOf(false) }
         var showResetSettingsDialog by remember { mutableStateOf(false) }
         var showThemeDialog by remember { mutableStateOf(false) }
