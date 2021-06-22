@@ -62,14 +62,14 @@ object Libs {
     }
 
     object Navigation {
-        private const val version = "2.4.0-alpha02"
+        private const val version = "2.4.0-alpha03"
         const val navigation = "androidx.navigation:navigation-fragment-ktx:$version"
         const val compose = "androidx.navigation:navigation-compose:$version"
     }
 
     object Compose {
-        private const val versionActivity = "1.3.0-beta01"
-        const val version = "1.0.0-beta08"
+        private const val versionActivity = "1.3.0-beta02"
+        const val version = "1.0.0-beta09"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -83,7 +83,7 @@ object Libs {
     }
 
     object DataStore {
-        private const val version = "1.0.0-beta01"
+        private const val version = "1.0.0-beta02"
         const val preferences = "androidx.datastore:datastore-preferences:$version"
     }
 
