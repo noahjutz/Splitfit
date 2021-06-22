@@ -1,0 +1,10 @@
+Features:
+* Changed top bar appearance (041ca45f)
+
+Bug fixes:
+* Search top bar in exercise list now closes on back press (4e304121)
+
+Development:
+* Upgraded jetpack dependencies (0420ac32)
+* Upgraded AGP (1ce11814)
+* Removed deprecated code (b5b40fe8)
