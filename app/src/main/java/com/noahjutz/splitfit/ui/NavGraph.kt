@@ -34,6 +34,7 @@ import com.noahjutz.splitfit.ui.routines.editor.CreateRoutineScreen
 import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutApp
 import com.noahjutz.splitfit.ui.settings.about.LicensesList
+import com.noahjutz.splitfit.ui.workout.completed.WorkoutCompleted
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditor
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgress
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
@@ -50,7 +51,8 @@ enum class Screen {
     workoutEditor,
     settings,
     about,
-    licenses
+    licenses,
+    workoutCompleted
 }
 
 @ExperimentalTime
@@ -129,6 +131,7 @@ fun NavGraph(
         ) { backStackEntry ->
             WorkoutInProgress(
                 navToExerciseEditor = { navController.navigate(Screen.exerciseEditor.name) },
+                navToCompleted = { navController.navigate("${Screen.workoutCompleted.name}/$it") },
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
@@ -140,11 +143,14 @@ fun NavGraph(
         composable(Screen.about.name) {
             AboutApp(
                 popBackStack = { navController.popBackStack() },
-                navToLicenses = {navController.navigate(Screen.licenses.name)}
+                navToLicenses = { navController.navigate(Screen.licenses.name) }
             )
         }
         composable(Screen.licenses.name) {
             LicensesList(popBackStack = { navController.popBackStack() })
+        }
+        composable("${Screen.workoutCompleted.name}/{workoutId}") {
+            WorkoutCompleted()
         }
     }
 }
