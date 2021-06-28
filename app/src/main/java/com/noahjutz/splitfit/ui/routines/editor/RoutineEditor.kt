@@ -29,10 +29,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Title
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
@@ -40,9 +43,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.AppPrefs
-import com.noahjutz.splitfit.ui.components.AppBarTextField
+import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerSheet
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -117,38 +119,31 @@ fun CreateRoutineScreen(
                 )
             },
             topBar = {
-                TopAppBar(
+                TopBar(
                     navigationIcon = {
-                        IconButton(
-                            onClick = popBackStack,
-                            content = { Icon(Icons.Default.ArrowBack, null) },
-                            modifier = Modifier.testTag("backButton")
-                        )
+                        IconButton(onClick = popBackStack) {
+                            Icon(Icons.Default.ArrowBack, stringResource(R.string.pop_back))
+                        }
                     },
-                    title = {
-                        var nameFieldValue by remember { mutableStateOf(viewModel.presenter.routine.value.name) }
-                        AppBarTextField(
-                            value = nameFieldValue,
-                            onValueChange = {
-                                nameFieldValue = it
-                                viewModel.editor.setName(it)
-                            },
-                            hint = stringResource(R.string.unnamed_routine),
-                        )
-                    },
+                    title = "Edit Routine",
                 )
             }
         ) {
-            val setGroups by viewModel.presenter.routine
-                .mapLatest { it.setGroups }
-                .collectAsState(emptyList())
+            val routine by viewModel.presenter.routine.collectAsState()
             LazyColumn(Modifier.fillMaxHeight(), contentPadding = PaddingValues(bottom = 70.dp)) {
 
                 item {
-                    Spacer(Modifier.height(8.dp))
+                    TextField(
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        value = routine.name,
+                        onValueChange = viewModel.editor::setName,
+                        label = { Text("Routine Name") },
+                        placeholder = { Text(stringResource(R.string.unnamed_routine)) },
+                        singleLine = true,
+                    )
                 }
 
-                itemsIndexed(setGroups) { setGroupIndex, setGroup ->
+                itemsIndexed(routine.setGroups) { setGroupIndex, setGroup ->
                     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
                     com.noahjutz.splitfit.ui.components.SetGroupCard(
                         name = exercise.name.takeIf { it.isNotBlank() }
