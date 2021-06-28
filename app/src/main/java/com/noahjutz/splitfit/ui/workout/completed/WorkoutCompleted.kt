@@ -13,12 +13,16 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.data.ColorTheme
 import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.ui.theme.SplitfitTheme
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutCompleted(
     routineId: Int,
+    workoutId: Int,
     popBackStack: () -> Unit,
+    viewModel: WorkoutCompletedViewModel = getViewModel { parametersOf(routineId, workoutId) }
 ) {
     Scaffold(
         topBar = {
@@ -39,7 +43,7 @@ fun WorkoutCompleted(
                 Text("Workout complete!", style = typography.h4)
                 if (routineId >= 0) {
                     Spacer(Modifier.height(24.dp))
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = viewModel::updateRoutine) {
                         Text("Update Routine")
                     }
                 }
@@ -63,7 +67,8 @@ fun WorkoutCompletedPreview() {
     SplitfitTheme(colors = ColorTheme.Black) {
         WorkoutCompleted(
             popBackStack = {},
-            routineId = -1
+            routineId = -1,
+            workoutId = -1
         )
     }
 }

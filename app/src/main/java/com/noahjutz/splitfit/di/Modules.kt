@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.di
 
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.Room
 import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.ExerciseRepository
@@ -30,6 +31,7 @@ import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerViewModel
 import com.noahjutz.splitfit.ui.routines.RoutineListViewModel
 import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
+import com.noahjutz.splitfit.ui.workout.completed.WorkoutCompletedViewModel
 import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditorViewModel
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgressViewModel
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsightsViewModel
@@ -126,6 +128,15 @@ val koinModule = module {
     viewModel { params ->
         WorkoutEditorViewModel(
             workoutId = params.get(),
+            workoutRepository = get(),
+        )
+    }
+
+    viewModel { params ->
+        WorkoutCompletedViewModel(
+            routineId = params[0],
+            workoutId = params[1],
+            routineRepository = get(),
             workoutRepository = get(),
         )
     }
