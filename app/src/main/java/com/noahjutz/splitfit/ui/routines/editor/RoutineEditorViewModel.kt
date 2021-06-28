@@ -49,11 +49,6 @@ class RoutineEditorViewModel(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        editor.close()
-    }
-
     inner class Editor {
         fun setName(name: String) {
             _routine.value = _routine.value.copy(name = name)
@@ -93,10 +88,6 @@ class RoutineEditorViewModel(
                     }
                 }
             _routine.value = _routine.value.copy(setGroups = setGroups)
-        }
-
-        fun close() {
-            routineRepository.insert(_routine.value)
         }
 
         fun updateSet(
