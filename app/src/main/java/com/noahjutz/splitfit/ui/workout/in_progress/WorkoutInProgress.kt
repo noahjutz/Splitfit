@@ -53,10 +53,6 @@ fun WorkoutInProgress(
     routineId: Int,
     viewModel: WorkoutInProgressViewModel = getViewModel { parametersOf(workoutId, routineId) },
 ) {
-    LaunchedEffect(Unit) {
-        Log.d("WorkoutInProgress", "workoutId: $workoutId; routineId: $routineId")
-    }
-
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
