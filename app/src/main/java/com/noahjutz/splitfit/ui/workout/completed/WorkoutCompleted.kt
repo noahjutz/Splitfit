@@ -33,7 +33,7 @@ fun WorkoutCompleted(
                 navigationIcon = {
                     IconButton(onClick = popBackStack) { Icon(Icons.Default.ArrowBack, "back") }
                 },
-                title = {}
+                title = ""
             )
         }
     ) {

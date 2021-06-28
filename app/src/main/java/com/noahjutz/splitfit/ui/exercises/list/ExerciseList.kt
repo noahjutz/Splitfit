@@ -34,8 +34,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.ui.components.SearchTopBar
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
+import com.noahjutz.splitfit.ui.components.TopBar
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
@@ -48,12 +48,7 @@ fun ExerciseList(
     val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            val nameFilter by viewModel.nameFilter.collectAsState()
-            SearchTopBar(
-                value = nameFilter,
-                onValueChange = { viewModel.setNameFilter(it) },
-                title = stringResource(R.string.tab_exercises),
-            )
+            TopBar(title = stringResource(R.string.tab_exercises))
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(

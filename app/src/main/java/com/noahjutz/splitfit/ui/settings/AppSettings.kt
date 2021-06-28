@@ -50,7 +50,7 @@ fun AppSettings(
     navToAbout: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    Scaffold(topBar = { TopBar(title = { Text("Settings") }) }) {
+    Scaffold(topBar = { TopBar(title = stringResource(R.string.tab_settings)) }) {
         var showRestartAppDialog by remember { mutableStateOf(false) }
         var showResetSettingsDialog by remember { mutableStateOf(false) }
         var showThemeDialog by remember { mutableStateOf(false) }

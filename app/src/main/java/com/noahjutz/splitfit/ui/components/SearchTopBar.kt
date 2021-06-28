@@ -30,59 +30,61 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 
-@Composable
-fun SearchTopBar(
-    value: String,
-    onValueChange: (String) -> Unit,
-    title: String,
-    navigationIcon: @Composable (() -> Unit)? = null,
-) {
-    val searchFocusRequester = remember { FocusRequester() }
-    var isInSearchMode by remember { mutableStateOf(false) }
-
-    BackHandler(enabled = isInSearchMode) { isInSearchMode = false }
-
-    DisposableEffect(isInSearchMode) {
-        if (isInSearchMode) searchFocusRequester.requestFocus()
-        onDispose { }
-    }
-
-    if (isInSearchMode) {
-        DisposableEffect(Unit) {
-            onDispose {
-                onValueChange("")
-            }
-        }
-
-        TopBar(
-            title = {
-                AppBarTextField(
-                    modifier = Modifier.focusRequester(searchFocusRequester),
-                    value = value,
-                    onValueChange = onValueChange,
-                    hint = "Search"
-                )
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = {
-                        onValueChange("")
-                        isInSearchMode = false
-                    }
-                ) {
-                    Icon(Icons.Default.ArrowBack, "Back")
-                }
-            },
-        )
-    } else {
-        TopBar(
-            title = { Text(title) },
-            actions = {
-                IconButton(onClick = { isInSearchMode = true }) {
-                    Icon(Icons.Default.Search, "Search")
-                }
-            },
-            navigationIcon = navigationIcon
-        )
-    }
-}
+// TODO broken because of TopBar change
+//@Composable
+//fun SearchTopBar(
+//    value: String,
+//    onValueChange: (String) -> Unit,
+//    title: String,
+//    navigationIcon: @Composable (() -> Unit)? = null,
+//) {
+//    val searchFocusRequester = remember { FocusRequester() }
+//    var isInSearchMode by remember { mutableStateOf(false) }
+//
+//    BackHandler(enabled = isInSearchMode) { isInSearchMode = false }
+//
+//    DisposableEffect(isInSearchMode) {
+//        if (isInSearchMode) searchFocusRequester.requestFocus()
+//        onDispose { }
+//    }
+//
+//    if (isInSearchMode) {
+//        DisposableEffect(Unit) {
+//            onDispose {
+//                onValueChange("")
+//            }
+//        }
+//
+//        TopBar(
+//            title = {
+//                AppBarTextField(
+//                    modifier = Modifier.focusRequester(searchFocusRequester),
+//                    value = value,
+//                    onValueChange = onValueChange,
+//                    hint = "Search"
+//                )
+//            },
+//            navigationIcon = {
+//                IconButton(
+//                    onClick = {
+//                        onValueChange("")
+//                        isInSearchMode = false
+//                    }
+//                ) {
+//                    Icon(Icons.Default.ArrowBack, "Back")
+//                }
+//            },
+//        )
+//    } else {
+//        TopBar(
+//            title = { Text(title) },
+//            actions = {
+//                IconButton(onClick = { isInSearchMode = true }) {
+//                    Icon(Icons.Default.Search, "Search")
+//                }
+//            },
+//            navigationIcon = navigationIcon
+//        )
+//    }
+//}
+//

@@ -70,7 +70,7 @@ fun WorkoutInsightsContent(
     val scope = rememberCoroutineScope()
 
     val workouts by viewModel.presenter.workouts.collectAsState(emptyList())
-    Scaffold(topBar = { TopBar(title = { Text(stringResource(R.string.tab_insights)) }) }) {
+    Scaffold(topBar = { TopBar(title = stringResource(R.string.tab_insights)) }) {
         LazyColumn {
             item {
                 Column {

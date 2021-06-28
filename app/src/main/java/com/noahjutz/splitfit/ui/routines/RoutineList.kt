@@ -51,7 +51,7 @@ fun RoutineList(
     viewModel: RoutineListViewModel = getViewModel(),
 ) {
     Scaffold(
-        topBar = { TopBar(title = { Text(stringResource(R.string.tab_routines)) }) },
+        topBar = { TopBar(title = stringResource(R.string.tab_routines)) },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { addEditRoutine(viewModel.addRoutine().toInt()) },
