@@ -36,7 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.ColorTheme
-import com.noahjutz.splitfit.ui.LocalTheme
+import com.noahjutz.splitfit.ui.LocalThemePreference
 import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.util.OpenDocument
 import kotlinx.coroutines.launch
@@ -187,7 +187,7 @@ fun ThemeDialog(
         text = {
             Column {
                 for (theme in ColorTheme.values()) {
-                    val isSelected = LocalTheme.current == theme
+                    val isSelected = LocalThemePreference.current == theme
                     ListItem(
                         modifier = Modifier.toggleable(
                             value = isSelected,

@@ -22,8 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.noahjutz.splitfit.data.ColorTheme
+import com.noahjutz.splitfit.ui.LocalColorTheme
+import com.noahjutz.splitfit.ui.LocalThemePreference
 
 @ExperimentalAnimationApi
 @Composable
@@ -31,8 +33,6 @@ fun SearchBar(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    elevation: Dp = 2.dp,
-    border: BorderStroke? = null,
 ) {
     val onClear = { onValueChange("") }
     BasicTextField(
@@ -45,8 +45,9 @@ fun SearchBar(
         Surface(
             modifier = modifier,
             shape = RoundedCornerShape(percent = 50),
-            elevation = elevation,
-            border = border,
+            elevation = if (LocalThemePreference.current == ColorTheme.White) 2.dp else 0.dp,
+            border = BorderStroke(2.dp, colors.onSurface.copy(alpha = 0.12f))
+                .takeIf { LocalColorTheme.current == ColorTheme.Black },
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(enabled = false, onClick = {}) { Icon(Icons.Default.Search, "Search") }

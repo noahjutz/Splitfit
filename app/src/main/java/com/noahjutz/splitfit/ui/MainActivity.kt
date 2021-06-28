@@ -23,6 +23,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
@@ -37,7 +38,8 @@ import kotlinx.coroutines.flow.map
 import kotlin.time.ExperimentalTime
 
 val LocalActivity = compositionLocalOf<MainActivity> { error("MainActivity not found") }
-val LocalTheme = compositionLocalOf { ColorTheme.FollowSystem }
+val LocalThemePreference = compositionLocalOf { ColorTheme.FollowSystem }
+val LocalColorTheme = compositionLocalOf<ColorTheme> { error("") }
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,11 +59,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 .collectAsState(initial = ColorTheme.FollowSystem)
 
+            val colors = when (appTheme) {
+                ColorTheme.FollowSystem -> if (isSystemInDarkTheme()) ColorTheme.Black else ColorTheme.White
+                ColorTheme.White -> ColorTheme.White
+                ColorTheme.Black -> ColorTheme.Black
+            }
+
             CompositionLocalProvider(
                 LocalActivity provides this@MainActivity,
-                LocalTheme provides appTheme
+                LocalThemePreference provides appTheme,
+                LocalColorTheme provides colors
             ) {
-                SplitfitTheme(colors = LocalTheme.current) {
+                SplitfitTheme(colors = LocalThemePreference.current) {
                     SplitfitApp()
                 }
             }
