@@ -34,3 +34,4 @@ data class Workout(
 )
 
 fun Routine.toWorkout() = Workout(name, setGroups)
+fun Workout.toRoutine(routineId: Int) = Routine(name, setGroups, routineId)
