@@ -6,6 +6,8 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +26,7 @@ fun WorkoutCompleted(
     popBackStack: () -> Unit,
     viewModel: WorkoutCompletedViewModel = getViewModel { parametersOf(routineId, workoutId) }
 ) {
+    val state by viewModel.state.collectAsState()
     Scaffold(
         topBar = {
             TopBar(
@@ -41,7 +44,7 @@ fun WorkoutCompleted(
                     .padding(vertical = 48.dp, horizontal = 24.dp),
             ) {
                 Text("Workout complete!", style = typography.h4)
-                if (routineId >= 0) {
+                if (state is WorkoutCompletedViewModel.State.Found) {
                     Spacer(Modifier.height(24.dp))
                     Button(onClick = {
                         viewModel.updateRoutine()
