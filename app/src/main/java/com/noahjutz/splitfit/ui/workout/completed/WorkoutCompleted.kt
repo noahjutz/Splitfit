@@ -46,10 +46,12 @@ fun WorkoutCompleted(
                 Text("Workout complete!", style = typography.h4)
                 if (state is WorkoutCompletedViewModel.State.Found) {
                     Spacer(Modifier.height(24.dp))
-                    Button(onClick = {
-                        viewModel.updateRoutine()
-                        popBackStack()
-                    }) {
+                    Button(
+                        onClick = {
+                            viewModel.updateRoutine()
+                            popBackStack()
+                        }
+                    ) {
                         Text("Update Routine")
                     }
                 }

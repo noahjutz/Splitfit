@@ -18,7 +18,6 @@
 
 package com.noahjutz.splitfit.ui.workout.in_progress
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
