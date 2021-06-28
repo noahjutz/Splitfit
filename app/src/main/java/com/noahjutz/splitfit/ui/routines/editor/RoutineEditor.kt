@@ -20,6 +20,7 @@ package com.noahjutz.splitfit.ui.routines.editor
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,7 +30,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Title
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -43,6 +43,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.AppPrefs
+import com.noahjutz.splitfit.ui.components.SetGroupCard
 import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerSheet
 import kotlinx.coroutines.launch
@@ -86,7 +87,8 @@ fun CreateRoutineScreen(
                 },
                 navToExerciseEditor = navToExerciseEditor
             )
-        }
+        },
+        sheetElevation = 0.dp,
     ) {
         Scaffold(
             scaffoldState = scaffoldState,
@@ -134,7 +136,9 @@ fun CreateRoutineScreen(
 
                 item {
                     TextField(
-                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                         value = routine.name,
                         onValueChange = viewModel.editor::setName,
                         label = { Text("Routine Name") },
@@ -145,7 +149,7 @@ fun CreateRoutineScreen(
 
                 itemsIndexed(routine.setGroups) { setGroupIndex, setGroup ->
                     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
-                    com.noahjutz.splitfit.ui.components.SetGroupCard(
+                    SetGroupCard(
                         name = exercise.name.takeIf { it.isNotBlank() }
                             ?: stringResource(R.string.unnamed_exercise),
                         sets = setGroup.sets,
