@@ -104,7 +104,7 @@ fun WorkoutInProgress(
                 },
                 finishWorkout = {
                     viewModel.editor.finishWorkout()
-                    navToCompleted(routineId, workoutId) // TODO not always passed to WorkoutInProgress
+                    navToCompleted(routineId, viewModel.presenter.workout.value.workoutId) // TODO not always passed to WorkoutInProgress
                 }
             )
             var showCancelWorkoutDialog by remember { mutableStateOf(false) }
