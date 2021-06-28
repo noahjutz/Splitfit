@@ -43,7 +43,10 @@ fun WorkoutCompleted(
                 Text("Workout complete!", style = typography.h4)
                 if (routineId >= 0) {
                     Spacer(Modifier.height(24.dp))
-                    Button(onClick = viewModel::updateRoutine) {
+                    Button(onClick = {
+                        viewModel.updateRoutine()
+                        popBackStack()
+                    }) {
                         Text("Update Routine")
                     }
                 }
