@@ -33,5 +33,25 @@ data class Workout(
     val workoutId: Int = 0,
 )
 
-fun Routine.toWorkout() = Workout(name, setGroups)
-fun Workout.toRoutine(routineId: Int) = Routine(name, setGroups, routineId)
+fun Routine.toWorkout() = Workout(
+    name,
+    setGroups.map {
+        it.copy(
+            sets = it.sets.toMutableList().map {
+                it.copy(complete = false)
+            }
+        )
+    }
+)
+
+fun Workout.toRoutine(routineId: Int) = Routine(
+    name,
+    setGroups.map {
+        it.copy(
+            sets = it.sets.toMutableList().map {
+                it.copy(complete = false)
+            }
+        )
+    },
+    routineId
+)
