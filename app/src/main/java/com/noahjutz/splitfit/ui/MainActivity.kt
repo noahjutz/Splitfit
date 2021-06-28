@@ -32,6 +32,7 @@ import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.data.ColorTheme
 import com.noahjutz.splitfit.data.datastore
 import com.noahjutz.splitfit.ui.theme.SplitfitTheme
+import com.noahjutz.splitfit.util.valueOf
 import kotlinx.coroutines.flow.map
 import kotlin.time.ExperimentalTime
 
@@ -47,7 +48,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val appTheme: ColorTheme by applicationContext.datastore.data
-                .map { ColorTheme.valueOf(it[AppPrefs.AppTheme.key] ?: ColorTheme.FollowSystem.name) }
+                .map {
+                    valueOf(
+                        it[AppPrefs.AppTheme.key] ?: ColorTheme.FollowSystem.name,
+                        ColorTheme.FollowSystem
+                    )
+                }
                 .collectAsState(initial = ColorTheme.FollowSystem)
             SplitfitTheme(colors = appTheme) {
                 CompositionLocalProvider(LocalActivity provides this@MainActivity) {

@@ -31,8 +31,7 @@ enum class ColorTheme(
     @StringRes val themeName: Int
 ) {
     FollowSystem(R.string.theme_follow_system),
-    Light(R.string.theme_light),
-    Dark(R.string.theme_dark),
+    White(R.string.theme_light),
     Black(R.string.theme_black)
 }
 

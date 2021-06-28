@@ -29,7 +29,10 @@ import com.noahjutz.splitfit.data.AppDatabase
 import com.noahjutz.splitfit.data.AppPrefs
 import com.noahjutz.splitfit.data.ColorTheme
 import com.noahjutz.splitfit.data.resetAppSettings
-import kotlinx.coroutines.flow.*
+import com.noahjutz.splitfit.util.valueOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class AppSettingsViewModel(
@@ -48,7 +51,10 @@ class AppSettingsViewModel(
             preferences.data.collectLatest {
                 _showBottomNavLabels.value = it[AppPrefs.ShowBottomNavLabels.key] == true
                 _appTheme.value =
-                    ColorTheme.valueOf(it[AppPrefs.AppTheme.key] ?: ColorTheme.FollowSystem.name)
+                    valueOf(
+                        it[AppPrefs.AppTheme.key] ?: ColorTheme.FollowSystem.name,
+                        ColorTheme.FollowSystem
+                    )
             }
         }
     }
