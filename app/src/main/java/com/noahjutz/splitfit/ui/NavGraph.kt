@@ -22,6 +22,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -131,7 +132,11 @@ fun NavGraph(
         ) { backStackEntry ->
             WorkoutInProgress(
                 navToExerciseEditor = { navController.navigate(Screen.exerciseEditor.name) },
-                navToCompleted = { navController.navigate("${Screen.workoutCompleted.name}/$it") },
+                navToCompleted = {
+                    navController.navigate("${Screen.workoutCompleted.name}/$it") {
+                        popUpTo(navController.graph.findStartDestination().id)
+                    }
+                },
                 popBackStack = { navController.popBackStack() },
                 workoutId = backStackEntry.arguments!!.getInt("workoutId"),
                 routineId = backStackEntry.arguments!!.getInt("routineId"),
@@ -150,7 +155,9 @@ fun NavGraph(
             LicensesList(popBackStack = { navController.popBackStack() })
         }
         composable("${Screen.workoutCompleted.name}/{workoutId}") {
-            WorkoutCompleted()
+            WorkoutCompleted(
+                popBackStack = { navController.popBackStack() }
+            )
         }
     }
 }
