@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.ColorTheme
+import com.noahjutz.splitfit.ui.LocalTheme
 import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.util.OpenDocument
 import kotlinx.coroutines.launch
@@ -139,10 +140,9 @@ fun AppSettings(
                 viewModel.resetSettings()
             }
         )
-        val theme by viewModel.appTheme.collectAsState()
+
         if (showThemeDialog) ThemeDialog(
             onDismiss = { showThemeDialog = false },
-            colorTheme = theme,
             onThemeSelected = viewModel::setAppTheme
         )
     }
@@ -179,7 +179,6 @@ fun ResetSettingsDialog(
 @Composable
 fun ThemeDialog(
     onDismiss: () -> Unit,
-    colorTheme: ColorTheme,
     onThemeSelected: (ColorTheme) -> Unit
 ) {
     AlertDialog(
@@ -188,13 +187,14 @@ fun ThemeDialog(
         text = {
             Column {
                 for (theme in ColorTheme.values()) {
+                    val isSelected = LocalTheme.current == theme
                     ListItem(
                         modifier = Modifier.toggleable(
-                            value = colorTheme == theme,
+                            value = isSelected,
                             onValueChange = { onThemeSelected(theme) }
                         ),
                         text = { Text(stringResource(theme.themeName)) },
-                        trailing = { RadioButton(selected = colorTheme == theme, onClick = null) },
+                        trailing = { RadioButton(selected = isSelected, onClick = null) },
                     )
                 }
             }

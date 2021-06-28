@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.map
 import kotlin.time.ExperimentalTime
 
 val LocalActivity = compositionLocalOf<MainActivity> { error("MainActivity not found") }
+val LocalTheme = compositionLocalOf { ColorTheme.FollowSystem }
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,8 +56,12 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
                 .collectAsState(initial = ColorTheme.FollowSystem)
-            SplitfitTheme(colors = appTheme) {
-                CompositionLocalProvider(LocalActivity provides this@MainActivity) {
+
+            CompositionLocalProvider(
+                LocalActivity provides this@MainActivity,
+                LocalTheme provides appTheme
+            ) {
+                SplitfitTheme(colors = LocalTheme.current) {
                     SplitfitApp()
                 }
             }

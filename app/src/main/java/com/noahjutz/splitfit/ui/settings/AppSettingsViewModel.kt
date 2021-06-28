@@ -43,18 +43,10 @@ class AppSettingsViewModel(
     private val _showBottomNavLabels = MutableStateFlow(false)
     val showBottomNavLabels = _showBottomNavLabels.asStateFlow()
 
-    private val _appTheme = MutableStateFlow(ColorTheme.FollowSystem)
-    val appTheme = _appTheme.asStateFlow()
-
     init {
         viewModelScope.launch {
             preferences.data.collectLatest {
                 _showBottomNavLabels.value = it[AppPrefs.ShowBottomNavLabels.key] == true
-                _appTheme.value =
-                    valueOf(
-                        it[AppPrefs.AppTheme.key] ?: ColorTheme.FollowSystem.name,
-                        ColorTheme.FollowSystem
-                    )
             }
         }
     }
