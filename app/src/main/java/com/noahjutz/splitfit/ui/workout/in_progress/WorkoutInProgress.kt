@@ -47,7 +47,7 @@ import org.koin.core.parameter.parametersOf
 @Composable
 fun WorkoutInProgress(
     navToExerciseEditor: () -> Unit,
-    navToCompleted: (workoutId: Int) -> Unit,
+    navToCompleted: (routineId: Int) -> Unit,
     popBackStack: () -> Unit,
     workoutId: Int,
     routineId: Int,
@@ -108,7 +108,7 @@ fun WorkoutInProgress(
                 },
                 finishWorkout = {
                     viewModel.editor.finishWorkout()
-                    navToCompleted(viewModel.presenter.workout.value.workoutId)
+                    navToCompleted(routineId)
                 }
             )
             var showCancelWorkoutDialog by remember { mutableStateOf(false) }

@@ -17,6 +17,7 @@ import com.noahjutz.splitfit.ui.theme.SplitfitTheme
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutCompleted(
+    routineId: Int,
     popBackStack: () -> Unit,
 ) {
     Scaffold(
@@ -36,13 +37,15 @@ fun WorkoutCompleted(
                     .padding(vertical = 48.dp, horizontal = 24.dp),
             ) {
                 Text("Workout complete!", style = typography.h4)
-                Spacer(Modifier.height(24.dp))
-                Button(onClick = { /*TODO*/ }) {
-                    Text("Update Routine")
+                if (routineId >= 0) {
+                    Spacer(Modifier.height(24.dp))
+                    Button(onClick = { /*TODO*/ }) {
+                        Text("Update Routine")
+                    }
                 }
             }
             TextButton(
-                onClick = { /*TODO*/ },
+                onClick = popBackStack,
                 Modifier
                     .align(Alignment.BottomCenter)
                     .padding(24.dp)
@@ -59,7 +62,8 @@ fun WorkoutCompleted(
 fun WorkoutCompletedPreview() {
     SplitfitTheme(colors = ColorTheme.Black) {
         WorkoutCompleted(
-            popBackStack = {}
+            popBackStack = {},
+            routineId = -1
         )
     }
 }

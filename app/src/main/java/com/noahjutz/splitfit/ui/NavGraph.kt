@@ -154,9 +154,10 @@ fun NavGraph(
         composable(Screen.licenses.name) {
             LicensesList(popBackStack = { navController.popBackStack() })
         }
-        composable("${Screen.workoutCompleted.name}/{workoutId}") {
+        composable("${Screen.workoutCompleted.name}/{routineId}") { backStackEntry ->
             WorkoutCompleted(
-                popBackStack = { navController.popBackStack() }
+                popBackStack = { navController.popBackStack() },
+                routineId = backStackEntry.arguments!!.getInt("routineId")
             )
         }
     }
