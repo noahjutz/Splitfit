@@ -18,11 +18,13 @@
 
 package com.noahjutz.splitfit.ui.exercises.list
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
@@ -34,11 +36,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.ui.components.SearchBar
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.components.TopBar
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun ExerciseList(
@@ -60,6 +64,15 @@ fun ExerciseList(
         content = {
             val exercises by viewModel.exercises.collectAsState(emptyList())
             LazyColumn(Modifier.fillMaxHeight()) {
+                item {
+                    val searchQuery by viewModel.nameFilter.collectAsState()
+                    SearchBar(
+                        modifier = Modifier.padding(bottom = 16.dp, end = 16.dp, start = 16.dp),
+                        value = searchQuery,
+                        onValueChange = viewModel::setNameFilter
+                    )
+                }
+
                 items(exercises.filter { !it.hidden }) { exercise ->
                     val dismissState = rememberDismissState()
                     var hidden by remember { mutableStateOf(false) }
