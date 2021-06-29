@@ -73,21 +73,12 @@ fun WorkoutInsightsContent(
     Scaffold(topBar = { TopBar(title = stringResource(R.string.tab_insights)) }) {
         LazyColumn {
             item {
-                Column {
-                    InfoTiles(workouts)
-
-                    ProvideTextStyle(typography.h4) {
-                        Box(
-                            Modifier.padding(
-                                bottom = 8.dp,
-                                start = 16.dp,
-                                end = 16.dp
-                            )
-                        ) {
-                            Text("History")
-                        }
-                    }
-                }
+                InfoTiles(workouts)
+                Text(
+                    "History",
+                    Modifier.padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
+                    style = typography.h5
+                )
             }
             items(workouts) { workout ->
                 val dismissState = rememberDismissState()
