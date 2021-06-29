@@ -74,10 +74,6 @@ class WorkoutInProgressViewModel(
     }
 
     inner class Editor {
-        fun setName(name: String) {
-            _workout.value = _workout.value.copy(name = name)
-        }
-
         fun setEndTime(endTime: Date) {
             _workout.value = _workout.value.copy(endTime = endTime)
         }

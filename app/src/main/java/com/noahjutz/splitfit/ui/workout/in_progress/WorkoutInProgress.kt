@@ -34,7 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.ui.components.AppBarTextField
+import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerSheet
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -54,6 +54,8 @@ fun WorkoutInProgress(
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
+    val workout by viewModel.presenter.workout.collectAsState()
 
     BackHandler(enabled = sheetState.isVisible) {
         scope.launch {
@@ -78,20 +80,10 @@ fun WorkoutInProgress(
     ) {
         Scaffold(
             topBar = {
-                TopAppBar(
+                TopBar(
+                    title = workout.name,
                     navigationIcon = {
                         IconButton(onClick = popBackStack) { Icon(Icons.Default.Close, null) }
-                    },
-                    title = {
-                        var nameFieldValue by remember { mutableStateOf(viewModel.presenter.workout.value.name) }
-                        AppBarTextField(
-                            value = nameFieldValue,
-                            onValueChange = {
-                                nameFieldValue = it
-                                viewModel.editor.setName(it)
-                            },
-                            hint = stringResource(R.string.unnamed_workout),
-                        )
                     }
                 )
             },
