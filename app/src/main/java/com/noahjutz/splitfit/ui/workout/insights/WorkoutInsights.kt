@@ -19,10 +19,12 @@
 package com.noahjutz.splitfit.ui.workout.insights
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -33,7 +35,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.data.ColorTheme
 import com.noahjutz.splitfit.data.domain.Workout
+import com.noahjutz.splitfit.ui.LocalColorTheme
 import com.noahjutz.splitfit.ui.components.NothingHereYet
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.components.TopBar
@@ -167,46 +171,45 @@ private fun InfoTiles(
 ) {
     Column(Modifier.padding(16.dp)) {
         Row {
-            Card(Modifier.weight(1f)) {
-                Column(Modifier.padding(16.dp)) {
-                    Text(
-                        workouts.map { it.startTime }.currentDailyStreak.toString(),
-                        style = typography.h6
-                    )
-                    Text("Streak", style = typography.body2)
-                }
-            }
+            InfoTile(
+                text = workouts.map { it.startTime }.currentDailyStreak.toString(),
+                secondaryText = "Streak"
+            )
             Spacer(Modifier.width(16.dp))
-            Card(Modifier.weight(1f)) {
-                Column(Modifier.padding(16.dp)) {
-                    Text(
-                        workouts.map { it.endTime - it.startTime }.average.toString(),
-                        style = typography.h6
-                    )
-                    Text("Average duration", style = typography.body2)
-                }
-            }
+            InfoTile(
+                text = workouts.map { it.endTime - it.startTime }.average.toString(),
+                secondaryText = "Average Duration"
+            )
         }
         Spacer(Modifier.height(16.dp))
         Row {
-            Card(Modifier.weight(1f)) {
-                Box {
-                    Column(Modifier.padding(16.dp)) {
-                        Text(workouts.size.toString(), style = typography.h6)
-                        Text("Total workouts", style = typography.body2)
-                    }
-                }
-            }
+            InfoTile(
+                text = workouts.size.toString(),
+                secondaryText = "Total Workouts"
+            )
             Spacer(Modifier.width(16.dp))
-            Card(Modifier.weight(1f)) {
-                Column(Modifier.padding(16.dp)) {
-                    Text(
-                        workouts.map { it.endTime - it.startTime }.total.toString(),
-                        style = typography.h6
-                    )
-                    Text("Total duration", style = typography.body2)
-                }
-            }
+            InfoTile(
+                text = workouts.map { it.endTime - it.startTime }.total.toString(),
+                secondaryText = "Total duration"
+            )
+        }
+    }
+}
+
+@Composable
+private fun RowScope.InfoTile(
+    text: String,
+    secondaryText: String,
+) {
+    Card(
+        Modifier.weight(1f),
+        elevation = if (LocalColorTheme.current == ColorTheme.White) 2.dp else 0.dp,
+        border = BorderStroke(2.dp, colors.onSurface.copy(alpha = 0.12f))
+            .takeIf { LocalColorTheme.current == ColorTheme.Black }
+    ) {
+        Column(Modifier.padding(16.dp)) {
+            Text(text, style = typography.h6)
+            Text(secondaryText, style = typography.body2)
         }
     }
 }
