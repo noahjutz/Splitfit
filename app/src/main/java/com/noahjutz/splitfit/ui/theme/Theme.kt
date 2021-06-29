@@ -13,7 +13,7 @@ private val WhiteColorPalette = lightColors(
     primaryVariant = PrimaryDark,
     secondary = Secondary,
     secondaryVariant = SecondaryDark,
-    onPrimary = Color.Black,
+    onPrimary = Color.White,
     onSecondary = Color.Black,
 )
 
