@@ -169,29 +169,35 @@ private fun DeleteConfirmation(
 private fun InfoTiles(
     workouts: List<Workout>
 ) {
-    Column(Modifier.padding(16.dp)) {
-        Row {
-            InfoTile(
-                text = workouts.map { it.startTime }.currentDailyStreak.toString(),
-                secondaryText = "Streak"
-            )
-            Spacer(Modifier.width(16.dp))
-            InfoTile(
-                text = workouts.map { it.endTime - it.startTime }.average.toString(),
-                secondaryText = "Average Duration"
-            )
-        }
-        Spacer(Modifier.height(16.dp))
-        Row {
-            InfoTile(
-                text = workouts.size.toString(),
-                secondaryText = "Total Workouts"
-            )
-            Spacer(Modifier.width(16.dp))
-            InfoTile(
-                text = workouts.map { it.endTime - it.startTime }.total.toString(),
-                secondaryText = "Total duration"
-            )
+    Card(
+        Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        elevation = if (LocalColorTheme.current == ColorTheme.White) 2.dp else 0.dp,
+        border = BorderStroke(2.dp, colors.onSurface.copy(alpha = 0.12f))
+            .takeIf { LocalColorTheme.current == ColorTheme.Black }
+    ) {
+        Column {
+            Row {
+                InfoTile(
+                    text = workouts.map { it.startTime }.currentDailyStreak.toString(),
+                    secondaryText = "Streak"
+                )
+                InfoTile(
+                    text = workouts.map { it.endTime - it.startTime }.average.toString(),
+                    secondaryText = "Average Duration"
+                )
+            }
+            Row {
+                InfoTile(
+                    text = workouts.size.toString(),
+                    secondaryText = "Total Workouts"
+                )
+                InfoTile(
+                    text = workouts.map { it.endTime - it.startTime }.total.toString(),
+                    secondaryText = "Total duration"
+                )
+            }
         }
     }
 }
@@ -201,15 +207,11 @@ private fun RowScope.InfoTile(
     text: String,
     secondaryText: String,
 ) {
-    Card(
-        Modifier.weight(1f),
-        elevation = if (LocalColorTheme.current == ColorTheme.White) 2.dp else 0.dp,
-        border = BorderStroke(2.dp, colors.onSurface.copy(alpha = 0.12f))
-            .takeIf { LocalColorTheme.current == ColorTheme.Black }
-    ) {
-        Column(Modifier.padding(16.dp)) {
-            Text(text, style = typography.h6)
-            Text(secondaryText, style = typography.body2)
-        }
+    Column(
+        Modifier
+            .weight(1f)
+            .padding(16.dp)) {
+        Text(text, style = typography.h6)
+        Text(secondaryText, style = typography.body2)
     }
 }
