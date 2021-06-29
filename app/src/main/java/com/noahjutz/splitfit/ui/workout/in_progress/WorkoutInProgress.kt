@@ -27,7 +27,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
@@ -86,7 +86,7 @@ fun WorkoutInProgress(
                 TopBar(
                     title = workout.name,
                     navigationIcon = {
-                        IconButton(onClick = popBackStack) { Icon(Icons.Default.Close, null) }
+                        IconButton(onClick = popBackStack) { Icon(Icons.Default.ArrowBack, null) }
                     }
                 )
             },
