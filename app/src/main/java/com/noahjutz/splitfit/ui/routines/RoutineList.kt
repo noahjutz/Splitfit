@@ -88,7 +88,7 @@ fun RoutineList(
                     }
                 }
 
-                if (dismissState.currentValue != DismissValue.Default) {
+                if (dismissState.targetValue != DismissValue.Default) {
                     AlertDialog(
                         title = {
                             Text(
@@ -103,28 +103,18 @@ fun RoutineList(
                             Button(
                                 onClick = {
                                     viewModel.deleteRoutine(routine.routineId)
-                                    scope.launch {
-                                        dismissState.snapTo(DismissValue.Default)
-                                    }
+                                    scope.launch { dismissState.reset() }
                                 },
                                 content = { Text(stringResource(R.string.yes)) }
                             )
                         },
                         dismissButton = {
                             TextButton(
-                                onClick = {
-                                    scope.launch {
-                                        dismissState.snapTo(DismissValue.Default)
-                                    }
-                                },
+                                onClick = { scope.launch { dismissState.reset() } },
                                 content = { Text(stringResource(R.string.cancel)) }
                             )
                         },
-                        onDismissRequest = {
-                            scope.launch {
-                                dismissState.snapTo(DismissValue.Default)
-                            }
-                        }
+                        onDismissRequest = { scope.launch { dismissState.reset() } }
                     )
                 }
             }

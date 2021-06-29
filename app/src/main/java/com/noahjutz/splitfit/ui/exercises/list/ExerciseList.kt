@@ -101,20 +101,14 @@ fun ExerciseList(
                         }
                     }
 
-                    if (dismissState.currentValue != DismissValue.Default) {
+                    if (dismissState.targetValue != DismissValue.Default) {
                         ConfirmDeleteExerciseDialog(
-                            onDismiss = {
-                                scope.launch {
-                                    dismissState.snapTo(DismissValue.Default)
-                                }
-                            },
+                            onDismiss = { scope.launch { dismissState.reset() } },
                             exerciseName = exercise.name,
                             onConfirm = {
                                 viewModel.hide(exercise, true)
                                 hidden = true
-                                scope.launch {
-                                    dismissState.snapTo(DismissValue.Default)
-                                }
+                                scope.launch { dismissState.reset() }
                             },
                         )
                     }
