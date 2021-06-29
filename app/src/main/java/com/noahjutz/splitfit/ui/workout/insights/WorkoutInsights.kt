@@ -111,14 +111,12 @@ fun WorkoutInsightsContent(
                     }
                 }
 
-                if (dismissState.currentValue != DismissValue.Default) {
+                if (dismissState.targetValue != DismissValue.Default) {
                     DeleteConfirmation(
                         workout = workout,
                         deleteWorkout = { viewModel.editor.delete(workout) },
                         resetDismissState = {
-                            scope.launch {
-                                dismissState.snapTo(DismissValue.Default)
-                            }
+                            scope.launch { dismissState.reset() }
                         }
                     )
                 }
