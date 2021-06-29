@@ -21,17 +21,20 @@ package com.noahjutz.splitfit.ui.workout.in_progress
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.components.TopBar
@@ -95,7 +98,10 @@ fun WorkoutInProgress(
                 },
                 finishWorkout = {
                     viewModel.editor.finishWorkout()
-                    navToCompleted(routineId, viewModel.presenter.workout.value.workoutId) // TODO not always passed to WorkoutInProgress
+                    navToCompleted(
+                        routineId,
+                        viewModel.presenter.workout.value.workoutId
+                    ) // TODO not always passed to WorkoutInProgress
                 }
             )
             var showCancelWorkoutDialog by remember { mutableStateOf(false) }
@@ -111,23 +117,21 @@ fun WorkoutInProgress(
                 }
             )
 
-            val workout by viewModel.presenter.workout.collectAsState()
-            val setGroups = workout.setGroups
             LazyColumn(Modifier.fillMaxHeight()) {
                 item {
-                    Column {
-                        val duration by viewModel.presenter.durationString.collectAsState("00:00:00")
-                        ListItem(
-                            modifier = Modifier.clickable {},
-                            text = { Text(duration) },
-                            icon = { Icon(Icons.Default.AccessTime, null) },
-                        )
-                    }
+                    val duration by viewModel.presenter.durationString.collectAsState("00:00:00")
+                    Text(
+                        text = duration,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        textAlign = TextAlign.Center
+                    )
                     Divider()
                     Spacer(Modifier.height(8.dp))
                 }
 
-                itemsIndexed(setGroups) { setGroupIndex, setGroup ->
+                itemsIndexed(workout.setGroups) { setGroupIndex, setGroup ->
                     val exercise = viewModel.presenter.getExercise(setGroup.exerciseId)!!
                     com.noahjutz.splitfit.ui.components.SetGroupCard(
                         name = exercise.name.takeIf { it.isNotBlank() }
