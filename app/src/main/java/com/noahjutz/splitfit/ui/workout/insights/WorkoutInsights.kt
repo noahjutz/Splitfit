@@ -210,7 +210,8 @@ private fun RowScope.InfoTile(
     Column(
         Modifier
             .weight(1f)
-            .padding(16.dp)) {
+            .padding(16.dp)
+    ) {
         Text(text, style = typography.h6)
         Text(secondaryText, style = typography.body2)
     }

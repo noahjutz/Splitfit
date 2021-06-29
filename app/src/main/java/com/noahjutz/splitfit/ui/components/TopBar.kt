@@ -3,7 +3,6 @@ package com.noahjutz.splitfit.ui.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
