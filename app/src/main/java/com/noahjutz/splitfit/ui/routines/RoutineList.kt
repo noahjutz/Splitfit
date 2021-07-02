@@ -104,7 +104,7 @@ fun RoutineList(
                             Button(
                                 onClick = {
                                     viewModel.deleteRoutine(routine.routineId)
-                                    scope.launch { dismissState.reset() }
+                                    scope.launch { dismissState.snapTo(DismissValue.Default) }
                                 },
                                 content = { Text(stringResource(R.string.yes)) }
                             )
