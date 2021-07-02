@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.ui.components.NormalDialog
 import com.noahjutz.splitfit.ui.components.SearchBar
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.components.TopBar
@@ -129,7 +130,7 @@ fun ConfirmDeleteExerciseDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
 ) {
-    AlertDialog(
+    NormalDialog(
         title = {
             Text(
                 stringResource(
