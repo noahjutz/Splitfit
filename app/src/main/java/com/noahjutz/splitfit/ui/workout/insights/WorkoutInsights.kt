@@ -38,6 +38,7 @@ import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.data.ColorTheme
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.ui.LocalColorTheme
+import com.noahjutz.splitfit.ui.components.NormalDialog
 import com.noahjutz.splitfit.ui.components.NothingHereYet
 import com.noahjutz.splitfit.ui.components.SwipeToDeleteBackground
 import com.noahjutz.splitfit.ui.components.TopBar
@@ -135,7 +136,7 @@ private fun DeleteConfirmation(
     deleteWorkout: () -> Unit,
     resetDismissState: () -> Unit,
 ) {
-    AlertDialog(
+    NormalDialog(
         title = {
             Text(
                 stringResource(
