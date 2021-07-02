@@ -67,8 +67,12 @@ object Libs {
         const val compose = "androidx.navigation:navigation-compose:$version"
     }
 
+    object Activity {
+        private const val version = "1.3.0-rc01"
+        const val compose = "androidx.activity:activity-compose:$version"
+    }
+
     object Compose {
-        private const val versionActivity = "1.3.0-beta02"
         const val version = "1.0.0-beta09"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
@@ -79,7 +83,6 @@ object Libs {
         const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
         const val test = "androidx.compose.ui:ui-test:$version"
         const val testJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
-        const val activityCompose = "androidx.activity:activity-compose:$versionActivity"
     }
 
     object DataStore {

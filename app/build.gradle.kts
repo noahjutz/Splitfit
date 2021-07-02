@@ -115,6 +115,8 @@ dependencies {
     testImplementation(TestLibs.Mockk.unit)
     androidTestImplementation(TestLibs.Mockk.instrumented)
 
+    implementation(Libs.Activity.compose)
+
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.foundation)
     implementation(Libs.Compose.iconsCore)
@@ -122,7 +124,6 @@ dependencies {
     implementation(Libs.Compose.runtimeLivedata)
     implementation(Libs.Compose.material)
     implementation(Libs.Compose.tooling)
-    implementation(Libs.Compose.activityCompose)
     androidTestImplementation(Libs.Compose.test)
     androidTestImplementation(Libs.Compose.testJunit4)
 
