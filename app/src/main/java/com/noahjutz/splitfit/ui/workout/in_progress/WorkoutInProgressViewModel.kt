@@ -30,7 +30,6 @@ import com.noahjutz.splitfit.data.WorkoutRepository
 import com.noahjutz.splitfit.data.domain.*
 import com.noahjutz.splitfit.data.domain.Set
 import com.noahjutz.splitfit.util.minus
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -38,7 +37,6 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
 
 class WorkoutInProgressViewModel(
     private val preferences: DataStore<Preferences>,
@@ -145,18 +143,14 @@ class WorkoutInProgressViewModel(
             }
         }
 
-        fun finishWorkout() {
+        suspend fun finishWorkout() {
             setEndTime(Calendar.getInstance().time)
-            GlobalScope.launch {
-                preferences.edit { it[AppPrefs.CurrentWorkout.key] = -1 }
-            }
+            preferences.edit { it[AppPrefs.CurrentWorkout.key] = -1 }
         }
 
-        fun cancelWorkout() {
+        suspend fun cancelWorkout() {
             deleteWorkout()
-            GlobalScope.launch {
-                preferences.edit { it[AppPrefs.CurrentWorkout.key] = -1 }
-            }
+            preferences.edit { it[AppPrefs.CurrentWorkout.key] = -1 }
         }
     }
 
@@ -170,7 +164,8 @@ class WorkoutInProgressViewModel(
         }
 
         @OptIn(ExperimentalTime::class)
-        val duration = currentTime.map { Duration.seconds((it - workout.value.startTime).inWholeSeconds) }
+        val duration =
+            currentTime.map { Duration.seconds((it - workout.value.startTime).inWholeSeconds) }
 
         @OptIn(ExperimentalTime::class)
         val durationString = duration.map {
