@@ -55,7 +55,7 @@ fun NormalDialog(
                         content = text
                     )
                 }
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(16.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                     if (dismissButton != null) dismissButton()
                     Spacer(Modifier.width(8.dp))
