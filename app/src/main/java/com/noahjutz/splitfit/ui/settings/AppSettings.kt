@@ -167,7 +167,7 @@ fun ResetSettingsDialog(
     onDismiss: () -> Unit,
     resetSettings: () -> Unit,
 ) {
-    AlertDialog(
+    NormalDialog(
         onDismissRequest = onDismiss,
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
         confirmButton = { Button(onClick = resetSettings) { Text("Reset all settings") } },
