@@ -34,7 +34,7 @@ object Libs {
     }
 
     object Coroutines {
-        private const val version = "1.4.3"
+        private const val version = "1.5.0"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
     }
 
@@ -44,7 +44,7 @@ object Libs {
     }
 
     object Serialization {
-        private const val version = "1.1.0"
+        private const val version = "1.2.1"
         const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$version"
     }
 
