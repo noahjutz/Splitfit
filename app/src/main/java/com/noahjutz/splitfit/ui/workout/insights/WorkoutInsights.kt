@@ -119,10 +119,11 @@ fun WorkoutInsightsContent(
                 if (dismissState.targetValue != DismissValue.Default) {
                     DeleteConfirmation(
                         workout = workout,
-                        deleteWorkout = { viewModel.editor.delete(workout) },
-                        resetDismissState = {
-                            scope.launch { dismissState.reset() }
-                        }
+                        onConfirm = {
+                            viewModel.editor.delete(workout)
+                            scope.launch { dismissState.snapTo(DismissValue.Default) }
+                        },
+                        onDismiss = { scope.launch { dismissState.reset() } }
                     )
                 }
             }
@@ -133,8 +134,8 @@ fun WorkoutInsightsContent(
 @Composable
 private fun DeleteConfirmation(
     workout: Workout,
-    deleteWorkout: () -> Unit,
-    resetDismissState: () -> Unit,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
 ) {
     NormalDialog(
         title = {
@@ -148,20 +149,17 @@ private fun DeleteConfirmation(
         },
         confirmButton = {
             Button(
-                onClick = {
-                    deleteWorkout()
-                    resetDismissState()
-                },
+                onClick = onConfirm,
                 content = { Text(stringResource(R.string.yes)) }
             )
         },
         dismissButton = {
             TextButton(
-                onClick = resetDismissState,
+                onClick = onDismiss,
                 content = { Text(stringResource(R.string.cancel)) }
             )
         },
-        onDismissRequest = resetDismissState
+        onDismissRequest = onDismiss
     )
 }
 
