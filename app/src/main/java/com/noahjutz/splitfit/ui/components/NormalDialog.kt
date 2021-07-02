@@ -1,6 +1,5 @@
 package com.noahjutz.splitfit.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -25,9 +24,7 @@ fun NormalDialog(
         val theme = LocalColorTheme.current
         Card(
             modifier = Modifier.padding(24.dp),
-            elevation = 0.dp,
-            border = BorderStroke(1.dp, colors.onSurface.copy(alpha = 0.12f))
-                .takeIf { theme == ColorTheme.Black },
+            elevation = if (theme == ColorTheme.Black) 2.dp else 0.dp,
             content = content
         )
     }
