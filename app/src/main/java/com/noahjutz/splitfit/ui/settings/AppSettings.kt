@@ -153,7 +153,7 @@ fun AppSettings(
 fun RestartAppDialog(
     restartApp: () -> Unit,
 ) {
-    AlertDialog(
+    NormalDialog(
         onDismissRequest = {},
         dismissButton = {},
         confirmButton = { Button(onClick = restartApp) { Text("Restart") } },
