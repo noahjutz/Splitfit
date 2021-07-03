@@ -1,31 +1,18 @@
 package com.noahjutz.splitfit.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.noahjutz.splitfit.data.ColorTheme
-import com.noahjutz.splitfit.ui.LocalColorTheme
-import com.noahjutz.splitfit.ui.LocalThemePreference
 
 @ExperimentalAnimationApi
 @Composable
@@ -35,39 +22,21 @@ fun SearchBar(
     modifier: Modifier = Modifier,
 ) {
     val onClear = { onValueChange("") }
-    BasicTextField(
+    TextField(
+        modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = onValueChange,
-        textStyle = typography.h6.copy(color = colors.onSurface),
-        cursorBrush = SolidColor(colors.onSurface),
-        singleLine = true
-    ) { innerTextField ->
-        Surface(
-            modifier = modifier,
-            shape = RoundedCornerShape(percent = 50),
-            elevation = if (LocalThemePreference.current == ColorTheme.White) 2.dp else 0.dp,
-            border = BorderStroke(2.dp, colors.onSurface.copy(alpha = 0.12f))
-                .takeIf { LocalColorTheme.current == ColorTheme.Black },
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(enabled = false, onClick = {}) { Icon(Icons.Default.Search, "Search") }
-                Box(Modifier.weight(1f)) {
-                    if (value.isEmpty()) {
-                        Text("Search", style = typography.h6, modifier = Modifier.alpha(0.5f))
-                    }
-                    innerTextField()
-                }
-                Spacer(Modifier.width(8.dp))
-                AnimatedVisibility(
-                    value.isNotEmpty(),
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                ) {
-                    IconButton(onClick = onClear) { Icon(Icons.Default.Clear, "Clear") }
-                }
+        leadingIcon = { Icon(Icons.Default.Search, null) },
+        label = { Text("Search") },
+        trailingIcon = (@Composable {
+            IconButton(onClick = onClear) {
+                Icon(
+                    Icons.Default.Clear,
+                    null
+                )
             }
-        }
-    }
+        }).takeIf { value.isNotEmpty() }
+    )
 }
 
 @ExperimentalAnimationApi
