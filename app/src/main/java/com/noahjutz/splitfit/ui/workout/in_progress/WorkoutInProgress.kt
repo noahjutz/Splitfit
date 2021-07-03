@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
+import com.noahjutz.splitfit.ui.components.NormalDialog
 import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.ui.exercises.picker.ExercisePickerSheet
 import kotlinx.coroutines.launch
@@ -247,7 +248,7 @@ private fun CancelWorkoutDialog(
     onDismiss: () -> Unit,
     cancelWorkout: () -> Unit,
 ) {
-    AlertDialog(
+    NormalDialog(
         onDismissRequest = onDismiss,
         title = { Text("Delete Workout?") },
         text = { Text("Do you really want to delete this workout?") },
@@ -261,7 +262,7 @@ private fun FinishWorkoutDialog(
     onDismiss: () -> Unit,
     finishWorkout: () -> Unit,
 ) {
-    AlertDialog(
+    NormalDialog(
         onDismissRequest = onDismiss,
         title = { Text("Finish Workout?") },
         text = { Text("Do you want to finish the workout?") },
