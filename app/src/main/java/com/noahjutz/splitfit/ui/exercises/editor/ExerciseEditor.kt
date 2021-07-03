@@ -18,6 +18,8 @@
 
 package com.noahjutz.splitfit.ui.exercises.editor
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
@@ -26,8 +28,9 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
-import com.noahjutz.splitfit.ui.components.AppBarTextField
+import com.noahjutz.splitfit.ui.components.TopBar
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -48,24 +51,14 @@ fun ExerciseEditor(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
+            TopBar(
                 navigationIcon = {
                     IconButton(
                         onClick = popBackStack,
                         content = { Icon(Icons.Default.ArrowBack, null) },
                     )
                 },
-                title = {
-                    var nameFieldValue by remember { mutableStateOf(exercise.name) }
-                    AppBarTextField(
-                        value = nameFieldValue,
-                        onValueChange = {
-                            nameFieldValue = it
-                            editor.updateExercise(name = it)
-                        },
-                        hint = stringResource(R.string.unnamed_exercise),
-                    )
-                }
+                title = "Edit Exercise"
             )
         },
         content = {
@@ -85,6 +78,16 @@ fun ExerciseEditor(
             }
             LazyColumn {
                 item {
+                    TextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        value = exercise.name,
+                        onValueChange = { editor.updateExercise(name = it) },
+                        label = { Text("Exercise name") },
+                        singleLine = true,
+                        placeholder = { Text(stringResource(R.string.unnamed_exercise)) }
+                    )
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logReps,
