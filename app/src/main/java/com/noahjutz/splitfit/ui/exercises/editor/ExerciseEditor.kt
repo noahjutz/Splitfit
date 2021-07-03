@@ -91,12 +91,7 @@ fun ExerciseEditor(
                             onValueChange = { editor.updateExercise(logReps = it) }
                         ),
                         text = { Text(stringResource(R.string.log_reps)) },
-                        icon = {
-                            Checkbox(
-                                checked = exercise.logReps,
-                                onCheckedChange = null,
-                            )
-                        },
+                        icon = { Checkbox(checked = exercise.logReps, null) },
                     )
                     ListItem(
                         Modifier.toggleable(
@@ -104,12 +99,7 @@ fun ExerciseEditor(
                             onValueChange = { editor.updateExercise(logWeight = it) }
                         ),
                         text = { Text(stringResource(R.string.log_weight)) },
-                        icon = {
-                            Checkbox(
-                                checked = exercise.logWeight,
-                                onCheckedChange = null,
-                            )
-                        },
+                        icon = { Checkbox(checked = exercise.logWeight, null) },
                     )
                     ListItem(
                         Modifier.toggleable(
@@ -117,12 +107,7 @@ fun ExerciseEditor(
                             onValueChange = { editor.updateExercise(logTime = it) }
                         ),
                         text = { Text(stringResource(R.string.log_time)) },
-                        icon = {
-                            Checkbox(
-                                checked = exercise.logTime,
-                                onCheckedChange = null,
-                            )
-                        },
+                        icon = { Checkbox(checked = exercise.logTime, null) },
                     )
                     ListItem(
                         Modifier.toggleable(
@@ -130,12 +115,7 @@ fun ExerciseEditor(
                             onValueChange = { editor.updateExercise(logDistance = it) }
                         ),
                         text = { Text(stringResource(R.string.log_distance)) },
-                        icon = {
-                            Checkbox(
-                                checked = exercise.logDistance,
-                                onCheckedChange = null,
-                            )
-                        },
+                        icon = { Checkbox(checked = exercise.logDistance, null) },
                     )
                 }
             }
