@@ -70,16 +70,16 @@ fun ExerciseEditor(
         },
         content = {
             val alertNoLogValueSelected = stringResource(R.string.alert_no_log_value_selected)
-            val onAnyCheckedChange = {
-                presenter.exercise.value.let {
-                    if (!it.logReps && !it.logWeight && !it.logTime && !it.logDistance) {
-                        editor.updateExercise(logReps = true)
-                        scope.launch {
-                            scaffoldState.snackbarHostState.let {
-                                it.currentSnackbarData?.dismiss()
-                                it.showSnackbar(alertNoLogValueSelected)
-                            }
-                        }
+            LaunchedEffect(
+                exercise.logReps,
+                exercise.logWeight,
+                exercise.logTime,
+                exercise.logDistance
+            ) {
+                if (!(exercise.logReps || exercise.logWeight || exercise.logTime || exercise.logDistance)) {
+                    editor.updateExercise(logReps = true)
+                    scope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(alertNoLogValueSelected)
                     }
                 }
             }
@@ -88,10 +88,7 @@ fun ExerciseEditor(
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logReps,
-                            onValueChange = {
-                                editor.updateExercise(logReps = it)
-                                onAnyCheckedChange()
-                            }
+                            onValueChange = { editor.updateExercise(logReps = it) }
                         ),
                         text = { Text(stringResource(R.string.log_reps)) },
                         icon = {
@@ -104,10 +101,7 @@ fun ExerciseEditor(
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logWeight,
-                            onValueChange = {
-                                editor.updateExercise(logWeight = it)
-                                onAnyCheckedChange()
-                            }
+                            onValueChange = { editor.updateExercise(logWeight = it) }
                         ),
                         text = { Text(stringResource(R.string.log_weight)) },
                         icon = {
@@ -120,10 +114,7 @@ fun ExerciseEditor(
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logTime,
-                            onValueChange = {
-                                editor.updateExercise(logTime = it)
-                                onAnyCheckedChange()
-                            }
+                            onValueChange = { editor.updateExercise(logTime = it) }
                         ),
                         text = { Text(stringResource(R.string.log_time)) },
                         icon = {
@@ -136,10 +127,7 @@ fun ExerciseEditor(
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logDistance,
-                            onValueChange = {
-                                editor.updateExercise(logDistance = it)
-                                onAnyCheckedChange()
-                            }
+                            onValueChange = { editor.updateExercise(logDistance = it) }
                         ),
                         text = { Text(stringResource(R.string.log_distance)) },
                         icon = {
