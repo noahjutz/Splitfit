@@ -101,8 +101,6 @@ fun ExerciseEditor(
                             )
                         },
                     )
-                }
-                item {
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logWeight,
@@ -119,8 +117,6 @@ fun ExerciseEditor(
                             )
                         },
                     )
-                }
-                item {
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logTime,
@@ -137,8 +133,6 @@ fun ExerciseEditor(
                             )
                         },
                     )
-                }
-                item {
                     ListItem(
                         Modifier.toggleable(
                             value = exercise.logDistance,
