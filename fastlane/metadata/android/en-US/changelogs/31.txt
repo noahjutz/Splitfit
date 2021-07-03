@@ -1,0 +1,22 @@
+Features:
+* Added WorkoutCompleted screen from which the workout's corresponding Routine can be updated (experimental) (bfa7970c..9330d36e)
+* Updated app bar and other UI elements (fde1f1f5, 413eb192, e3b6f7e6, 4df746e1, fad9e221, d85b3f9f, 734dadae, 4035e81d)
+* Removed app bar text fields (e3c62ecb, 5a8a8ba3)
+* Updated dialogs (abb76331, 8b05d23d, 8b05d23d, 35d1642f, 84f23b88, 534571e3, e3a55ec7, 17564228)
+* Updated SearchBar (b4f029bf, fbeab898)
+* Removed dark theme in favor of black theme (5ba472e9)
+* Changed color theme (e185dd9f)
+* Workout names can't be changed anymore. Their names are inherited from their corresponding routine.
+
+Bug Fixes:
+* When starting a workout and navigating back, the user now lands at the start destination, not the routine (a9825ce0)
+* Swipe-to-delete is now faster in some screens (7f3e3daf, 5e7b7fac)
+* Swipe-to-delete doesn't animate back anymore when an item is deleted (84567c46, 97787d97)
+
+Development:
+* Added color theme composition locals (c9ec9606, 4903e310)
+* Removed obsolete code (a24c6531)
+* Upgraded dependencies (koin: 995226cc; datastore: f5713f17; activity: a7aa46b8; compose: 22436c0a; navigation: 17f58b96; coroutines, serialization: 017f83ac; core: 183cf70b)
+* Removed GlobalScope usages (9d2993bf)
+* Clean up ExerciseEditor (d40ce2b0, 3219908c, d3b312d1)
+* Removed obsolete gradle configuration (250c67ed)
