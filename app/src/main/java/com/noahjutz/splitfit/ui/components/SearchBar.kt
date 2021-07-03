@@ -28,14 +28,16 @@ fun SearchBar(
         onValueChange = onValueChange,
         leadingIcon = { Icon(Icons.Default.Search, null) },
         label = { Text("Search") },
-        trailingIcon = (@Composable {
-            IconButton(onClick = onClear) {
-                Icon(
-                    Icons.Default.Clear,
-                    null
-                )
+        trailingIcon = (
+            @Composable {
+                IconButton(onClick = onClear) {
+                    Icon(
+                        Icons.Default.Clear,
+                        null
+                    )
+                }
             }
-        }).takeIf { value.isNotEmpty() }
+            ).takeIf { value.isNotEmpty() }
     )
 }
 
