@@ -69,6 +69,7 @@ fun WorkoutInProgress(
     ModalBottomSheetLayout(
         sheetState = sheetState,
         scrimColor = Color.Black.copy(alpha = 0.32f),
+        sheetElevation = 0.dp,
         sheetContent = {
             ExercisePickerSheet(
                 onExercisesSelected = {
