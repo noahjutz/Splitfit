@@ -457,9 +457,9 @@ private fun ConfirmDeleteSetDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
 ) {
-    AlertDialog(
+    NormalDialog(
         onDismissRequest = onDismiss,
-        text = { Text("Do you want to delete this set?") },
+        title = { Text("Do you want to delete this set?") },
         confirmButton = { Button(onClick = onConfirm) { Text(stringResource(R.string.yes)) } },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
     )
