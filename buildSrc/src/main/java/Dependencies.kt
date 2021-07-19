@@ -68,12 +68,12 @@ object Libs {
     }
 
     object Activity {
-        private const val version = "1.3.0-rc01"
+        private const val version = "1.3.0-rc02"
         const val compose = "androidx.activity:activity-compose:$version"
     }
 
     object Compose {
-        const val version = "1.0.0-rc01"
+        const val version = "1.0.0-rc02"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -91,7 +91,7 @@ object Libs {
     }
 
     object Koin {
-        private const val version = "3.1.1"
+        private const val version = "3.1.2"
         const val android = "io.insert-koin:koin-android:$version"
         const val compose = "io.insert-koin:koin-androidx-compose:$version"
         const val test = "io.insert-koin:koin-test:$version"
