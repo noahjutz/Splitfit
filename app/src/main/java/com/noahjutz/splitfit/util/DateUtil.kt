@@ -3,11 +3,18 @@ package com.noahjutz.splitfit.util
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
-import kotlin.time.seconds
 
 @OptIn(ExperimentalTime::class)
 infix operator fun Date.minus(date: Date): Duration = Duration.milliseconds(this.time - date.time)
+
+@OptIn(ExperimentalTime::class)
+fun Duration.iso8601() = toComponents { hours, minutes, seconds, _ ->
+    val formatPart = { it: Int -> if (it > 9) it.toString() else "0$it" }
+    val hoursString = formatPart(hours)
+    val minutesString = formatPart(minutes)
+    val secondsString = formatPart(seconds)
+    "$hoursString:$minutesString:$secondsString"
+}
 
 /**
  * Sum of all [Duration] items in a list

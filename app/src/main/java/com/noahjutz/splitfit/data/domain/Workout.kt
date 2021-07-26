@@ -20,6 +20,7 @@ package com.noahjutz.splitfit.data.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.noahjutz.splitfit.util.minus
 import java.util.*
 
 @Entity(tableName = "workout_table")
@@ -55,3 +56,5 @@ fun Workout.toRoutine(routineId: Int) = Routine(
     },
     routineId
 )
+
+val Workout.duration get() = endTime - startTime
