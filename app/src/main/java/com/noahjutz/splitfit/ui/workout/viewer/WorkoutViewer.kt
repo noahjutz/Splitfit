@@ -1,4 +1,4 @@
-package com.noahjutz.splitfit.ui.workout.editor
+package com.noahjutz.splitfit.ui.workout.viewer
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +12,9 @@ import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
-fun WorkoutEditor(
+fun WorkoutViewer(
     workoutId: Int,
-    viewModel: WorkoutEditorViewModel = getViewModel { parametersOf(workoutId) },
+    viewModel: WorkoutViewerViewModel = getViewModel { parametersOf(workoutId) },
     popBackStack: () -> Unit,
 ) {
     Scaffold(

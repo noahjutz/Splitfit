@@ -36,7 +36,7 @@ import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutApp
 import com.noahjutz.splitfit.ui.settings.about.LicensesList
 import com.noahjutz.splitfit.ui.workout.completed.WorkoutCompleted
-import com.noahjutz.splitfit.ui.workout.editor.WorkoutEditor
+import com.noahjutz.splitfit.ui.workout.viewer.WorkoutViewer
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgress
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
 import kotlin.time.ExperimentalTime
@@ -49,7 +49,7 @@ enum class Screen {
     exerciseList,
     exerciseEditor,
     workoutInProgress,
-    workoutEditor,
+    workoutViewer,
     settings,
     about,
     licenses,
@@ -67,15 +67,15 @@ fun NavGraph(
     NavHost(navController, startDestination = Screen.routineList.name) {
         composable(Screen.insights.name) {
             WorkoutInsights(
-                navToWorkoutEditor = { workoutId -> navController.navigate("${Screen.workoutEditor}/$workoutId") }
+                navToWorkoutEditor = { workoutId -> navController.navigate("${Screen.workoutViewer}/$workoutId") }
             )
         }
         composable(
-            route = "${Screen.workoutEditor}/{workoutId}",
+            route = "${Screen.workoutViewer}/{workoutId}",
             arguments = listOf(navArgument("workoutId") { type = NavType.IntType })
         ) { backStackEntry ->
             val workoutId = backStackEntry.arguments!!.getInt("workoutId")
-            WorkoutEditor(
+            WorkoutViewer(
                 workoutId = workoutId,
                 popBackStack = { navController.popBackStack() },
             )
