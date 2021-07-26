@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.noahjutz.splitfit.ui.components.TopBar
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -19,8 +20,8 @@ fun WorkoutViewer(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(viewModel.workout.name) },
+            TopBar(
+                title = viewModel.workout.name,
                 navigationIcon = {
                     IconButton(onClick = popBackStack) { Icon(Icons.Default.ArrowBack, null) }
                 }
