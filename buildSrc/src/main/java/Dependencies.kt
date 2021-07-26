@@ -86,7 +86,7 @@ object Libs {
     }
 
     object DataStore {
-        private const val version = "1.0.0-rc01"
+        private const val version = "1.0.0-rc02"
         const val preferences = "androidx.datastore:datastore-preferences:$version"
     }
 
