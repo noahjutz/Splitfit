@@ -23,7 +23,6 @@ fun NormalDialog(
     Dialog(onDismissRequest) {
         val theme = LocalColorTheme.current
         Card(
-            modifier = Modifier.padding(24.dp),
             elevation = if (theme == ColorTheme.Black) 2.dp else 0.dp,
             content = content
         )
