@@ -42,7 +42,6 @@ import org.koin.dsl.module
 val koinModule = module {
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "workout_routines_database")
-            .fallbackToDestructiveMigration()
             .build()
     }
 

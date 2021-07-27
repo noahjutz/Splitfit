@@ -18,6 +18,7 @@
 
 package com.noahjutz.splitfit.data
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -32,7 +33,11 @@ import com.noahjutz.splitfit.data.domain.Workout
         Routine::class,
         Workout::class,
     ],
-    version = 35
+    version = 36,
+    autoMigrations = [
+        AutoMigration(from = 35, to = 36)
+    ],
+    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

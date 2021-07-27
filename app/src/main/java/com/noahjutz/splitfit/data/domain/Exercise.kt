@@ -18,12 +18,15 @@
 
 package com.noahjutz.splitfit.data.domain
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "exercise_table")
 data class Exercise(
     var name: String = "",
+    @ColumnInfo(defaultValue = "")
+    var notes: String = "",
     var logReps: Boolean = true,
     var logWeight: Boolean = false,
     var logTime: Boolean = false,
