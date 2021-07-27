@@ -42,6 +42,10 @@ android {
                 arguments += "room.schemaLocation" to "$projectDir/schemas"
             }
         }
+
+        sourceSets {
+            getByName("androidTest").assets.srcDirs("$projectDir/schemas")
+        }
     }
 
     compileOptions {
@@ -101,6 +105,7 @@ dependencies {
     implementation(Libs.Room.room)
     kapt(Libs.Room.compiler)
     implementation(Libs.Room.runtime)
+    testImplementation(Libs.Room.testing)
 
     kapt(Libs.Lifecycle.lifecycle)
     implementation(Libs.Lifecycle.livedata)

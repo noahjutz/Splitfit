@@ -53,6 +53,7 @@ object Libs {
         const val room = "androidx.room:room-ktx:$version"
         const val compiler = "androidx.room:room-compiler:$version"
         const val runtime = "androidx.room:room-runtime:$version"
+        const val testing = "androidx.room:room-testing:$version"
     }
 
     object Lifecycle {
