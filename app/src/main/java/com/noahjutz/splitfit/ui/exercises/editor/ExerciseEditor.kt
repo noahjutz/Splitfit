@@ -81,12 +81,20 @@ fun ExerciseEditor(
                     TextField(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
+                            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
                         value = exercise.name,
                         onValueChange = { editor.updateExercise(name = it) },
                         label = { Text("Exercise name") },
                         singleLine = true,
                         placeholder = { Text(stringResource(R.string.unnamed_exercise)) }
+                    )
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        value = "",
+                        onValueChange = {},
+                        label = { Text("Notes") },
                     )
                     ListItem(
                         Modifier.toggleable(
