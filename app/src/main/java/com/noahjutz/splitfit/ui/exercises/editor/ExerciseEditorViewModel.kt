@@ -46,6 +46,7 @@ class ExerciseEditorViewModel(
     inner class Editor {
         fun updateExercise(
             name: String = _exercise.value.name,
+            notes: String = _exercise.value.notes,
             logReps: Boolean = _exercise.value.logReps,
             logWeight: Boolean = _exercise.value.logWeight,
             logTime: Boolean = _exercise.value.logTime,
@@ -53,6 +54,7 @@ class ExerciseEditorViewModel(
         ) {
             _exercise.value = _exercise.value.copy(
                 name = name,
+                notes = notes,
                 logReps = logReps,
                 logWeight = logWeight,
                 logTime = logTime,

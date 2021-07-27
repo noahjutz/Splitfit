@@ -92,8 +92,8 @@ fun ExerciseEditor(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),
-                        value = "",
-                        onValueChange = {},
+                        value = exercise.notes,
+                        onValueChange = { editor.updateExercise(notes = it) },
                         label = { Text("Notes") },
                     )
                     ListItem(
