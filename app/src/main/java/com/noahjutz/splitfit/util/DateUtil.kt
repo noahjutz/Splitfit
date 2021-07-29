@@ -1,8 +1,16 @@
 package com.noahjutz.splitfit.util
 
+import org.ocpsoft.prettytime.PrettyTime
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+
+private val prettyTime = PrettyTime()
+
+fun Date.pretty(): String = prettyTime.format(this)
+
+@OptIn(ExperimentalTime::class)
+fun Duration.pretty(): String = this.toComponents { h, m, _, _ -> "${h}h ${m}min" }
 
 @OptIn(ExperimentalTime::class)
 infix operator fun Date.minus(date: Date): Duration = Duration.milliseconds(this.time - date.time)

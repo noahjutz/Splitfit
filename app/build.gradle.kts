@@ -139,6 +139,8 @@ dependencies {
     implementation(Libs.DataStore.preferences)
 
     implementation(Libs.ProcessPhoenix.processPhoenix)
+
+    implementation("org.ocpsoft.prettytime:prettytime:5.0.1.Final")
 }
 
 ktlint {
