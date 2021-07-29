@@ -31,21 +31,8 @@ fun WorkoutViewer(
     viewModel: WorkoutViewerViewModel = getViewModel { parametersOf(workoutId) },
     popBackStack: () -> Unit,
 ) {
-    val state by viewModel.state.collectAsState()
-    when (state) {
-        is WorkoutViewerViewModel.State.Found -> {
-            val found = state as? WorkoutViewerViewModel.State.Found
-            found?.let {
-                WorkoutViewer(popBackStack, found.workout)
-            }
-        }
-        WorkoutViewerViewModel.State.Error -> TODO()
-        WorkoutViewerViewModel.State.Loading -> {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
-        }
-    }
+    val workout by viewModel.workout.collectAsState()
+    if (workout != null) WorkoutViewer(popBackStack, workout!!)
 }
 
 @Composable
