@@ -106,6 +106,7 @@ dependencies {
     kapt(Libs.Room.compiler)
     implementation(Libs.Room.runtime)
     testImplementation(Libs.Room.testing)
+    androidTestImplementation(Libs.Room.testing)
 
     kapt(Libs.Lifecycle.lifecycle)
     implementation(Libs.Lifecycle.livedata)
