@@ -31,9 +31,9 @@ import com.noahjutz.splitfit.ui.routines.RoutineListViewModel
 import com.noahjutz.splitfit.ui.routines.editor.RoutineEditorViewModel
 import com.noahjutz.splitfit.ui.settings.AppSettingsViewModel
 import com.noahjutz.splitfit.ui.workout.completed.WorkoutCompletedViewModel
-import com.noahjutz.splitfit.ui.workout.viewer.WorkoutViewerViewModel
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgressViewModel
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsightsViewModel
+import com.noahjutz.splitfit.ui.workout.viewer.WorkoutViewerViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

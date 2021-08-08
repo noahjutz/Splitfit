@@ -36,9 +36,9 @@ import com.noahjutz.splitfit.ui.settings.AppSettings
 import com.noahjutz.splitfit.ui.settings.about.AboutApp
 import com.noahjutz.splitfit.ui.settings.about.LicensesList
 import com.noahjutz.splitfit.ui.workout.completed.WorkoutCompleted
-import com.noahjutz.splitfit.ui.workout.viewer.WorkoutViewer
 import com.noahjutz.splitfit.ui.workout.in_progress.WorkoutInProgress
 import com.noahjutz.splitfit.ui.workout.insights.WorkoutInsights
+import com.noahjutz.splitfit.ui.workout.viewer.WorkoutViewer
 import kotlin.time.ExperimentalTime
 
 @Suppress("EnumEntryName")

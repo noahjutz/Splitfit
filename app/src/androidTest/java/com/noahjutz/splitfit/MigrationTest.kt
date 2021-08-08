@@ -22,7 +22,6 @@ class MigrationTest {
         FrameworkSQLiteOpenHelperFactory()
     )
 
-
     @Test
     @Throws(IOException::class)
     fun migrate35To36() {

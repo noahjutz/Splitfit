@@ -17,16 +17,11 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.data.domain.Workout
 import com.noahjutz.splitfit.data.domain.duration
 import com.noahjutz.splitfit.ui.components.TopBar
-import com.noahjutz.splitfit.util.iso8601
 import com.noahjutz.splitfit.util.pretty
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
-import org.ocpsoft.prettytime.PrettyTime
-import org.ocpsoft.prettytime.impl.DurationImpl
-import java.time.Duration
 import java.util.*
 import kotlin.time.ExperimentalTime
-import kotlin.time.toJavaDuration
 
 @OptIn(ExperimentalTime::class)
 @Composable
