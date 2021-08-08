@@ -75,8 +75,7 @@ fun WorkoutViewerContent(workout: Workout) {
         }
 
         items(workout.setGroups) {
-            Text(it.sets.toString()) // TODO use SetGroupCards
-            Spacer(Modifier.height(12.dp))
+            // TODO show setGroups using SetGroupCards like in WorkoutInProgress
         }
     }
 }
