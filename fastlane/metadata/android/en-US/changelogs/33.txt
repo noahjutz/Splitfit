@@ -1,0 +1,10 @@
+Features:
+* Basic information about past workouts can now be viewed (#64)
+* Exercises can now have notes (#46)
+* New top bar design is now used in all screens (8c952250)
+
+Development:
+* Rename WorkoutEditor to WorkoutViewer (cf35ef4c)
+* Upgrade dependencies (dcd6ca71, 609c966d, d3008e5f, abd274bb)
+* Add room-testing, db schema source set (02423558)
+* Ktlint formatting (384e67ec)
