@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.LocalActivity
+import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.util.openUrl
 
 enum class Licenses(val fullName: String) {
@@ -55,11 +56,11 @@ fun LicensesList(
     val mainActivity = LocalActivity.current
     Scaffold(
         topBar = {
-            TopAppBar(
+            TopBar(
                 navigationIcon = {
                     IconButton(onClick = popBackStack) { Icon(Icons.Default.ArrowBack, "Back") }
                 },
-                title = { Text("Licenses") },
+                title = "Licenses",
             )
         }
     ) {

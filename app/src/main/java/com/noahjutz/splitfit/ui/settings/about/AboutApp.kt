@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.noahjutz.splitfit.BuildConfig
 import com.noahjutz.splitfit.R
 import com.noahjutz.splitfit.ui.LocalActivity
+import com.noahjutz.splitfit.ui.components.TopBar
 import com.noahjutz.splitfit.util.openUrl
 
 private object Urls {
@@ -54,8 +55,8 @@ fun AboutApp(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("About") },
+            TopBar(
+                title = "About",
                 navigationIcon = {
                     IconButton(onClick = popBackStack) {
                         Icon(Icons.Default.ArrowBack, null)
