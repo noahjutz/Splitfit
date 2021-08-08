@@ -63,18 +63,18 @@ object Libs {
     }
 
     object Navigation {
-        private const val version = "2.4.0-alpha05"
+        private const val version = "2.4.0-alpha06"
         const val navigation = "androidx.navigation:navigation-fragment-ktx:$version"
         const val compose = "androidx.navigation:navigation-compose:$version"
     }
 
     object Activity {
-        private const val version = "1.3.0"
+        private const val version = "1.3.1"
         const val compose = "androidx.activity:activity-compose:$version"
     }
 
     object Compose {
-        const val version = "1.0.0"
+        const val version = "1.0.1"
         const val ui = "androidx.compose.ui:ui:$version"
         const val tooling = "androidx.compose.ui:ui-tooling:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
@@ -87,7 +87,7 @@ object Libs {
     }
 
     object DataStore {
-        private const val version = "1.0.0-rc02"
+        private const val version = "1.0.0"
         const val preferences = "androidx.datastore:datastore-preferences:$version"
     }
 
@@ -129,7 +129,7 @@ object GradlePlugins {
     }
 
     object Kotlin {
-        const val version = "1.5.10"
+        const val version = "1.5.21"
         const val classpath = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     }
 }
